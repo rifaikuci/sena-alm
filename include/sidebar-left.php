@@ -19,6 +19,12 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href=<?php echo base_url() . "tanimlar/firma" ?> class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Firmalar</p>
+                        </a>
+                    </li>
 
                 </ul>
             </li>

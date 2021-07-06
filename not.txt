@@ -1,0 +1,11 @@
+admin -> 0
+vekil -> 1
+sevkiyat -> 2
+kalipci -> 3
+pres sorumlu -> 4
+pres operator -> 5
+boya sorumlu -> 6
+boya operator -> 7
+personel ->8
+sofor -9
+bietci ->10

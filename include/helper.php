@@ -42,4 +42,15 @@ function durumDanger($content)
     </div>";
 }
 
+function kelimeAyirma($metin,$sayi){
+
+    $uzunluk =    count(explode(' ', $metin));
+    if($uzunluk > $sayi){
+        return  implode(' ', array_slice(explode(' ', $metin), 0, $sayi))." ...";
+    }else{
+        return $metin;
+    }
+
+}
+
 ?>

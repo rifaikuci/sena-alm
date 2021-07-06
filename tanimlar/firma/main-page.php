@@ -1,7 +1,8 @@
 <?php
 include "../../netting/baglan.php";
+include "../../include/sql.php";
 
-$sql = "SELECT * FROM tblfirmatur";
+$sql = "SELECT * FROM tblfirma";
 $result = $db->query($sql);
 
 ?>
@@ -10,20 +11,20 @@ $result = $db->query($sql);
 
     <?php
     if ($_GET['durumekle'] == "ok") {
-        durumSuccess("Firma Türü Başarılı Bir Şekilde Eklendi. ");
+        durumSuccess("Firma Başarılı Bir Şekilde Eklendi. ");
     } else if ($_GET['durumekle'] == "no") {
-        durumDanger("Firma Türü Eklenirken Bir Hata Oluştu !");
+        durumDanger("Firma Eklenirken Bir Hata Oluştu !");
     } else if ($_GET['durumsil'] == "ok") {
-        durumSuccess("Firma Türü Başarılı Bir Şekilde Silindi. ");
+        durumSuccess("Firma Başarılı Bir Şekilde Silindi. ");
     } else if ($_GET['durumsil'] == "no") {
-        durumDanger("Firma Türü Silinirken Bir Hata Oluştu.");
+        durumDanger("Firma Silinirken Bir Hata Oluştu.");
     } else if ($_GET['durumguncelleme'] == "ok") {
-        durumSuccess("Firma Türü Başarılı Bir Şekilde Güncellendi. ");
+        durumSuccess("Firma Başarılı Bir Şekilde Güncellendi. ");
     } else if ($_GET['durumguncelleme'] == "no") {
-        durumDanger("Firma Türü Güncellenirken Bir Hata Oluştu.");
+        durumDanger("Firma Güncellenirken Bir Hata Oluştu.");
     } ?>
     <div style="text-align: center">
-        <h4 style="color: #0b93d5">Firma Türleri</h4>
+        <h4 style="color: #0b93d5">Firmalar</h4>
     </div>
     <div class="card-body">
         <div class="row">
@@ -39,7 +40,10 @@ $result = $db->query($sql);
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Ad</th>
+                                <th>Firmad Adı</th>
+                                <th>Firmad Türü</th>
+                                <th>Kısa Kod</th>
+                                <th>Yetkili Kişi</th>
                                 <th>İşlem</th>
                             </tr>
                             </thead>
@@ -48,11 +52,14 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td><?php echo $row['ad']; ?></td>
+                                    <td><?php echo $row['firmaAd']; ?></td>
+                                    <td><?php echo firmaTur($row['firmaTurId'], $db); ?></td>
+                                    <td><?php echo $row['kisaKod']; ?></td>
+                                    <td><?php echo $row['yetkiliKisi']; ?></td>
                                     <td>
                                         <a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
                                            btn-warning">Düzenle</a>
-                                        <a href=<?php echo base_url() . "netting/tanimlar/firmatur.php?firmatursil=" . $row['id']; ?> class="btn
+                                        <a href=<?php echo base_url() . "netting/tanimlar/firma.php?firmasil=" . $row['id']; ?> class="btn
                                            btn-danger">Sil</a>
                                     </td>
 
