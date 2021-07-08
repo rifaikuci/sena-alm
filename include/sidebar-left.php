@@ -1,5 +1,3 @@
-
-
 <div class="sidebar">
     <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
@@ -7,7 +5,7 @@
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-list"></i>
                     <p>
-                       Tanımlar
+                        Tanımlar
                         <i class="right fas fa-angle-left"></i>
                     </p>
                 </a>
@@ -23,6 +21,20 @@
                         <a href=<?php echo base_url() . "tanimlar/firma" ?> class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Firmalar</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href=<?php echo base_url() . "tanimlar/personel" ?> class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Personeller</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href=<?php echo base_url() . "tanimlar/alasim" ?> class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Alaşım</p>
                         </a>
                     </li>
 

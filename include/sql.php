@@ -7,4 +7,18 @@ function firmaTur($id,$db){
     $row = $result->fetch_assoc();
     return $row['ad'];
 }
+
+function personelTur($id,$db){
+    $sql = "SELECT * FROM tblrol WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row['rol'];
+}
+
+function alasimTur($id,$db){
+    $sql = "SELECT * FROM tblalasim WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row['ad'];
+}
 ?>
