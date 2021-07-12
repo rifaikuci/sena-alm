@@ -38,6 +38,20 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href=<?php echo base_url() . "tanimlar/sektor" ?> class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Sektör</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a href=<?php echo base_url() . "tanimlar/boya" ?> class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Boyalar</p>
+                        </a>
+                    </li>
+
                 </ul>
             </li>
 

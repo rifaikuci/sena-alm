@@ -5,7 +5,7 @@ if ($_GET['id']) {
 
     include '../../../netting/baglan.php';
 
-    $sql = "SELECT * FROM tblalasim WHERE id = '$id'";
+    $sql = "SELECT * FROM tblboya WHERE id = '$id'";
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_assoc();
 } ?>
@@ -16,7 +16,7 @@ if ($_GET['id']) {
             Firma Türleri Güncelleme Alanı
         </div>
         <div class="card-body">
-            <form method="post" action="<?php echo base_url() . 'netting/tanimlar/alasim.php' ?>">
+            <form method="post" action="<?php echo base_url() . 'netting/tanimlar/boya.php' ?>">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -31,15 +31,14 @@ if ($_GET['id']) {
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Özkütle</label>
-                            <input required type="number" step="0.01" class="form-control form-control-lg"
-                                   name="ozkutle"
-                                   value="<?php echo $row['ozkutle'] ?>">
+                            <input required type="text" step="0.01" class="form-control form-control-lg"  name="kod"
+                                   value="<?php echo $row['kod'] ?>">
                         </div>
                     </div>
                 </div>
                 <div class="card-footer">
                     <div>
-                        <button type="submit" name="alasimguncelleme" class="btn btn-info float-right">Güncelleme
+                        <button type="submit" name="boyaguncelleme" class="btn btn-info float-right">Güncelleme
                         </button>
                         <a href="../"
                            class="btn btn-warning float-left">Vazgeç</a>

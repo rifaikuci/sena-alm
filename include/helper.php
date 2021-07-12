@@ -53,4 +53,10 @@ function kelimeAyirma($metin,$sayi){
 
 }
 
+function tarih($tarih){
+    $tarih =  date("m.d.Y", strtotime(explode(" ", $tarih)[0]));
+
+    return$tarih;
+}
+
 ?>

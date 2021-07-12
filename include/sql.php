@@ -21,4 +21,11 @@ function alasimTur($id,$db){
     $row = $result->fetch_assoc();
     return $row['ad'];
 }
+
+function personelBul($id,$db){
+    $sql = "SELECT * FROM tblpersonel WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row['adsoyad'];
+}
 ?>

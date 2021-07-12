@@ -1,15 +1,22 @@
 <?php
-include "../../../netting/baglan.php";
+if ($_GET['id']) {
 
-$sql = "SELECT * FROM tblrol";
-$result = $db->query($sql);
+    $id = $_GET['id'];
 
-?>
+    include '../../../netting/baglan.php';
+
+    $sql = "SELECT * FROM tblpersonel WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+
+    $sqlpersoneltur = "SELECT * FROM tblrol";
+    $personeltur = $db->query($sqlpersoneltur);
+} ?>
 
 <section class="content">
     <div class="card card-info">
         <div class="card-header">
-            Personel Ekleme Alanı
+            Personel Güncelleme Alanı
         </div>
         <div class="card-body">
             <form method="post" action="<?php echo base_url() . 'netting/tanimlar/personel.php' ?>">
@@ -17,8 +24,10 @@ $result = $db->query($sql);
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Persone Ad Soyad</label>
+                            <input required type="hidden" class="form-control form-control-lg" name="id"
+                                   value="<?php echo $row['id'] ?>">
                             <input required type="text" class="form-control form-control-lg" name="adsoyad"
-                                   placeholder="Personel Adı Giriniz...">
+                                   value="<?php echo $row['adsoyad'] ?>">
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -26,8 +35,9 @@ $result = $db->query($sql);
                             <label>Personel Türü</label>
                             <select required name="rolId" class="form-group select2" style="width: 100%;">
                                 <option selected value="">Personel Türü Seçiniz</option>
-                                <?php while ($row = $result->fetch_array()) { ?>
-                                    <option value="<?php echo $row['level']; ?>"><?php echo $row['rol']; ?></option>
+                                <?php while ($rol = $personeltur->fetch_array()) { ?>
+                                    <option <?php echo $rol['level'] == $row['rolId'] ? 'selected' : '' ?>
+                                            value="<?php echo $rol['level']; ?>"><?php echo $rol['rol']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -37,15 +47,15 @@ $result = $db->query($sql);
                         <div class="form-group">
                             <label>T.C.</label>
                             <input required type="text" class="form-control form-control-lg" name="tc"
-                                   placeholder="T.C. Bilgisi ">
+                                   value="<?php echo $row['tc'] ?>">
                         </div>
                     </div>
 
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Telefon</label>
-                            <input reequired type="text" class="form-control form-control-lg" name="telefon"
-                                   placeholder="Telefon ">
+                            <input required type="text" class="form-control form-control-lg" name="telefon"
+                                   value="<?php echo $row['telefon'] ?>">
                         </div>
                     </div>
 
@@ -53,7 +63,7 @@ $result = $db->query($sql);
                         <div class="form-group">
                             <label>İşe Giriş Tar.</label>
                             <input required type="date" class="form-control form-control-lg" name="isegiristarih"
-                                   value="<?php echo date("Y-m-d") ?>">
+                                   value="<?php echo date("Y-m-d", strtotime(explode(" ", $row['isegiristarih'])[0])) ?>">
                         </div>
                     </div>
 
@@ -61,7 +71,7 @@ $result = $db->query($sql);
                         <div class="form-group">
                             <label>İşe Çıkış Tar.</label>
                             <input required type="date" class="form-control form-control-lg" name="isecikistarih"
-                                   value="<?php echo date("Y-m-d") ?>">
+                                   value="<?php echo date("Y-m-d", strtotime(explode(" ", $row['isecikistarih'])[0])) ?>">
                         </div>
                     </div>
 
@@ -69,14 +79,14 @@ $result = $db->query($sql);
                         <div class="form-group">
                             <label>Mail</label>
                             <input required type="text" class="form-control form-control-lg" name="mail"
-                                   placeholder="Mail">
+                                   value="<?php echo $row['mail'] ?>">
                         </div>
                     </div>
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label>Adres</label>
                             <input required type="text" class="form-control form-control-lg" name="adres"
-                                   placeholder="Adres">
+                                   value="<?php echo $row['adres'] ?>">
                         </div>
                     </div>
 
@@ -84,7 +94,7 @@ $result = $db->query($sql);
                         <div class="form-group">
                             <label>Tshirt Beden</label>
                             <input required type="text" class="form-control form-control-lg" name="bedentshirt"
-                                   placeholder="Tshirt ">
+                                   value="<?php echo $row['bedentshirt'] ?>">
                         </div>
                     </div>
 
@@ -92,22 +102,23 @@ $result = $db->query($sql);
                         <div class="form-group">
                             <label>Pantalon</label>
                             <input required type="text" class="form-control form-control-lg" name="bedenpantalon"
-                                   placeholder="Pantalon ">
+                                   value="<?php echo $row['bedenpantalon'] ?>">
                         </div>
                     </div>
 
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Ayakkabı</label>
+                            <label>Ayakkabi</label>
                             <input required type="text" class="form-control form-control-lg" name="bedenayakkabi"
-                                   placeholder="Ayakkabı">
+                                   value="<?php echo $row['bedenayakkabi'] ?>">
                         </div>
                     </div>
 
                 </div>
                 <div class="card-footer">
                     <div>
-                        <button type="submit" name="personelekleme" class="btn btn-info float-right">Ekle</button>
+                        <button type="submit" name="personelguncelleme" class="btn btn-info float-right">Güncelle
+                        </button>
                         <a href="../"
                            class="btn btn-warning float-left">Vazgeç</a>
                     </div>
