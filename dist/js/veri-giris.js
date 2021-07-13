@@ -1,6 +1,27 @@
 new Vue({
         el: "#stok-giris",
         data: {
+
+            boyapartino: [],
+            boyafirma: [],
+            boyaboya: [],
+            boyaadet: [],
+            boyakilo: [],
+            boyasicaklik: [],
+            boyacins: [],
+            boyalar: [],
+            boya: {
+                partino: '',
+                firma: '',
+                boya: '',
+                adet: '',
+                kilo: '',
+                sicaklik: '',
+                cins: ''
+            },
+            isFullBoyaData: false,
+
+
             biyetpartino: [],
             biyetfirma: [],
             biyetalasim: [],
@@ -38,7 +59,7 @@ new Vue({
                     this.biyetcap.push(this.biyet.cap);
                     this.biyetboy.push(this.biyet.boy);
 
-                    isFullBiyetData: false
+                    this.isFullBiyetData = false;
                     this.biyet = {
                         partino: '',
                         firma: '',
@@ -90,7 +111,95 @@ new Vue({
                 }
             },
             biyetSil: function (index) {
-                this.$delete(this.biyetler, index)
+                this.$delete(this.biyetler, index);
+                this.isFullBiyetData = false;
+            },
+
+
+            boyaekle: function (event) {
+                event.preventDefault();
+
+                if (this.boya.partino &&
+                    this.boya.firma &&
+                    this.boya.boya &&
+                    this.boya.adet &&
+                    this.boya.kilo &&
+                    this.boya.sicaklik &&
+                    this.boya.cins) {
+
+                    this.boyalar.push(this.boya);
+
+                    this.boyapartino.push(this.boya.partino);
+                    this.boyafirma.push(this.boya.firma);
+                    this.boyaboya.push(this.boya.boya);
+                    this.boyaadet.push(this.boya.adet);
+                    this.boyakilo.push(this.boya.kilo);
+                    this.boyasicaklik.push(this.boya.sicaklik);
+                    this.boyacins.push(this.boya.cins);
+
+                    this.isFullBoyaData = false
+                    this.boya = {
+                        partino: '',
+                        firma: '',
+                        boya: '',
+                        adet: '',
+                        kilo: '',
+                        sicaklik: '',
+                        cins: ''
+                    }
+                }
+
+
+            },
+
+            checkboyapartino(event) {
+                if (event.target.value &&
+                    this.boya.partino &&
+                    this.boya.firma &&
+                    this.boya.boya &&
+                    this.boya.adet &&
+                    this.boya.kilo &&
+                    this.boya.sicaklik &&
+                    this.boya.cins) {
+                    this.isFullBoyaData = true;
+                } else {
+                    this.isFullBoyaData = false;
+                }
+            },
+
+            checkboyaadet(event) {
+                if (event.target.value &&
+                    this.boya.partino &&
+                    this.boya.firma &&
+                    this.boya.boya &&
+                    this.boya.adet &&
+                    this.boya.kilo &&
+                    this.boya.sicaklik &&
+                    this.boya.cins) {
+                    this.isFullBoyaData = true;
+                } else {
+                    this.isFullBoyaData = false;
+                }
+            },
+
+            checkboyakilo(event) {
+                if (event.target.value &&
+                    this.boya.partino &&
+                    this.boya.firma &&
+                    this.boya.boya &&
+                    this.boya.adet &&
+                    this.boya.kilo &&
+                    this.boya.sicaklik &&
+                    this.boya.cins) {
+                    this.isFullBoyaData = true;
+                } else {
+                    this.isFullBoyaData = false;
+                }
+            },
+
+            boyaSil: function (index) {
+                this.$delete(this.boyalar, index);
+                this.isFullBoyaData = false;
             }
 
         }

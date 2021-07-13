@@ -10,8 +10,14 @@ $personeller2 = $db->query($personelsql2);
 $firmasql = "SELECT * FROM tblfirma";
 $firmalar = $db->query($firmasql);
 
+$firmaboyasql = "SELECT * FROM tblfirma";
+$firmalarboya = $db->query($firmaboyasql);
+
 $alasimsql = "SELECT * FROM tblalasim";
 $alasimlar = $db->query($alasimsql);
+
+$boyasql = "SELECT * FROM tblboya";
+$boyalar = $db->query($boyasql);
 ?>
 
 <section class="content">
@@ -100,9 +106,10 @@ $alasimlar = $db->query($alasimsql);
                                            aria-selected="true">Biyetler</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" id="profil" data-toggle="pill"
+                                        <a class="nav-link" id="boya" data-toggle="pill"
                                            href="#custom-tabs-one-profile"
-                                           role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Profil</a>
+                                           role="tab" aria-controls="custom-tabs-one-profile"
+                                           aria-selected="false">Boya</a>
                                     </li>
                                 </ul>
                             </div>
@@ -227,8 +234,142 @@ $alasimlar = $db->query($alasimsql);
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel"
-                                         aria-labelledby="profil">
-                                        Profil
+                                         aria-labelledby="boya">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Parti Numarası</label>
+                                                    <input v-model="boya.partino" type="text"
+                                                           placeholder="Parti Numarası Giriniz..."
+                                                           @input="checkboyapartino($event)"
+                                                           class="form-control form-control-lg">
+                                                    <input name="boyapartino" :value="boyapartino" type="hidden">
+                                                    <input name="boyafirma" :value="boyafirma" type="hidden">
+                                                    <input name="boyaboya" :value="boyaboya" type="hidden">
+                                                    <input name="boyaadet" :value="boyaadet" type="hidden">
+                                                    <input name="boyakilo" :value="boyakilo" type="hidden">
+                                                    <input name="boyasicaklik" :value="boyasicaklik" type="hidden">
+                                                    <input name="boyacins" :value="boyacins" type="hidden">
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Firma Adı</label>
+                                                    <select v-model="boya.firma" class="form-control"
+                                                            style="width: 100%;">
+                                                        <option selected disabled value="">Firma Seçiniz</option>
+                                                        <?php while ($firmaboya = $firmalarboya->fetch_array()) { ?>
+                                                            <option
+                                                                    value="<?php echo $firmaboya['firmaAd']; ?>"><?php echo $firmaboya['firmaAd']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Boya Türü</label>
+                                                    <select v-model="boya.boya" class="form-control"
+                                                            style="width: 100%;">
+                                                        <option selected disabled value="">Boya Seçiniz</option>
+                                                        <?php while ($boya = $boyalar->fetch_array()) { ?>
+                                                            <option value="<?php echo $boya['ad']; ?>"><?php echo $boya['ad']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label>Sıcaklık</label>
+                                                    <select v-model="boya.sicaklik" class="form-control"
+                                                            style="width: 100%;">
+                                                        <option selected disabled value="">Kürlenme Sıcaklığı</option>
+                                                        <option value="180">180</option>
+                                                        <option value="200">200</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label>Cins</label>
+                                                    <select v-model="boya.cins" class="form-control"
+                                                            style="width: 100%;">
+                                                        <option selected disabled value="">Cins</option>
+                                                        <option value="Mat">Mat</option>
+                                                        <option value="Parlak">Parlak</option>
+                                                        <option value="Yarı Mat">Yarı Mat</option>
+                                                        <option value="Metalik">Metalik</option>
+                                                        <option value="Simli">Simli</option>
+                                                        <option value="Texture">Texture</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label>Adet</label>
+                                                    <input v-model="boya.adet" type="number"
+                                                           @input="checkboyaadet($event)"
+                                                           class="form-control form-control-lg" placeholder="0"
+                                                           step="1">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label>KG</label>
+                                                    <input v-model="boya.kilo" type="number"
+                                                           @input="checkboyakilo($event)"
+                                                           class="form-control form-control-lg" placeholder="0"
+                                                           step="1">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div style="text-align: right" v-if="isFullBoyaData">
+                                            <button v-on:click="boyaekle" class="btn btn-info float-right">Yeni
+                                                Boya Ekle
+                                            </button>
+
+                                        </div>
+
+                                        <div v-if="boyalar.length > 0" class="card-body table-responsive p-0">
+                                            <table class="table table-hover text-nowrap">
+                                                <thead>
+                                                <tr>
+                                                    <th>Parti No</th>
+                                                    <th>Firma</th>
+                                                    <th>Boya</th>
+                                                    <th>Sıcaklık</th>
+                                                    <th>Cins</th>
+                                                    <th>Adet</th>
+                                                    <th>Kilo</th>
+                                                    <th>İşlem</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                <tr v-for="(boya,index) in boyalar">
+                                                    <td> {{boya.partino}}</td>
+                                                    <td> {{boya.firma}}</td>
+                                                    <td> {{boya.boya}}</td>
+                                                    <td> {{boya.sicaklik}}</td>
+                                                    <td> {{boya.cins}}</td>
+                                                    <td> {{boya.adet}}</td>
+                                                    <td> {{boya.kilo}}</td>
+                                                    <td><a style="color: white" v-on:click="boyaSil(index)"
+                                                           class="btn btn-danger">Sil</a></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
