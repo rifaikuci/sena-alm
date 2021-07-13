@@ -10,8 +10,9 @@ if (isset($_POST['sektorekleme'])) {
     try {
         $ad = $_POST['ad'];
         $kisakod = $_POST['kisakod'];
+        $seo = seo($ad);
 
-        $sql = "INSERT INTO tblsektor (ad, kisakod) VALUES ('$ad', '$kisakod')";
+        $sql = "INSERT INTO tblsektor (ad, kisakod, seo) VALUES ('$ad', '$kisakod', '$seo')";
 
         if (mysqli_query($db, $sql)) {
             header("Location:../../tanimlar/sektor/?durumekle=ok");
@@ -42,9 +43,9 @@ if (isset($_POST['sektorguncelleme'])) {
     $id = $_POST['id'];
     $ad = $_POST['ad'];
     $kisakod = $_POST['kisakod'];
-
+    $seo = seo($ad);
     $sql = "UPDATE tblsektor set 
-        ad = '$ad', kisakod = '$kisakod' WHERE id='$id'";
+        ad = '$ad', kisakod = '$kisakod', seo = '$seo' WHERE id='$id'";
 
     if (mysqli_query($db, $sql)) {
         header("Location:../../tanimlar/sektor/?durumguncelleme=ok");

@@ -10,8 +10,9 @@ if (isset($_POST['alasimekleme'])) {
     try {
         $ad = $_POST['ad'];
         $ozkutle = $_POST['ozkutle'];
+        $seo = seo($ad);
 
-        $sql = "INSERT INTO tblalasim (ad, ozkutle) VALUES ('$ad', '$ozkutle')";
+        $sql = "INSERT INTO tblalasim (ad, ozkutle,seo) VALUES ('$ad', '$ozkutle','$seo')";
 
         if (mysqli_query($db, $sql)) {
             header("Location:../../tanimlar/alasim/?durumekle=ok");
@@ -42,9 +43,10 @@ if (isset($_POST['alasimguncelleme'])) {
     $id = $_POST['id'];
     $ad = $_POST['ad'];
     $ozkutle = $_POST['ozkutle'];
+    $seo = seo($ad);
 
     $sql = "UPDATE tblalasim set 
-        ad = '$ad', ozkutle = '$ozkutle' WHERE id='$id'";
+        ad = '$ad', ozkutle = '$ozkutle', seo = '$seo' WHERE id='$id'";
 
     if (mysqli_query($db, $sql)) {
         header("Location:../../tanimlar/alasim/?durumguncelleme=ok");

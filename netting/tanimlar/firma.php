@@ -8,7 +8,7 @@ ini_set('display_errors', 1);
 if (isset($_POST['firmaekleme'])) {
     try {
         $firmaAd = $_POST['firmaAd'];
-        $seoFirmaAd = seo($_POST['firmaAd']);
+        $seo = seo($firmaAd);
         $kisaKod = $_POST['kisaKod'];
         $firmaTurId = $_POST['firmaTurId'];
         $vergiDairesi = $_POST['vergiDairesi'];
@@ -22,9 +22,9 @@ if (isset($_POST['firmaekleme'])) {
         $aciklama = $_POST['aciklama'];
         $naylon = $_POST['naylon'];
 
-        $sql = "INSERT INTO tblfirma (firmaAd, seoFirmaAd, kisaKod, firmaTurId, vergiDairesi, vergiNumara,
+        $sql = "INSERT INTO tblfirma (firmaAd, seo, kisaKod, firmaTurId, vergiDairesi, vergiNumara,
                                       yetkiliKisi, telefon, mail, adres, il, ilce, aciklama, naylon)
-                VALUES ('$firmaAd', '$seoFirmaAd','$kisaKod', '$firmaTurId','$vergiDairesi', '$vergiNumara',
+                VALUES ('$firmaAd', '$seo','$kisaKod', '$firmaTurId','$vergiDairesi', '$vergiNumara',
                         '$yetkiliKisi', '$telefon','$mail', '$adres','$il', '$ilce', '$aciklama', '$naylon')";
 
         if (mysqli_query($db, $sql)) {
@@ -55,7 +55,7 @@ if (isset($_GET['firmasil'])) {
 if (isset($_POST['firmaguncelleme'])) {
     $id = $_POST['id'];
     $firmaAd = $_POST['firmaAd'];
-    $seoFirmaAd = seo($_POST['firmaAd']);
+    $seo = seo($firmaAd);
     $kisaKod = $_POST['kisaKod'];
     $firmaTurId = $_POST['firmaTurId'];
     $vergiDairesi = $_POST['vergiDairesi'];
@@ -70,7 +70,7 @@ if (isset($_POST['firmaguncelleme'])) {
     $naylon = $_POST['naylon'];
 
     $sql = "UPDATE tblfirma set 
-        firmaAd = '$firmaAd', seoFirmaAd = '$seoFirmaAd', kisaKod = '$kisaKod', firmaTurId = '$firmaTurId',
+        firmaAd = '$firmaAd', seo = '$seo', kisaKod = '$kisaKod', firmaTurId = '$firmaTurId',
         vergiDairesi = '$vergiDairesi', vergiNumara = '$vergiNumara', yetkiliKisi = '$yetkiliKisi', telefon = '$telefon',
         mail = '$mail', adres = '$adres', il = '$il', ilce = '$ilce',  aciklama = '$aciklama', naylon = '$naylon'
             WHERE id='$id'";

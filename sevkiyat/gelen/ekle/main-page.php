@@ -20,7 +20,7 @@ $alasimlar = $db->query($alasimsql);
             Sevkiyat Giriş Ekleme Alanı
         </div>
         <div class="card-body">
-            <form method="post" action="<?php echo base_url() . 'netting/tanimlar/personel.php' ?>">
+            <form method="post" action="<?php echo base_url() . 'netting/sevkiyat/gelen.php' ?>">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -69,6 +69,7 @@ $alasimlar = $db->query($alasimsql);
                                    disabled value="<?php echo tarih(date("Y-m-d")) ?>">
                         </div>
                     </div>
+
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label>Açıklama</label>
@@ -76,6 +77,7 @@ $alasimlar = $db->query($alasimsql);
                                    placeholder="Sevkiyat Açıklaması">
                         </div>
                     </div>
+
                 </div>
                 <br>
                 <hr style="color: #fff0f0">
@@ -85,144 +87,163 @@ $alasimlar = $db->query($alasimsql);
                 <div class="col-12">
                     <h4>Ürün Bilgileri <small>Giriş Stoğu</small></h4>
                 </div>
-        </div>
-        <!-- ./row -->
-        <div class="row" id="stok-giris">
-            <div class="col-sm-12">
-                <div class="card card-gray-dark card-tabs">
-                    <div class="card-header p-0 pt-1">
-                        <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="biyet" data-toggle="pill" href="#custom-tabs-one-home"
-                                   role="tab" aria-controls="custom-tabs-one-home" aria-selected="true">Biyetler</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" id="profil" data-toggle="pill" href="#custom-tabs-one-profile"
-                                   role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Profil</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="card-body">
-                        <div class="tab-content" id="custom-tabs-one-tabContent">
-                            <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
-                                 aria-labelledby="biyet">
-                                <div class="row">
 
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label>Parti Numarası</label>
-                                            <input v-model="biyet.partino" required type="text"
-                                                   @input="checkpartino($event)"
-                                                   class="form-control form-control-lg">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label>Firma Adı</label>
-                                            <select v-model="biyet.firmaId" required name="firmaId" class="form-control"
-                                                    style="width: 100%;">
-                                                <option value="">Firma Seçiniz</option>
-                                                <?php while ($firma = $firmalar->fetch_array()) { ?>
-                                                    <option value="<?php echo $firma['id']; ?>"><?php echo $firma['firmaAd']; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label>Alaşım Türü</label>
-                                            <select v-model="biyet.alasimId" required name="alasimId"
-                                                    class="form-control"
-                                                    style="width: 100%;">
-                                                <option value="">Alaşım Seçiniz</option>
-                                                <?php while ($alasim = $alasimlar->fetch_array()) { ?>
-                                                    <option value="<?php echo $alasim['id']; ?>"><?php echo $alasim['ad']; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label>Adet</label>
-                                            <input v-model="biyet.adetbiyet" required type="number"
-                                                   class="form-control form-control-lg"
-                                                   @input="checkadetbiyet($event)"
-                                                   name="adetbiyet" placeholder="0" step="1">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label>Çap (mm)</label>
-                                            <select v-model="biyet.cap" required class="form-control"
-                                                    style="width: 100%;">
-                                                <option selected value="">Çap Seçiniz</option>
-                                                <option value="127">127</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-4">
-                                        <div class="form-group">
-                                            <label>Boy(cm)</label>
-                                            <input v-model='biyet.boy' required type="number"
-                                                   class="form-control form-control-lg"
-                                                   name="boy" placeholder="0" step="1" @input="checkboy($event)">
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div style="text-align: right" v-if="isFullBiyetData">
-                                    <button v-on:click="biyetekle" class="btn btn-info float-right">Yeni
-                                        Biyet Ekle
-                                    </button>
-
-                                </div>
-
-                                <div class="card-body table-responsive p-0">
-                                    <table class="table table-hover text-nowrap">
-                                        <thead>
-                                        <tr>
-                                            <th>Parti No</th>
-                                            <th>Firma</th>
-                                            <th>Alaşım</th>
-                                            <th>Adet</th>
-                                            <th>Çap</th>
-                                            <th>Boy</th>
-                                            <th>İşlem</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-
-                                        <tr v-for="(biyet,index) in biyetler">
-                                            <td> {{biyet.partino}}</td>
-                                            <td> {{biyet.firmaAd}}</td>
-                                            <td> {{biyet.alasimAd}}</td>
-                                            <td> {{biyet.adetbiyet}}</td>
-                                            <td> {{biyet.cap}}</td>
-                                            <td> {{biyet.boy}}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
+                <div class="row" id="stok-giris">
+                    <div class="col-sm-12">
+                        <div class="card card-gray-dark card-tabs">
+                            <div class="card-header p-0 pt-1">
+                                <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" id="biyet" data-toggle="pill"
+                                           href="#custom-tabs-one-home"
+                                           role="tab" aria-controls="custom-tabs-one-home"
+                                           aria-selected="true">Biyetler</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profil" data-toggle="pill"
+                                           href="#custom-tabs-one-profile"
+                                           role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false">Profil</a>
+                                    </li>
+                                </ul>
                             </div>
-                            <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel"
-                                 aria-labelledby="profil">
-                                Profil
+                            <div class="card-body">
+                                <div class="tab-content" id="custom-tabs-one-tabContent">
+                                    <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
+                                         aria-labelledby="biyet">
+                                        <div class="row">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Parti Numarası</label>
+                                                    <input v-model="biyet.partino" type="text"
+                                                           @input="checkpartino($event)"
+                                                           placeholder="Parti Numarası Giriniz..."
+                                                           class="form-control form-control-lg">
+                                                    <input name="biyetpartino" :value="biyetpartino" type="hidden">
+                                                    <input name="biyetfirma" :value="biyetfirma" type="hidden">
+                                                    <input name="biyetalasim" :value="biyetalasim" type="hidden">
+                                                    <input name="biyetadetbiyet" :value="biyetadetbiyet" type="hidden">
+                                                    <input name="biyetcap" :value="biyetcap" type="hidden">
+                                                    <input name="biyetboy" :value="biyetboy" type="hidden">
+
+                                                </div>
+
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Firma Adı</label>
+                                                    <select v-model="biyet.firma" name="firmaId"
+                                                            class="form-control"
+                                                            style="width: 100%;">
+                                                        <option selected disabled value="">Firma Seçiniz</option>
+                                                        <?php while ($firma = $firmalar->fetch_array()) { ?>
+                                                            <option
+                                                                    value="<?php echo $firma['firmaAd']; ?>"><?php echo $firma['firmaAd']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Alaşım Türü</label>
+                                                    <select v-model="biyet.alasim" name="alasimId"
+                                                            class="form-control"
+                                                            style="width: 100%;">
+                                                        <option selected disabled value="">Alaşım Seçiniz</option>
+                                                        <?php while ($alasim = $alasimlar->fetch_array()) { ?>
+                                                            <option value="<?php echo $alasim['ad']; ?>"><?php echo $alasim['ad']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Adet</label>
+                                                    <input v-model="biyet.adetbiyet" type="number"
+                                                           class="form-control form-control-lg"
+                                                           @input="checkadetbiyet($event)"
+                                                           name="adetbiyet" placeholder="0" step="1">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Çap (mm)</label>
+                                                    <select v-model="biyet.cap" class="form-control"
+                                                            style="width: 100%;">
+                                                        <option selected disabled value="">Çap Seçiniz</option>
+                                                        <option value="127">127</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Boy(cm)</label>
+                                                    <input v-model="biyet.boy" type="number"
+                                                           class="form-control form-control-lg"
+                                                           name="boy" placeholder="0" step="1"
+                                                           @input="checkboy($event)">
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div style="text-align: right" v-if="isFullBiyetData">
+                                            <button v-on:click="biyetekle" class="btn btn-info float-right">Yeni
+                                                Biyet Ekle
+                                            </button>
+
+                                        </div>
+
+                                        <div v-if="biyetler.length > 0" class="card-body table-responsive p-0">
+                                            <table class="table table-hover text-nowrap">
+                                                <thead>
+                                                <tr>
+                                                    <th>Parti No</th>
+                                                    <th>Firma</th>
+                                                    <th>Alaşım</th>
+                                                    <th>Adet</th>
+                                                    <th>Çap</th>
+                                                    <th>Boy</th>
+                                                    <th>İşlem</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                <tr v-for="(biyet,index) in biyetler">
+                                                    <td> {{biyet.partino}}</td>
+                                                    <td> {{biyet.firma}}</td>
+                                                    <td> {{biyet.alasim}}</td>
+                                                    <td> {{biyet.adetbiyet}}</td>
+                                                    <td> {{biyet.cap}}</td>
+                                                    <td> {{biyet.boy}}</td>
+                                                    <td><a style="color: white" v-on:click="biyetSil(index)"
+                                                           class="btn btn-danger">Sil</a></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel"
+                                         aria-labelledby="profil">
+                                        Profil
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <!-- /.card -->
                 </div>
-            </div>
+                <div class="card-footer">
+                    <div>
+                        <button type="submit" name="sevkiyatekle" class="btn btn-info float-right">Ekle</button>
+                        <a href="../"
+                           class="btn btn-warning float-left">Vazgeç</a>
+                    </div>
+                </div>
+
+            </form>
         </div>
-        <div class="card-footer">
-            <div>
-                <button type="submit" name="personelekleme" class="btn btn-info float-right">Ekle</button>
-                <a href="../"
-                   class="btn btn-warning float-left">Vazgeç</a>
-            </div>
-        </div>
-        </form>
-    </div>
+
 </section>

@@ -10,8 +10,9 @@ if (isset($_POST['boyaekleme'])) {
     try {
         $ad = $_POST['ad'];
         $kod = $_POST['kod'];
+        $seo = seo($ad);
 
-        $sql = "INSERT INTO tblboya (ad, kod) VALUES ('$ad', '$kod')";
+        $sql = "INSERT INTO tblboya (ad, kod, seo) VALUES ('$ad', '$kod', '$seo')";
 
         if (mysqli_query($db, $sql)) {
             header("Location:../../tanimlar/boya/?durumekle=ok");
@@ -42,9 +43,10 @@ if (isset($_POST['boyaguncelleme'])) {
     $id = $_POST['id'];
     $ad = $_POST['ad'];
     $kod = $_POST['kod'];
+    $seo = seo($ad);
 
     $sql = "UPDATE tblboya set 
-        ad = '$ad', kod = '$kod' WHERE id='$id'";
+        ad = '$ad', kod = '$kod', seo = '$seo' WHERE id='$id'";
 
     if (mysqli_query($db, $sql)) {
         header("Location:../../tanimlar/boya/?durumguncelleme=ok");
