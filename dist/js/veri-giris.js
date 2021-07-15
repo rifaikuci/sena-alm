@@ -37,7 +37,21 @@ new Vue({
                 cap: '',
                 boy: ''
             },
-            isFullBiyetData: false
+            isFullBiyetData: false,
+
+
+            malzemepartino: [],
+            malzemefirma: [],
+            malzemeadet: [],
+            malzememalzeme: [],
+            malzemeler: [],
+            malzeme: {
+                partino: '',
+                firma: '',
+                malzemeadet: '',
+                malzeme:''
+            },
+            isFullMalzemeData: false,
         },
         methods: {
             biyetekle: function (event) {
@@ -200,6 +214,64 @@ new Vue({
             boyaSil: function (index) {
                 this.$delete(this.boyalar, index);
                 this.isFullBoyaData = false;
+            },
+
+
+
+            malzemeekle: function (event) {
+                event.preventDefault();
+
+                if (this.malzeme.partino &&
+                    this.malzeme.firma &&
+                    this.malzeme.malzeme &&
+                    this.malzeme.adet) {
+
+                    this.malzemeler.push(this.malzeme);
+
+                    this.malzemepartino.push(this.malzeme.partino);
+                    this.malzemefirma.push(this.malzeme.firma);
+                    this.malzememalzeme.push(this.malzeme.malzeme);
+                    this.malzemeadet.push(this.malzeme.adet);
+
+                    this.isFullMalzemeData = false
+                    this.malzeme = {
+                        partino: '',
+                        firma: '',
+                        malzeme: '',
+                        adet: ''
+                    }
+                }
+
+
+            },
+
+            checkmalzemepartino(event) {
+                if (event.target.value &&
+                    this.malzeme.partino &&
+                    this.malzeme.firma &&
+                    this.malzeme.malzeme &&
+                    this.malzeme.adet) {
+                    this.isFullMalzemeData = true;
+                } else {
+                    this.isFullMalzemeData = false;
+                }
+            },
+
+            checkmalzemeadet(event) {
+                if (event.target.value &&
+                    this.malzeme.partino &&
+                    this.malzeme.firma &&
+                    this.malzeme.malzeme &&
+                    this.malzeme.adet) {
+                    this.isFullMalzemeData = true;
+                } else {
+                    this.isFullMalzemeData = false;
+                }
+            },
+
+            malzemeSil: function (index) {
+                this.$delete(this.malzemeler, index);
+                this.isFullMalzemeData = false;
             }
 
         }

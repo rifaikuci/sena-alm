@@ -18,6 +18,12 @@ $alasimlar = $db->query($alasimsql);
 
 $boyasql = "SELECT * FROM tblboya";
 $boyalar = $db->query($boyasql);
+
+$malzemelersql = "SELECT * FROM tblmalzemeler";
+$malzemeler = $db->query($malzemelersql);
+
+$malzemelerfirmasql = "SELECT * FROM tblfirma";
+$malzemelerfirma = $db->query($malzemelerfirmasql);
 ?>
 
 <section class="content">
@@ -110,6 +116,12 @@ $boyalar = $db->query($boyasql);
                                            href="#custom-tabs-one-profile"
                                            role="tab" aria-controls="custom-tabs-one-profile"
                                            aria-selected="false">Boya</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="malzemeler" data-toggle="pill"
+                                           href="#custom-tabs-one-malzeme"
+                                           role="tab" aria-controls="custom-tabs-one-malzeme"
+                                           aria-selected="false">Malzemeler</a>
                                     </li>
                                 </ul>
                             </div>
@@ -365,6 +377,98 @@ $boyalar = $db->query($boyasql);
                                                     <td> {{boya.adet}}</td>
                                                     <td> {{boya.kilo}}</td>
                                                     <td><a style="color: white" v-on:click="boyaSil(index)"
+                                                           class="btn btn-danger">Sil</a></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="custom-tabs-one-malzeme" role="tabpanel"
+                                         aria-labelledby="malzemeler">
+                                        <div class="row">
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Parti Numarası</label>
+                                                    <input v-model="malzeme.partino" type="text"
+                                                           placeholder="Parti Numarası Giriniz..."
+                                                           @input="checkmalzemepartino($event)"
+                                                           class="form-control form-control-lg">
+                                                    <input name="malzemepartino" :value="malzemepartino" type="hidden">
+                                                    <input name="malzemefirma" :value="malzemefirma" type="hidden">
+                                                    <input name="malzememalzeme" :value="malzememalzeme" type="hidden">
+                                                    <input name="malzemeadet" :value="malzemeadet" type="hidden">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Firma Adı</label>
+                                                    <select v-model="malzeme.firma" class="form-control"
+                                                            style="width: 100%;">
+                                                        <option selected disabled value="">Firma Seçiniz</option>
+                                                        <?php while ($malzemefirma = $malzemelerfirma->fetch_array()) { ?>
+                                                            <option
+                                                                    value="<?php echo $malzemefirma['firmaAd']; ?>"><?php echo $malzemefirma['firmaAd']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Malzeme</label>
+                                                    <select v-model="malzeme.malzeme" class="form-control"
+                                                            style="width: 100%;">
+                                                        <option selected disabled value="">Malzeme Seçiniz</option>
+                                                        <?php while ($malzeme = $malzemeler->fetch_array()) { ?>
+                                                            <option
+                                                                    value="<?php echo $malzeme['ad']; ?>"><?php echo $malzeme['ad']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Adet</label>
+                                                    <input v-model="malzeme.adet" type="number"
+                                                           @input="checkmalzemeadet($event)"
+                                                           class="form-control form-control-lg" placeholder="0"
+                                                           step="1">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div style="text-align: right" v-if="isFullMalzemeData">
+                                            <button v-on:click="malzemeekle" class="btn btn-info float-right">Yeni
+                                                Malzeme Ekle
+                                            </button>
+
+                                        </div>
+
+                                        <div v-if="malzemeler.length > 0" class="card-body table-responsive p-0">
+                                            <table class="table table-hover text-nowrap">
+                                                <thead>
+                                                <tr>
+                                                    <th>Parti No</th>
+                                                    <th>Firma</th>
+                                                    <th>Malzeme</th>
+                                                    <th>Adet</th>
+                                                    <th>İşlem</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                <tr v-for="(malzeme,index) in malzemeler">
+                                                    <td> {{malzeme.partino}}</td>
+                                                    <td> {{malzeme.firma}}</td>
+                                                    <td> {{malzeme.malzeme}}</td>
+                                                    <td> {{malzeme.adet}}</td>
+                                                    <td><a style="color: white" v-on:click="malzemeSil(index)"
                                                            class="btn btn-danger">Sil</a></td>
                                                 </tr>
                                                 </tbody>
