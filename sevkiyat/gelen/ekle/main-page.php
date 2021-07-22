@@ -68,17 +68,16 @@ $malzemelerfirma = $db->query($malzemelerfirmasql);
 
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Konum</label>
-                            <input required type="text" class="form-control form-control-lg" name="konum"
-                                   placeholder="Geldiği Yer ">
+                            <label>Sevkiyat Tarihi</label>
+                            <input type="date" class="form-control form-control-lg" name="sevkiyatarih"
+                                    value="<?php echo date("Y-m-d") ?>">
                         </div>
                     </div>
 
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Sevkiyat Tarihi</label>
-                            <input required type="text" class="form-control form-control-lg" name="konum"
-                                   disabled value="<?php echo tarih(date("Y-m-d")) ?>">
+                            <label>Sevkiyat Zamanı</label>
+                            <input type="time" class="form-control form-control-lg" name="sevkiyasaat">
                         </div>
                     </div>
 

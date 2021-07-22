@@ -43,7 +43,8 @@ $result = $db->query($sql);
                                 <th>Ad Soyad</th>
                                 <th>Personel Türü</th>
                                 <th>Telefon</th>
-                                <th>mail</th>
+                                <th>Mail</th>
+                                <th>Durum</th>
                                 <th>İşlem</th>
                             </tr>
                             </thead>
@@ -56,6 +57,8 @@ $result = $db->query($sql);
                                     <td><?php echo personelTur($row['rolId'], $db); ?></td>
                                     <td><?php echo $row['telefon']; ?></td>
                                     <td><?php echo $row['mail']; ?></td>
+                                    <td><?php echo $row['isecikistarih'] != "0000-00-00 00:00:00" ?
+                                            "<b style='color: green'>Aktif</b>" : "<b style='color: red'>Pasif</b>"; ?></td>
                                     <td>
                                         <a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
                                            btn-warning">Düzenle</a>

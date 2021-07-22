@@ -60,8 +60,7 @@ $result = $db->query($sql);
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>İşe Çıkış Tar.</label>
-                            <input required type="date" class="form-control form-control-lg" name="isecikistarih"
-                                   value="<?php echo date("Y-m-d") ?>">
+                            <input type="date" class="form-control form-control-lg" name="isecikistarih" >
                         </div>
                     </div>
 

@@ -18,7 +18,6 @@ if (isset($_POST['personelekleme'])) {
         $bedenpantalon = $_POST['bedenpantalon'];
         $bedenayakkabi = $_POST['bedenayakkabi'];
         $rolId = $_POST['rolId'];
-
         $sql = "INSERT INTO tblpersonel (adsoyad, isegiristarih, isecikistarih, adres, tc, telefon,
                                       mail, bedentshirt, bedenpantalon, bedenayakkabi, rolId)
                 VALUES ('$adsoyad', '$isegiristarih','$isecikistarih', '$adres','$tc', '$telefon',
