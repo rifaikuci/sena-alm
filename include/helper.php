@@ -42,21 +42,87 @@ function durumDanger($content)
     </div>";
 }
 
-function kelimeAyirma($metin,$sayi){
+function kelimeAyirma($metin, $sayi)
+{
 
-    $uzunluk =    count(explode(' ', $metin));
-    if($uzunluk > $sayi){
-        return  implode(' ', array_slice(explode(' ', $metin), 0, $sayi))." ...";
-    }else{
+    $uzunluk = count(explode(' ', $metin));
+    if ($uzunluk > $sayi) {
+        return implode(' ', array_slice(explode(' ', $metin), 0, $sayi)) . " ...";
+    } else {
         return $metin;
     }
 
 }
 
-function tarih($tarih){
-    $tarih =  date("m.d.Y", strtotime(explode(" ", $tarih)[0]));
+function tarih($tarih)
+{
+    $tarih = date("m.d.Y", strtotime(explode(" ", $tarih)[0]));
 
-    return$tarih;
+    return $tarih;
+}
+
+function imageUpload($image, $path)
+{
+
+    $img_name = $_FILES[$image]['name'];
+    $img_size = $_FILES[$image]['size'];
+    $tmp_name = $_FILES[$image]['tmp_name'];
+    $error = $_FILES[$image]['error'];
+    if ($error == 0) {
+        if ($img_size > 300000) {
+            return "hataboyimage";
+
+        } else {
+            $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
+            $img_ex_lc = strtolower($img_ex);
+            $allowed_exs = array("jpg", "jpeg", "png");
+
+            if (in_array($img_ex_lc, $allowed_exs)) {
+                $new_img_name = uniqid() . '.' . $img_ex_lc;
+                $img_upload_path = "../../" . $path . "/" . $new_img_name;
+                move_uploaded_file($tmp_name, $img_upload_path);
+                return $path . "/" . $new_img_name;
+
+            } else {
+                return "gecersizturimage";
+            }
+        }
+
+    } else {
+        return "hataimage";
+    }
+}
+
+function pdfUpload($pdf, $path)
+{
+
+    $img_name = $_FILES[$pdf]['name'];
+    $img_size = $_FILES[$pdf]['size'];
+    $tmp_name = $_FILES[$pdf]['tmp_name'];
+    $error = $_FILES[$pdf]['error'];
+    if ($error == 0) {
+        if ($img_size > 200000) {
+            return "hataboypdf";
+
+        } else {
+            $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
+            $img_ex_lc = strtolower($img_ex);
+            $allowed_exs = array("pdf");
+
+            if (in_array($img_ex_lc, $allowed_exs)) {
+                $new_img_name = uniqid() . '.' . $img_ex_lc;
+                $img_upload_path = "../../" . $path . "/" . $new_img_name;
+                move_uploaded_file($tmp_name, $img_upload_path);
+                return $path . "/" . $new_img_name;
+
+            } else {
+                return "gecersizturpdf";
+            }
+        }
+
+    } else {
+        return "hatapdf";
+    }
 }
 
 ?>
