@@ -24,6 +24,12 @@ $malzemeler = $db->query($malzemelersql);
 
 $malzemelerfirmasql = "SELECT * FROM tblfirma";
 $malzemelerfirma = $db->query($malzemelerfirmasql);
+
+$profilfirmasql = "SELECT * FROM tblfirma";
+$profilfirmalar = $db->query($profilfirmasql);
+
+$profillerrsql = "SELECT * FROM tblprofil";
+$profiller = $db->query($profillerrsql);
 ?>
 
 <section class="content">
@@ -121,6 +127,13 @@ $malzemelerfirma = $db->query($malzemelerfirmasql);
                                            href="#custom-tabs-one-malzeme"
                                            role="tab" aria-controls="custom-tabs-one-malzeme"
                                            aria-selected="false">Malzemeler</a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a class="nav-link" id="profil" data-toggle="pill"
+                                           href="#custom-tabs-one-profil"
+                                           role="tab" aria-controls="custom-tabs-one-profil"
+                                           aria-selected="false">Profiller</a>
                                     </li>
                                 </ul>
                             </div>
@@ -474,6 +487,102 @@ $malzemelerfirma = $db->query($malzemelerfirmasql);
                                             </table>
                                         </div>
                                     </div>
+                                    <div class="tab-pane fade" id="custom-tabs-one-profil" role="tabpanel"
+                                         aria-labelledby="profil">
+                                        <div class="row">
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Parti Numarası</label>
+                                                    <input v-model="profil.partino" type="text"
+                                                           placeholder="Parti Numarası Giriniz..."
+                                                           @input="checkprofilpartino($event)"
+                                                           class="form-control form-control-lg">
+                                                    <input name="profilpartino" :value="profilpartino" type="hidden">
+                                                    <input name="profilfirma" :value="profilfirma" type="hidden">
+                                                    <input name="profiladet" :value="profiladet" type="hidden">
+                                                    <input name="profilprofil" :value="profilprofil" type="hidden">
+                                                </div>
+
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Firma Adı</label>
+                                                    <select v-model="profil.firma" class="form-control"
+                                                            style="width: 100%;">
+                                                        <option selected disabled value="">Firma Seçiniz</option>
+                                                        <?php while ($profilfirma = $profilfirmalar->fetch_array()) { ?>
+                                                            <option
+                                                                    value="<?php echo $profilfirma['firmaAd']; ?>"><?php echo $profilfirma['firmaAd']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Profiller</label>
+                                                    <select v-model="profil.profil" class="form-control"
+                                                            style="width: 100%;">
+                                                        <option selected disabled value="">Profil Seçiniz</option>
+                                                        <?php while ($profil = $profiller->fetch_array()) { ?>
+                                                            <option
+                                                                    value="<?php echo $profil['profilAdi']; ?>"><?php echo $profil['profilAdi']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-6">
+                                                <div class="form-group">
+                                                    <label>Adet</label>
+                                                    <input v-model="profil.adet" type="number"
+                                                           @input="checkprofiladet($event)"
+                                                           class="form-control form-control-lg" placeholder="0"
+                                                           step="1">
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+
+                                        <div style="text-align: right" v-if="isFullProfilData">
+                                            <button v-on:click="profilekle" class="btn btn-info float-right">Yeni
+                                                Profil Ekle
+                                            </button>
+
+                                        </div>
+
+                                        <div v-if="profiller.length > 0" class="card-body table-responsive p-0">
+                                            <table class="table table-hover text-nowrap">
+                                                <thead>
+                                                <tr>
+                                                    <th>Parti No</th>
+                                                    <th>Firma</th>
+                                                    <th>Profil</th>
+                                                    <th>Adet</th>
+                                                    <th>Resim</th>
+                                                    <th>İşlem</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                <tr v-for="(profil,index) in profiller">
+                                                    <td> {{profil.partino}}</td>
+                                                    <td> {{profil.firma}}</td>
+                                                    <td> {{profil.profil}}</td>
+                                                    <td> {{profil.adet}}</td>
+                                                    <td> <a target="_blank" :href="profil.resim">Resim için tıklayınız</a>
+                                                    </td>
+                                                    <td><a style="color: white" v-on:click="profilSil(index)"
+                                                           class="btn btn-danger">Sil</a></td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>

@@ -46,6 +46,7 @@ $sektorler = $db->query($sqlsektor);
                             </select>
                         </div>
                     </div>
+
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Profil Gramaj</label>

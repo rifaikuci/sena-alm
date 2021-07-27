@@ -59,6 +59,13 @@
                         </a>
                     </li>
 
+                    <li class="nav-item">
+                        <a href=<?php echo base_url() . "tanimlar/profil" ?> class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Profiller</p>
+                        </a>
+                    </li>
+
                 </ul>
             </li>
 

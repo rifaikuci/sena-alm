@@ -1,7 +1,7 @@
 new Vue({
         el: "#stok-giris",
         data: {
-
+            responseprofil :[],
             boyapartino: [],
             boyafirma: [],
             boyaboya: [],
@@ -52,6 +52,20 @@ new Vue({
                 malzeme:''
             },
             isFullMalzemeData: false,
+
+            profilpartino: [],
+            profilfirma: [],
+            profiladet: [],
+            profilprofil: [],
+            profiller: [],
+            profil: {
+                partino: '',
+                firma: '',
+                adet: '',
+                profil:'',
+                resim: '',
+            },
+            isFullProfilData: false,
         },
         methods: {
             biyetekle: function (event) {
@@ -272,6 +286,72 @@ new Vue({
             malzemeSil: function (index) {
                 this.$delete(this.malzemeler, index);
                 this.isFullMalzemeData = false;
+            },
+
+            profilekle:  async  function (event) {
+                event.preventDefault();
+
+             const data = await   axios.post('/sena/dist/js/action.php', {
+                    action:'profilId',
+                    id:this.profil.profil
+                }).then((response) =>  {return response.data });
+             this.profil.resim = data.resim;
+             console.log(this.profil)
+                    if (this.profil.partino &&
+                        this.profil.firma &&
+                    this.profil.profil &&
+                    this.profil.adet) {
+
+                    this.profiller.push(this.profil);
+
+                    this.profilpartino.push(this.profil.partino);
+                    this.profilfirma.push(this.profil.firma);
+                    this.profilprofil.push(this.profil.profil);
+                    this.profiladet.push(this.profil.adet);
+                    this.isFullProfilData = false
+                    this.profil = {
+                        partino: '',
+                        firma: '',
+                        profil: '',
+                        adet: '',
+                        resim: ''
+                    }
+                }
+
+
+            },
+
+            checkprofilpartino(event) {
+                if (event.target.value &&
+                    this.profil.partino &&
+                    this.profil.firma &&
+                    this.profil.profil &&
+                    this.profil.adet) {
+                    this.isFullProfilData = true;
+                } else {
+                    this.isFullProfilData = false;
+                }
+            },
+
+            checkprofiladet(event) {
+                if (event.target.value &&
+                    this.profil.partino &&
+                    this.profil.firma &&
+                    this.profil.profil &&
+                    this.profil.adet) {
+                    this.isFullProfilData = true;
+                } else {
+                    this.isFullProfilData = false;
+                }
+            },
+
+            profilSil: function (index) {
+                this.$delete(this.profiller, index);
+                this.isFullProfilData = false;
+            },
+
+            fetchData:function(id){
+
             }
 
         }

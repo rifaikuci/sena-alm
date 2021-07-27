@@ -49,4 +49,12 @@ function personelBul($id, $db)
     return $row['adsoyad'];
 }
 
+function profilbul($id, $db ,  $sutun)
+{
+    $sql = "SELECT * FROM tblprofil WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row[$sutun];
+}
+
 ?>
