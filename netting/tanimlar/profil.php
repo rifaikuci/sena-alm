@@ -14,7 +14,8 @@ if (isset($_POST['profilekleme'])) {
         $alan = $_POST['alan'];
         $cevre = $_POST['cevre'];
         $paketAdet = $_POST['paketAdet'];
-        $paketEbat = $_POST['paketEbat'];
+        $paketEn = $_POST['paketEn'];
+        $paketBoy = $_POST['paketBoy'];
         $balyaAdet = $_POST['balyaAdet'];
         $maxGramaj = $_POST['maxGramaj'];
         $ezilmeKatsayisi = $_POST['ezilmeKatsayisi'];
@@ -70,10 +71,10 @@ if (isset($_POST['profilekleme'])) {
         }
 
         $sql = "INSERT INTO tblprofil (profilAdi, sektorId, gramaj, alan, cevre, paketAdet,
-                                      paketEbat, balyaAdet, maxGramaj, ezilmeKatsayisi, aciklama,
+                                      paketEn, paketBoy, balyaAdet, maxGramaj, ezilmeKatsayisi, aciklama,
                                       seo, resim, paketlemeSekli, sepetDizilmeSekli )
                 VALUES ('$profilAdi', '$sektorId','$gramaj', '$alan','$cevre', '$paketAdet',
-                        '$paketEbat', '$balyaAdet','$maxGramaj', '$ezilmeKatsayisi','$aciklama',
+                        '$paketEn', '$paketBoy', '$balyaAdet','$maxGramaj', '$ezilmeKatsayisi','$aciklama',
                         '$seo', '$resim', '$paketlemeSekli', '$sepetDizilmeSekli')";
 
         if (mysqli_query($db, $sql)) {
@@ -125,7 +126,8 @@ if (isset($_POST['profilguncelleme'])) {
     $alan = $_POST['alan'];
     $cevre = $_POST['cevre'];
     $paketAdet = $_POST['paketAdet'];
-    $paketEbat = $_POST['paketEbat'];
+    $paketEn = $_POST['paketEn'];
+    $paketBoy = $_POST['paketBoy'];
     $balyaAdet = $_POST['balyaAdet'];
     $maxGramaj = $_POST['maxGramaj'];
     $ezilmeKatsayisi = $_POST['ezilmeKatsayisi'];
@@ -135,7 +137,7 @@ if (isset($_POST['profilguncelleme'])) {
     $sepetyol = $_POST['sepetyol'];
     $paketyol = $_POST['paketyol'];
 
-    if ($_FILES['paketlemeSekli']['resim'] != "") {
+    if ($_FILES['resim']['name'] != "") {
         $resim = pdfUpload('resim', "asset/img/profilresim/");
 
 
@@ -202,7 +204,7 @@ if (isset($_POST['profilguncelleme'])) {
 
     $sql = "UPDATE tblprofil set 
         profilAdi = '$profilAdi', sektorId = '$sektorId', gramaj = '$gramaj', alan = '$alan',
-        cevre = '$cevre', paketAdet = '$paketAdet', paketEbat = '$paketEbat', balyaAdet = '$balyaAdet', 
+        cevre = '$cevre', paketAdet = '$paketAdet', paketEn = '$paketEn', paketBoy = '$paketBoy', balyaAdet = '$balyaAdet', 
                        maxGramaj = '$maxGramaj', ezilmeKatsayisi ='$ezilmeKatsayisi', aciklama = '$aciklama',
                     seo = '$seo', resim = '$resimyol', paketlemeSekli = '$paketyol' , sepetDizilmeSekli  = '$sepetyol'  
             WHERE id='$id'";

@@ -1,7 +1,7 @@
 <?php
 
-include '../../netting/baglan.php';
-include '../../include/helper.php';
+include 'baglan.php';
+include '../include/helper.php';
 
 $received_data = json_decode(file_get_contents("php://input"));
 $data = array();

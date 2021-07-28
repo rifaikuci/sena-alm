@@ -61,7 +61,7 @@ if ($_GET['id']) {
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Profil Gramaj</label>
-                            <input required type="number" class="form-control form-control-lg"
+                            <input required type="number" class="form-control form-control-lg"  step="0.1"
                                    name="gramaj" value="<?php echo $row['gramaj'] ?>">
 
                         </div>
@@ -70,7 +70,7 @@ if ($_GET['id']) {
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Profil Alanı</label>
-                            <input required type="number" class="form-control form-control-lg"
+                            <input required type="number" class="form-control form-control-lg"  step="0.1"
                                    name="alan" value="<?php echo $row['alan'] ?>">
                         </div>
                     </div>
@@ -78,7 +78,7 @@ if ($_GET['id']) {
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Profil Çevresi</label>
-                            <input required type="number" class="form-control form-control-lg"
+                            <input required type="number" class="form-control form-control-lg"  step="0.1"
                                    name="cevre" value="<?php echo $row['cevre'] ?>">
                         </div>
                     </div>
@@ -91,11 +91,19 @@ if ($_GET['id']) {
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Paket Ebadı</label>
-                            <input required type="number" class="form-control form-control-lg"
-                                   name="paketEbat" value="<?php echo $row['paketEbat'] ?>">
+                            <label>Paket En</label>
+                            <input required type="number" class="form-control form-control-lg" step="0.1"
+                                   name="paketEn" value="<?php echo $row['paketEn'] ?>">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Paket Boy</label>
+                            <input required type="number" class="form-control form-control-lg" step="0.1"
+                                   name="paketBoy"value="<?php echo $row['paketBoy'] ?>">
                         </div>
                     </div>
 
@@ -110,7 +118,7 @@ if ($_GET['id']) {
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Max Gramaj</label>
-                            <input required type="number" class="form-control form-control-lg"
+                            <input required type="number" class="form-control form-control-lg"  step="0.1"
                                    name="maxGramaj" value="<?php echo $row['maxGramaj'] ?>">
                         </div>
                     </div>

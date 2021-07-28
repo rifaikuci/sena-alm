@@ -40,7 +40,7 @@ $result = $db->query($sql);
                             <tr>
                                 <th>#</th>
                                 <th>Ad</th>
-                                <th>Özkütle</th>
+                                <th>Kısa Kod</th>
                                 <th>İşlem</th>
                             </tr>
                             </thead>

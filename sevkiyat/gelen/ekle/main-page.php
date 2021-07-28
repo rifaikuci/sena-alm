@@ -28,6 +28,9 @@ $malzemelerfirma = $db->query($malzemelerfirmasql);
 $profilfirmasql = "SELECT * FROM tblfirma";
 $profilfirmalar = $db->query($profilfirmasql);
 
+$profilmusterisql = "SELECT * FROM tblfirma";
+$profilfirmamusteri = $db->query($profilmusterisql);
+
 $profillerrsql = "SELECT * FROM tblprofil";
 $profiller = $db->query($profillerrsql);
 ?>
@@ -76,7 +79,7 @@ $profiller = $db->query($profillerrsql);
                         <div class="form-group">
                             <label>Sevkiyat Tarihi</label>
                             <input type="date" class="form-control form-control-lg" name="sevkiyatarih"
-                                    value="<?php echo date("Y-m-d") ?>">
+                                   value="<?php echo date("Y-m-d") ?>">
                         </div>
                     </div>
 
@@ -490,37 +493,7 @@ $profiller = $db->query($profillerrsql);
                                     <div class="tab-pane fade" id="custom-tabs-one-profil" role="tabpanel"
                                          aria-labelledby="profil">
                                         <div class="row">
-
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label>Parti Numarası</label>
-                                                    <input v-model="profil.partino" type="text"
-                                                           placeholder="Parti Numarası Giriniz..."
-                                                           @input="checkprofilpartino($event)"
-                                                           class="form-control form-control-lg">
-                                                    <input name="profilpartino" :value="profilpartino" type="hidden">
-                                                    <input name="profilfirma" :value="profilfirma" type="hidden">
-                                                    <input name="profiladet" :value="profiladet" type="hidden">
-                                                    <input name="profilprofil" :value="profilprofil" type="hidden">
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-sm-6">
-                                                <div class="form-group">
-                                                    <label>Firma Adı</label>
-                                                    <select v-model="profil.firma" class="form-control"
-                                                            style="width: 100%;">
-                                                        <option selected disabled value="">Firma Seçiniz</option>
-                                                        <?php while ($profilfirma = $profilfirmalar->fetch_array()) { ?>
-                                                            <option
-                                                                    value="<?php echo $profilfirma['firmaAd']; ?>"><?php echo $profilfirma['firmaAd']; ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Profiller</label>
                                                     <select v-model="profil.profil" class="form-control"
@@ -534,11 +507,98 @@ $profiller = $db->query($profillerrsql);
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-6">
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Geldiği Firma</label>
+                                                    <input name="profilfirma" :value="profilfirma" type="hidden">
+                                                    <input name="profilmusteri" :value="profilmusteri" type="hidden">
+                                                    <input name="profilprofil" :value="profilprofil" type="hidden">
+                                                    <input name="profiladet" :value="profiladet" type="hidden">
+                                                    <input name="profilpaketAdet" :value="profilpaketAdet"
+                                                           type="hidden">
+                                                    <input name="profiltur" :value="profiltur" type="hidden">
+                                                    <input name="profilgelis" :value="profilgelis" type="hidden">
+                                                    <select v-model="profil.firma" class="form-control"
+                                                            style="width: 100%;">
+                                                        <option selected disabled value="">Geldiği Firma Seçiniz
+                                                        </option>
+                                                        <?php while ($profilfirma = $profilfirmalar->fetch_array()) { ?>
+                                                            <option
+                                                                    value="<?php echo $profilfirma['firmaAd']; ?>"><?php echo $profilfirma['firmaAd']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Müşteri</label>
+                                                    <select v-model="profil.musteri" class="form-control"
+                                                            style="width: 100%;">
+                                                        <option selected disabled value="">Müşteri Seçiniz</option>
+                                                        <?php while ($musteri = $profilfirmamusteri->fetch_array()) { ?>
+                                                            <option
+                                                                    value="<?php echo $musteri['firmaAd']; ?>"><?php echo $musteri['firmaAd']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Profil Tür</label>
+                                                    <select v-model="profil.tur" class="form-control"
+                                                            style="width: 100%;">
+                                                        <option selected value="">Profil Tür Seçiniz</option>
+                                                        <option value="Pres">Pres</option>
+                                                        <option value="Boyalı">Boyalı</option>
+                                                        <option value="Eloksallı">Eloksallı</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Geliş Amacı</label>
+                                                    <select v-model="profil.gelis" class="form-control"
+                                                            style="width: 100%;">
+                                                        <option selected value="">Geliş Amacı Seçiniz</option>
+                                                        <option value="Boya">Boya</option>
+                                                        <option value="Kesim">Kesim</option>
+                                                        <option value="Delim">Delim</option>
+                                                        <option value="Sertleştirm">Sertleştirm</option>
+                                                        <option value="Paketleme">Paketleme</option>
+
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Adet</label>
                                                     <input v-model="profil.adet" type="number"
                                                            @input="checkprofiladet($event)"
+                                                           class="form-control form-control-lg" placeholder="0"
+                                                           step="1">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Boy</label>
+                                                    <input v-model="profil.boy" type="number"
+                                                           @input="checkprofilboy($event)"
+                                                           class="form-control form-control-lg" placeholder="0.1"
+                                                           step="0.1">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Paket Adet</label>
+                                                    <input v-model="profil.paketAdet" type="number"
+                                                           @input="checkprofilpaketAdet($event)"
                                                            class="form-control form-control-lg" placeholder="0"
                                                            step="1">
                                                 </div>
@@ -558,9 +618,9 @@ $profiller = $db->query($profillerrsql);
                                             <table class="table table-hover text-nowrap">
                                                 <thead>
                                                 <tr>
-                                                    <th>Parti No</th>
-                                                    <th>Firma</th>
                                                     <th>Profil</th>
+                                                    <th>Firma</th>
+                                                    <th>Müşteri</th>
                                                     <th>Adet</th>
                                                     <th>Resim</th>
                                                     <th>İşlem</th>
@@ -569,11 +629,12 @@ $profiller = $db->query($profillerrsql);
                                                 <tbody>
 
                                                 <tr v-for="(profil,index) in profiller">
-                                                    <td> {{profil.partino}}</td>
-                                                    <td> {{profil.firma}}</td>
                                                     <td> {{profil.profil}}</td>
+                                                    <td> {{profil.firma}}</td>
+                                                    <td> {{profil.musteri}}</td>
                                                     <td> {{profil.adet}}</td>
-                                                    <td> <a target="_blank" :href="profil.resim">Resim için tıklayınız</a>
+                                                    <td><a target="_blank" :href="profil.resim">Resim için
+                                                            tıklayınız</a>
                                                     </td>
                                                     <td><a style="color: white" v-on:click="profilSil(index)"
                                                            class="btn btn-danger">Sil</a></td>

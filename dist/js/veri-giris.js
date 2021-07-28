@@ -1,7 +1,7 @@
 new Vue({
         el: "#stok-giris",
         data: {
-            responseprofil :[],
+            responseprofil: [],
             boyapartino: [],
             boyafirma: [],
             boyaboya: [],
@@ -49,20 +49,28 @@ new Vue({
                 partino: '',
                 firma: '',
                 malzemeadet: '',
-                malzeme:''
+                malzeme: ''
             },
             isFullMalzemeData: false,
 
-            profilpartino: [],
             profilfirma: [],
-            profiladet: [],
+            profilmusteri: [],
             profilprofil: [],
+            profiladet: [],
+            profilboy: [],
+            profilpaketAdet: [],
+            profiltur: [],
+            profilgelis: [],
             profiller: [],
             profil: {
-                partino: '',
                 firma: '',
+                musteri: '',
+                profil: '',
                 adet: '',
-                profil:'',
+                boy: '',
+                paketAdet: '',
+                tur: '',
+                gelis: '',
                 resim: '',
             },
             isFullProfilData: false,
@@ -231,7 +239,6 @@ new Vue({
             },
 
 
-
             malzemeekle: function (event) {
                 event.preventDefault();
 
@@ -288,32 +295,47 @@ new Vue({
                 this.isFullMalzemeData = false;
             },
 
-            profilekle:  async  function (event) {
+            profilekle: async function (event) {
                 event.preventDefault();
 
-             const data = await   axios.post('/sena/dist/js/action.php', {
-                    action:'profilId',
-                    id:this.profil.profil
-                }).then((response) =>  {return response.data });
-             this.profil.resim = data.resim;
-             console.log(this.profil)
-                    if (this.profil.partino &&
-                        this.profil.firma &&
+                const data = await axios.post('/sena/netting/action.php', {
+                    action: 'profilId',
+                    id: this.profil.profil
+                }).then((response) => {
+                    return response.data
+                });
+                this.profil.resim = data.resim;
+
+                if (this.profil.firma &&
+                    this.profil.musteri &&
                     this.profil.profil &&
+                    this.profil.adet &&
+                    this.profil.boy &&
+                    this.profil.paketAdet &&
+                    this.profil.tur &&
+                    this.profil.gelis &&
                     this.profil.adet) {
 
                     this.profiller.push(this.profil);
 
-                    this.profilpartino.push(this.profil.partino);
-                    this.profilfirma.push(this.profil.firma);
+                    this.profilfirma.push(this.profil.firmafirma);
+                    this.profilmusteri.push(this.profil.musteri);
                     this.profilprofil.push(this.profil.profil);
                     this.profiladet.push(this.profil.adet);
+                    this.profilboy.push(this.profil.boy);
+                    this.profilpaketAdet.push(this.profil.paketAdet);
+                    this.profiltur.push(this.profil.tur);
+                    this.profilgelis.push(this.profil.gelis);
                     this.isFullProfilData = false
                     this.profil = {
-                        partino: '',
                         firma: '',
+                        musteri: '',
                         profil: '',
                         adet: '',
+                        boy: '',
+                        paketAdet: '',
+                        tur: '',
+                        gelis: '',
                         resim: ''
                     }
                 }
@@ -321,12 +343,16 @@ new Vue({
 
             },
 
-            checkprofilpartino(event) {
+            checkprofilboy(event) {
                 if (event.target.value &&
-                    this.profil.partino &&
                     this.profil.firma &&
+                    this.profil.musteri &&
                     this.profil.profil &&
-                    this.profil.adet) {
+                    this.profil.adet &&
+                    this.profil.boy &&
+                    this.profil.paketAdet &&
+                    this.profil.tur &&
+                    this.profil.gelis) {
                     this.isFullProfilData = true;
                 } else {
                     this.isFullProfilData = false;
@@ -335,10 +361,30 @@ new Vue({
 
             checkprofiladet(event) {
                 if (event.target.value &&
-                    this.profil.partino &&
                     this.profil.firma &&
+                    this.profil.musteri &&
                     this.profil.profil &&
-                    this.profil.adet) {
+                    this.profil.adet &&
+                    this.profil.boy &&
+                    this.profil.paketAdet &&
+                    this.profil.tur &&
+                    this.profil.gelis) {
+                    this.isFullProfilData = true;
+                } else {
+                    this.isFullProfilData = false;
+                }
+            },
+
+            checkprofilpaketAdet(event) {
+                if (event.target.value &&
+                    this.profil.firma &&
+                    this.profil.musteri &&
+                    this.profil.profil &&
+                    this.profil.adet &&
+                    this.profil.boy &&
+                    this.profil.paketAdet &&
+                    this.profil.tur &&
+                    this.profil.gelis) {
                     this.isFullProfilData = true;
                 } else {
                     this.isFullProfilData = false;
@@ -350,7 +396,7 @@ new Vue({
                 this.isFullProfilData = false;
             },
 
-            fetchData:function(id){
+            fetchData: function (id) {
 
             }
 
