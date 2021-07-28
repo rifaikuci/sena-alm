@@ -1,7 +1,7 @@
 <?php
 include "../../netting/baglan.php";
 
-$sql = "SELECT * FROM tblprofil";
+$sql = "SELECT * FROM tblprofil order by id desc";
 $result = $db->query($sql);
 
 ?>
@@ -46,8 +46,8 @@ $result = $db->query($sql);
                 </div>
                 <br>
                 <div class="card">
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -75,9 +75,6 @@ $result = $db->query($sql);
                                            btn-warning">Düzenle</a>
                                         <a href=<?php echo base_url() . "netting/tanimlar/profil.php?profilsil=" . $row['id']; ?> class="btn
                                            btn-danger">Sil</a>
-                                    </td>
-
-                                    <td style="text-align: center">
                                     </td>
                                 </tr>
                                 <?php $sira++;

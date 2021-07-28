@@ -40,7 +40,7 @@ $profiller = $db->query($profillerrsql);
         <div class="card-header">
             Sevkiyat Giriş Ekleme Alanı
         </div>
-        <div class="card-body">
+        <div class="card-body" id="stok-giris">
             <form method="post" action="<?php echo base_url() . 'netting/sevkiyat/gelen.php' ?>">
                 <div class="row">
                     <div class="col-sm-6">
@@ -108,7 +108,7 @@ $profiller = $db->query($profillerrsql);
                     <h4>Ürün Bilgileri <small>Giriş Stoğu</small></h4>
                 </div>
 
-                <div class="row" id="stok-giris">
+                <div class="row">
                     <div class="col-sm-12">
                         <div class="card card-gray-dark card-tabs">
                             <div class="card-header p-0 pt-1">
@@ -153,8 +153,10 @@ $profiller = $db->query($profillerrsql);
                                                            placeholder="Parti Numarası Giriniz..."
                                                            class="form-control form-control-lg">
                                                     <input name="biyetpartino" :value="biyetpartino" type="hidden">
-                                                    <input name="biyetfirma" :value="biyetfirma" type="hidden">
-                                                    <input name="biyetalasim" :value="biyetalasim" type="hidden">
+                                                    <input name="biyetfirmaId" :value="biyetfirmaId" type="hidden">
+                                                    <input name="biyetfirmaAd" :value="biyetfirmaAd" type="hidden">
+                                                    <input name="biyetalasimId" :value="biyetalasimId" type="hidden">
+                                                    <input name="biyetalasimAd" :value="biyetalasimAd" type="hidden">
                                                     <input name="biyetadetbiyet" :value="biyetadetbiyet" type="hidden">
                                                     <input name="biyetcap" :value="biyetcap" type="hidden">
                                                     <input name="biyetboy" :value="biyetboy" type="hidden">
@@ -165,13 +167,13 @@ $profiller = $db->query($profillerrsql);
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Firma Adı</label>
-                                                    <select v-model="biyet.firma" name="firmaId"
+                                                    <select v-model="biyet.firmaId" name="firmaId"
                                                             class="form-control"
                                                             style="width: 100%;">
                                                         <option selected disabled value="">Firma Seçiniz</option>
                                                         <?php while ($firma = $firmalar->fetch_array()) { ?>
                                                             <option
-                                                                    value="<?php echo $firma['firmaAd']; ?>"><?php echo $firma['firmaAd']; ?></option>
+                                                                    value="<?php echo $firma['id']; ?>"><?php echo $firma['firmaAd']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -180,12 +182,12 @@ $profiller = $db->query($profillerrsql);
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Alaşım Türü</label>
-                                                    <select v-model="biyet.alasim" name="alasimId"
+                                                    <select v-model="biyet.alasimId" name="alasimId"
                                                             class="form-control"
                                                             style="width: 100%;">
                                                         <option selected disabled value="">Alaşım Seçiniz</option>
                                                         <?php while ($alasim = $alasimlar->fetch_array()) { ?>
-                                                            <option value="<?php echo $alasim['ad']; ?>"><?php echo $alasim['ad']; ?></option>
+                                                            <option value="<?php echo $alasim['id']; ?>"><?php echo $alasim['ad']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -248,8 +250,8 @@ $profiller = $db->query($profillerrsql);
 
                                                 <tr v-for="(biyet,index) in biyetler">
                                                     <td> {{biyet.partino}}</td>
-                                                    <td> {{biyet.firma}}</td>
-                                                    <td> {{biyet.alasim}}</td>
+                                                    <td> {{biyet.firmaAd}}</td>
+                                                    <td> {{biyet.alasimAd}}</td>
                                                     <td> {{biyet.adetbiyet}}</td>
                                                     <td> {{biyet.cap}}</td>
                                                     <td> {{biyet.boy}}</td>
@@ -271,8 +273,10 @@ $profiller = $db->query($profillerrsql);
                                                            @input="checkboyapartino($event)"
                                                            class="form-control form-control-lg">
                                                     <input name="boyapartino" :value="boyapartino" type="hidden">
-                                                    <input name="boyafirma" :value="boyafirma" type="hidden">
-                                                    <input name="boyaboya" :value="boyaboya" type="hidden">
+                                                    <input name="boyafirmaId" :value="boyafirmaId" type="hidden">
+                                                    <input name="boyafirmaAd" :value="boyafirmaAd" type="hidden">
+                                                    <input name="boyaboyaId" :value="boyaboyaId" type="hidden">
+                                                    <input name="boyaboyaAd" :value="boyaboyaAd" type="hidden">
                                                     <input name="boyaadet" :value="boyaadet" type="hidden">
                                                     <input name="boyakilo" :value="boyakilo" type="hidden">
                                                     <input name="boyasicaklik" :value="boyasicaklik" type="hidden">
@@ -284,12 +288,12 @@ $profiller = $db->query($profillerrsql);
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Firma Adı</label>
-                                                    <select v-model="boya.firma" class="form-control"
+                                                    <select v-model="boya.firmaId" class="form-control"
                                                             style="width: 100%;">
                                                         <option selected disabled value="">Firma Seçiniz</option>
                                                         <?php while ($firmaboya = $firmalarboya->fetch_array()) { ?>
                                                             <option
-                                                                    value="<?php echo $firmaboya['firmaAd']; ?>"><?php echo $firmaboya['firmaAd']; ?></option>
+                                                                    value="<?php echo $firmaboya['id']; ?>"><?php echo $firmaboya['firmaAd']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -298,11 +302,11 @@ $profiller = $db->query($profillerrsql);
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Boya Türü</label>
-                                                    <select v-model="boya.boya" class="form-control"
+                                                    <select v-model="boya.boyaId" class="form-control"
                                                             style="width: 100%;">
                                                         <option selected disabled value="">Boya Seçiniz</option>
                                                         <?php while ($boya = $boyalar->fetch_array()) { ?>
-                                                            <option value="<?php echo $boya['ad']; ?>"><?php echo $boya['ad']; ?></option>
+                                                            <option value="<?php echo $boya['id']; ?>"><?php echo $boya['ad']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -385,8 +389,8 @@ $profiller = $db->query($profillerrsql);
 
                                                 <tr v-for="(boya,index) in boyalar">
                                                     <td> {{boya.partino}}</td>
-                                                    <td> {{boya.firma}}</td>
-                                                    <td> {{boya.boya}}</td>
+                                                    <td> {{boya.firmaAd}}</td>
+                                                    <td> {{boya.boyaAd}}</td>
                                                     <td> {{boya.sicaklik}}</td>
                                                     <td> {{boya.cins}}</td>
                                                     <td> {{boya.adet}}</td>
@@ -410,8 +414,12 @@ $profiller = $db->query($profillerrsql);
                                                            @input="checkmalzemepartino($event)"
                                                            class="form-control form-control-lg">
                                                     <input name="malzemepartino" :value="malzemepartino" type="hidden">
-                                                    <input name="malzemefirma" :value="malzemefirma" type="hidden">
-                                                    <input name="malzememalzeme" :value="malzememalzeme" type="hidden">
+                                                    <input name="malzemefirmaId" :value="malzemefirmaId" type="hidden">
+                                                    <input name="malzemefirmaAd" :value="malzemefirmaAd" type="hidden">
+                                                    <input name="malzememalzemeId" :value="malzememalzemeId"
+                                                           type="hidden">
+                                                    <input name="malzememalzemeAd" :value="malzememalzemeAd"
+                                                           type="hidden">
                                                     <input name="malzemeadet" :value="malzemeadet" type="hidden">
                                                 </div>
 
@@ -420,12 +428,12 @@ $profiller = $db->query($profillerrsql);
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>Firma Adı</label>
-                                                    <select v-model="malzeme.firma" class="form-control"
+                                                    <select v-model="malzeme.firmaId" class="form-control"
                                                             style="width: 100%;">
                                                         <option selected disabled value="">Firma Seçiniz</option>
                                                         <?php while ($malzemefirma = $malzemelerfirma->fetch_array()) { ?>
                                                             <option
-                                                                    value="<?php echo $malzemefirma['firmaAd']; ?>"><?php echo $malzemefirma['firmaAd']; ?></option>
+                                                                    value="<?php echo $malzemefirma['id']; ?>"><?php echo $malzemefirma['firmaAd']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -434,12 +442,12 @@ $profiller = $db->query($profillerrsql);
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>Malzeme</label>
-                                                    <select v-model="malzeme.malzeme" class="form-control"
+                                                    <select v-model="malzeme.malzemeId" class="form-control"
                                                             style="width: 100%;">
                                                         <option selected disabled value="">Malzeme Seçiniz</option>
                                                         <?php while ($malzeme = $malzemeler->fetch_array()) { ?>
                                                             <option
-                                                                    value="<?php echo $malzeme['ad']; ?>"><?php echo $malzeme['ad']; ?></option>
+                                                                    value="<?php echo $malzeme['id']; ?>"><?php echo $malzeme['ad']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -480,8 +488,8 @@ $profiller = $db->query($profillerrsql);
 
                                                 <tr v-for="(malzeme,index) in malzemeler">
                                                     <td> {{malzeme.partino}}</td>
-                                                    <td> {{malzeme.firma}}</td>
-                                                    <td> {{malzeme.malzeme}}</td>
+                                                    <td> {{malzeme.firmaAd}}</td>
+                                                    <td> {{malzeme.malzemeAd}}</td>
                                                     <td> {{malzeme.adet}}</td>
                                                     <td><a style="color: white" v-on:click="malzemeSil(index)"
                                                            class="btn btn-danger">Sil</a></td>
@@ -496,12 +504,12 @@ $profiller = $db->query($profillerrsql);
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Profiller</label>
-                                                    <select v-model="profil.profil" class="form-control"
+                                                    <select v-model="profil.profilId" class="form-control"
                                                             style="width: 100%;">
                                                         <option selected disabled value="">Profil Seçiniz</option>
                                                         <?php while ($profil = $profiller->fetch_array()) { ?>
                                                             <option
-                                                                    value="<?php echo $profil['profilAdi']; ?>"><?php echo $profil['profilAdi']; ?></option>
+                                                                    value="<?php echo $profil['id']; ?>"><?php echo $profil['profilAdi']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -510,21 +518,26 @@ $profiller = $db->query($profillerrsql);
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Geldiği Firma</label>
-                                                    <input name="profilfirma" :value="profilfirma" type="hidden">
-                                                    <input name="profilmusteri" :value="profilmusteri" type="hidden">
-                                                    <input name="profilprofil" :value="profilprofil" type="hidden">
+                                                    <input name="profilfirmaId" :value="profilfirmaId" type="hidden">
+                                                    <input name="profilfirmaAd" :value="profilfirmaAd" type="hidden">
+                                                    <input name="profilmusteriId" :value="profilmusteriId"
+                                                           type="hidden">
+                                                    <input name="profilmusteriAd" :value="profilmusteriAd"
+                                                           type="hidden">
+                                                    <input name="profilprofilId" :value="profilprofilId" type="hidden">
+                                                    <input name="profilprofilAd" :value="profilprofilAd" type="hidden">
                                                     <input name="profiladet" :value="profiladet" type="hidden">
                                                     <input name="profilpaketAdet" :value="profilpaketAdet"
                                                            type="hidden">
                                                     <input name="profiltur" :value="profiltur" type="hidden">
                                                     <input name="profilgelis" :value="profilgelis" type="hidden">
-                                                    <select v-model="profil.firma" class="form-control"
+                                                    <select v-model="profil.firmaId" class="form-control"
                                                             style="width: 100%;">
                                                         <option selected disabled value="">Geldiği Firma Seçiniz
                                                         </option>
                                                         <?php while ($profilfirma = $profilfirmalar->fetch_array()) { ?>
                                                             <option
-                                                                    value="<?php echo $profilfirma['firmaAd']; ?>"><?php echo $profilfirma['firmaAd']; ?></option>
+                                                                    value="<?php echo $profilfirma['id']; ?>"><?php echo $profilfirma['firmaAd']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -533,12 +546,12 @@ $profiller = $db->query($profillerrsql);
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Müşteri</label>
-                                                    <select v-model="profil.musteri" class="form-control"
+                                                    <select v-model="profil.musteriId" class="form-control"
                                                             style="width: 100%;">
                                                         <option selected disabled value="">Müşteri Seçiniz</option>
                                                         <?php while ($musteri = $profilfirmamusteri->fetch_array()) { ?>
                                                             <option
-                                                                    value="<?php echo $musteri['firmaAd']; ?>"><?php echo $musteri['firmaAd']; ?></option>
+                                                                    value="<?php echo $musteri['id']; ?>"><?php echo $musteri['firmaAd']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -629,9 +642,9 @@ $profiller = $db->query($profillerrsql);
                                                 <tbody>
 
                                                 <tr v-for="(profil,index) in profiller">
-                                                    <td> {{profil.profil}}</td>
-                                                    <td> {{profil.firma}}</td>
-                                                    <td> {{profil.musteri}}</td>
+                                                    <td> {{profil.profilAd}}</td>
+                                                    <td> {{profil.firmaAd}}</td>
+                                                    <td> {{profil.musteriAd}}</td>
                                                     <td> {{profil.adet}}</td>
                                                     <td><a target="_blank" :href="profil.resim">Resim için
                                                             tıklayınız</a>
@@ -651,7 +664,12 @@ $profiller = $db->query($profillerrsql);
                 </div>
                 <div class="card-footer">
                     <div>
-                        <button type="submit" name="sevkiyatekle" class="btn btn-info float-right">Ekle</button>
+                        <button :disabled="profiller.length == 0 &&
+                                           malzemeler.length == 0 &&
+                                           biyetler.length == 0 &&
+                                           boyalar.length == 0"
+                                type="submit" name="sevkiyatekle" class="btn btn-info float-right">Ekle
+                        </button>
                         <a href="../"
                            class="btn btn-warning float-left">Vazgeç</a>
                     </div>
