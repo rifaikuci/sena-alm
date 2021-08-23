@@ -7,10 +7,10 @@ $personeller = $db->query($personelsql);
 $personelsql2 = "SELECT * FROM tblpersonel where rolId = 10";
 $personeller2 = $db->query($personelsql2);
 
-$firmasql = "SELECT * FROM tblfirma";
+$firmasql = "SELECT * FROM tblfirma where firmaTurId =3 ";
 $firmalar = $db->query($firmasql);
 
-$firmaboyasql = "SELECT * FROM tblfirma";
+$firmaboyasql = "SELECT * FROM tblfirma where firmaTurId =2";
 $firmalarboya = $db->query($firmaboyasql);
 
 $alasimsql = "SELECT * FROM tblalasim";
@@ -22,7 +22,7 @@ $boyalar = $db->query($boyasql);
 $malzemelersql = "SELECT * FROM tblmalzemeler";
 $malzemeler = $db->query($malzemelersql);
 
-$malzemelerfirmasql = "SELECT * FROM tblfirma";
+$malzemelerfirmasql = "SELECT * FROM tblfirma where firmaTurId =1";
 $malzemelerfirma = $db->query($malzemelerfirmasql);
 
 $profilfirmasql = "SELECT * FROM tblfirma";
@@ -216,7 +216,7 @@ $profiller = $db->query($profillerrsql);
 
                                             <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <label>Boy(cm)</label>
+                                                    <label>Boy(mm)</label>
                                                     <input v-model="biyet.boy" type="number"
                                                            class="form-control form-control-lg"
                                                            name="boy" placeholder="0" step="1"
@@ -243,6 +243,8 @@ $profiller = $db->query($profillerrsql);
                                                     <th>Adet</th>
                                                     <th>Çap</th>
                                                     <th>Boy</th>
+                                                    <th>Toplam Kilo</th>
+                                                    <th>Toplam Boy</th>
                                                     <th>İşlem</th>
                                                 </tr>
                                                 </thead>
@@ -255,6 +257,8 @@ $profiller = $db->query($profillerrsql);
                                                     <td> {{biyet.adetbiyet}}</td>
                                                     <td> {{biyet.cap}}</td>
                                                     <td> {{biyet.boy}}</td>
+                                                    <td> {{biyet.toplamkilo}} Kg</td>
+                                                    <td> {{biyet.toplamboy}} Cm</td>
                                                     <td><a style="color: white" v-on:click="biyetSil(index)"
                                                            class="btn btn-danger">Sil</a></td>
                                                 </tr>
@@ -306,7 +310,7 @@ $profiller = $db->query($profillerrsql);
                                                             style="width: 100%;">
                                                         <option selected disabled value="">Boya Seçiniz</option>
                                                         <?php while ($boya = $boyalar->fetch_array()) { ?>
-                                                            <option value="<?php echo $boya['id']; ?>"><?php echo $boya['ad']; ?></option>
+                                                            <option value="<?php echo $boya['id']; ?>"><?php echo $boya['kod'] . " - " .  $boya['ad']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -382,6 +386,7 @@ $profiller = $db->query($profillerrsql);
                                                     <th>Cins</th>
                                                     <th>Adet</th>
                                                     <th>Kilo</th>
+                                                    <th>Toplam Kilo</th>
                                                     <th>İşlem</th>
                                                 </tr>
                                                 </thead>
@@ -395,6 +400,7 @@ $profiller = $db->query($profillerrsql);
                                                     <td> {{boya.cins}}</td>
                                                     <td> {{boya.adet}}</td>
                                                     <td> {{boya.kilo}}</td>
+                                                    <td> {{boya.toplamkilo}}</td>
                                                     <td><a style="color: white" v-on:click="boyaSil(index)"
                                                            class="btn btn-danger">Sil</a></td>
                                                 </tr>
@@ -481,6 +487,7 @@ $profiller = $db->query($profillerrsql);
                                                     <th>Firma</th>
                                                     <th>Malzeme</th>
                                                     <th>Adet</th>
+                                                    <th>Toplam</th>
                                                     <th>İşlem</th>
                                                 </tr>
                                                 </thead>
@@ -491,6 +498,7 @@ $profiller = $db->query($profillerrsql);
                                                     <td> {{malzeme.firmaAd}}</td>
                                                     <td> {{malzeme.malzemeAd}}</td>
                                                     <td> {{malzeme.adet}}</td>
+                                                    <td> {{malzeme.toplam}}</td>
                                                     <td><a style="color: white" v-on:click="malzemeSil(index)"
                                                            class="btn btn-danger">Sil</a></td>
                                                 </tr>
@@ -558,7 +566,7 @@ $profiller = $db->query($profillerrsql);
                                             </div>
 
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <label>Profil Tür</label>
                                                     <select v-model="profil.tur" class="form-control"
@@ -572,7 +580,7 @@ $profiller = $db->query($profillerrsql);
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <label>Geliş Amacı</label>
                                                     <select v-model="profil.gelis" class="form-control"
@@ -587,9 +595,30 @@ $profiller = $db->query($profillerrsql);
                                                     </select>
                                                 </div>
                                             </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label>Boy (mm)</label>
+                                                    <input v-model="profil.boy" type="number"
+                                                           @input="checkprofilboy($event)"
+                                                           class="form-control form-control-lg" placeholder="0.1"
+                                                           step="0.1">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-3">
+                                                <div class="form-group">
+                                                    <label>Toplam Kg </label>
+                                                    <input  type="number"
+                                                            v-model="profil.toplamkilo"
+                                                            class="form-control form-control-lg" placeholder="0.1"
+                                                            step="0.1">
+                                                </div>
+                                            </div>
+
                                             <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <label>Adet</label>
+                                                    <label> İç Adet</label>
                                                     <input v-model="profil.adet" type="number"
                                                            @input="checkprofiladet($event)"
                                                            class="form-control form-control-lg" placeholder="0"
@@ -597,15 +626,6 @@ $profiller = $db->query($profillerrsql);
                                                 </div>
                                             </div>
 
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label>Boy</label>
-                                                    <input v-model="profil.boy" type="number"
-                                                           @input="checkprofilboy($event)"
-                                                           class="form-control form-control-lg" placeholder="0.1"
-                                                           step="0.1">
-                                                </div>
-                                            </div>
 
                                             <div class="col-sm-4">
                                                 <div class="form-group">
@@ -616,6 +636,17 @@ $profiller = $db->query($profillerrsql);
                                                            step="1">
                                                 </div>
                                             </div>
+
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Toplam Adet</label>
+                                                    <input v-model="profil.toplamadet" type="number"
+                                                           class="form-control form-control-lg" placeholder="0"
+                                                           step="1">
+                                                </div>
+                                            </div>
+
 
 
                                         </div>
@@ -632,10 +663,16 @@ $profiller = $db->query($profillerrsql);
                                                 <thead>
                                                 <tr>
                                                     <th>Profil</th>
+                                                    <th>Boy (mt)</th>
                                                     <th>Firma</th>
                                                     <th>Müşteri</th>
+                                                    <th>Çizim</th>
+                                                    <th>İç adet</th>
+                                                    <th>Paket Adet</th>
                                                     <th>Adet</th>
-                                                    <th>Resim</th>
+                                                    <th>Toplam Kg</th>
+                                                    <th>M/Gr</th>
+                                                    <th>Tolerans</th>
                                                     <th>İşlem</th>
                                                 </tr>
                                                 </thead>
@@ -643,12 +680,16 @@ $profiller = $db->query($profillerrsql);
 
                                                 <tr v-for="(profil,index) in profiller">
                                                     <td> {{profil.profilAd}}</td>
+                                                    <td> {{profil.boy}}</td>
                                                     <td> {{profil.firmaAd}}</td>
                                                     <td> {{profil.musteriAd}}</td>
+                                                    <td><a target="_blank" :href="profil.resim">Çizim</a></td>
                                                     <td> {{profil.adet}}</td>
-                                                    <td><a target="_blank" :href="profil.resim">Resim için
-                                                            tıklayınız</a>
-                                                    </td>
+                                                    <td> {{profil.paketAdet}}</td>
+                                                    <td> {{profil.toplamadet}}</td>
+                                                    <td> {{profil.toplamkilo}}</td>
+                                                    <td> {{profil.mGr}}</td>
+                                                    <td> %  {{profil.tolerans}}</td>
                                                     <td><a style="color: white" v-on:click="profilSil(index)"
                                                            class="btn btn-danger">Sil</a></td>
                                                 </tr>

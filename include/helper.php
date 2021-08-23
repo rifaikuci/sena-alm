@@ -101,7 +101,7 @@ function pdfUpload($pdf, $path)
     $tmp_name = $_FILES[$pdf]['tmp_name'];
     $error = $_FILES[$pdf]['error'];
     if ($error == 0) {
-        if ($img_size > 200000) {
+        if ($img_size > 5000000) {
             return "hataboypdf";
 
         } else {

@@ -57,7 +57,7 @@ $result = $db->query($sql);
                                     <td><?php echo personelTur($row['rolId'], $db); ?></td>
                                     <td><?php echo $row['telefon']; ?></td>
                                     <td><?php echo $row['mail']; ?></td>
-                                    <td><?php echo $row['isecikistarih'] != "0000-00-00 00:00:00" ?
+                                    <td><?php echo $row['isecikistarih'] != "0000-00-00 00:00:00.000000" ?
                                             "<b style='color: green'>Aktif</b>" : "<b style='color: red'>Pasif</b>"; ?></td>
                                     <td>
                                         <a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn

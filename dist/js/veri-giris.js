@@ -21,7 +21,8 @@ new Vue({
                 adet: '',
                 kilo: '',
                 sicaklik: '',
-                cins: ''
+                cins: '',
+                toplamkilo: ''
             },
             isFullBoyaData: false,
 
@@ -44,7 +45,9 @@ new Vue({
                 alasimAd: '',
                 adetbiyet: '',
                 cap: '',
-                boy: ''
+                boy: '',
+                toplamkilo: '',
+                toplamboy: ''
             },
             isFullBiyetData: false,
 
@@ -63,7 +66,8 @@ new Vue({
                 firmaAd: '',
                 malzemeadet: '',
                 malzemeId: '',
-                malzemeAd: ''
+                malzemeAd: '',
+                toplam : ''
             },
             isFullMalzemeData: false,
 
@@ -78,8 +82,10 @@ new Vue({
             profilboy: [],
             profilpaketAdet: [],
             profiltur: [],
+            profiltur: [],
             profilgelis: [],
             profiller: [],
+            profiltoplamadet : [],
             profil: {
                 firmaId: '',
                 firmaAd: '',
@@ -93,6 +99,10 @@ new Vue({
                 tur: '',
                 gelis: '',
                 resim: '',
+                toplamadet: '',
+                toplamkilo: '',
+                mGr: '',
+                tolerans: ''
             },
             isFullProfilData: false,
         },
@@ -120,13 +130,16 @@ new Vue({
                 this.biyet.firmaAd = firmabul.firmaAd;
                 this.biyet.alasimAd = alasimbul.ad;
 
-
                 if (this.biyet.partino &&
                     this.biyet.firmaId &&
                     this.biyet.alasimId &&
                     this.biyet.adetbiyet &&
                     this.biyet.cap &&
                     this.biyet.boy) {
+
+                    this.biyet.toplamkilo =  ((this.biyet.adetbiyet * alasimbul.ozkutle *
+                        (Math.PI * this.biyet.boy * Math.pow(this.biyet.cap,2)) / 4 ) / 1000000).toFixed(3) ;
+                    this.biyet.toplamboy = this.biyet.adetbiyet * this.biyet.boy / 10;
 
                     this.biyetler.push(this.biyet);
 
@@ -147,7 +160,9 @@ new Vue({
                         alasimAd: '',
                         adetbiyet: '',
                         cap: '',
-                        boy: ''
+                        boy: '',
+                        toplamkilo: '',
+                        toplamboy: ''
                     }
                 }
 
@@ -226,6 +241,7 @@ new Vue({
                     this.boya.kilo &&
                     this.boya.sicaklik &&
                     this.boya.cins) {
+                    this.boya.toplamkilo = this.boya.kilo * this.boya.adet;
 
                     this.boyalar.push(this.boya);
 
@@ -327,7 +343,7 @@ new Vue({
                     this.malzeme.firmaId &&
                     this.malzeme.malzemeId &&
                     this.malzeme.adet) {
-
+                    this.malzeme.toplam = malzemebul.miktar ? malzemebul.miktar * this.malzeme.adet : 0;
                     this.malzemeler.push(this.malzeme);
 
                     this.malzemepartino.push(this.malzeme.partino);
@@ -344,7 +360,8 @@ new Vue({
                         firmaIAd: '',
                         malzemeId: '',
                         malzemeAd: '',
-                        adet: ''
+                        adet: '',
+                        toplam: ''
                     }
                 }
 
@@ -391,7 +408,6 @@ new Vue({
                 this.profil.resim = data.resim;
                 this.profil.profilAd = data.ad;
 
-
                 const firmabul = await axios.post('/sena/netting/action.php', {
                     action: 'firmaId',
                     id: this.profil.firmaId
@@ -409,7 +425,7 @@ new Vue({
                 });
 
                 this.profil.musteriAd = musteribul.firmaAd;
-
+                console.log(this.profil.toplamadet);
                 if (this.profil.firmaId &&
                     this.profil.musteriId &&
                     this.profil.profilId &&
@@ -417,9 +433,10 @@ new Vue({
                     this.profil.boy &&
                     this.profil.paketAdet &&
                     this.profil.tur &&
-                    this.profil.gelis &&
-                    this.profil.adet) {
+                    this.profil.gelis) {
+                console.log(data.agirlik);
 
+                        console.log(this.profil.tolerans);
                     this.profiller.push(this.profil);
 
                     this.profilfirmaId.push(this.profil.firmaId);
@@ -432,6 +449,11 @@ new Vue({
                     this.profilpaketAdet.push(this.profil.paketAdet);
                     this.profiltur.push(this.profil.tur);
                     this.profilgelis.push(this.profil.gelis);
+                    this.profiltoplamadet.push(this.profil.toplamadet);
+                    this.profil.boy =  (this.profil.boy / 1000).toFixed(3);
+                    this.profil.mGr = (((this.profil.toplamkilo / this.profil.toplamadet ) /  this.profil.boy) * 1000).toFixed(3);
+                    this.profil.tolerans =   ( (( data.agirlik - this.profil.mGr   ) / data.agirlik) * 100).toFixed(2);
+
                     this.isFullProfilData = false
                     this.profil = {
                         firmaId: '',
@@ -445,7 +467,11 @@ new Vue({
                         paketAdet: '',
                         tur: '',
                         gelis: '',
-                        resim: ''
+                        resim: '',
+                        toplamadet: '',
+                        toplamkilo: '',
+                        mGr: '',
+                        tolerans :''
                     }
                 }
 
@@ -467,6 +493,11 @@ new Vue({
                 }
             },
             checkprofiladet(event) {
+
+                if(this.profil.adet && this.profil.paketAdet) {
+                    this.profil.toplamadet = this.profil.adet * this.profil.paketAdet;
+                }
+
                 if (event.target.value &&
                     this.profil.firmaId &&
                     this.profil.musteriId &&
@@ -482,6 +513,11 @@ new Vue({
                 }
             },
             checkprofilpaketAdet(event) {
+
+                if(this.profil.adet && this.profil.paketAdet) {
+                    this.profil.toplamadet = this.profil.adet * this.profil.paketAdet;
+                }
+
                 if (event.target.value &&
                     this.profil.firmaId &&
                     this.profil.musteriId &&

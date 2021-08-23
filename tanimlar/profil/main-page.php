@@ -51,11 +51,12 @@ $result = $db->query($sql);
                             <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Çizim</th>
                                 <th>Profil Adı</th>
                                 <th>Alan</th>
                                 <th>Çevre</th>
                                 <th>Ağırlık</th>
-                                <th>Resim</th>
+                                <th>Çizim (Pdf)</th>
                                 <th>İşlem</th>
                             </tr>
                             </thead>
@@ -64,12 +65,12 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
+                                    <td><img class="img-fluid" style="width: 100px;height: 50px" src="<?php echo base_url().$row['cizim']?>"</td>
                                     <td><?php echo $row['profilAdi']; ?></td>
                                     <td><?php echo $row['alan']; ?></td>
                                     <td><?php echo $row['cevre']; ?></td>
                                     <td><?php echo $row['gramaj']; ?></td>
-                                    <td><a target="_blank" href="<?php echo base_url() . $row['resim']; ?>"> Resim için
-                                            tıklayınız </a></td>
+                                    <td><a target="_blank" href="<?php echo base_url() . $row['resim']; ?>"> Çizim </a></td>
                                     <td>
                                         <a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
                                            btn-warning">Düzenle</a>

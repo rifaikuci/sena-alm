@@ -17,6 +17,7 @@ if ($received_data->action == 'profilId') {
     foreach ($result as $row) {
         $data['id'] = $row['id'];
         $data['ad'] = $row['profilAdi'];
+        $data['agirlik'] = $row['gramaj'];
         $data['resim'] = base_url() . $row['resim'];
     }
 
@@ -48,6 +49,7 @@ if ($received_data->action == 'alasimId') {
     foreach ($result as $row) {
         $data['id'] = $row['id'];
         $data['ad'] = $row['ad'];
+        $data['ozkutle'] = $row['ozkutle'];
     }
 
     echo json_encode($data);
@@ -78,6 +80,7 @@ if ($received_data->action == 'malzemeId') {
     foreach ($result as $row) {
         $data['id'] = $row['id'];
         $data['ad'] = $row['ad'];
+        $data['miktar'] = $row['birimMiktari'];
     }
 
     echo json_encode($data);

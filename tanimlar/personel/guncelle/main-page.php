@@ -70,7 +70,7 @@ if ($_GET['id']) {
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>İşe Çıkış Tar.</label>
-                            <input required type="date" class="form-control form-control-lg" name="isecikistarih"
+                            <input type="date" class="form-control form-control-lg" name="isecikistarih"
                                    value="<?php echo $row['isecikistarih'] ? date("Y-m-d", strtotime(explode(" ", $row['isecikistarih'])[0])) : "" ?>">
                         </div>
                     </div>

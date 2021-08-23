@@ -11,13 +11,6 @@
                 </a>
                 <ul class="nav nav-treeview">
                     <li class="nav-item">
-                        <a href=<?php echo base_url() . "tanimlar/firmatur" ?> class="nav-link">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Firma Türleri</p>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
                         <a href=<?php echo base_url() . "tanimlar/firma" ?> class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Firmalar</p>

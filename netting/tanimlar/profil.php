@@ -20,6 +20,7 @@ if (isset($_POST['profilekleme'])) {
         $maxGramaj = $_POST['maxGramaj'];
         $ezilmeKatsayisi = $_POST['ezilmeKatsayisi'];
         $aciklama = $_POST['aciklama'];
+        $cizim = $_POST['cizim'];
         $seo = seo($profilAdi);
         $resim = "";
         $paketlemeSekli = "";
@@ -70,12 +71,27 @@ if (isset($_POST['profilekleme'])) {
             }
         }
 
+        if ($_FILES['cizim']['name'] != "") {
+            $cizim = imageUpload("cizim", "asset/img/profilcizim");
+
+            if ($cizim == "hataboyimage") {
+                header("Location:../../tanimlar/profil/?hataboyimage=ok");
+                exit();
+            } else if ($cizim == "gecersizturimage") {
+                header("Location:../../tanimlar/profil/?gecersizturimage=ok");
+                exit();
+            } else if ($cizim == "hataimage") {
+                header("Location:../../tanimlar/profil/?hataimage=ok");
+                exit();
+            }
+        }
+
         $sql = "INSERT INTO tblprofil (profilAdi, sektorId, gramaj, alan, cevre, paketAdet,
                                       paketEn, paketBoy, balyaAdet, maxGramaj, ezilmeKatsayisi, aciklama,
-                                      seo, resim, paketlemeSekli, sepetDizilmeSekli )
+                                      seo, resim, paketlemeSekli, sepetDizilmeSekli, cizim )
                 VALUES ('$profilAdi', '$sektorId','$gramaj', '$alan','$cevre', '$paketAdet',
                         '$paketEn', '$paketBoy', '$balyaAdet','$maxGramaj', '$ezilmeKatsayisi','$aciklama',
-                        '$seo', '$resim', '$paketlemeSekli', '$sepetDizilmeSekli')";
+                        '$seo', '$resim', '$paketlemeSekli', '$sepetDizilmeSekli', '$cizim')";
 
         if (mysqli_query($db, $sql)) {
             header("Location:../../tanimlar/profil/?durumekle=ok");
@@ -94,6 +110,7 @@ if (isset($_GET['profilsil'])) {
     $resim = profilbul($id, $db, 'resim');
     $sepet = profilbul($id, $db, 'sepetDizilmeSekli');
     $paket = profilbul($id, $db, 'paketlemeSekli');
+    $cizim= profilbul($id, $db, 'cizim');
 
     if (file_exists("../../" . $resim)) {
         unlink("../../" . $resim);
@@ -105,6 +122,10 @@ if (isset($_GET['profilsil'])) {
 
     if (file_exists("../../" . $paket)) {
         unlink("../../" . $paket);
+    }
+
+    if (file_exists("../../" . $cizim)) {
+        unlink("../../" . $cizim);
     }
 
     $sql = "DELETE FROM tblprofil where id = '$id' ";
@@ -136,6 +157,7 @@ if (isset($_POST['profilguncelleme'])) {
     $resimyol = $_POST['resimyol'];
     $sepetyol = $_POST['sepetyol'];
     $paketyol = $_POST['paketyol'];
+    $cizimyol = $_POST['cizimyol'];
 
     if ($_FILES['resim']['name'] != "") {
         $resim = pdfUpload('resim', "asset/img/profilresim/");
@@ -201,12 +223,34 @@ if (isset($_POST['profilguncelleme'])) {
         }
     }
 
+    if ($_FILES['cizim']['name'] != "") {
+        $cizim = imageUpload("cizim", "asset/img/profilcizim");
+
+        if ($cizim == "hataboyimage") {
+            header("Location:../../tanimlar/profil/?hataboyimage=ok");
+            exit();
+        } else if ($cizim == "gecersizturimage") {
+            header("Location:../../tanimlar/profil/?gecersizturimage=ok");
+            exit();
+        } else if ($cizim == "hataimage") {
+            header("Location:../../tanimlar/profil/?hataimage=ok");
+            exit();
+        } else {
+            if (file_exists("../../" . $cizimyol)) {
+                unlink("../../" . $cizimyol);
+
+            }
+            $cizimyol = $cizim;
+
+        }
+    }
+
 
     $sql = "UPDATE tblprofil set 
         profilAdi = '$profilAdi', sektorId = '$sektorId', gramaj = '$gramaj', alan = '$alan',
         cevre = '$cevre', paketAdet = '$paketAdet', paketEn = '$paketEn', paketBoy = '$paketBoy', balyaAdet = '$balyaAdet', 
                        maxGramaj = '$maxGramaj', ezilmeKatsayisi ='$ezilmeKatsayisi', aciklama = '$aciklama',
-                    seo = '$seo', resim = '$resimyol', paketlemeSekli = '$paketyol' , sepetDizilmeSekli  = '$sepetyol'  
+                    seo = '$seo', resim = '$resimyol', paketlemeSekli = '$paketyol' , sepetDizilmeSekli  = '$sepetyol', cizim = '$cizim'  
             WHERE id='$id'";
 
     if (mysqli_query($db, $sql)) {

@@ -127,24 +127,31 @@ $sektorler = $db->query($sqlsektor);
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="form-group">
-                            <label>Profilin Çizimleri</label>
+                            <label>Çizim (Pdf)</label>
                             <input required type="file" name="resim">
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label>Paketleme Şekli</label>
                             <input type="file" name="paketlemeSekli">
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label>Sepet Dizilme Şekli</label>
                             <input type="file" name="sepetDizilmeSekli">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Çizim (JPG) </label>
+                            <input required type="file" name="cizim">
                         </div>
                     </div>
 

@@ -42,6 +42,9 @@ if ($_GET['id']) {
 
                             <input type="hidden" class="form-control form-control-lg" name="sepetyol"
                                    value="<?php echo $row['sepetDizilmeSekli'] ?>">
+
+                            <input type="hidden" class="form-control form-control-lg" name="cizimyol"
+                                   value="<?php echo $row['cizim'] ?>">
                         </div>
                     </div>
 
@@ -139,14 +142,14 @@ if ($_GET['id']) {
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label></label>
                             <?php if ($row['resim'] != "") { ?>
                                 <div style="text-align: center">
                                     <h4 style="color: #0e84b5">
                                         <a href="<?php echo base_url() . $row['resim']; ?>" target="_blank">
-                                            Pdf Resim için Tıklayınız </a>
+                                           Çizim (Pdf) </a>
                                     </h4>
                                 </div>
                             <?php } ?>
@@ -154,18 +157,18 @@ if ($_GET['id']) {
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="form-group" style="margin-top: 30px; text-align: center">
 
                             <?php if ($row['paketlemeSekli'] != "") { ?>
                                 <a href="<?php echo base_url() . $row['paketlemeSekli']; ?>" data-toggle="lightbox"
                                    data-title="<?php echo $row['profilAdi'] . " - Paketleme Şekli" ?>"
                                    data-gallery="gallery">
-                                    <img width="250px" src="<?php echo base_url() . $row['paketlemeSekli']; ?>"
+                                    <img width="200px" src="<?php echo base_url() . $row['paketlemeSekli']; ?>"
                                          class="img-fluid mb-4"
                                          alt="<?php echo $row['profilAdi'] . " - Paketleme Şekli" ?>"/>
                                 </a>
-                                <p style="color: #00bfff; font-weight: bold"> Eğer tekrar resim yüklemek isterseniz
+                                <p style="color: #00bfff; font-weight: bold"> Eğer tekrar Paketleme Şeklini yüklemek isterseniz
                                     resim seçin.</p>
                                 <input type="file" name="paketlemeSekli">
                             <?php } else { ?>
@@ -175,21 +178,39 @@ if ($_GET['id']) {
                         </div>
                     </div>
 
-                    <div class="col-sm-4" style="">
+                    <div class="col-sm-3" style="">
                         <div class="form-group" style="margin-top: 30px; text-align: center">
                             <?php if ($row['sepetDizilmeSekli'] != "") { ?>
                                 <a href="<?php echo base_url() . $row['sepetDizilmeSekli']; ?>" data-toggle="lightbox"
                                    data-title="<?php echo $row['profilAdi'] . " - Sepete Dizilme Şekli" ?>">
-                                    <img width="250px" src="<?php echo base_url() . $row['sepetDizilmeSekli']; ?>"
+                                    <img width="200px" src="<?php echo base_url() . $row['sepetDizilmeSekli']; ?>"
                                          class="img-fluid mb-4"
                                          alt="<?php echo $row['profilAdi'] . " - Sepete Dizilme Şekli Şekli" ?>"/>
                                 </a>
-                                <p style="color: #00bfff; font-weight: bold"> Eğer tekrar resim yüklemek isterseniz
+                                <p style="color: #00bfff; font-weight: bold"> Eğer tekrar Sepete Dizilme Şekli Yüklemek isterseniz
                                     resim seçin.</p>
                                 <input type="file" name="sepetDizilmeSekli">
                             <?php } else { ?>
                                 <label>Sepet Şekli</label>
                                 <input type="file" name="sepetDizilmeSekli">
+                            <?php } ?>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-3" style="">
+                        <div class="form-group" style="margin-top: 30px; text-align: center">
+                            <?php if ($row['cizim'] != "") { ?>
+                                <a href="<?php echo base_url() . $row['cizim']; ?>" data-toggle="lightbox"
+                                   data-title="<?php echo $row['cizim'] . " - Çizimler" ?>">
+                                    <img width="200px" src="<?php echo base_url() . $row['cizim']; ?>"
+                                         class="img-fluid mb-4"
+                                         alt="<?php echo $row['profilAdi'] . " - Çizimleri" ?>"/>
+                                </a>
+                                <p style="color: #00bfff; font-weight: bold"> Eğer tekrar Çizim Yüklemek İsterseniz Yükleyiniz.</p>
+                                <input type="file" name="cizim">
+                            <?php } else { ?>
+                                <label>Çizim</label>
+                                <input type="file" name="cizim">
                             <?php } ?>
                         </div>
                     </div>
