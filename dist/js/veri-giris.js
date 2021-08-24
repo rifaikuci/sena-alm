@@ -67,7 +67,7 @@ new Vue({
                 malzemeadet: '',
                 malzemeId: '',
                 malzemeAd: '',
-                toplam : ''
+                toplam: ''
             },
             isFullMalzemeData: false,
 
@@ -85,7 +85,7 @@ new Vue({
             profiltur: [],
             profilgelis: [],
             profiller: [],
-            profiltoplamadet : [],
+            profiltoplamadet: [],
             profil: {
                 firmaId: '',
                 firmaAd: '',
@@ -137,8 +137,8 @@ new Vue({
                     this.biyet.cap &&
                     this.biyet.boy) {
 
-                    this.biyet.toplamkilo =  ((this.biyet.adetbiyet * alasimbul.ozkutle *
-                        (Math.PI * this.biyet.boy * Math.pow(this.biyet.cap,2)) / 4 ) / 1000000).toFixed(3) ;
+                    this.biyet.toplamkilo = ((this.biyet.adetbiyet * alasimbul.ozkutle *
+                        (Math.PI * this.biyet.boy * Math.pow(this.biyet.cap, 2)) / 4) / 1000000).toFixed(3);
                     this.biyet.toplamboy = this.biyet.adetbiyet * this.biyet.boy / 10;
 
                     this.biyetler.push(this.biyet);
@@ -434,9 +434,7 @@ new Vue({
                     this.profil.paketAdet &&
                     this.profil.tur &&
                     this.profil.gelis) {
-                console.log(data.agirlik);
 
-                        console.log(this.profil.tolerans);
                     this.profiller.push(this.profil);
 
                     this.profilfirmaId.push(this.profil.firmaId);
@@ -450,9 +448,9 @@ new Vue({
                     this.profiltur.push(this.profil.tur);
                     this.profilgelis.push(this.profil.gelis);
                     this.profiltoplamadet.push(this.profil.toplamadet);
-                    this.profil.boy =  (this.profil.boy / 1000).toFixed(3);
-                    this.profil.mGr = (((this.profil.toplamkilo / this.profil.toplamadet ) /  this.profil.boy) * 1000).toFixed(3);
-                    this.profil.tolerans =   ( (( data.agirlik - this.profil.mGr   ) / data.agirlik) * 100).toFixed(2);
+                    this.profil.boy = (this.profil.boy / 1000).toFixed(3);
+                    this.profil.mGr = (((this.profil.toplamkilo / this.profil.toplamadet) / this.profil.boy) * 1000).toFixed(3);
+                    this.profil.tolerans = (((data.agirlik - this.profil.mGr) / data.agirlik) * 100).toFixed(2);
 
                     this.isFullProfilData = false
                     this.profil = {
@@ -471,7 +469,7 @@ new Vue({
                         toplamadet: '',
                         toplamkilo: '',
                         mGr: '',
-                        tolerans :''
+                        tolerans: ''
                     }
                 }
 
@@ -494,7 +492,7 @@ new Vue({
             },
             checkprofiladet(event) {
 
-                if(this.profil.adet && this.profil.paketAdet) {
+                if (this.profil.adet && this.profil.paketAdet) {
                     this.profil.toplamadet = this.profil.adet * this.profil.paketAdet;
                 }
 
@@ -514,7 +512,7 @@ new Vue({
             },
             checkprofilpaketAdet(event) {
 
-                if(this.profil.adet && this.profil.paketAdet) {
+                if (this.profil.adet && this.profil.paketAdet) {
                     this.profil.toplamadet = this.profil.adet * this.profil.paketAdet;
                 }
 

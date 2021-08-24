@@ -1,5 +1,7 @@
 <?php
 include '../netting/baglan.php';
+include '../include/sql.php';
+
 
 function firmaTur($id, $db)
 {
@@ -55,6 +57,14 @@ function profilbul($id, $db ,  $sutun)
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_assoc();
     return $row[$sutun];
+}
+
+function maxIdBul($db ,  $table)
+{
+    $sql = "SELECT MAX(id) as id FROM  $table";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row['id'];
 }
 
 ?>

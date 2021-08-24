@@ -310,7 +310,7 @@ $profiller = $db->query($profillerrsql);
                                                             style="width: 100%;">
                                                         <option selected disabled value="">Boya Seçiniz</option>
                                                         <?php while ($boya = $boyalar->fetch_array()) { ?>
-                                                            <option value="<?php echo $boya['id']; ?>"><?php echo $boya['kod'] . " - " .  $boya['ad']; ?></option>
+                                                            <option value="<?php echo $boya['id']; ?>"><?php echo $boya['kod'] . " - " . $boya['ad']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
@@ -609,10 +609,10 @@ $profiller = $db->query($profillerrsql);
                                             <div class="col-sm-3">
                                                 <div class="form-group">
                                                     <label>Toplam Kg </label>
-                                                    <input  type="number"
-                                                            v-model="profil.toplamkilo"
-                                                            class="form-control form-control-lg" placeholder="0.1"
-                                                            step="0.1">
+                                                    <input type="number"
+                                                           v-model="profil.toplamkilo"
+                                                           class="form-control form-control-lg" placeholder="0.1"
+                                                           step="0.1">
                                                 </div>
                                             </div>
 
@@ -646,7 +646,6 @@ $profiller = $db->query($profillerrsql);
                                                            step="1">
                                                 </div>
                                             </div>
-
 
 
                                         </div>
@@ -689,7 +688,9 @@ $profiller = $db->query($profillerrsql);
                                                     <td> {{profil.toplamadet}}</td>
                                                     <td> {{profil.toplamkilo}}</td>
                                                     <td> {{profil.mGr}}</td>
-                                                    <td> %  {{profil.tolerans}}</td>
+                                                    <td :style="[profil.tolerans > 0 ? { color :  '#00b44e'} : {color :  '#ff2400'}]">
+                                                        % {{profil.tolerans}}
+                                                    </td>
                                                     <td><a style="color: white" v-on:click="profilSil(index)"
                                                            class="btn btn-danger">Sil</a></td>
                                                 </tr>
