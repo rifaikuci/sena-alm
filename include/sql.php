@@ -11,12 +11,12 @@ function firmaTur($id, $db)
     return $row['ad'];
 }
 
-function firmaTurSeo($seo, $db)
+function firmaKod($id, $db)
 {
-    $sql = "SELECT * FROM tblfirmatur WHERE seo = '$seo'";
+    $sql = "SELECT * FROM tblfirma WHERE id = '$id'";
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_assoc();
-    return $row['ad'];
+    return $row['kisaKod'];
 }
 
 function personelTur($id, $db)
@@ -51,7 +51,7 @@ function personelBul($id, $db)
     return $row['adsoyad'];
 }
 
-function profilbul($id, $db ,  $sutun)
+function profilbul($id, $db, $sutun)
 {
     $sql = "SELECT * FROM tblprofil WHERE id = '$id'";
     $result = mysqli_query($db, $sql);
@@ -59,7 +59,7 @@ function profilbul($id, $db ,  $sutun)
     return $row[$sutun];
 }
 
-function maxIdBul($db ,  $table)
+function maxIdBul($db, $table)
 {
     $sql = "SELECT MAX(id) as id FROM  $table";
     $result = mysqli_query($db, $sql);

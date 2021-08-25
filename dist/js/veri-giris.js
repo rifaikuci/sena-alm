@@ -82,10 +82,10 @@ new Vue({
             profilboy: [],
             profilpaketAdet: [],
             profiltur: [],
-            profiltur: [],
             profilgelis: [],
             profiller: [],
             profiltoplamadet: [],
+            profiltoplamkilo: [],
             profil: {
                 firmaId: '',
                 firmaAd: '',
@@ -164,6 +164,7 @@ new Vue({
                         toplamkilo: '',
                         toplamboy: ''
                     }
+
                 }
 
 
@@ -425,7 +426,6 @@ new Vue({
                 });
 
                 this.profil.musteriAd = musteribul.firmaAd;
-                console.log(this.profil.toplamadet);
                 if (this.profil.firmaId &&
                     this.profil.musteriId &&
                     this.profil.profilId &&
@@ -441,13 +441,14 @@ new Vue({
                     this.profilfirmaAd.push(this.profil.firmaAd);
                     this.profilmusteriId.push(this.profil.musteriId);
                     this.profilmusteriAd.push(this.profil.musteriAd);
-                    this.profilprofilId.push(this.profil.profil);
+                    this.profilprofilId.push(this.profil.profilId);
                     this.profiladet.push(this.profil.adet);
                     this.profilboy.push(this.profil.boy);
                     this.profilpaketAdet.push(this.profil.paketAdet);
                     this.profiltur.push(this.profil.tur);
                     this.profilgelis.push(this.profil.gelis);
                     this.profiltoplamadet.push(this.profil.toplamadet);
+                    this.profiltoplamkilo.push(this.profil.toplamkilo);
                     this.profil.boy = (this.profil.boy / 1000).toFixed(3);
                     this.profil.mGr = (((this.profil.toplamkilo / this.profil.toplamadet) / this.profil.boy) * 1000).toFixed(3);
                     this.profil.tolerans = (((data.agirlik - this.profil.mGr) / data.agirlik) * 100).toFixed(2);

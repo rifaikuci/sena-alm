@@ -2,7 +2,7 @@
 include "../../netting/baglan.php";
 include "../../include/sql.php";
 
-$sql = "SELECT * FROM tblsevkiyat where tur = 1 order by id desc ";
+$sql = "SELECT * FROM tblsevkiyat order by id desc ";
 $result = $db->query($sql);
 
 ?>
@@ -44,7 +44,7 @@ $result = $db->query($sql);
                                 <th>Şoför Bilgisi</th>
                                 <th>Plaka</th>
                                 <th>Tarih</th>
-                                <th>Konum</th>
+                                <th>Açıklama</th>
                                 <th>İşlem</th>
                             </tr>
                             </thead>
@@ -55,15 +55,20 @@ $result = $db->query($sql);
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['kod']; ?></td>
                                     <td><?php
-                                        echo $row['personelId2'] ?  personelBul($row['personelId1'], $db) . "- " . personelBul($row['personelId2'], $db) :
+                                        echo $row['personelId2'] ? personelBul($row['personelId1'], $db) . "- " . personelBul($row['personelId2'], $db) :
                                             personelBul($row['personelId1'], $db); ?></td>
                                     <td><?php echo $row['plaka']; ?></td>
-                                    <td><?php echo tarih($row['tarih']); ?></td>
-                                    <td><?php echo $row['konum']; ?></td>
+                                    <td><?php echo tarih($row['sevkiyatTarih']); ?></td>
+                                    <td><?php echo kelimeAyirma($row['aciklama'], 30); ?></td>
                                     <td>
+                                        <a class="btn btn-info " target="_blank"
+                                           href=<?php echo "yazdir/?id=" . $row['id']; ?>><i class="fa fa-print"
+                                                                                             aria-hidden="true"></i>
+                                            Sevkiyat Yazdır</a>
                                         <a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
-                                           btn-warning">Düzenle</a>
-                                        <a href=<?php echo base_url() . "netting/sevkiyat/gelen.php?gelensil=" . $row['id']; ?> class="btn
+                                           btn-warning">Görüntüle</a>
+                                        <a onclick="return confirm('Silmek istediğinizden emin misiniz?')"
+                                           href=<?php echo base_url() . "netting/sevkiyat/gelen.php?gelensil=" . $row['id']; ?> class="btn
                                            btn-danger">Sil</a>
                                     </td>
 

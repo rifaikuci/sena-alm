@@ -526,19 +526,25 @@ $profiller = $db->query($profillerrsql);
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Geldiği Firma</label>
+                                                    <input name="profilprofilId" :value="profilprofilId" type="hidden">
+                                                    <input name="profilprofilAd" :value="profilprofilAd" type="hidden">
+                                                    <input name="profilboy" :value="profilboy" type="hidden">
                                                     <input name="profilfirmaId" :value="profilfirmaId" type="hidden">
                                                     <input name="profilfirmaAd" :value="profilfirmaAd" type="hidden">
                                                     <input name="profilmusteriId" :value="profilmusteriId"
                                                            type="hidden">
                                                     <input name="profilmusteriAd" :value="profilmusteriAd"
                                                            type="hidden">
-                                                    <input name="profilprofilId" :value="profilprofilId" type="hidden">
-                                                    <input name="profilprofilAd" :value="profilprofilAd" type="hidden">
-                                                    <input name="profiladet" :value="profiladet" type="hidden">
+
+                                                    <input name="profilicadet" :value="profiladet" type="hidden">
                                                     <input name="profilpaketAdet" :value="profilpaketAdet"
                                                            type="hidden">
+                                                    <input name="profiltoplamadet" :value="profiltoplamadet"
+                                                           type="hidden">
+                                                    <input name="profiltoplamkilo" :value="profiltoplamkilo"
+                                                           type="hidden">
                                                     <input name="profiltur" :value="profiltur" type="hidden">
-                                                    <input name="profilgelis" :value="profilgelis" type="hidden">
+                                                    <input name="profilgelisAmaci" :value="profilgelis" type="hidden">
                                                     <select v-model="profil.firmaId" class="form-control"
                                                             style="width: 100%;">
                                                         <option selected disabled value="">Geldiği Firma Seçiniz
