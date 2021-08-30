@@ -694,7 +694,7 @@ $profiller = $db->query($profillerrsql);
                                                     <td> {{profil.toplamadet}}</td>
                                                     <td> {{profil.toplamkilo}}</td>
                                                     <td> {{profil.mGr}}</td>
-                                                    <td :style="[profil.tolerans > 0 ? { color :  '#00b44e'} : {color :  '#ff2400'}]">
+                                                    <td :style="[profil.tolerans < 0 ? { color :  '#00b44e'} : {color :  '#ff2400'}]">
                                                         % {{profil.tolerans}}
                                                     </td>
                                                     <td><a style="color: white" v-on:click="profilSil(index)"

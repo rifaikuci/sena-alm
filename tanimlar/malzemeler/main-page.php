@@ -54,9 +54,9 @@ $result = $db->query($sql);
                                     <td><?php echo $row['birim']; ?></td>
                                     <td><?php echo $row['birimMiktari']; ?></td>
                                     <td>
-                                        <a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
+                                        <a style="font-size: 10px" href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
                                            btn-warning">Düzenle</a>
-                                        <a href=<?php echo base_url() . "netting/tanimlar/malzemeler.php?malzemelersil=" . $row['id']; ?> class="btn
+                                        <a style="font-size: 10px" href=<?php echo base_url() . "netting/tanimlar/malzemeler.php?malzemelersil=" . $row['id']; ?> class="btn
                                            btn-danger">Sil</a>
                                     </td>
                                 </tr>

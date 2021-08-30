@@ -33,6 +33,23 @@ $result = $db->query($sql);
                     <a href="ekle/" class="btn btn-primary"><i class="fa fa-plus"><?php echo "\t\t\t\t" ?>
                             Ekle</i></a>
                 </div>
+                <div>
+                    <h6 style="color: #0b93d5">
+                   <a class="btn btn-default " target="_blank"
+                       href="#"><i class="fa fa-print" aria-hidden="true"></i></a>  Biyetlerin yazdırılmasını temsil eder</h6>
+                    <h6 style="color: #0b93d5">
+                        <a class="btn btn-warning " target="_blank"
+                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a>  Boyaların yazdırılmasını temsil eder</h6>
+                    <h6 style="color: #0b93d5">
+                        <a class="btn btn-info " target="_blank"
+                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a>  Malzemelerin yazdırılmasını temsil eder</h6>
+                    <h6 style="color: #0b93d5">
+                        <a class="btn btn-dark " target="_blank"
+                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a>  Profillerin yazdırılmasını temsil eder</h6>
+                    <h6 style="color: #0b93d5">
+                        <a class="btn btn-danger " target="_blank"
+                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a>  Hepsinin yazdırılmasını temsil eder</h6>
+                </div>
                 <br>
                 <div class="card">
                     <div class="card-body table-responsive p-0">
@@ -45,7 +62,8 @@ $result = $db->query($sql);
                                 <th>Plaka</th>
                                 <th>Tarih</th>
                                 <th>Açıklama</th>
-                                <th>İşlem</th>
+                                <th style="text-align: center">İşlem</th>
+                                <th style="text-align: center">Yazdırma İşlemi</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -60,11 +78,7 @@ $result = $db->query($sql);
                                     <td><?php echo $row['plaka']; ?></td>
                                     <td><?php echo tarih($row['sevkiyatTarih']); ?></td>
                                     <td><?php echo kelimeAyirma($row['aciklama'], 30); ?></td>
-                                    <td>
-                                        <a class="btn btn-info " target="_blank"
-                                           href=<?php echo "yazdir/?id=" . $row['id']; ?>><i class="fa fa-print"
-                                                                                             aria-hidden="true"></i>
-                                            Sevkiyat Yazdır</a>
+                                    <td style="text-align: center">
                                         <a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
                                            btn-warning">Görüntüle</a>
                                         <a onclick="return confirm('Silmek istediğinizden emin misiniz?')"
@@ -73,6 +87,24 @@ $result = $db->query($sql);
                                     </td>
 
                                     <td style="text-align: center">
+                                        <?php if(isTableSevkiyat($db,"tblstokbiyet", $row['id']) > 0) { ?>
+                                        <a class="btn btn-default " target="_blank"
+                                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a> <?php  }?>
+
+                                        <?php if(isTableSevkiyat($db,"tblstokboya", $row['id']) > 0) { ?>
+                                        <a class="btn btn-warning " target="_blank"
+                                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a> <?php  }?>
+
+                                        <?php if(isTableSevkiyat($db,"tblstokmalzeme", $row['id']) > 0 ) { ?>
+                                        <a class="btn btn-info" target="_blank"
+                                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a>  <?php  }?>
+
+                                        <?php if(isTableSevkiyat($db,"tblstokprofil", $row['id']) > 0 ) { ?>
+                                        <a class="btn btn-dark " target="_blank"
+                                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a> <?php  }?>
+
+                                        <a class="btn btn-danger " target="_blank"
+                                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a>
                                     </td>
                                 </tr>
                                 <?php $sira++;

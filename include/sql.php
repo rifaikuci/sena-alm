@@ -67,4 +67,13 @@ function maxIdBul($db, $table)
     return $row['id'];
 }
 
+function isTableSevkiyat($db,$table, $sevkiyatId) {
+
+    $sql = "SELECT COUNT(*)  FROM $table where sevkiyatId = '$sevkiyatId'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_row();
+
+    return $row[0];
+}
+
 ?>
