@@ -53,7 +53,7 @@ $result = $db->query($sql);
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['firmaAd']; ?></td>
-                                    <td><?php echo firmaTur($row['firmaTurId'], $db); ?></td>
+                                    <td><?php echo firmaTurBul($row['firmaTurId'], $db,'ad'); ?></td>
                                     <td><?php echo $row['kisaKod']; ?></td>
                                     <td><?php echo $row['yetkiliKisi']; ?></td>
                                     <td>

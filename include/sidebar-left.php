@@ -62,6 +62,14 @@
                 </ul>
             </li>
 
+            <li class="nav-item">
+                <a href="<?php echo base_url() . "sevkiyat/gelen" ?> " class="nav-link">
+                    <i class="nav-icon fa fa-adjust"></i>
+                    <p>
+                        Sevkiyat
+                    </p>
+                </a>
+
 
             <li class="nav-item">
                 <a href="https://rifaikuci.com/" class="nav-link">

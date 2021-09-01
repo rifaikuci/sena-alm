@@ -62,8 +62,8 @@ $result = $db->query($sql);
                                 <th>Plaka</th>
                                 <th>Tarih</th>
                                 <th>Açıklama</th>
-                                <th style="text-align: center">İşlem</th>
                                 <th style="text-align: center">Yazdırma İşlemi</th>
+                                <th style="text-align: center">İşlem</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -78,13 +78,6 @@ $result = $db->query($sql);
                                     <td><?php echo $row['plaka']; ?></td>
                                     <td><?php echo tarih($row['sevkiyatTarih']); ?></td>
                                     <td><?php echo kelimeAyirma($row['aciklama'], 30); ?></td>
-                                    <td style="text-align: center">
-                                        <a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
-                                           btn-warning">Görüntüle</a>
-                                        <a onclick="return confirm('Silmek istediğinizden emin misiniz?')"
-                                           href=<?php echo base_url() . "netting/sevkiyat/gelen.php?gelensil=" . $row['id']; ?> class="btn
-                                           btn-danger">Sil</a>
-                                    </td>
 
                                     <td style="text-align: center">
                                         <?php if(isTableSevkiyat($db,"tblstokbiyet", $row['id']) > 0) { ?>
@@ -106,6 +99,15 @@ $result = $db->query($sql);
                                         <a class="btn btn-danger " target="_blank"
                                            href="#"><i class="fa fa-print" aria-hidden="true"></i></a>
                                     </td>
+
+                                    <td style="text-align: center">
+                                        <a href=<?php echo "goruntule/?id=" . $row['id']; ?> class="btn
+                                           btn-warning">Görüntüle</a>
+                                        <a onclick="return confirm('Silmek istediğinizden emin misiniz?')"
+                                           href=<?php echo base_url() . "netting/sevkiyat/gelen.php?gelensil=" . $row['id']; ?> class="btn
+                                           btn-danger">Sil</a>
+                                    </td>
+
                                 </tr>
                                 <?php $sira++;
                             } ?>

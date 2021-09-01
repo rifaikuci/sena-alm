@@ -3,21 +3,22 @@ include '../netting/baglan.php';
 include '../include/sql.php';
 
 
-function firmaTur($id, $db)
+function firmaTurBul($id, $db,$sutun)
 {
     $sql = "SELECT * FROM tblfirmatur WHERE id = '$id'";
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_assoc();
-    return $row['ad'];
+    return $row[$sutun];
 }
 
-function firmaKod($id, $db)
+function firmaBul($id, $db, $sutun)
 {
     $sql = "SELECT * FROM tblfirma WHERE id = '$id'";
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_assoc();
-    return $row['kisaKod'];
+    return $row[$sutun];
 }
+
 
 function personelTur($id, $db)
 {
@@ -27,21 +28,14 @@ function personelTur($id, $db)
     return $row['rol'];
 }
 
-function alasimTur($id, $db)
+function alasimBul($id, $db,$sutun)
 {
     $sql = "SELECT * FROM tblalasim WHERE id = '$id'";
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_assoc();
-    return $row['ad'];
+    return $row[$sutun];
 }
 
-function alasimTurSeo($seo, $db)
-{
-    $sql = "SELECT * FROM tblalasim WHERE seo = '$seo'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row['ad'];
-}
 
 function personelBul($id, $db)
 {
@@ -74,6 +68,23 @@ function isTableSevkiyat($db,$table, $sevkiyatId) {
     $row = $result->fetch_row();
 
     return $row[0];
+}
+
+
+function boyaBul($id, $db)
+{
+    $sql = "SELECT * FROM tblboya WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row['ad'];
+}
+
+function malzemeBul($id, $db,$sutun)
+{
+    $sql = "SELECT * FROM tblmalzemeler WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row[$sutun];
 }
 
 ?>

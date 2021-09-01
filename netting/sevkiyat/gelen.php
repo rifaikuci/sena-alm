@@ -6,14 +6,7 @@ include '../../include/sql.php';
 ini_set('display_errors', 1);
 
 if (isset($_POST['sevkiyatekle'])) {
-    /*
-      echo "Biyet Pari No : " .    $_POST['biyetpartino']."\n";
-      echo "Biyet Pari No : " .    $_POST['biyetfirma']."\n";
-      echo "Biyet Pari No : " .    $_POST['biyetalasim']."\n";
-      echo "Biyet Pari No : " .    $_POST['biyetadetbiyet']."\n";
-      echo "Biyet Pari No : " .    $_POST['biyetcap']."\n";
-      echo "Biyet Pari No : " .    $_POST['biyetboy']."\n";
-    */
+
     $personelId1 = $_POST['personelId1'];
     $personelId2 = $_POST['personelId2'];
     $plaka = $_POST['plaka'];
@@ -54,7 +47,7 @@ if (isset($_POST['sevkiyatekle'])) {
             $biyetalasimsatir = $biyetalasimId[$i];
             $biyetcapsatir = $biyetcap[$i];
             $biyetboysatir = $biyetboy[$i];
-            $firmaKod = firmaKod($biyetfirmasatir, $db);
+            $firmaKod = firmaBul($biyetfirmasatir, $db,'kisaKod');
 
             for ($j = 0; $j < $biyetadetbiyet[$i]; $j++) {
                 $barkod = $firmaKod . mt_rand();
@@ -72,7 +65,7 @@ if (isset($_POST['sevkiyatekle'])) {
         $boyakilo = explode(",", $_POST['boyakilo']);
         $boyasicaklik = explode(",", $_POST['boyasicaklik']);
         $boyacins = explode(",", $_POST['boyacins']);
-        $sqlBoya = "INSERT INTO tblstokboya (partino, firmaId, boyaTuru, sicaklik, cins, sevkiyatId, barkodNo, kilo)  VALUES ";
+        $sqlBoya = "INSERT INTO tblstokboya (partino, firmaId, boyaTuru, sicaklik, cins, sevkiyatId, barkodNo, kilo, adet)  VALUES ";
         for ($i = 0; $i < count($boyapartino); $i++) {
             $boyapartinosatir = $boyapartino[$i];
             $boyafirmasatir = $boyafirmaId[$i];
@@ -82,11 +75,11 @@ if (isset($_POST['sevkiyatekle'])) {
             $boyasicakliksatir = $boyasicaklik[$i];
             $boyacinssatir = $boyacins[$i];
 
-            $firmaKod = firmaKod($boyafirmasatir, $db);
+            $firmaKod = firmaBul($boyafirmasatir, $db,'kisaKod');
 
             for ($j = 0; $j < $boyaadetsatir; $j++) {
                 $barkod = $firmaKod . mt_rand();
-                $sqlBoya = $sqlBoya . " ('$boyapartinosatir', '$boyafirmasatir', '$boyapboyaidsatir','$boyasicakliksatir', '$boyacinssatir',  '$sevkiyatId', '$barkod', '$boyaadetsatir'),";
+                $sqlBoya = $sqlBoya . " ('$boyapartinosatir', '$boyafirmasatir', '$boyapboyaidsatir','$boyasicakliksatir', '$boyacinssatir',  '$sevkiyatId', '$barkod', '$boyakilosatir', '$boyaadetsatir'),";
             }
         }
         $sqlBoya[strlen($sqlBoya) - 1] = ";";
@@ -104,7 +97,7 @@ if (isset($_POST['sevkiyatekle'])) {
             $malzemeidsatir = $malzemeId[$i];
             $malzemeadetsatir = $malzemeadet[$i];
 
-            $firmaKod = firmaKod($malzemefirmasatir, $db);
+            $firmaKod = firmaBul($malzemefirmasatir, $db,'kisaKod');
 
             for ($j = 0; $j < $malzemeadetsatir; $j++) {
                 $barkod = $firmaKod . mt_rand();

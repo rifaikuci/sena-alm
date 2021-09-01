@@ -452,7 +452,6 @@ new Vue({
                     this.profil.boy = (this.profil.boy / 1000).toFixed(3);
                     this.profil.mGr = (((this.profil.toplamkilo / this.profil.toplamadet) / this.profil.boy) * 1000).toFixed(3);
                     this.profil.tolerans = (((this.profil.mGr - data.agirlik) / this.profil.mGr) * 100).toFixed(2);
-
                     this.isFullProfilData = false
                     this.profil = {
                         firmaId: '',
