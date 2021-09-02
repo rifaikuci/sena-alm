@@ -102,7 +102,16 @@ if ($_GET['id']) {
                                             Kg
                                         </td>
                                         <td> <?php echo biyetToplamBoy($biyet['adet'], $biyet["boy"]) ?> Cm</td>
-                                        <td><a href="#" class="btn btn-outline-primary"><i class="fa fa-expand"></i></a>
+                                        <td>
+                                            <button type="button" class="btn btn-outline-primary biyetim"
+                                                    data-toggle="modal" data-target="#biyet"
+                                                    data-cap="<?php echo $biyet['cap'] ?>"
+                                                    data-boy="<?php echo $biyet['boy'] ?>"
+                                                    data-adet="<?php echo $biyet['adet'] ?>"
+                                                    data-alasim="<?php echo $biyet['alasimId'] ?>"
+                                                    data-firma="<?php echo $biyet['firmaId'] ?>"
+                                                    data-partino="<?php echo $biyet['partino'] ?>"
+                                            ><i class="fa fa-expand"></i></button>
                                         </td>
                                     </tr>
                                     <?php $sira++;
@@ -154,9 +163,18 @@ if ($_GET['id']) {
                                         <td> <?php echo $boya['adet'] ?></td>
                                         <td> <?php echo $boya['kilo']; ?></td>
                                         <td> <?php echo $boya['kilo'] * $boya['adet']; ?></td>
-                                        <td><a href="#" class="btn btn-outline-primary"><i class="fa fa-expand"></i></a>
+                                        <td>
+                                            <button id="boyabilgi" type="button" class="btn btn-outline-primary boyam"
+                                                    data-toggle="modal" data-target="#boya"
+                                                    data-partino="<?php echo $boya['partino'] ?>"
+                                                    data-firma="<?php echo $boya['firmaId'] ?>"
+                                                    data-boya="<?php echo $boya['boyaTuru'] ?>"
+                                                    data-sicaklik="<?php echo $boya['sicaklik'] ?>"
+                                                    data-cins="<?php echo $boya['cins'] ?>"
+                                                    data-kilo="<?php echo $boya['kilo'] ?>"
+                                                    data-adet="<?php echo $boya['adet'] ?>"
+                                            ><i class="fa fa-expand"></i></button>
                                         </td>
-
                                     </tr>
                                     <?php $sira++;
                                 } ?>
@@ -202,7 +220,15 @@ if ($_GET['id']) {
                                         <td> <?php echo malzemeBul($malzeme["malzemeId"], $db, "ad") ?></td>
                                         <td> <?php echo $malzeme['adet'] ?></td>
                                         <td> <?php echo $malzeme['adet'] * malzemeBul($malzeme["malzemeId"], $db, "birimMiktari") ?></td>
-                                        <td><a href="#" class="btn btn-outline-primary"><i class="fa fa-expand"></i></a>
+                                        <td>
+                                            <button id="malzemebilgi" type="button"
+                                                    class="btn btn-outline-primary malzemem"
+                                                    data-toggle="modal" data-target="#malzeme"
+                                                    data-partino="<?php echo $malzeme['partino'] ?>"
+                                                    data-malzeme="<?php echo $malzeme['malzemeId'] ?>"
+                                                    data-firma="<?php echo $malzeme['firmaId'] ?>"
+                                                    data-adet="<?php echo $malzeme['adet'] ?>"
+                                            ><i class="fa fa-expand"></i></button>
                                         </td>
 
                                     </tr>
@@ -264,7 +290,12 @@ if ($_GET['id']) {
                                         <td><?php echo $profil['toplamKg'] ?></td>
                                         <td><?php echo $mgr ?></td>
                                         <td style="color:<?php echo $tolerans < 0 ? '#00b44e' : '#ff2400' ?>"> <?php echo "% " . $tolerans ?></td>
-                                        <td><a href="#" class="btn btn-outline-primary"><i class="fa fa-expand"></i></a>
+                                        <td>
+                                            <button id="profilbilgi" type="button"
+                                                    class="btn btn-outline-primary profilim"
+                                                    data-toggle="modal" data-target="#profil"
+                                                    data-id="<?php echo $profil['id'] ?>"
+                                            ><i class="fa fa-expand"></i></button>
                                         </td>
 
                                     </tr>
@@ -276,6 +307,95 @@ if ($_GET['id']) {
                     </div>
                     <br><br><br>
                 <?php } ?>
+
+
+                <!-- Profiller -->
+                <div id="profil" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-xl">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div style="margin: 10px">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div style="text-align: center">
+                                <h4 style="color: #0e84b5">
+                                    Profiller
+                                </h4>
+                            </div>
+
+                            <div class="modal-body"></div>
+                        </div>
+
+                    </div>
+                </div
+
+                        <!-- Malzemeler -->
+
+                <div id="malzeme" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-xl">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div style="margin: 10px">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div style="text-align: center">
+                                <h4 style="color: #0e84b5">
+                                    Malzemeler
+                                </h4>
+                            </div>
+
+                            <div class="modal-body"></div>
+                        </div>
+
+                    </div>
+                </div
+
+
+                        <!-- Biyetler -->
+                <div id="biyet" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-xl">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div style="margin: 10px">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div style="text-align: center">
+                                <h4 style="color: #0e84b5">
+                                    Biyetler
+                                </h4>
+                            </div>
+
+                            <div class="modal-body"></div>
+                        </div>
+
+                    </div>
+                </div
+
+
+                        <!-- boya -->
+                <div id="boya" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-xl">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div style="margin: 10px">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                            <div style="text-align: center">
+                                <h4 style="color: #0e84b5">
+                                    Boyalar
+                                </h4>
+                            </div>
+
+                            <div class="modal-body">
+                            </div>
+                        </div>
+
+                    </div>
+                </div
 
 
             </form>
