@@ -53,4 +53,6 @@
 </script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/veri-giris.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/kalipci.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/takim.js" ?>></script>
 

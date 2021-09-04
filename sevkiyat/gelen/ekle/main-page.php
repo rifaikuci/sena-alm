@@ -448,9 +448,9 @@ $profiller = $db->query($profillerrsql);
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>Malzeme</label>
-                                                    <select v-model="malzeme.malzemeId" class="form-control"
+                                                    <select required v-model="malzeme.malzemeId" class="form-control"
                                                             style="width: 100%;">
-                                                        <option selected disabled value="">Malzeme Seçiniz</option>
+                                                        <option selected value="">Malzeme Seçiniz</option>
                                                         <?php while ($malzeme = $malzemeler->fetch_array()) { ?>
                                                             <option
                                                                     value="<?php echo $malzeme['id']; ?>"><?php echo $malzeme['ad']; ?></option>

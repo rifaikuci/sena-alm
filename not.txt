@@ -9,3 +9,6 @@ boya operator -> 7
 personel ->8
 sofor -9
 bietci ->10
+
+
+Kalip durum -> 1 Aktif, 2 Pasif 3 Çöp

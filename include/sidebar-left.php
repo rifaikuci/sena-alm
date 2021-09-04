@@ -69,6 +69,25 @@
                         Sevkiyat
                     </p>
                 </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="<?php echo base_url() . "kalipci/" ?> " class="nav-link">
+                    <i class="nav-icon fa fa-dumbbell"></i>
+                    <p>
+                        Kalıplar
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="<?php echo base_url() . "takim/" ?> " class="nav-link">
+                    <i class="nav-icon fa fa-people-arrows"></i>
+                    <p>
+                        Takım
+                    </p>
+                </a>
+            </li>
 
 
             <li class="nav-item">
