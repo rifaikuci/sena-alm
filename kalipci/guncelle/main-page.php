@@ -20,7 +20,7 @@ $profiller = $db->query($profillerrsql);
 <section class="content">
     <div class="card card-info">
         <div class="card-header">
-            Kalıp Güncelleme Alanı
+            Parça Güncelleme Alanı
         </div>
         <div class="card-body" id="kalip-giris">
             <form method="post" action="<?php echo base_url() . 'netting/kalipci/index.php' ?>">

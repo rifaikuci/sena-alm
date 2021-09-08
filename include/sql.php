@@ -61,6 +61,7 @@ function maxIdBul($db, $table)
     return $row['id'];
 }
 
+
 function isTableSevkiyat($db, $table, $sevkiyatId)
 {
 
@@ -90,17 +91,27 @@ function malzemeBul($id, $db, $sutun)
 
 function kalipBul($id)
 {
-    $arrayKalip = array("Köprülü" => 0, "Bindirmeli" => 1,"Solid" => 2, "Hazneli" => 3, "Bolster" => 4);
+    $arrayKalip = array("Köprülü" => 0, "Bindirmeli" => 1, "Solid" => 2, "Hazneli" => 3, "Bolster" => 4);
 
-    return array_search($id,$arrayKalip);
+    return array_search($id, $arrayKalip);
 }
 
 function parcaBul($id)
 {
     $arrayKalip = array("Zıvana " => 0, "Kapak " => 1, "Destek " => 2, "Zıvana" => 3, "Kapak" => 4, "Destek  " => 5,
-                        "Hazne" => 6, "Kalıp" => 7 , "Destek   " => 8, "Hazneli Kalıp" => 9, "Destek     " => 10);
+        "Hazne" => 6, "Kalıp" => 7, "Destek   " => 8, "Hazneli Kalıp" => 9, "Destek     " => 10);
 
-    return array_search($id,$arrayKalip);
+    return array_search($id, $arrayKalip);
+}
+
+function firmaTakimNoBul($db, $table, $firmaId)
+{
+
+    $sql = "SELECT COUNT(*)  FROM $table where firmaId = '$firmaId'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_row();
+
+    return $row[0] + 1;
 }
 
 ?>

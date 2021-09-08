@@ -5,35 +5,37 @@ require_once "../../include/helper.php";
 
 
 $kalipCins = $_POST['kalipCins'];
-$parca = $kalipCins == 0 ? 0 : ($kalipCins == 1 ? 3 : ($kalipCins == 2 ? 6 : ($kalipCins == 3 ? 9 : "")));
+$parca = $kalipCins == 0 ? 1 : ($kalipCins == 1 ? 4 : ($kalipCins == 2 ? 7 : ""));
 
-$parcaIsimleri = $kalipCins == 0 ? "Zıvanalar" : ($kalipCins == 1 ? "Zıvanalar" : ($kalipCins == 2 ? "Hazneler" : ($kalipCins == 3 ? "Hazneli Kalıplar" : "")));
-
+$parcaIsimleri = $kalipCins == 0 ? "Kapaklar" : ($kalipCins == 1 ? "Kapaklar" : ($kalipCins == 2 ? "Kalıplar" : ""));
 if ($_POST['cap'] != "" && $_POST['firmaId'] != "" && $_POST['profilId'] != "" && $_POST['figur'] != "") {
     $cap = trim($_POST['cap']);
     $firmaId = trim($_POST['firmaId']);
     $profilId = trim($_POST['profilId']);
     $figurSayi = trim($_POST['figur']);
+
     $sql = "SELECT * FROM tblkalipparcalar  
             where kalipCins = '$kalipCins' AND takimNo = '' AND cap= '$cap' AND  firmaId = '$firmaId' AND
                 profilId = '$profilId' AND figurSayi = '$figurSayi' AND parca = $parca AND durum = '1'";
+
+
 } else {
     $sql = "SELECT * FROM tblkalipparcalar  
                     where kalipCins = '$kalipCins' AND takimNo = '' AND parca  = $parca AND durum = '1' ";
 }
 
-
 $result = $db->query($sql);
 
 
 ?>
+
+
 <div style="text-align: center">
     <h4 style="color: #0e84b5">
         <?php echo $parcaIsimleri ?>
     </h4>
 </div>
 <div class="card-body table-responsive p-0">
-
     <table class="table table-dark table-hover text-nowrap">
         <thead>
         <tr>
@@ -51,7 +53,7 @@ $result = $db->query($sql);
         <?php
         while ($parca = $result->fetch_array()) { ?>
             <tr>
-                <td class="parcaselected" style="color: indianred"
+                <td class="parcaselected2" style="color: indianred"
                     data-senaNo="<?php echo $parca['senaNo'] ?>"
                     data-firmaId="<?php echo $parca['firmaId'] ?>"
                     data-firmaAd="<?php echo firmaBul($parca['firmaId'], $db, 'firmaAd') ?>"

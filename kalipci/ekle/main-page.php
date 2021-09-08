@@ -12,7 +12,7 @@ $profiller = $db->query($profillerrsql);
 <section class="content">
     <div class="card card-info">
         <div class="card-header">
-            Kalıp Giriş Ekleme Alanı
+            Parça Ekleme Alanı
         </div>
         <div class="card-body" id="kalip-giris">
             <form method="post" action="<?php echo base_url() . 'netting/kalipci/index.php' ?>">
@@ -62,7 +62,9 @@ $profiller = $db->query($profillerrsql);
                         <input name="prefix" :value="prefix" type="hidden">
                         <div class="form-group">
                             <label>Parça</label>
-                            <select @change="onChangeParca($event)" name="parca" :required = "filterParca.length > 0 ? true : false" class="form-control" style="width: 100%;">
+                            <select @change="onChangeParca($event)" name="parca"
+                                    :required="filterParca.length > 0 ? true : false" class="form-control"
+                                    style="width: 100%;">
                                 <option selected value="">Parça Seçiniz</option>
                                 <option v-for="parca in filterParca" v-bind:value="parca.id">{{parca.name}}</option>
                             </select>

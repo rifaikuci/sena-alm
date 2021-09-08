@@ -75,7 +75,7 @@
                 <a href="<?php echo base_url() . "kalipci/" ?> " class="nav-link">
                     <i class="nav-icon fa fa-dumbbell"></i>
                     <p>
-                        Kalıplar
+                        Parçalar
                     </p>
                 </a>
             </li>

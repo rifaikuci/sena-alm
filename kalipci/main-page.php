@@ -12,20 +12,20 @@ $result = $db->query($sql);
 
     <?php
     if ($_GET['durumekle'] == "ok") {
-        durumSuccess("Kalıp Stoğa Başarılı Bir Şekilde Eklendi. ");
+        durumSuccess("Parça Stoğa Başarılı Bir Şekilde Eklendi. ");
     } else if ($_GET['durumekle'] == "no") {
-        durumDanger("Kalıp Stoğa Eklenirken Bir Hata Oluştu !");
+        durumDanger("Parça Stoğa Eklenirken Bir Hata Oluştu !");
     } else if ($_GET['durumsil'] == "ok") {
-        durumSuccess("Kalıp Stoktan Başarılı Bir Şekilde Silindi. ");
+        durumSuccess("Parça Stoktan Başarılı Bir Şekilde Silindi. ");
     } else if ($_GET['durumsil'] == "no") {
-        durumDanger("Kalıp Stoktan Silinirken Bir Hata Oluştu.");
+        durumDanger("Parça Stoktan Silinirken Bir Hata Oluştu.");
     } else if ($_GET['durumguncelleme'] == "ok") {
-        durumSuccess("Kalıp Stoktan Başarılı Bir Şekilde Güncellendi. ");
+        durumSuccess("Parça Stoktan Başarılı Bir Şekilde Güncellendi. ");
     } else if ($_GET['durumguncelleme'] == "no") {
-        durumDanger("Kalıp Stoktan Güncellenirken Bir Hata Oluştu.");
+        durumDanger("Parça Stoktan Güncellenirken Bir Hata Oluştu.");
     } ?>
     <div style="text-align: center">
-        <h4 style="color: #0b93d5">Kalıplar</h4>
+        <h4 style="color: #0b93d5">Parçalar</h4>
     </div>
     <div class="card-body">
         <div class="row">
@@ -44,7 +44,7 @@ $result = $db->query($sql);
                                 <th>Sena No</th>
                                 <th>Profil</th>
                                 <th>Firma</th>
-                                <th>Kalıp Cinsi</th>
+                                <th>Parça</th>
                                 <th>Parça</th>
                                 <th>Çap</th>
                                 <th>Durum</th>
