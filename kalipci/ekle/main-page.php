@@ -15,7 +15,7 @@ $profiller = $db->query($profillerrsql);
             Parça Ekleme Alanı
         </div>
         <div class="card-body" id="kalip-giris">
-            <form method="post" action="<?php echo base_url() . 'netting/kalipci/index.php' ?>">
+            <form method="post" action="<?php echo base_url() . 'netting/kalipci/index.php' ?>" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -25,19 +25,6 @@ $profiller = $db->query($profillerrsql);
                                 <?php while ($firma = $firmalar->fetch_array()) { ?>
                                     <option
                                             value="<?php echo $firma['id']; ?>"><?php echo $firma['firmaAd']; ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Profiller</label>
-                            <select name="profilId" required class="form-control" style="width: 100%;">
-                                <option selected disabled value="">Profil Seçiniz</option>
-                                <?php while ($profil = $profiller->fetch_array()) { ?>
-                                    <option
-                                            value="<?php echo $profil['id']; ?>"><?php echo $profil['profilAdi']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -58,7 +45,21 @@ $profiller = $db->query($profillerrsql);
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div v-if="filterParca.length > 0 ? true : false" class="col-sm-6">
+                        <div class="form-group">
+                            <label>Profiller</label>
+                            <select name="profilId" :required="filterParca.length > 0 ? true : false"
+                                    class="form-control" style="width: 100%;">
+                                <option selected disabled value="">Profil Seçiniz</option>
+                                <?php while ($profil = $profiller->fetch_array()) { ?>
+                                    <option
+                                            value="<?php echo $profil['id']; ?>"><?php echo $profil['profilAdi']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6" v-if="filterParca.length > 0 ? true : false">
                         <input name="prefix" :value="prefix" type="hidden">
                         <div class="form-group">
                             <label>Parça</label>
@@ -107,6 +108,15 @@ $profiller = $db->query($profillerrsql);
                             <input required type="number" class="form-control form-control-lg" name="figurSayi" min="1"
                                    max="10"
                                    placeholder="1">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6" v-if="kalipCins == 4">
+                        <div style="text-align: center">
+                            <div class="form-group">
+                                <label>Çizim Yükleyiniz...</label>
+                                <input required type="file" name="cizim">
+                            </div>
                         </div>
                     </div>
 

@@ -1,6 +1,7 @@
 new Vue({
         el: "#kalip-giris",
         data: {
+            kalipCins : "",
             prefix:"",
             parcalar: [
                 {id: 0, name: "Zıvana", type: "koprulu", prefix: "KZ"},
@@ -26,7 +27,9 @@ new Vue({
 
         methods: {
             onChangeKalipCins(event) {
+                debugger;
                 if (event.target.value) {
+                    this.kalipCins = "";
                     this.caplar = [
                         {id: 160},
                         {id: 170},
@@ -43,9 +46,11 @@ new Vue({
                     }  else if (event.target.value == 4) {
                         this.filterParca = [];
                         this.caplar = this.caplar.filter(e=> e.id >= 220);
+                        this.kalipCins = 4
                     }
                 } else {
-                    this.filterParca = [];
+                    this.kalipCins = "";
+                        this.filterParca = [];
                 }
             },
 

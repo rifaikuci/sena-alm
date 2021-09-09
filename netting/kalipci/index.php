@@ -22,6 +22,7 @@ if (isset($_POST['kalipciekle'])) {
     $maxId = maxIdBul($db,"tblkalipparcalar") + 1;
     $maxId =  sprintf('%04d',$maxId);
     $prefix = $_POST['prefix'];
+    $cizim = "";
     if($kalipCins  == 4) {
         $cap = 220;
         $parca = 100;
@@ -30,13 +31,25 @@ if (isset($_POST['kalipciekle'])) {
 
     $senaNo = "SN-".$prefix.$maxId;
 
-
+    if ($_FILES['cizim']['name'] != "") {
+         $cizim = imageUpload("cizim", "asset/img/bolster");
+        if ($cizim == "hataboyimage") {
+            header("Location:../../kalipci/?hataboyimage=ok");
+            exit();
+        } else if ($cizim == "gecersizturimage") {
+            header("Location:../../kalipci/?gecersizturimage=ok");
+            exit();
+        } else if ($cizim == "hataimage") {
+            header("Location:../../kalipci/?hataimage=ok");
+            exit();
+        }
+    }
 
 
     $sql = "INSERT INTO tblkalipparcalar (firmaId, profilId, kalipCins, parca, senaNo, kalipciNo,
-                                      cap, kalite, figurSayi, takimNo, durum, netKilo, brutKilo)
+                                      cap, kalite, figurSayi, takimNo, durum, netKilo, brutKilo, cizim)
                 VALUES ('$firmaId', '$profilId','$kalipCins', '$parca','$senaNo', '$kalipciNo',
-                        '$cap', '$kalite','$figurSayi', '$takimNo','$durum', '$netKilo', '$brutKilo')";
+                        '$cap', '$kalite','$figurSayi', '$takimNo','$durum', '$netKilo', '$brutKilo', '$cizim')";
 
     if (mysqli_query($db, $sql)) {
         header("Location:../../kalipci/?durumekle=ok");
@@ -50,6 +63,10 @@ if (isset($_POST['kalipciekle'])) {
 
 if (isset($_GET['kalipsil'])) {
     $id = $_GET['kalipsil'];
+     $cizim = parcalarsqlbul($id, $db, 'cizim');
+    if (file_exists("../../" . $cizim)) {
+        unlink("../../" . $cizim);
+    }
     $sql = "DELETE FROM tblkalipparcalar where id = '$id' ";
 
     if (mysqli_query($db, $sql)) {
@@ -70,11 +87,27 @@ if (isset($_POST['kalipciguncelleme'])) {
     $cap = $_POST['cap'];
     $kalite = $_POST['kalite'];
     $figurSayi = $_POST['figurSayi'];
+    $cizim = parcalarsqlbul($id, $db, 'cizim');
 
-
+    if ($_FILES['cizim']['name'] != "") {
+        if (file_exists("../../" . $cizim)) {
+            unlink("../../" . $cizim);
+        }
+        $cizim = imageUpload("cizim", "asset/img/bolster");
+        if ($cizim == "hataboyimage") {
+            header("Location:../../kalipci/?hataboyimage=ok");
+            exit();
+        } else if ($cizim == "gecersizturimage") {
+            header("Location:../../kalipci/?gecersizturimage=ok");
+            exit();
+        } else if ($cizim == "hataimage") {
+            header("Location:../../kalipci/?hataimage=ok");
+            exit();
+        }
+    }
     $sql = "UPDATE tblkalipparcalar set 
         firmaId = '$firmaId', profilId = '$profilId', kalipciNo = '$kalipciNo', cap = '$cap',
-        kalite = '$kalite', figurSayi = '$figurSayi' WHERE id='$id'";
+        kalite = '$kalite', figurSayi = '$figurSayi', cizim = '$cizim' WHERE id='$id'";
 
     if (mysqli_query($db, $sql)) {
         header("Location:../../kalipci/?durumguncelleme=ok");

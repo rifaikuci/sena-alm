@@ -104,14 +104,23 @@ function parcaBul($id)
     return array_search($id, $arrayKalip);
 }
 
-function firmaTakimNoBul($db, $table, $firmaId)
+function firmaTakimNoBul($db, $table, $firmaId,$profilId)
 {
 
-    $sql = "SELECT COUNT(*)  FROM $table where firmaId = '$firmaId'";
+    $sql = "SELECT COUNT(*)  FROM $table where firmaId = '$firmaId' AND profilId = '$profilId'";
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_row();
 
     return $row[0] + 1;
+}
+
+
+function parcalarsqlbul($id, $db, $sutun)
+{
+    $sql = "SELECT * FROM tblkalipparcalar WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row[$sutun];
 }
 
 ?>

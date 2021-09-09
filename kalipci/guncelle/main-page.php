@@ -23,10 +23,10 @@ $profiller = $db->query($profillerrsql);
             Parça Güncelleme Alanı
         </div>
         <div class="card-body" id="kalip-giris">
-            <form method="post" action="<?php echo base_url() . 'netting/kalipci/index.php' ?>">
+            <form method="post" action="<?php echo base_url() . 'netting/kalipci/index.php' ?>" enctype="multipart/form-data">
                 <div class="row">
 
-                    <div class="col-sm-4">
+                    <div class="<?php echo $row['kalipCins'] == 4 ? 'col-sm-6' : 'col-sm-4'?>">
                         <div class="form-group">
                             <label>Sena No</label>
                             <input required disabled type="text" class="form-control form-control-lg"
@@ -35,7 +35,7 @@ $profiller = $db->query($profillerrsql);
                     </div>
 
 
-                    <div class="col-sm-4">
+                    <div class="<?php echo $row['kalipCins'] == 4 ? 'col-sm-6' : 'col-sm-4'?>">
                         <div class="form-group">
                             <label>Kalıp Cinsi</label>
                             <input required disabled type="text" class="form-control form-control-lg"
@@ -43,13 +43,15 @@ $profiller = $db->query($profillerrsql);
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <?php if($row['kalipCins'] != 4) { ?>
+                        <div class="<?php echo $row['kalipCins'] == 4 ? 'col-sm-6' : 'col-sm-4'?>">
                         <div class="form-group">
                             <label>Parça</label>
-                            <input required disabled type="text" class="form-control form-control-lg" name="kalipciNo"
+                            <input disabled type="text" class="form-control form-control-lg" name="kalipciNo"
                                    value="<?php echo parcaBul($row['parca']) ?>">
                         </div>
                     </div>
+                    <?php } ?>
 
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -64,10 +66,11 @@ $profiller = $db->query($profillerrsql);
                         </div>
                     </div>
 
+                    <?php if($row['kalipCins'] != 4) { ?>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Profiller</label>
-                            <select name="profilId" required class="form-control" style="width: 100%;">
+                            <select name="profilId" class="form-control" style="width: 100%;">
                                 <option disabled value="">Profil Seçiniz</option>
                                 <?php while ($profil = $profiller->fetch_array()) { ?>
                                     <option <?php echo $profil['id'] == $row['profilId'] ? "selected" : "" ?>
@@ -76,6 +79,7 @@ $profiller = $db->query($profillerrsql);
                             </select>
                         </div>
                     </div>
+                    <?php } ?>
 
 
                     <div class="col-sm-6">
@@ -122,6 +126,18 @@ $profiller = $db->query($profillerrsql);
                                    max="10" value="<?php echo $row['figurSayi'] ?>">
                         </div>
                     </div>
+                    <br><br>
+                    <?php if($row['kalipCins'] ==4)  {?>
+                    <div class="col-sm-7" style="text-align: center">
+                        <div class="form-group">
+                            <input type="file" name="cizim">
+                        </div>
+                        <div>
+                            <img src="<?php echo base_url() . $row['cizim']; ?>" alt="<?php echo $row['senaNo']; ?>"
+                                 class="img img-fluid">
+                        </div>
+                    </div>
+                    <?php } ?>
 
                 </div>
 
