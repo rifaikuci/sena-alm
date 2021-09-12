@@ -71,7 +71,7 @@ $profiller = $db->query($profillerrsql);
                                 <option disabled value="">Profil Seçiniz</option>
                                 <?php while ($profil = $profiller->fetch_array()) { ?>
                                     <option <?php echo $profil['id'] == $row['profilId'] ? "selected" : "" ?>
-                                            value="<?php echo $profil['id']; ?>"><?php echo $profil['profilAdi']; ?></option>
+                                            value="<?php echo $profil['id']; ?>"><?php echo $profil['profilNo']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>

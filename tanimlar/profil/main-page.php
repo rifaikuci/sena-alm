@@ -50,8 +50,9 @@ $result = $db->query($sql);
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Çizim</th>
+                                <th style="width: 25px">#</th>
+                                <th style="width: 100px;height: 50px;">Çizim</th>
+                                <th>Profil No</th>
                                 <th>Profil Adı</th>
                                 <th>Alan</th>
                                 <th>Çevre</th>
@@ -65,7 +66,8 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td><img class="img-fluid" style="width: 100px;height: 50px" src="<?php echo base_url().$row['cizim']?>"</td>
+                                    <td><img class="img-fluid"  src="<?php echo base_url().$row['cizim']?>"</td>
+                                    <td><?php echo $row['profilNo']; ?></td>
                                     <td><?php echo $row['profilAdi']; ?></td>
                                     <td><?php echo $row['alan']; ?></td>
                                     <td><?php echo $row['cevre']; ?></td>

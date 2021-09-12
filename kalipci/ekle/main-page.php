@@ -2,7 +2,7 @@
 include "../../netting/baglan.php";
 
 
-$firmasql = "SELECT * FROM tblfirma where firmaTurId =1 ";
+$firmasql = "SELECT * FROM tblfirma where firmaTurId =21 ";
 $firmalar = $db->query($firmasql);
 
 $profillerrsql = "SELECT * FROM tblprofil";
@@ -45,20 +45,6 @@ $profiller = $db->query($profillerrsql);
                         </div>
                     </div>
 
-                    <div v-if="filterParca.length > 0 ? true : false" class="col-sm-6">
-                        <div class="form-group">
-                            <label>Profiller</label>
-                            <select name="profilId" :required="filterParca.length > 0 ? true : false"
-                                    class="form-control" style="width: 100%;">
-                                <option selected disabled value="">Profil Seçiniz</option>
-                                <?php while ($profil = $profiller->fetch_array()) { ?>
-                                    <option
-                                            value="<?php echo $profil['id']; ?>"><?php echo $profil['profilAdi']; ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-
                     <div class="col-sm-6" v-if="filterParca.length > 0 ? true : false">
                         <input name="prefix" :value="prefix" type="hidden">
                         <div class="form-group">
@@ -71,6 +57,22 @@ $profiller = $db->query($profillerrsql);
                             </select>
                         </div>
                     </div>
+
+
+                    <div v-if="filterParca.length > 0 ? true : false" class="col-sm-6">
+                        <div class="form-group">
+                            <label>Profiller</label>
+                            <select name="profilId" :required="filterParca.length > 0 ? true : false"
+                                    class="form-control" style="width: 100%;">
+                                <option selected disabled value="">Profil Seçiniz</option>
+                                <?php while ($profil = $profiller->fetch_array()) { ?>
+                                    <option
+                                            value="<?php echo $profil['id']; ?>"><?php echo $profil['profilNo']; ?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                    </div>
+
 
                     <div class="col-sm-6">
                         <div class="form-group">

@@ -8,6 +8,7 @@ ini_set('display_errors', 1);
 
 if (isset($_POST['profilekleme'])) {
     try {
+        $profilNo = $_POST['profilNo'];
         $profilAdi = $_POST['profilAdi'];
         $sektorId = $_POST['sektorId'];
         $gramaj = $_POST['gramaj'];
@@ -21,7 +22,7 @@ if (isset($_POST['profilekleme'])) {
         $ezilmeKatsayisi = $_POST['ezilmeKatsayisi'];
         $aciklama = $_POST['aciklama'];
         $cizim = $_POST['cizim'];
-        $seo = seo($profilAdi);
+        $seo = seo($profilNo);
         $resim = "";
         $paketlemeSekli = "";
         $sepetDizilmeSekli = "";
@@ -86,12 +87,12 @@ if (isset($_POST['profilekleme'])) {
             }
         }
 
-        $sql = "INSERT INTO tblprofil (profilAdi, sektorId, gramaj, alan, cevre, paketAdet,
+        $sql = "INSERT INTO tblprofil (profilNo, sektorId, gramaj, alan, cevre, paketAdet,
                                       paketEn, paketBoy, balyaAdet, maxGramaj, ezilmeKatsayisi, aciklama,
-                                      seo, resim, paketlemeSekli, sepetDizilmeSekli, cizim )
-                VALUES ('$profilAdi', '$sektorId','$gramaj', '$alan','$cevre', '$paketAdet',
+                                      seo, resim, paketlemeSekli, sepetDizilmeSekli, cizim, profilAdi )
+                VALUES ('$profilNo', '$sektorId','$gramaj', '$alan','$cevre', '$paketAdet',
                         '$paketEn', '$paketBoy', '$balyaAdet','$maxGramaj', '$ezilmeKatsayisi','$aciklama',
-                        '$seo', '$resim', '$paketlemeSekli', '$sepetDizilmeSekli', '$cizim')";
+                        '$seo', '$resim', '$paketlemeSekli', '$sepetDizilmeSekli', '$cizim', '$profilAdi')";
 
         if (mysqli_query($db, $sql)) {
             header("Location:../../tanimlar/profil/?durumekle=ok");
@@ -141,6 +142,7 @@ if (isset($_GET['profilsil'])) {
 
 if (isset($_POST['profilguncelleme'])) {
     $id = $_POST['id'];
+    $profilNo = $_POST['profilNo'];
     $profilAdi = $_POST['profilAdi'];
     $sektorId = $_POST['sektorId'];
     $gramaj = $_POST['gramaj'];
@@ -153,7 +155,7 @@ if (isset($_POST['profilguncelleme'])) {
     $maxGramaj = $_POST['maxGramaj'];
     $ezilmeKatsayisi = $_POST['ezilmeKatsayisi'];
     $aciklama = $_POST['aciklama'];
-    $seo = seo($profilAdi);
+    $seo = seo($profilNo);
     $resimyol = $_POST['resimyol'];
     $sepetyol = $_POST['sepetyol'];
     $paketyol = $_POST['paketyol'];
@@ -247,10 +249,11 @@ if (isset($_POST['profilguncelleme'])) {
 
 
     $sql = "UPDATE tblprofil set 
-        profilAdi = '$profilAdi', sektorId = '$sektorId', gramaj = '$gramaj', alan = '$alan',
+        profilNo = '$profilNo', sektorId = '$sektorId', gramaj = '$gramaj', alan = '$alan',
         cevre = '$cevre', paketAdet = '$paketAdet', paketEn = '$paketEn', paketBoy = '$paketBoy', balyaAdet = '$balyaAdet', 
                        maxGramaj = '$maxGramaj', ezilmeKatsayisi ='$ezilmeKatsayisi', aciklama = '$aciklama',
-                    seo = '$seo', resim = '$resimyol', paketlemeSekli = '$paketyol' , sepetDizilmeSekli  = '$sepetyol', cizim = '$cizim'  
+                    seo = '$seo', resim = '$resimyol', paketlemeSekli = '$paketyol' , sepetDizilmeSekli  = '$sepetyol', cizim = '$cizim',
+                     profilAdi = '$profilAdi'
             WHERE id='$id'";
 
     if (mysqli_query($db, $sql)) {

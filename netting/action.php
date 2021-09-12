@@ -2,6 +2,8 @@
 
 include 'baglan.php';
 include '../include/helper.php';
+include '../include/sql.php';
+ini_set('display_errors', 1);
 
 $received_data = json_decode(file_get_contents("php://input"));
 $data = array();
@@ -16,7 +18,7 @@ if ($received_data->action == 'profilId') {
 
     foreach ($result as $row) {
         $data['id'] = $row['id'];
-        $data['ad'] = $row['profilAdi'];
+        $data['ad'] = $row['profilNo'];
         $data['agirlik'] = $row['gramaj'];
         $data['resim'] = base_url() . $row['resim'];
     }
@@ -85,4 +87,38 @@ if ($received_data->action == 'malzemeId') {
 
     echo json_encode($data);
 }
+
+if ($received_data->action == 'destekId') {
+
+    $parca = $received_data->kalipCins == 0 || $received_data->kalipCins == 1 ? '2,5' : ($received_data->kalipCins == 2 ? '8' : ($received_data->kalipCins == 3 ? '10' : '100'));
+    $firmaId = $received_data->firmaId;
+    $profilId = $received_data->profilId;
+    $figur = $received_data->figur;
+    $cap = $received_data->cap;
+    $sql = "SELECT * FROM tblkalipparcalar WHERE durum = '1' AND $firmaId = '$firmaId' AND figurSayi = '$figur' AND cap = '$cap' AND parca IN($parca) ";
+
+    $result = $db->query($sql);
+    $listedestekler = array();
+    while ($row = $result->fetch_array()) {
+        $data['senaNo'] = $row['senaNo'];
+        $data['id'] = $row['id'];
+        $data['profilId'] = $row['profilId'];
+        $data['cap'] = $row['cap'];
+        $data['kalite'] = $row['kalite'];
+        $data['figurSayi'] = $row['figurSayi'];
+        $data['kalipCins'] = $row['kalipCins'];
+        $data['kalipciNo'] = $row['kalipciNo'];
+        $data['parca'] = $row['parca'];
+        $data['durum'] = $row['durum'];
+        $data['netKilo'] = $row['netKilo'];
+        $data['brutKilo'] = $row['brutKilo'];
+        $data['profilNo'] = profilbul($row['profilId'], $db, "profilNo");
+        $data['firmaAdi'] = firmaBul($row["firmaId"], $db, 'firmaAd');
+        array_push($listedestekler, $data);
+    }
+
+    echo json_encode($listedestekler);
+
+}
+
 ?>

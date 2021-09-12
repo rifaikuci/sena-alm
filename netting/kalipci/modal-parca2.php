@@ -58,13 +58,13 @@ $result = $db->query($sql);
                     data-firmaId="<?php echo $parca['firmaId'] ?>"
                     data-firmaAd="<?php echo firmaBul($parca['firmaId'], $db, 'firmaAd') ?>"
                     data-profilId="<?php echo $parca['profilId'] ?>"
-                    data-profilAd="<?php echo profilbul($parca['profilId'], $db, 'profilAdi') ?>"
+                    data-profilAd="<?php echo profilbul($parca['profilId'], $db, 'profilNo') ?>"
                     data-figurSayi="<?php echo $parca['figurSayi'] ?>"
                     data-cap="<?php echo $parca['cap'] ?>"> <?php echo $parca['senaNo'] ?>
                 </td>
                 <td> <?php echo firmaBul($parca["firmaId"], $db, 'firmaAd') ?></td>
                 <td><?php echo $parca['kalipciNo'] ?></td>
-                <td> <?php echo profilbul($parca["profilId"], $db, 'profilAdi') ?></td>
+                <td> <?php echo profilbul($parca["profilId"], $db, 'profilNo') ?></td>
                 <td><?php echo trim(parcaBul($parca['parca'])); ?></td>
                 <td> <?php echo $parca['cap'] ?></td>
                 <td> <?php echo $parca['kalite']; ?></td>

@@ -10,7 +10,7 @@ if ($_GET['id']) {
 
 }
 
-$firmasql = "SELECT * FROM tblfirma where firmaTurId =1 ";
+$firmasql = "SELECT * FROM tblfirma where firmaTurId =21 ";
 $firmalar = $db->query($firmasql);
 
 $profillerrsql = "SELECT * FROM tblprofil";
@@ -74,7 +74,7 @@ $profiller = $db->query($profillerrsql);
                                 <option disabled value="">Profil Seçiniz</option>
                                 <?php while ($profil = $profiller->fetch_array()) { ?>
                                     <option <?php echo $profil['id'] == $row['profilId'] ? "selected" : "" ?>
-                                            value="<?php echo $profil['id']; ?>"><?php echo $profil['profilAdi']; ?></option>
+                                            value="<?php echo $profil['id']; ?>"><?php echo $profil['profilNo']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -112,7 +112,7 @@ $profiller = $db->query($profillerrsql);
                             <label>Kalite</label>
                             <select name="kalite" required class="form-control" style="width: 100%;">
                                 <option value="">Kalite</option>
-                                <option <?php echo $row['kalite'] == "160" ? "selected" : "" ?> value="2344">2344 </option>
+                                <option <?php echo $row['kalite'] == "2344" ? "selected" : "" ?> value="2344">2344 </option>
                                 <option <?php echo $row['kalite'] == "2716" ? "selected" : "" ?> value="2716">2716 </option>
                                 <option <?php echo $row['kalite'] == "Dievar" ? "selected" : "" ?> value="Dievar"> Dievar </option>
                             </select>

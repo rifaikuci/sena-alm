@@ -1,5 +1,6 @@
 <?php
 include "../../netting/baglan.php";
+include "../../include/sql.php";
 
 
 $firmasql = "SELECT * FROM tblfirma where firmaTurId =1 ";
@@ -7,6 +8,10 @@ $firmalar = $db->query($firmasql);
 
 $profillerrsql = "SELECT * FROM tblprofil";
 $profiller = $db->query($profillerrsql);
+
+
+$bolstersql = "SELECT * FROM tblkalipparcalar where durum =1 and parca =100";
+$bolsterler = $db->query($bolstersql);
 ?>
 
 <section class="content">
@@ -44,8 +49,8 @@ $profiller = $db->query($profillerrsql);
                         <div class="form-group">
                             <label>{{label1}} </label>
                             <br>
-                            <button type="button" data-target="#parca1modal" v-on:click="parca1ekle($event)"
-                                    data-toggle="modal" class="btn btn-info">Parçayı Seç
+                            <button type="button" v-on:click="parca1ekle($event)"
+                                    data-toggle="modal" class="btn btn-info">{{parca1SenaNo }}
                             </button>
 
                         </div>
@@ -56,8 +61,8 @@ $profiller = $db->query($profillerrsql);
                         <div class="form-group">
                             <label>{{label2}} </label>
                             <br>
-                            <button type="button" data-target="#parca2modal" v-on:click="parca2ekle($event)"
-                                    data-toggle="modal" class="btn btn-info">Parçayı Seç
+                            <button type="button" v-on:click="parca2ekle($event)"
+                                    data-toggle="modal" class="btn btn-info">{{parca2SenaNo }}
                             </button>
 
                         </div>
@@ -101,45 +106,79 @@ $profiller = $db->query($profillerrsql);
                                 <div class="icheck-primary d-inline">
                                     <input @change="takimOnay()" type="checkbox" id="checkboxPrimary1">
                                     <label style="color: #0e84b5" for="checkboxPrimary1">
-                                        Parçaları tamamladıktan sonra seçeneği işaretleyerek takım oluşturma işlemini
-                                        tamamlayabilirsiniz.
+                                       Destek ve bolsterleri seçmek için tıklayınız
                                     </label>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-
-                </div>
-
-                <div class="card-footer">
-                    <div>
-                        <button v-if="ekle" type="submit" name="kalipciekle" class="btn btn-info float-right">Ekle
-                        </button>
-                        <a href="../"
-                           class="btn btn-warning float-left">Vazgeç</a>
-                    </div>
-                </div>
-
-
-                <div id="parca1modal" class="modal fade" role="dialog">
-                    <div class="modal-dialog modal-xl">
-
-                        <div class="modal-content">
-                            <div style="margin: 10px">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            </div>
-
-                            <div class="modal-body">
+                    <div class="col-sm-12">
+                        <div class="form-group" >
+                            <label>Bolster Seçiniz</label>
+                            <div class="select2-blue">
+                                <select :disabled="!ekle" required name="bolsterler[]" class="select2" multiple="multiple"
+                                        data-dropdown-css-class="select2-blue"
+                                        data-placeholder="Sena No - Firma Adı -Kalıpçı No - Kalite - Figür Sayı"
+                                        style="width: 100%;">
+                                    <?php
+                                    while ($bolster = $bolsterler->fetch_array()) { ?>
+                                        <option value="<?php echo $bolster['id'] ?>">
+                                            <?php echo $bolster['senaNo'] . " - " . firmaBul($bolster['firmaId'], $db, "firmaAd") . " - " . $bolster['kalipciNo'] . " - " . $bolster['kalite'] . " - " . $bolster['figurSayi'] ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
                             </div>
                         </div>
 
                     </div>
-                </div
+
+
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Destek Seçiniz</label>
+                            <div class="select2-blue">
+                                <select :disabled="!ekle" required name="destekler[]" class="select2" multiple="multiple"
+                                        data-dropdown-css-class="select2-blue"
+                                        data-placeholder="Sena No - Firma Adı - Profil - Çap - Kalıpçı No - Kalite - Figür Sayı"
+                                        style="width: 100%;">
+                                        <option v-for="(destek,index) in destekler" :value="destek.id">
+                                            {{destek.senaNo}} - {{destek.firmaAdi}} - {{destek.profilNo}} - {{destek.cap}} - {{destek.kalipciNo}} -  {{destek.kalite}} - {{destek.figurSayi}}
+                                        </option>
+                                </select>
+                            </div>
+                        </div>
+
+
+
+                    <div class="card-footer">
+                        <div>
+                            <button v-if="ekle" type="submit" name="kalipciekle" class="btn btn-info float-right">Ekle
+                            </button>
+                            <a href="../"
+                               class="btn btn-warning float-left">Vazgeç</a>
+                        </div>
+                    </div>
+
+
+                    <div id="parca1modal" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-xl">
+
+                            <div class="modal-content">
+                                <div style="margin: 10px">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                </div>
+
+                                <div class="modal-body">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
         </div>
-
-
-        </form>
-    </div>
 
 </section>

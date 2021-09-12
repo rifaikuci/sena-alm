@@ -8,7 +8,8 @@
 <script src=<?php echo base_url() . "plugins/datatables-bs4/js/dataTables.bootstrap4.min.js" ?>></script>
 <script src=<?php echo base_url() . "plugins/datatables-responsive/js/dataTables.responsive.min.js" ?>></script>
 <script src=<?php echo base_url() . "plugins/datatables-responsive/js/responsive.bootstrap4.min.js" ?>></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.1/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/goruntule.js" ?>></script>
 <script>
@@ -55,4 +56,5 @@
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/veri-giris.js" ?>></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/kalipci.js" ?>></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/takim.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/takim-goster.js" ?>></script>
 

@@ -9,17 +9,38 @@ ini_set('display_errors', 1);
 $profilId = $_POST['profilId'];
 $cap = $_POST['cap'];
 $kalipCins = $_POST['kalipCins'];
+$bolsterler = $_POST['bolsterler'];
+$destekler = $_POST['destekler'];
 $firmaId = $_POST['firmaId'];
 $parca1 = $_POST['parca1SenaNo'];
 $parca2 = $_POST['parca2SenaNo'];
 $profil = $_POST['profil'];
 $kisaKod = firmaBul($firmaId, $db, 'kisaKod');
-$sonEk = firmaTakimNoBul($db, "tbltakim", $firmaId,$profilId);
+$sonEk = firmaTakimNoBul($db, "tbltakim", $firmaId, $profilId);
 $takimNo = "SN-" . $kisaKod . $profil . "-";
 $sonEk = sprintf('%03d', $sonEk);
 $takimNo = $takimNo . $sonEk;
-$sql = "INSERT INTO tbltakim (parca1, parca2, takimNo, firmaId, profilId, cap, kalipCins)
-                            VALUES ('$parca1', '$parca2','$takimNo', '$firmaId','$profilId', '$cap', '$kalipCins')";
+
+
+$bolster = "";
+for ($i = 0; $i < count($bolsterler); $i++) {
+    if ($i == count($bolsterler) - 1) {
+        $bolster = $bolster . $bolsterler[$i];
+    } else {
+        $bolster = $bolster . $bolsterler[$i] . ",";
+    }
+}
+$destek = "";
+for ($i = 0; $i < count($destekler); $i++) {
+    if ($i == count($destekler) - 1) {
+        $destek = $destek . $destekler[$i];
+    } else {
+        $destek = $destek . $destekler[$i] . ",";
+    }
+}
+
+$sql = "INSERT INTO tbltakim (parca1, parca2, takimNo, firmaId, profilId, cap, kalipCins, bolster, destek)
+                            VALUES ('$parca1', '$parca2','$takimNo', '$firmaId','$profilId', '$cap', '$kalipCins', '$bolster', '$destek')";
 
 if (mysqli_query($db, $sql)) {
     $updateParca = "UPDATE tblkalipparcalar set 

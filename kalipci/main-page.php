@@ -47,6 +47,7 @@ $result = $db->query($sql);
                                 <th>Parça</th>
                                 <th>Parça</th>
                                 <th>Çap</th>
+                                <th>Kalıpçı No</th>
                                 <th>Durum</th>
                                 <th>Takım</th>
                                 <th style="text-align: center">İşlem</th>
@@ -58,11 +59,14 @@ $result = $db->query($sql);
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['senaNo']; ?></td>
-                                    <td><?php echo profilbul($row['profilId'], $db, "profilAdi"); ?></td>
+                                    <td><?php echo profilbul($row['profilId'], $db, "profilNo"); ?></td>
                                     <td><?php echo firmaBul($row['firmaId'], $db, 'firmaAd'); ?></td>
                                     <td><?php echo kalipBul($row['kalipCins']); ?></td>
                                     <td><?php echo trim(parcaBul($row['parca'])); ?></td>
                                     <td><?php echo $row['cap']; ?></td>
+                                    <td><?php echo
+                                        firmaBul($row['firmaId'],$db,'kisaKod').
+                                        $row['kalipciNo']; ?></td>
                                     <td style="color: <?php echo $row['durum'] == 1 ? '#00b44e' : ($row['durum'] == 2 ? '#d55537' : '#b8860b') ?>">
                                         <b>
                                             <?php echo $row['durum'] == 1 ? "Aktif" : ($row['durum'] == 2 ? 'Pasif' : 'Çöp')

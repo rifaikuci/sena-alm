@@ -3,6 +3,7 @@ new Vue({
         data: {
             kalipCins : "",
             prefix:"",
+            parca : "",
             parcalar: [
                 {id: 0, name: "Zıvana", type: "koprulu", prefix: "KZ"},
                 {id: 1, name: "Kapak", type: "koprulu", prefix: "KK"},
@@ -27,7 +28,6 @@ new Vue({
 
         methods: {
             onChangeKalipCins(event) {
-                debugger;
                 if (event.target.value) {
                     this.kalipCins = "";
                     this.caplar = [
@@ -57,6 +57,7 @@ new Vue({
             onChangeParca(event) {
                 if (event.target.value) {
                     this.prefix = this.parcalar.find(e => e.id == event.target.value).prefix;
+                    this.parca = event.target.value
                 } else {
                     this.prefix = "";
                 }

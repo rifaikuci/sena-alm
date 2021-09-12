@@ -2,12 +2,12 @@
 
 include '../../../netting/baglan.php';
 
-$sql = "SELECT MAX(profilAdi) as profil FROM tblprofil";
+$sql = "SELECT MAX(profilNo) as profil FROM tblprofil";
 $result = mysqli_query($db, $sql);
 $row = $result->fetch_assoc();
-$profilAdi = 1000;
+$profilNo = 1000;
 if ($row['profil'] != "") {
-    $profilAdi = $row['profil'] + 1;
+    $profilNo = $row['profil'] + 1;
 }
 
 $sqlsektor = "SELECT * FROM tblsektor";
@@ -26,12 +26,20 @@ $sektorler = $db->query($sqlsektor);
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Profil Adı</label>
+                            <label>Profil No</label>
                             <input disabled type="text" class="form-control form-control-lg"
-                                   value="<?php echo $profilAdi ?>">
+                                   value="<?php echo $profilNo ?>">
 
                             <input required type="hidden" class="form-control form-control-lg"
-                                   value="<?php echo $profilAdi ?>" name="profilAdi">
+                                   value="<?php echo $profilNo ?>" name="profilNo">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Profil Adı</label>
+                            <input required type="text" class="form-control form-control-lg" name="profilAdi"
+                                   placeholder="Profil Adı Giriniz...">
                         </div>
                     </div>
 
@@ -103,7 +111,7 @@ $sektorler = $db->query($sqlsektor);
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <div class="form-group">
                             <label>Max Gramaj</label>
                             <input required type="number" class="form-control form-control-lg" step="0.1"
@@ -111,7 +119,7 @@ $sektorler = $db->query($sqlsektor);
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <div class="form-group">
                             <label>Ezilme Katsayısı</label>
                             <input required type="number" class="form-control form-control-lg"
@@ -119,7 +127,7 @@ $sektorler = $db->query($sqlsektor);
                         </div>
                     </div>
 
-                    <div class="col-sm-8">
+                    <div class="col-sm-10">
                         <div class="form-group">
                             <label>Açıklama</label>
                             <input type="text" class="form-control form-control-lg"

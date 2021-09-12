@@ -18,6 +18,13 @@
                     </li>
 
                     <li class="nav-item">
+                        <a href=<?php echo base_url() . "tanimlar/firmatur" ?> class="nav-link">
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Firma Türü</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
                         <a href=<?php echo base_url() . "tanimlar/personel" ?> class="nav-link">
                             <i class="far fa-circle nav-icon"></i>
                             <p>Personeller</p>

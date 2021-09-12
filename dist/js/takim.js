@@ -5,7 +5,7 @@ new Vue({
             kalipCins: "",
             label1: "",
             label2: "",
-            parca1SenaNo: '',
+            parca1SenaNo: "Parçayı Seç",
             parca1Cap: '',
             parca1FirmaAd: '',
             parca1FirmaId: '',
@@ -13,7 +13,7 @@ new Vue({
             parca1ProfilAd: '',
             parca1FigurSayi: '',
 
-            parca2SenaNo: '',
+            parca2SenaNo: "Parçayı Seç",
             parca2Cap: '',
             parca2FirmaAd: '',
             parca2FirmaId: '',
@@ -32,7 +32,8 @@ new Vue({
             timer: null,
             timer2: null,
             takimCheck: false,
-            ekle: false
+            ekle: false,
+            destekler: []
         },
 
 
@@ -78,14 +79,15 @@ new Vue({
             },
             parca1ekle(event) {
                 if (this.label1) {
-                    this.cap = self.parca1Cap ? self.parca1Cap : self.parca2Cap ? self.parca2Cap : "";
-                    this.firmaAd = self.parca1FirmaAd ? self.parca1FirmaAd : self.parca2FirmaAd ? self.parca2FirmaAd : "";
-                    this.firmaId = self.parca1FirmaId ? self.parca1FirmaId : self.parca2FirmaId ? self.parca2FirmaId : "";
-                    this.profil = self.parca1ProfilAd ? self.parca1ProfilAd : self.parca2ProfilAd ? self.parca2ProfilAd : "";
-                    this.profilId = self.parca1ProfilId ? self.parca1ProfilId : self.parca2ProfilId ? self.parca2ProfilId : "";
-                    this.figur = self.parca1FigurSayi ? self.parca1FigurSayi : self.parca2FigurSayi ? self.parca2FigurSayi : "";
-                    this.parca1SenaNo = self.parca1SenaNo ? self.parca1SenaNo : "";
-                    this.parca2SenaNo = self.parca2SenaNo ? self.parca2SenaNo : "";
+                    this.cap = self.parca2Cap ? self.parca2Cap : "";
+                    this.firmaAd = self.parca2FirmaAd ? self.parca2FirmaAd : "";
+                    this.firmaId = self.parca2FirmaId ? self.parca2FirmaId : "";
+                    this.profil = self.parca2ProfilAd ? self.parca2ProfilAd : "";
+                    this.profilId = self.parca2ProfilId ? self.parca2ProfilId : "";
+                    this.figur = self.parca2FigurSayi ? self.parca2FigurSayi : "";
+                    this.parca1SenaNo = self.parca1SenaNo ? self.parca1SenaNo : "Parçayı Seç";
+                    this.parca2SenaNo = self.parca2SenaNo ? self.parca2SenaNo : "Parçayı Seç";
+
                 }
                 $.ajax({
                     url: '/sena/netting/kalipci/modal-parca1.php',
@@ -129,16 +131,17 @@ new Vue({
 
             },
 
-            parca2ekle(event) {
+            async parca2ekle(event) {
                 if (this.label1) {
-                    this.cap = self.parca1Cap ? self.parca1Cap : self.parca2Cap ? self.parca2Cap : "";
-                    this.firmaAd = self.parca1FirmaAd ? self.parca1FirmaAd : self.parca2FirmaAd ? self.parca2FirmaAd : "";
-                    this.firmaId = self.parca1FirmaId ? self.parca1FirmaId : self.parca2FirmaId ? self.parca2FirmaId : "";
-                    this.profil = self.parca1ProfilAd ? self.parca1ProfilAd : self.parca2ProfilAd ? self.parca2ProfilAd : "";
-                    this.profilId = self.parca1ProfilId ? self.parca1ProfilId : self.parca2ProfilId ? self.parca2ProfilId : "";
-                    this.figur = self.parca1FigurSayi ? self.parca1FigurSayi : self.parca2FigurSayi ? self.parca2FigurSayi : "";
-                    this.parca1SenaNo = self.parca1SenaNo ? self.parca1SenaNo : "";
-                    this.parca2SenaNo = self.parca2SenaNo ? self.parca2SenaNo : "";
+                    this.cap = self.parca1Cap ? self.parca1Cap : "";
+                    this.firmaAd = self.parca1FirmaAd ? self.parca1FirmaAd : "";
+                    this.firmaId = self.parca1FirmaId ? self.parca1FirmaId : "";
+                    this.profil = self.parca1ProfilAd ? self.parca1ProfilAd : "";
+                    this.profilId = self.parca1ProfilId ? self.parca1ProfilId : "";
+                    this.figur = self.parca1FigurSayi ? self.parca1FigurSayi : "";
+                    this.parca1SenaNo = self.parca1SenaNo ? self.parca1SenaNo : "Parçayı Seç";
+                    this.parca2SenaNo = self.parca2SenaNo ? self.parca2SenaNo : "Parçayı Seç";
+
                 }
 
                 $.ajax({
@@ -182,7 +185,7 @@ new Vue({
                 });
 
             },
-            takimOnay(event) {
+            async takimOnay() {
 
                 this.takimCheck = !this.takimCheck;
                 if (this.kalipCins == 0 || this.kalipCins == 1 || this.kalipCins == 2) {
@@ -192,10 +195,22 @@ new Vue({
                     this.profil = self.parca1ProfilAd ? self.parca1ProfilAd : self.parca2ProfilAd ? self.parca2ProfilAd : "";
                     this.profilId = self.parca1ProfilId ? self.parca1ProfilId : self.parca2ProfilId ? self.parca2ProfilId : "";
                     this.figur = self.parca1FigurSayi ? self.parca1FigurSayi : self.parca2FigurSayi ? self.parca2FigurSayi : "";
-                    this.parca1SenaNo = self.parca1SenaNo ? self.parca1SenaNo : "";
-                    this.parca2SenaNo = self.parca2SenaNo ? self.parca2SenaNo : "";
+                    this.parca1SenaNo = self.parca1SenaNo ? self.parca1SenaNo : "Parçayı Seç";
+                    this.parca2SenaNo = self.parca2SenaNo ? self.parca2SenaNo : "Parçayı Seç";
+                    const destekler = await axios.post('/sena/netting/action.php', {
+                        action: 'destekId',
+                        firmaId: this.firmaId,
+                        profilId: this.profilId,
+                        figur: this.figur,
+                        cap: this.cap,
+                        kalipCins: this.kalipCins
 
-                    if (this.parca1SenaNo && this.parca2SenaNo) {
+                    }).then((response) => {
+                        return response.data
+                    });
+                    this.destekler = destekler;
+
+                    if (this.parca1SenaNo != "Parçayı Seç" && this.parca2SenaNo != "Parçayı Seç") {
                         this.ekle = true;
                     } else {
                         this.ekle = false;
@@ -208,10 +223,22 @@ new Vue({
                     this.profil = self.parca1ProfilAd ? self.parca1ProfilAd : "";
                     this.profilId = self.parca1ProfilId ? self.parca1ProfilId : "";
                     this.figur = self.parca1FigurSayi ? self.parca1FigurSayi : "";
-                    this.parca1SenaNo = self.parca1SenaNo ? self.parca1SenaNo : "";
-                    this.parca2SenaNo = self.parca2SenaNo ? self.parca2SenaNo : "";
+                    this.parca1SenaNo = self.parca1SenaNo ? self.parca1SenaNo : "Parçayı Seç";
+                    this.parca2SenaNo = self.parca2SenaNo ? self.parca2SenaNo : "Parçayı Seç";
+                    const destekler = await axios.post('/sena/netting/action.php', {
+                        action: 'destekId',
+                        firmaId: this.firmaId,
+                        profilId: this.profilId,
+                        figur: this.figur,
+                        cap: this.cap,
+                        kalipCins: this.kalipCins
 
-                    if (this.parca1SenaNo) {
+                    }).then((response) => {
+                        return response.data
+                    });
+                    this.destekler = destekler;
+
+                    if (this.parca1SenaNo != "Parçayı Seç") {
                         this.ekle = true;
                     } else {
                         this.ekle = false;

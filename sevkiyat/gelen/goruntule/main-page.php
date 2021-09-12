@@ -280,7 +280,7 @@ if ($_GET['id']) {
                                     <tr>
                                         <td style="font-weight: bold"><?php echo $sira; ?></td>
                                         <td><?php echo $profil['siparisNo'] ?></td>
-                                        <td><?php echo profilbul($profil['profilId'], $db, "profilAdi"); ?></td>
+                                        <td><?php echo profilbul($profil['profilId'], $db, "profilNo"); ?></td>
                                         <td><?php echo $profil['boy'] ?></td>
                                         <td><?php echo firmaBul($profil["firmaId"], $db, 'firmaAd') ?></td>
                                         <td><?php echo firmaBul($profil['musteriId'], $db, 'firmaAd') ?></td>

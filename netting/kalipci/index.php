@@ -11,28 +11,28 @@ if (isset($_POST['kalipciekle'])) {
     $profilId = $_POST['profilId'];
     $kalipCins = $_POST['kalipCins'];
     $parca = $_POST['parca'];
-    $kalipciNo = firmaBul($firmaId,$db,'kisaKod'). $_POST['kalipciNo'];
+    $kalipciNo = $_POST['kalipciNo'];
     $cap = $_POST['cap'];
     $kalite = $_POST['kalite'];
     $figurSayi = $_POST['figurSayi'];
-    $takimNo= "";
-    $netKilo= 0;
-    $brutKilo= 0;
+    $takimNo = "";
+    $netKilo = 0;
+    $brutKilo = 0;
     $durum = 1; //1 Aktif 2 Pasif 3 Çöp
-    $maxId = maxIdBul($db,"tblkalipparcalar") + 1;
-    $maxId =  sprintf('%04d',$maxId);
+    $maxId = maxIdBul($db, "tblkalipparcalar") + 1;
+    $maxId = sprintf('%04d', $maxId);
     $prefix = $_POST['prefix'];
     $cizim = "";
-    if($kalipCins  == 4) {
+    if ($kalipCins == 4) {
         $cap = 220;
         $parca = 100;
         $prefix = "BOL";
     }
 
-    $senaNo = "SN-".$prefix.$maxId;
+    $senaNo = "SN-" . $prefix . $maxId;
 
     if ($_FILES['cizim']['name'] != "") {
-         $cizim = imageUpload("cizim", "asset/img/bolster");
+        $cizim = imageUpload("cizim", "asset/img/bolster");
         if ($cizim == "hataboyimage") {
             header("Location:../../kalipci/?hataboyimage=ok");
             exit();
@@ -63,7 +63,7 @@ if (isset($_POST['kalipciekle'])) {
 
 if (isset($_GET['kalipsil'])) {
     $id = $_GET['kalipsil'];
-     $cizim = parcalarsqlbul($id, $db, 'cizim');
+    $cizim = parcalarsqlbul($id, $db, 'cizim');
     if (file_exists("../../" . $cizim)) {
         unlink("../../" . $cizim);
     }
@@ -83,7 +83,7 @@ if (isset($_POST['kalipciguncelleme'])) {
     $id = $_POST['id'];
     $firmaId = $_POST['firmaId'];
     $profilId = $_POST['profilId'];
-    $kalipciNo = firmaBul($firmaId,$db,'kisaKod'). $_POST['kalipciNo'];
+    $kalipciNo = $_POST['kalipciNo'];
     $cap = $_POST['cap'];
     $kalite = $_POST['kalite'];
     $figurSayi = $_POST['figurSayi'];
