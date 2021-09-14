@@ -52,9 +52,9 @@ $result = $db->query($sql);
                 </div>
                 <br>
                 <div class="card">
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
-                            <thead>
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                        <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Sevkiyat Kodu</th>

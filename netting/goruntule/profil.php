@@ -10,8 +10,8 @@ $result = $db->query($sql);
 
 
 ?>
-<div class="card-body table-responsive p-0">
-    <table class="table table-dark table-hover text-nowrap">
+<div class="card-body">
+    <table id="example1" class="table table-bordered table-striped">
         <thead>
         <tr>
             <th scope="col">Sipariş No</th>

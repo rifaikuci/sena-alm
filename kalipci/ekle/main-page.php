@@ -15,7 +15,8 @@ $profiller = $db->query($profillerrsql);
             Parça Ekleme Alanı
         </div>
         <div class="card-body" id="kalip-giris">
-            <form method="post" action="<?php echo base_url() . 'netting/kalipci/index.php' ?>" enctype="multipart/form-data">
+            <form method="post" action="<?php echo base_url() . 'netting/kalipci/index.php' ?>"
+                  enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
@@ -59,10 +60,12 @@ $profiller = $db->query($profillerrsql);
                     </div>
 
 
-                    <div v-if="filterParca.length > 0 ? true : false" class="col-sm-6">
+                    <div v-if="kalipCins == 4  ? false : true && ['0', '1', '3', '4','6','7','9'].includes(parca) "
+                         class="col-sm-6">
                         <div class="form-group">
                             <label>Profiller</label>
-                            <select name="profilId" :required="filterParca.length > 0 ? true : false"
+                            <select name="profilId"
+                                    :required="kalipCins == 4  ? false : true && ['0', '1', '3', '4','6','7','9'].includes(parca)"
                                     class="form-control" style="width: 100%;">
                                 <option selected disabled value="">Profil Seçiniz</option>
                                 <?php while ($profil = $profiller->fetch_array()) { ?>

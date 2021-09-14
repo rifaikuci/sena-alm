@@ -36,8 +36,8 @@ $result = $db->query($sql);
                 </div>
                 <br>
                 <div class="card" id="takim-goster">
-                    <div class="card-body table-responsive p-0">
-                        <table class="table table-hover text-nowrap">
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
                                 <th>#</th>
@@ -68,13 +68,14 @@ $result = $db->query($sql);
                                     <td><?php echo $row['parca2'] ?></td>
                                     <td>
                                         <button type="button" v-on:click="destekgoster($event)" class="btn btn-success"
-                                                data-toggle="modal" data-parca="<?php echo $row['parca'] ?>">Destekler
+                                                data-toggle="modal" data-parca="<?php echo $row['destek'] ?>">Destekler
                                         </button>
                                     </td>
 
                                     <td>
                                         <button ttype="button" v-on:click="bolstergoster($event)" class="btn btn-dark"
-                                                data-toggle="modal" data-parca="<?php echo $row['parca'] ?>">Bolsterler
+                                                data-toggle="modal" data-parca="<?php echo $row['bolster'] ?>">
+                                            Bolsterler
                                         </button>
                                     </td>
 
@@ -87,22 +88,23 @@ $result = $db->query($sql);
                             } ?>
                             </tbody>
                         </table>
-                    </div>
+                        <div id="modalview" class="modal fade" role="dialog">
+                            <div class="modal-dialog modal-xl">
 
-                    <div id="destekler" class="modal fade" role="dialog">
-                        <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div style="margin: 10px">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
 
-                            <div class="modal-content">
-                                <div style="margin: 10px">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <div class="modal-body">
+                                    </div>
                                 </div>
 
-                                <div class="modal-body">
-                                </div>
                             </div>
-
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>

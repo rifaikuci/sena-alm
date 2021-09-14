@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 <head>
     <?php require_once "../../include/helper.php"; ?>
     <?php include "../../include/head.php" ?>

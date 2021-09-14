@@ -29,7 +29,7 @@ new Vue({
         methods: {
             onChangeKalipCins(event) {
                 if (event.target.value) {
-                    this.kalipCins = "";
+                    this.kalipCins = event.target.value;
                     this.caplar = [
                         {id: 160},
                         {id: 170},
@@ -45,8 +45,8 @@ new Vue({
                         this.filterParca = this.parcalar.filter(e => e.type == "hazneli-solid" || !e.type)
                     }  else if (event.target.value == 4) {
                         this.filterParca = [];
+                        this.parca =100;
                         this.caplar = this.caplar.filter(e=> e.id >= 220);
-                        this.kalipCins = 4
                     }
                 } else {
                     this.kalipCins = "";

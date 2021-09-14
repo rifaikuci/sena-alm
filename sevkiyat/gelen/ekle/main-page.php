@@ -7,10 +7,10 @@ $personeller = $db->query($personelsql);
 $personelsql2 = "SELECT * FROM tblpersonel where rolId = 10";
 $personeller2 = $db->query($personelsql2);
 
-$firmasql = "SELECT * FROM tblfirma where firmaTurId =3 ";
+$firmasql = "SELECT * FROM tblfirma where firmaTurId =23 ";
 $firmalar = $db->query($firmasql);
 
-$firmaboyasql = "SELECT * FROM tblfirma where firmaTurId =2";
+$firmaboyasql = "SELECT * FROM tblfirma where firmaTurId =20";
 $firmalarboya = $db->query($firmaboyasql);
 
 $alasimsql = "SELECT * FROM tblalasim";
@@ -22,7 +22,7 @@ $boyalar = $db->query($boyasql);
 $malzemelersql = "SELECT * FROM tblmalzemeler";
 $malzemeler = $db->query($malzemelersql);
 
-$malzemelerfirmasql = "SELECT * FROM tblfirma where firmaTurId =1";
+$malzemelerfirmasql = "SELECT * FROM tblfirma where firmaTurId =21";
 $malzemelerfirma = $db->query($malzemelerfirmasql);
 
 $profilfirmasql = "SELECT * FROM tblfirma";
@@ -78,7 +78,7 @@ $profiller = $db->query($profillerrsql);
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Sevkiyat Tarihi</label>
-                            <input type="date" class="form-control form-control-lg" name="sevkiyatarih"
+                            <input required type="date" class="form-control form-control-lg" name="sevkiyatarih"
                                    value="<?php echo date("Y-m-d") ?>">
                         </div>
                     </div>
@@ -86,7 +86,7 @@ $profiller = $db->query($profillerrsql);
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Sevkiyat Zamanı</label>
-                            <input type="time" class="form-control form-control-lg" name="sevkiyasaat">
+                            <input required type="time" class="form-control form-control-lg" name="sevkiyasaat">
                         </div>
                     </div>
 
@@ -448,7 +448,7 @@ $profiller = $db->query($profillerrsql);
                                             <div class="col-sm-6">
                                                 <div class="form-group">
                                                     <label>Malzeme</label>
-                                                    <select required v-model="malzeme.malzemeId" class="form-control"
+                                                    <select v-model="malzeme.malzemeId" class="form-control"
                                                             style="width: 100%;">
                                                         <option selected value="">Malzeme Seçiniz</option>
                                                         <?php while ($malzeme = $malzemeler->fetch_array()) { ?>
