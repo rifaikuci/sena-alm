@@ -40,7 +40,6 @@ $result = $db->query($sql);
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>#</th>
                                 <th>Sena No</th>
                                 <th>Profil</th>
                                 <th>Firma</th>
@@ -50,15 +49,12 @@ $result = $db->query($sql);
                                 <th>Parça 2</th>
                                 <th>Destekler</th>
                                 <th>Bolsterler</th>
-
-                                <th style="text-align: center">İşlem</th>
                             </tr>
                             </thead>
 
                             <?php $sira = 1;
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
-                                    <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['takimNo']; ?></td>
                                     <td><?php echo $row['profilId'] ? profilbul($row['profilId'], $db, "profilNo") : "-"; ?></td>
                                     <td><?php echo firmaBul($row['firmaId'], $db, 'firmaAd'); ?></td>
@@ -79,10 +75,6 @@ $result = $db->query($sql);
                                         </button>
                                     </td>
 
-                                    <td><a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
-                                           btn-warning">Düzenle</a>
-                                        <a href=<?php echo base_url() . "netting/kalipci/index.php?kalipsil=" . $row['id']; ?> class="btn
-                                           btn-danger">Sil</a></td>
                                 </tr>
                                 <?php $sira++;
                             } ?>

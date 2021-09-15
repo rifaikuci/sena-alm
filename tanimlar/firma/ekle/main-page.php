@@ -11,7 +11,7 @@ $result = $db->query($sql);
         <div class="card-header">
             Firma Ekleme Alanı
         </div>
-        <div class="card-body">
+        <div class="card-body" id="firma-durum">
             <form method="post" action="<?php echo base_url() . 'netting/tanimlar/firma.php' ?>">
                 <div class="row">
                     <div class="col-sm-6">
@@ -31,7 +31,8 @@ $result = $db->query($sql);
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Firma Türü</label>
-                            <select required name="firmaTurId" class="form-group select2" style="width: 100%;">
+                            <select @change="onChangeFirmaRol($event)" required name="firmaTurId" class="form-control form-control-lg"
+                                    style="width: 100%;">
                                 <option selected value="">Firma Türü Seçiniz</option>
                                 <?php while ($row = $result->fetch_array()) { ?>
                                     <option value="<?php echo $row['id']; ?>"><?php echo $row['ad']; ?></option>
@@ -102,10 +103,11 @@ $result = $db->query($sql);
                                    placeholder="Açıklama Giriniz...">
                         </div>
                     </div>
-                    <div class="col-sm-3">
+
+                    <div v-if="firmaRol" class="col-sm-3">
                         <div class="form-group">
                             <label>Naylon Durumu</label>
-                            <select required name="naylon" class="select2" style="width: 100%;">
+                            <select name="naylon" class="form-control select2" style="width: 100%;">
                                 <option selected value="">Naylon Durumu</option>
                                 <option value="1">Evet</option>
                                 <option value="0">Hayır</option>
