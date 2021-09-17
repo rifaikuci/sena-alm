@@ -3,7 +3,7 @@
 include "../netting/baglan.php";
 include "../include/sql.php";
 
-$sql = "SELECT * FROM tbltakim order by id desc ";
+$sql = "SELECT * FROM tbltakim where durum = 1 order by id desc ";
 $result = $db->query($sql);
 
 ?>
@@ -15,15 +15,19 @@ $result = $db->query($sql);
         durumSuccess("Takım Stoğa Başarılı Bir Şekilde Eklendi. ");
     } else if ($_GET['durumekle'] == "no") {
         durumDanger("Takım Stoğa Eklenirken Bir Hata Oluştu !");
-    } else if ($_GET['durumsil'] == "ok") {
-        durumSuccess("Takım Stoktan Başarılı Bir Şekilde Silindi. ");
-    } else if ($_GET['durumsil'] == "no") {
-        durumDanger("Takım Stoktan Silinirken Bir Hata Oluştu.");
-    } else if ($_GET['durumguncelleme'] == "ok") {
-        durumSuccess("Takım Stoktan Başarılı Bir Şekilde Güncellendi. ");
-    } else if ($_GET['durumguncelleme'] == "no") {
-        durumDanger("Takım Stoktan Güncellenirken Bir Hata Oluştu.");
-    } ?>
+    } else if ($_GET['durumcop'] == "ok") {
+        durumSuccess("Takım Çöpe Çıkarıldı. ");
+    } else if ($_GET['durumcop'] == "no") {
+        durumDanger("Takım Çöpe Çıkarılırken Bir Hata Oluştu.");
+    } else if ($_GET['desbols'] == "ok") {
+        durumSuccess("Takıma ait Destek ve Bolster Güncellendi");
+    } else if ($_GET['desbols'] == "no") {
+        durumDanger("Takıma ait Destek ve Bolster Güncellenirken bir hata oluştu");
+    }  else if ($_GET['durumdegis'] == "ok") {
+        durumSuccess("Takıma parçası değiştirildi");
+    } else if ($_GET['durumdegis'] == "no") {
+    durumDanger("Takıma parçası değiştirilirken bir hata oluştu");
+    ?>
     <div style="text-align: center">
         <h4 style="color: #0b93d5">Takımlar</h4>
     </div>
@@ -49,6 +53,7 @@ $result = $db->query($sql);
                                 <th>Parça 2</th>
                                 <th>Destekler</th>
                                 <th>Bolsterler</th>
+                                <th></th>
                             </tr>
                             </thead>
 
@@ -69,17 +74,35 @@ $result = $db->query($sql);
                                     </td>
 
                                     <td>
-                                        <button ttype="button" v-on:click="bolstergoster($event)" class="btn btn-dark"
+                                        <button type="button" v-on:click="bolstergoster($event)" class="btn btn-dark"
                                                 data-toggle="modal" data-parca="<?php echo $row['bolster'] ?>">
                                             Bolsterler
                                         </button>
                                     </td>
+
+                                    <td>
+                                        <button type="button" @click="modaltrash($event)" class="btn btn-danger"
+                                                data-parca1="<?php echo $row['parca1'] ?>"
+                                                data-parca2="<?php echo $row['parca2'] ?>"
+                                                data-takimno="<?php echo $row['takimNo'] ?>"
+                                                data-toggle="modal"><i class="fa fa-trash"></i>
+                                        </button>
+                                        <a href="<?php echo "desbols/?takimno=" . $row['takimNo']; ?>"
+                                           class="btn btn-outline-dark"><i class="fa fa-list"></i></a>
+                                        <?php if ($row['kalipCins'] != 3) { ?>
+                                            <a href="<?php echo "degistir/?takimno=" . $row['takimNo']; ?>"
+                                               class="btn btn-primary"><i class="fa fa-edit"></i>
+                                            </a>
+                                        <?php } ?>
+                                    </td>
+
 
                                 </tr>
                                 <?php $sira++;
                             } ?>
                             </tbody>
                         </table>
+
                         <div id="modalview" class="modal fade" role="dialog">
                             <div class="modal-dialog modal-xl">
 
@@ -94,6 +117,7 @@ $result = $db->query($sql);
 
                             </div>
                         </div>
+
                     </div>
 
 
