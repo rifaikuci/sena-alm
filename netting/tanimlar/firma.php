@@ -21,13 +21,11 @@ if (isset($_POST['firmaekleme'])) {
         $ilce = $_POST['ilce'];
         $aciklama = $_POST['aciklama'];
 
-        $naylon = $_POST['naylon'];
-        $naylon = $firmaTurId == 24 ? $naylon : 2;
 
         $sql = "INSERT INTO tblfirma (firmaAd, seo, kisaKod, firmaTurId, vergiDairesi, vergiNumara,
-                                      yetkiliKisi, telefon, mail, adres, il, ilce, aciklama, naylon)
+                                      yetkiliKisi, telefon, mail, adres, il, ilce, aciklama)
                 VALUES ('$firmaAd', '$seo','$kisaKod', '$firmaTurId','$vergiDairesi', '$vergiNumara',
-                        '$yetkiliKisi', '$telefon','$mail', '$adres','$il', '$ilce', '$aciklama', '$naylon')";
+                        '$yetkiliKisi', '$telefon','$mail', '$adres','$il', '$ilce', '$aciklama')";
 
         if (mysqli_query($db, $sql)) {
             header("Location:../../tanimlar/firma/?durumekle=ok");
@@ -68,12 +66,12 @@ if (isset($_POST['firmaguncelleme'])) {
     $il = $_POST['il'];
     $ilce = $_POST['ilce'];
     $aciklama = $_POST['aciklama'];
-    $naylon = $_POST['naylon'] ? $_POST['naylon'] : 2;
+    $firmaTurId = $_POST['firmaTurId'];
 
     $sql = "UPDATE tblfirma set 
         firmaAd = '$firmaAd', seo = '$seo', kisaKod = '$kisaKod',
         vergiDairesi = '$vergiDairesi', vergiNumara = '$vergiNumara', yetkiliKisi = '$yetkiliKisi', telefon = '$telefon',
-        mail = '$mail', adres = '$adres', il = '$il', ilce = '$ilce',  aciklama = '$aciklama', naylon = '$naylon'
+        mail = '$mail', adres = '$adres', il = '$il', ilce = '$ilce',  aciklama = '$aciklama', firmaTurId = '$firmaTurId'
             WHERE id='$id'";
 
     if (mysqli_query($db, $sql)) {

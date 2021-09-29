@@ -97,6 +97,14 @@ $profiller = $db->query($profillerrsql);
 
                     <div class="col-sm-6">
                         <div class="form-group">
+                            <label>Boy</label>
+                            <input required type="number" class="form-control form-control-lg" name="boy" min="0.1" step="0.1"
+                                   placeholder="0.1">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="form-group">
                             <label>Kalite</label>
                             <select name="kalite" required class="form-control" style="width: 100%;">
                                 <option selected value="">Kalite</option>

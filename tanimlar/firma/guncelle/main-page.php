@@ -40,7 +40,7 @@ if ($_GET['id']) {
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Firma Türü</label>
-                            <select disabled name="firmaTurId" class="form-control form-control-lg" style="width: 100%;">
+                            <select name="firmaTurId" class="form-control form-control-lg" style="width: 100%;">
                                 <option value="">Firma Türü Seçiniz</option>
                                 <?php while ($firma = $firmatur->fetch_array()) { ?>
                                     <option <?php echo $row['firmaTurId'] == $firma['id'] ? 'selected' : '' ?>
@@ -112,18 +112,6 @@ if ($_GET['id']) {
                                    value="<?php echo $row['aciklama'] ?>">
                         </div>
                     </div>
-                    <?php if($row['firmaTurId'] == 24) { ?>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Naylon Durumu</label>
-                            <select required name="naylon" class="form-control form-control-lg" style="width: 100%;">
-                                <option value="">Naylon Durumu</option>
-                                <option <?php echo $row['naylon'] == 1 ? "selected" : "" ?> value="1">Evet</option>
-                                <option <?php echo $row['naylon'] == 0 ? "selected" : "" ?> value="0">Hayır</option>
-                            </select>
-                        </div>
-                    </div>
-                    <?php } ?>
                 </div>
                 <div class="card-footer">
                     <div>

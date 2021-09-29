@@ -35,6 +35,7 @@
         $('.select2').select2()
 
     });
+
     $(function () {
         $("#example1").DataTable({
             "responsive": true,
@@ -57,5 +58,3 @@
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/kalipci.js" ?>></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/takim.js" ?>></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/takim-goster.js" ?>></script>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/firma.js" ?>></script>
-

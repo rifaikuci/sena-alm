@@ -3,7 +3,9 @@
 include "../netting/baglan.php";
 include "../include/sql.php";
 
+
 $sql = "SELECT * FROM tbltakim where durum = 1 order by id desc ";
+
 $result = $db->query($sql);
 
 ?>
@@ -26,8 +28,8 @@ $result = $db->query($sql);
     }  else if ($_GET['durumdegis'] == "ok") {
         durumSuccess("Takıma parçası değiştirildi");
     } else if ($_GET['durumdegis'] == "no") {
-    durumDanger("Takıma parçası değiştirilirken bir hata oluştu");
-    ?>
+        durumDanger("Takıma parçası değiştirilirken bir hata oluştu");
+    } ?>
     <div style="text-align: center">
         <h4 style="color: #0b93d5">Takımlar</h4>
     </div>
@@ -123,8 +125,5 @@ $result = $db->query($sql);
 
                 </div>
             </div>
-        </div>
     </div>
 </section>
-
-

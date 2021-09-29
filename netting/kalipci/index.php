@@ -15,6 +15,7 @@ if (isset($_POST['kalipciekle'])) {
     $cap = $_POST['cap'];
     $kalite = $_POST['kalite'];
     $figurSayi = $_POST['figurSayi'];
+    $boy = $_POST['boy'];
     $takimNo = "";
     $netKilo = 0;
     $brutKilo = 0;
@@ -47,9 +48,9 @@ if (isset($_POST['kalipciekle'])) {
 
 
     $sql = "INSERT INTO tblkalipparcalar (firmaId, profilId, kalipCins, parca, senaNo, kalipciNo,
-                                      cap, kalite, figurSayi, takimNo, durum, netKilo, brutKilo, cizim)
+                                      cap, kalite, figurSayi, takimNo, durum, netKilo, brutKilo, cizim, boy)
                 VALUES ('$firmaId', '$profilId','$kalipCins', '$parca','$senaNo', '$kalipciNo',
-                        '$cap', '$kalite','$figurSayi', '$takimNo','$durum', '$netKilo', '$brutKilo', '$cizim')";
+                        '$cap', '$kalite','$figurSayi', '$takimNo','$durum', '$netKilo', '$brutKilo', '$cizim', '$boy')";
 
     if (mysqli_query($db, $sql)) {
         header("Location:../../kalipci/?durumekle=ok");
@@ -85,6 +86,7 @@ if (isset($_POST['kalipciguncelleme'])) {
     $profilId = $_POST['profilId'];
     $kalipciNo = $_POST['kalipciNo'];
     $cap = $_POST['cap'];
+    $boy = $_POST['boy'];
     $kalite = $_POST['kalite'];
     $figurSayi = $_POST['figurSayi'];
     $cizim = parcalarsqlbul($id, $db, 'cizim');
@@ -107,7 +109,7 @@ if (isset($_POST['kalipciguncelleme'])) {
     }
     $sql = "UPDATE tblkalipparcalar set 
         firmaId = '$firmaId', profilId = '$profilId', kalipciNo = '$kalipciNo', cap = '$cap',
-        kalite = '$kalite', figurSayi = '$figurSayi', cizim = '$cizim' WHERE id='$id'";
+        kalite = '$kalite', figurSayi = '$figurSayi', cizim = '$cizim', boy = '$boy' WHERE id='$id'";
 
     if (mysqli_query($db, $sql)) {
         header("Location:../../kalipci/?durumguncelleme=ok");
