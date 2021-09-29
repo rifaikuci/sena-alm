@@ -16,6 +16,7 @@ $eloksallar = $db->query($eloksalsql);
 
 $alasimsql = "SELECT * FROM tblalasim";
 $alasimlar = $db->query($alasimsql);
+
 ?>
 
 <section class="content">
@@ -81,7 +82,7 @@ $alasimlar = $db->query($alasimsql);
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label>Boy</label>
-                                            <input type="number" step="0.1" placeholder="0.1"
+                                            <input type="number" placeholder="1 mm"
                                                    class="form-control form-control-lg" name="boy">
                                         </div>
                                     </div>
@@ -97,7 +98,7 @@ $alasimlar = $db->query($alasimsql);
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label>Kilo</label>
-                                            <input step="0.1" placeholder="0.1" type="number"
+                                            <input step="0.1" placeholder="0.1 kg" type="number"
                                                    class="form-control form-control-lg" name="kilo">
                                         </div>
                                     </div>
@@ -164,7 +165,7 @@ $alasimlar = $db->query($alasimsql);
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label>Tolerans (%)</label>
-                                            <input step="0.1" placeholder="0.1" type="number"
+                                            <input placeholder="1 (%)" type="number"
                                                    class="form-control form-control-lg" name="maxTolerans">
                                         </div>
                                     </div>

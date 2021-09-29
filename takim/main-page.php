@@ -53,6 +53,7 @@ $result = $db->query($sql);
                                 <th>Çap</th>
                                 <th>Parça 1</th>
                                 <th>Parça 2</th>
+                                <th>Gramaj</th>
                                 <th>Destekler</th>
                                 <th>Bolsterler</th>
                                 <th></th>
@@ -69,6 +70,7 @@ $result = $db->query($sql);
                                     <td><?php echo $row['cap']; ?></td>
                                     <td><?php echo $row['parca1'] ?></td>
                                     <td><?php echo $row['parca2'] ?></td>
+                                    <td><?php echo $row['sonGramaj'] ?></td>
                                     <td>
                                         <button type="button" v-on:click="destekgoster($event)" class="btn btn-success"
                                                 data-toggle="modal" data-parca="<?php echo $row['destek'] ?>">Destekler
@@ -101,6 +103,7 @@ $result = $db->query($sql);
 
                                 </tr>
                                 <?php $sira++;
+
                             } ?>
                             </tbody>
                         </table>
