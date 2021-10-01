@@ -12,49 +12,10 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/goruntule.js" ?>></script>
-<script>
-    $(function () {
-        $(document).on('click', '[data-toggle="lightbox"]', function (event) {
-            event.preventDefault();
-            $(this).ekkoLightbox({
-                alwaysShowClose: true
-            });
-        });
-
-        $('.filter-container').filterizr({gutterPixels: 3});
-        $('.btn[data-filter]').on('click', function () {
-            $('.btn[data-filter]').removeClass('active');
-            $(this).addClass('active');
-        });
-    })
-</script>
-
-<script>
-    $(function () {
-        //Initialize Select2 Elements
-        $('.select2').select2()
-
-    });
-
-    $(function () {
-        $("#example1").DataTable({
-            "responsive": true,
-            "autoWidth": false,
-        });
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false,
-            "responsive": true,
-        });
-    });
-
-</script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/datatable.js" ?>></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/veri-giris.js" ?>></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/kalipci.js" ?>></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/takim.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/siparis.js" ?>></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/takim-goster.js" ?>></script>

@@ -37,6 +37,7 @@ if ($_GET['takimno']) {
                             <label>Takım No</label>
                             <input disabled type="text" class="form-control form-control-lg"
                                    value="<?php echo $row['takimNo'] ?>">
+                            <input type="hidden" name="sonGramaj" value="<?php echo $row['sonGramaj']?>">
 
                         </div>
                     </div>

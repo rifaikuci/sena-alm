@@ -7,7 +7,6 @@ ini_set('display_errors', 1);
 
 
 if (isset($_POST['profilId']) && isset($_POST['kalipCins']) ) {
-    echo "asdas";
     $profilId = $_POST['profilId'];
     $cap = $_POST['cap'];
     $kalipCins = $_POST['kalipCins'];
@@ -23,6 +22,7 @@ if (isset($_POST['profilId']) && isset($_POST['kalipCins']) ) {
     $sonEk = sprintf('%03d', $sonEk);
     $takimNo = $takimNo . $sonEk;
     $parca2 = $parca2 == "Parçayı Seç" ? "" : $parca2;
+    $sonGramaj = profilbul($profilId,$db,'gramaj');
 
 
     $bolster = "";
@@ -42,8 +42,8 @@ if (isset($_POST['profilId']) && isset($_POST['kalipCins']) ) {
         }
     }
 
-    $sql = "INSERT INTO tbltakim (parca1, parca2, takimNo, firmaId, profilId, cap, kalipCins, bolster, destek)
-                            VALUES ('$parca1', '$parca2','$takimNo', '$firmaId','$profilId', '$cap', '$kalipCins', '$bolster', '$destek')";
+    $sql = "INSERT INTO tbltakim (parca1, parca2, takimNo, firmaId, profilId, cap, kalipCins, bolster, destek,sonGramaj)
+                            VALUES ('$parca1', '$parca2','$takimNo', '$firmaId','$profilId', '$cap', '$kalipCins', '$bolster', '$destek', '$sonGramaj')";
 
     if (mysqli_query($db, $sql)) {
         $updateParca = "UPDATE tblkalipparcalar set 
@@ -96,6 +96,7 @@ if (isset($_POST['takimdegistir'])) {
     $parcaeski = $_POST['parcaeski'];
     $parcayeni = $_POST['parcayeni'];
     $parcaNo = $_POST['parcaNo'];
+    $sonGramaj = $_POST['sonGramaj'];
 
 
     $sql1 = "UPDATE tblkalipparcalar set 
@@ -109,11 +110,11 @@ if (isset($_POST['takimdegistir'])) {
 
     if($parcaNo == 1) {
         $sql3 = "UPDATE tbltakim set 
-                     parca1 = '$parcayeni' WHERE takimNo = '$takimNo'";
+                     parca1 = '$parcayeni', sonGramaj = '$sonGramaj' WHERE takimNo = '$takimNo'";
 
     }else {
         $sql3 = "UPDATE tbltakim set 
-                     parca2 = '$parcayeni' WHERE takimNo = '$takimNo'";
+                     parca2 = '$parcayeni', sonGramaj = '$sonGramaj' WHERE takimNo = '$takimNo'";
     }
 
 

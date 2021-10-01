@@ -129,13 +129,13 @@ function pdfUpload($pdf, $path)
 function biyetToplamKilo($alasimId, $adetBiyet, $cap, $boy, $db)
 {
     $ozkutle = alasimBul($alasimId, $db, 'ozkutle');
-    $toplamKilo = sayiFormatla(($adetBiyet * $ozkutle * M_PI * $boy * (pow($cap, 2)) / 4) / 1000000,3);
+    $toplamKilo = sayiFormatla(($adetBiyet * $ozkutle * M_PI * $boy * (pow($cap, 2)) / 4) / 1000000, 3);
     return $toplamKilo;
 }
 
 function biyetToplamBoy($adetBiyet, $boy)
 {
-    return sayiFormatla($adetBiyet * $boy / 10,2);
+    return sayiFormatla($adetBiyet * $boy / 10, 2);
 }
 
 function mGrBul($kilo, $adet, $boy)
@@ -150,8 +150,9 @@ function toleransBul($mgr, $profilId, $db)
 
 }
 
-function sayiFormatla ($sayi, $digit) {
-    return number_format((float) $sayi,$digit,'.',',');
+function sayiFormatla($sayi, $digit)
+{
+    return number_format((float)$sayi, $digit, '.', ',');
 }
 
 ?>
