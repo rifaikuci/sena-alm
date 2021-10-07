@@ -96,6 +96,15 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a href="<?php echo base_url() . "siparis/" ?> " class="nav-link">
+                    <i class="nav-icon fas fa-shopping-cart"></i>
+                    <p>
+                        Siparişler
+                    </p>
+                </a>
+            </li>
+
 
             <li class="nav-item">
                 <a href="https://rifaikuci.com/" class="nav-link">

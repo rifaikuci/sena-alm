@@ -2,7 +2,7 @@
 
 include "../netting/baglan.php";
 include "../include/sql.php";
-$sql = "SELECT * FROM tblsiparis order by id desc ";
+$sql = "SELECT * FROM tblsiparis group by siparisNo";
 $result = $db->query($sql);
 
 ?>
@@ -11,20 +11,20 @@ $result = $db->query($sql);
 
     <?php
     if ($_GET['durumekle'] == "ok") {
-        durumSuccess("Parça Stoğa Başarılı Bir Şekilde Eklendi. ");
+        durumSuccess("Sipariş Başarılı Bir Şekilde Eklendi. ");
     } else if ($_GET['durumekle'] == "no") {
-        durumDanger("Parça Stoğa Eklenirken Bir Hata Oluştu !");
+        durumDanger("Sipariş Eklenirken Bir Hata Oluştu !");
     } else if ($_GET['durumsil'] == "ok") {
-        durumSuccess("Parça Stoktan Başarılı Bir Şekilde Silindi. ");
+        durumSuccess("Sipariş Başarılı Bir Şekilde Silindi. ");
     } else if ($_GET['durumsil'] == "no") {
-        durumDanger("Parça Stoktan Silinirken Bir Hata Oluştu.");
+        durumDanger("Sipariş Silinirken Bir Hata Oluştu.");
     } else if ($_GET['durumguncelleme'] == "ok") {
-        durumSuccess("Parça Stoktan Başarılı Bir Şekilde Güncellendi. ");
+        durumSuccess("Sipariş Başarılı Bir Şekilde Güncellendi. ");
     } else if ($_GET['durumguncelleme'] == "no") {
-        durumDanger("Parça Stoktan Güncellenirken Bir Hata Oluştu.");
+        durumDanger("Sipariş Güncellenirken Bir Hata Oluştu.");
     } ?>
     <div style="text-align: center">
-        <h4 style="color: #0b93d5">Parçalar</h4>
+        <h4 style="color: #0b93d5">Siparişler</h4>
     </div>
     <div class="card-body">
         <div class="row">
@@ -34,22 +34,16 @@ $result = $db->query($sql);
                             Ekle</i></a>
                 </div>
                 <br>
-                <div class="card">
+                <div class="card" id="siparis-detay-goster">
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
-                        <thead>
+                            <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Sena No</th>
-                                <th>Profil</th>
-                                <th>Firma</th>
-                                <th>Parça</th>
-                                <th>Parça</th>
-                                <th>Çap</th>
-                                <th>Kalıpçı No</th>
-                                <th>Durum</th>
-                                <th>Takım</th>
-                                <th style="text-align: center">İşlem</th>
+                                <th>Sipariş No</th>
+                                <th>Müşteri</th>
+                                <th>Tarih</th>
+                                <th style="text-align: center"></th>
                             </tr>
                             </thead>
 
@@ -57,32 +51,46 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td><?php echo $row['senaNo']; ?></td>
-                                    <td><?php echo profilbul($row['profilId'], $db, "profilNo"); ?></td>
-                                    <td><?php echo firmaBul($row['firmaId'], $db, 'firmaAd'); ?></td>
-                                    <td><?php echo kalipBul($row['kalipCins']); ?></td>
-                                    <td><?php echo trim(parcaBul($row['parca'])); ?></td>
-                                    <td><?php echo $row['cap']; ?></td>
-                                    <td><?php echo
-                                        firmaBul($row['firmaId'],$db,'kisaKod').
-                                        $row['kalipciNo']; ?></td>
-                                    <td style="color: <?php echo $row['durum'] == 1 ? '#00b44e' : ($row['durum'] == 2 ? '#d55537' : '#b8860b') ?>">
-                                        <b>
-                                            <?php echo $row['durum'] == 1 ? "Aktif" : ($row['durum'] == 2 ? 'Pasif' : 'Çöp')
-                                            ?></b></td>
-                                    <td><b><?php echo $row['takimNo']; ?></b></td>
-                                    <td><a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
-                                           btn-warning">Düzenle</a>
-                                        <?php if (!$row['takimNo']) { ?>
-                                            <a href=<?php echo base_url() . "netting/kalipci/index.php?kalipsil=" . $row['id']; ?> class="btn
-                                               btn-danger">Sil</a>
-                                        <?php } ?>
+                                    <td><?php echo $row['siparisNo']; ?></td>
+                                    <td><?php echo firmaBul($row['musteriId'], $db, 'firmaAd'); ?></td>
+                                    <td><?php echo tarih($row['siparisTarih']); ?></td>
+
+                                    <td>
+                                        <a
+                                                href="<?php echo "./goruntule/index.php?siparisno=" . $row['siparisNo']; ?>"
+                                                class="btn btn-outline-primary"><i class="fa fa-eye"></i>
+                                        </a>
+                                        <button type="button" v-on:click="detayGoster($event)"
+                                                class="btn btn-outline-dark"
+                                                data-toggle="modal" data-siparisno="<?php echo $row['siparisNo'] ?>">
+                                            <i class="fa fa-expand"></i>
+                                        </button>
+                                        <a
+                                                onclick="return confirm('Silmek istediğinizden emin misiniz?')"
+                                                href="<?php echo base_url() . "netting/siparis/index.php?siparisSil=" . $row['siparisNo']; ?>"
+                                                class="btn btn-outline-danger"><i class="fa fa-trash"></i>
+                                        </a>
                                     </td>
                                 </tr>
                                 <?php $sira++;
                             } ?>
                             </tbody>
                         </table>
+
+                        <div id="modalviewdetay" class="modal fade" role="dialog">
+                            <div class="modal-dialog modal-xl">
+
+                                <div class="modal-content">
+                                    <div style="margin: 10px">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

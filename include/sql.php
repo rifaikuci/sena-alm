@@ -123,4 +123,38 @@ function parcalarsqlbul($id, $db, $sutun)
     return $row[$sutun];
 }
 
+function siparisGunBul($db,$yil, $hafta, $gun )
+{
+
+    $sql = "select * from tblsiparis where yil ='$yil' AND hafta = '$hafta' AND gun = '$gun'";
+    $result = mysqli_query($db, $sql);
+    $num_rows = mysqli_num_rows($result);
+
+    if($num_rows >0 ) {
+        $sql2 = "SELECT * from tblsiparis order by id desc";
+        $resultfirst = $db->query($sql2);
+        $firstrow = mysqli_fetch_assoc($resultfirst);
+        $num_rows = substr($firstrow['satirNo'],-2);
+
+    }
+    return $num_rows + 1;
+}
+
+function siparisHaftaBul ($db, $yil, $hafta) {
+    $sql = "select * from tblsiparis where yil ='$yil' AND hafta = '$hafta'  group by yil,hafta";
+    $result = mysqli_query($db, $sql);
+    $num_rows = mysqli_num_rows($result);
+
+    if($num_rows >0 ) {
+        $sql2 = "SELECT * from tblsiparis order by id desc";
+        $resultfirst = $db->query($sql2);
+        $firstrow = mysqli_fetch_assoc($resultfirst);
+        $num_rows = substr($firstrow['siparisNo'],-3);
+
+    }
+
+    return $num_rows + 1;
+
+}
+
 ?>

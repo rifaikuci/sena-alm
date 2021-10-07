@@ -210,6 +210,14 @@ new Vue({
             },
             biyetSil: function (index) {
                 this.$delete(this.biyetler, index);
+                this.$delete(this.biyetpartino, index);
+                this.$delete(this.biyetfirmaId, index);
+                this.$delete(this.biyetfirmaAd, index);
+                this.$delete(this.biyetalasimId, index);
+                this.$delete(this.biyetalasimAd, index);
+                this.$delete(this.biyetadetbiyet, index);
+                this.$delete(this.biyetcap, index);
+                this.$delete(this.biyetboy, index);
                 this.isFullBiyetData = false;
             },
 
@@ -316,6 +324,16 @@ new Vue({
             },
             boyaSil: function (index) {
                 this.$delete(this.boyalar, index);
+                this.$delete(this.boyapartino, index);
+                this.$delete(this.boyafirmaId, index);
+                this.$delete(this.boyafirmaAd, index);
+                this.$delete(this.boyaboyaId, index);
+                this.$delete(this.boyaboyaAd, index);
+                this.$delete(this.boyaadet, index);
+                this.$delete(this.boyakilo, index);
+                this.$delete(this.boyasicaklik, index);
+                this.$delete(this.boyacins, index);
+
                 this.isFullBoyaData = false;
             },
 
@@ -392,6 +410,13 @@ new Vue({
             },
             malzemeSil: function (index) {
                 this.$delete(this.malzemeler, index);
+                this.$delete(this.malzemepartino, index);
+                this.$delete(this.malzemefirmaId, index);
+                this.$delete(this.malzemefirmaAd, index);
+                this.$delete(this.malzememalzemeId, index);
+                this.$delete(this.malzememalzemeAd, index);
+                this.$delete(this.malzemeadet, index);
+
                 this.isFullMalzemeData = false;
             },
 
@@ -532,6 +557,19 @@ new Vue({
             },
             profilSil: function (index) {
                 this.$delete(this.profiller, index);
+                this.$delete(this.profilfirmaId, index);
+                this.$delete(this.profilfirmaAd, index);
+                this.$delete(this.profilmusteriId, index);
+                this.$delete(this.profilmusteriAd, index);
+                this.$delete(this.profilprofilId, index);
+                this.$delete(this.profiladet, index);
+                this.$delete(this.profilboy, index);
+                this.$delete(this.profilpaketAdet, index);
+                this.$delete(this.profiltur, index);
+                this.$delete(this.profilgelis, index);
+                this.$delete(this.profiltoplamadet, index);
+                this.$delete(this.profiltoplamkilo, index);
+                this.$delete(this.profiltur, index);
                 this.isFullProfilData = false;
             },
 
