@@ -2,7 +2,7 @@
 
 include "../netting/baglan.php";
 include "../include/sql.php";
-$sql = "SELECT * FROM tblsiparis group by siparisNo";
+$sql = "SELECT * FROM tblsiparis group by siparisNo order by id desc";
 $result = $db->query($sql);
 
 ?>

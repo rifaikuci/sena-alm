@@ -158,9 +158,10 @@ new Vue({
                     });
 
                     if (kiloBul.ortalama) {
-                        this.siparis.adet = Math.ceil(((
+                        this.siparis.adet =
+                           Math.round(event.target.value / (
                             parseInt(kiloBul.ortalama) *
-                            parseInt(this.siparis.boy)) / event.target.value).toFixed(3))
+                            parseInt(this.siparis.boy)) * 1000000);
                     }
                 }
             } else {
@@ -182,9 +183,9 @@ new Vue({
                     });
 
                     if (kiloBul.ortalama) {
-                        this.siparis.kilo = (parseInt(event.target.value) *
+                        this.siparis.kilo = Math.round ((parseInt(event.target.value) *
                             parseInt(kiloBul.ortalama) *
-                            parseInt(this.siparis.boy))
+                            parseInt(this.siparis.boy)) / 1000000);
                     }
                 }
             } else {
@@ -508,9 +509,10 @@ new Vue({
                     });
 
                     if (kiloBul.ortalama) {
-                        this.siparis.adet = Math.ceil(((
-                            parseInt(kiloBul.ortalama) *
-                            parseInt(this.siparis.boy)) / event.target.value).toFixed(3))
+                        this.siparis.adet =
+                            Math.round(event.target.value / (
+                                parseInt(kiloBul.ortalama) *
+                                parseInt(this.siparis.boy)) * 1000000);
                     }
                 }
             } else {
@@ -532,9 +534,9 @@ new Vue({
                     });
 
                     if (kiloBul.ortalama) {
-                        this.siparis.kilo = (parseInt(event.target.value) *
+                        this.siparis.kilo = Math.round ((parseInt(event.target.value) *
                             parseInt(kiloBul.ortalama) *
-                            parseInt(this.siparis.boy))
+                            parseInt(this.siparis.boy)) / 1000000);
                     }
                 }
             } else {
@@ -544,7 +546,6 @@ new Vue({
             }
 
         },
-
 
         async checkTolerans(event) {
             if (event.target.value && event.target.value > 0) {
