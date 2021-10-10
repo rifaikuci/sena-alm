@@ -159,9 +159,9 @@ new Vue({
 
                     if (kiloBul.ortalama) {
                         this.siparis.adet =
-                           Math.round(event.target.value / (
-                            parseInt(kiloBul.ortalama) *
-                            parseInt(this.siparis.boy)) * 1000000);
+                            Math.round(event.target.value / (
+                                parseInt(kiloBul.ortalama) *
+                                parseInt(this.siparis.boy)) * 1000000);
                     }
                 }
             } else {
@@ -183,7 +183,7 @@ new Vue({
                     });
 
                     if (kiloBul.ortalama) {
-                        this.siparis.kilo = Math.round ((parseInt(event.target.value) *
+                        this.siparis.kilo = Math.round((parseInt(event.target.value) *
                             parseInt(kiloBul.ortalama) *
                             parseInt(this.siparis.boy)) / 1000000);
                     }
@@ -534,7 +534,7 @@ new Vue({
                     });
 
                     if (kiloBul.ortalama) {
-                        this.siparis.kilo = Math.round ((parseInt(event.target.value) *
+                        this.siparis.kilo = Math.round((parseInt(event.target.value) *
                             parseInt(kiloBul.ortalama) *
                             parseInt(this.siparis.boy)) / 1000000);
                     }
