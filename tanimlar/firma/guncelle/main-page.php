@@ -40,7 +40,7 @@ if ($_GET['id']) {
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Firma Türü</label>
-                            <select name="firmaTurId" class="form-control form-control-lg" style="width: 100%;">
+                            <select name="firmaTurId" class="form-control select2" style="width: 100%;">
                                 <option value="">Firma Türü Seçiniz</option>
                                 <?php while ($firma = $firmatur->fetch_array()) { ?>
                                     <option <?php echo $row['firmaTurId'] == $firma['id'] ? 'selected' : '' ?>

@@ -24,7 +24,7 @@ $result = $db->query($sql);
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Personel Türü</label>
-                            <select required name="rolId" class="form-group select2" style="width: 100%;">
+                            <select name="rolId" class="form-group select2" style="width: 100%;">
                                 <option selected value="">Personel Türü Seçiniz</option>
                                 <?php while ($row = $result->fetch_array()) { ?>
                                     <option value="<?php echo $row['level']; ?>"><?php echo $row['rol']; ?></option>

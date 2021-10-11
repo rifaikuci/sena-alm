@@ -2,7 +2,7 @@
 <script src=<?php echo base_url() . "plugins/bootstrap/js/bootstrap.bundle.min.js" ?>></script>
 <script src=<?php echo base_url() . "dist/js/adminlte.min.js" ?>></script>
 <script src=<?php echo base_url() . "dist/js/demo.js" ?>></script>
-<script src=<?php echo base_url() . "plugins/select2/js/select2.full.min.js" ?>></script>
+<script src=<?php echo base_url() . "plugins/select2/js/select2.full.js" ?>></script>
 <script src=<?php echo base_url() . "plugins/ekko-lightbox/ekko-lightbox.min.js" ?>></script>
 <script src=<?php echo base_url() . "plugins/datatables/jquery.dataTables.min.js" ?>></script>
 <script src=<?php echo base_url() . "plugins/datatables-bs4/js/dataTables.bootstrap4.min.js" ?>></script>
@@ -19,3 +19,4 @@
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/takim.js" ?>></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/siparis.js" ?>></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/takim-goster.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/baski-giris.js" ?>></script>

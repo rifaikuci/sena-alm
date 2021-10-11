@@ -56,7 +56,7 @@ $profiller = $db->query($profillerrsql);
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Firma Adı</label>
-                            <select name="firmaId" required class="form-control" style="width: 100%;">
+                            <select name="firmaId" class="form-control select2" style="width: 100%;">
                                 <option disabled value="">Firma Seçiniz</option>
                                 <?php while ($firma = $firmalar->fetch_array()) { ?>
                                     <option <?php echo $firma['id'] == $row['firmaId'] ? "selected" : "" ?>
@@ -70,8 +70,8 @@ $profiller = $db->query($profillerrsql);
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Profiller</label>
-                            <select name="profilId" class="form-control" style="width: 100%;">
-                                <option disabled value="">Profil Seçiniz</option>
+                            <select name="profilId" class="form-control select2" style="width: 100%;">
+                                <option value="">Profil Seçiniz</option>
                                 <?php while ($profil = $profiller->fetch_array()) { ?>
                                     <option <?php echo $profil['id'] == $row['profilId'] ? "selected" : "" ?>
                                             value="<?php echo $profil['id']; ?>"><?php echo $profil['profilNo']; ?></option>

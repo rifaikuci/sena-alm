@@ -1,4 +1,13 @@
-new Vue({
+var biyetFirmaId = "";
+var boyaFirmaId = "";
+var boyaTur = "";
+var malzemeFirmaId = "";
+var sevkiyatProfilId = "";
+var sevkiyatGeldigiFirma = "";
+var sevkiyatMusteriId = "";
+
+
+var app = new Vue({
         el: "#stok-giris",
         data: {
             //boyalar
@@ -112,7 +121,7 @@ new Vue({
             //biyetler method
             biyetekle: async function (event) {
                 event.preventDefault();
-
+                this.biyet.firmaId = biyetFirmaId;
                 const firmabul = await axios.post('/sena/netting/action.php', {
                     action: 'firmaId',
                     id: this.biyet.firmaId
@@ -170,6 +179,7 @@ new Vue({
 
             },
             checkboy(event) {
+                this.biyet.firmaId = biyetFirmaId;
                 if (event.target.value &&
                     this.biyet.partino &&
                     this.biyet.firmaId &&
@@ -183,6 +193,7 @@ new Vue({
 
             },
             checkpartino(event) {
+                this.biyet.firmaId = biyetFirmaId;
                 if (event.target.value &&
                     this.biyet.boy &&
                     this.biyet.firmaId &&
@@ -196,6 +207,7 @@ new Vue({
 
             },
             checkadetbiyet(event) {
+                this.biyet.firmaId = biyetFirmaId;
                 if (event.target.value &&
                     this.biyet.boy &&
                     this.biyet.firmaId &&
@@ -225,7 +237,8 @@ new Vue({
             //boyalar method
             boyaekle: async function (event) {
                 event.preventDefault();
-
+                    this.boya.firmaId = boyaFirmaId;
+                    this.boya.boyaId = boyaTur;
                 const firmabul = await axios.post('/sena/netting/action.php', {
                     action: 'firmaId',
                     id: this.boya.firmaId
@@ -281,6 +294,8 @@ new Vue({
 
             },
             checkboyapartino(event) {
+                this.boya.firmaId = boyaFirmaId;
+                this.boya.boyaId = boyaTur;
                 if (event.target.value &&
                     this.boya.partino &&
                     this.boya.firmaId &&
@@ -295,6 +310,8 @@ new Vue({
                 }
             },
             checkboyaadet(event) {
+                this.boya.firmaId = boyaFirmaId;
+                this.boya.boyaId = boyaTur;
                 if (event.target.value &&
                     this.boya.partino &&
                     this.boya.firmaId &&
@@ -309,6 +326,8 @@ new Vue({
                 }
             },
             checkboyakilo(event) {
+                this.boya.firmaId = boyaFirmaId;
+                this.boya.boyaId = boyaTur;
                 if (event.target.value &&
                     this.boya.partino &&
                     this.boya.firmaId &&
@@ -341,6 +360,7 @@ new Vue({
             //malzemeler method
             malzemeekle: async function (event) {
                 event.preventDefault();
+                this.malzeme.firmaId = malzemeFirmaId;
 
                 const firmabul = await axios.post('/sena/netting/action.php', {
                     action: 'firmaId',
@@ -387,6 +407,7 @@ new Vue({
 
             },
             checkmalzemepartino(event) {
+                this.malzeme.firmaId = malzemeFirmaId;
                 if (event.target.value &&
                     this.malzeme.partino &&
                     this.malzeme.firmaId &&
@@ -398,6 +419,7 @@ new Vue({
                 }
             },
             checkmalzemeadet(event) {
+                this.malzeme.firmaId = malzemeFirmaId;
                 if (event.target.value &&
                     this.malzeme.partino &&
                     this.malzeme.firmaId &&
@@ -424,6 +446,9 @@ new Vue({
             //profiller method
             profilekle: async function (event) {
                 event.preventDefault();
+                this.profil.profilId = sevkiyatProfilId;
+                this.profil.firmaId = sevkiyatGeldigiFirma;
+                this.profil.musteriId = sevkiyatMusteriId;
 
                 const data = await axios.post('/sena/netting/action.php', {
                     action: 'profilId',
@@ -501,6 +526,9 @@ new Vue({
 
             },
             checkprofilboy(event) {
+                this.profil.profilId = sevkiyatProfilId;
+                this.profil.firmaId = sevkiyatGeldigiFirma;
+                this.profil.musteriId = sevkiyatMusteriId;
                 if (event.target.value &&
                     this.profil.firmaId &&
                     this.profil.musteriId &&
@@ -516,7 +544,9 @@ new Vue({
                 }
             },
             checkprofiladet(event) {
-
+                this.profil.profilId = sevkiyatProfilId;
+                this.profil.firmaId = sevkiyatGeldigiFirma;
+                this.profil.musteriId = sevkiyatMusteriId;
                 if (this.profil.adet && this.profil.paketAdet) {
                     this.profil.toplamadet = this.profil.adet * this.profil.paketAdet;
                 }
@@ -536,7 +566,9 @@ new Vue({
                 }
             },
             checkprofilpaketAdet(event) {
-
+                this.profil.profilId = sevkiyatProfilId;
+                this.profil.firmaId = sevkiyatGeldigiFirma;
+                this.profil.musteriId = sevkiyatMusteriId;
                 if (this.profil.adet && this.profil.paketAdet) {
                     this.profil.toplamadet = this.profil.adet * this.profil.paketAdet;
                 }
@@ -578,3 +610,34 @@ new Vue({
 
     }
 );
+
+$('#sevkiyatBiyetFirmaId').on("change",function(value){
+    biyetFirmaId = value.target.value
+});
+
+$('#sevkiyatBoyaFirmaId').on("change",function(value){
+    boyaFirmaId = value.target.value
+});
+
+$('#sevkiyatBoyaTur').on("change",function(value){
+    boyaTur = value.target.value
+});
+
+
+$('#sevkiyatMalzemeFirmaId').on("change",function(value){
+    malzemeFirmaId = value.target.value
+});
+
+$('#sevkiyatProfilId').on("change",function(value){
+    sevkiyatProfilId = value.target.value
+});
+
+$('#sevkiyatGeldigiFirma').on("change",function(value){
+    sevkiyatGeldigiFirma = value.target.value
+});
+
+$('#sevkiyatMusteriId').on("change",function(value){
+    sevkiyatMusteriId = value.target.value
+});
+
+

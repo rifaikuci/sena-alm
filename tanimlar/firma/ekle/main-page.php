@@ -31,7 +31,7 @@ $result = $db->query($sql);
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Firma Türü</label>
-                            <select required name="firmaTurId" class="form-control form-control-lg"
+                            <select name="firmaTurId" class="form-control select2"
                                     style="width: 100%;">
                                 <option selected value="">Firma Türü Seçiniz</option>
                                 <?php while ($row = $result->fetch_array()) { ?>

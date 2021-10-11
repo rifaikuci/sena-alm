@@ -21,7 +21,7 @@ $profiller = $db->query($profillerrsql);
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Firma Adı</label>
-                            <select name="firmaId" required class="form-control" style="width: 100%;">
+                            <select name="firmaId" required class="form-control select2" style="width: 100%;">
                                 <option selected disabled value="">Firma Seçiniz</option>
                                 <?php while ($firma = $firmalar->fetch_array()) { ?>
                                     <option
@@ -65,8 +65,7 @@ $profiller = $db->query($profillerrsql);
                         <div class="form-group">
                             <label>Profiller</label>
                             <select name="profilId"
-                                    :required="kalipCins == 4  ? false : true && ['0', '1', '3', '4','6','7','9'].includes(parca)"
-                                    class="form-control" style="width: 100%;">
+                                    class="form-control select2" style="width: 100%;">
                                 <option selected disabled value="">Profil Seçiniz</option>
                                 <?php while ($profil = $profiller->fetch_array()) { ?>
                                     <option
