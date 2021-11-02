@@ -25,7 +25,11 @@ if (isset($_POST['siparisekle'])) {
     $arrayNaylonId = explode(",", $_POST['arrayNaylonId']);
     $arrayBoyaId = explode(",", $_POST['arrayBoyaId']);
     $arrayEloksalId = explode(",", $_POST['arrayEloksalId']);
-    $arrayAciklama = explode(",", $_POST['arrayAciklama']);
+    $arrayBaskiAciklama = explode(",", $_POST['arrayBaskiAciklama']);
+    $arrayPaketAciklama = explode(",", $_POST['arrayPaketAciklama']);
+    $arrayBoyaAciklama = explode(",", $_POST['arrayBoyaAciklama']);
+    $arrayIstenilenTermin = explode(",", $_POST['arrayIstenilenTermin']);
+    $arrayKiloAdet = explode(",", $_POST['arrayKiloAdet']);
 
     $yil = date('y');
     $ay = str_pad(date('m'), 2, "0", STR_PAD_LEFT);
@@ -47,15 +51,29 @@ if (isset($_POST['siparisekle'])) {
 
 
     $sql = "INSERT INTO tblsiparis (profilId, adet, kilo, siparisTuru, alasimId, musteriId, naylonDurum,
-                        araKagit, krepeKagit, siparisTarih, termimTarih, aciklama, siparisNo, boyaId,
-                        eloksalId, maxTolerans, boy, satirNo, durum,siparisTarihYil,ay, gun, yil, hafta)  VALUES ";
+                        araKagit, krepeKagit, siparisTarih, termimTarih, istenilenTermin, siparisNo, boyaId,
+                        eloksalId, maxTolerans, boy, satirNo, durum,siparisTarihYil,ay, gun, yil, hafta,
+                        kiloAdet, kalanAdet, kalanKilo, baskiAciklama, paketAciklama, boyaAciklama)  VALUES ";
 
-    for ($i = 0; $i < count($arrayAciklama); $i++) {
+    for ($i = 0; $i < count($arrayProfil); $i++) {
 
         $siparisTur = strtoupper(substr($arraySiparisTur[$i], 0, 1));
         $gunAritmetik = str_pad($gunAritmetikSayi, 2, "0", STR_PAD_LEFT);
         $satirNo = "SN-" . $siparisTur . $ay . $gun . $gunAritmetik;
 
+        $kiloAdet = "";
+        $kalanAdet = "";
+        $kalanKilo = "";
+        if($arrayKiloAdet[$i] == "A") {
+            $kalanKilo = 0;
+            $kalanAdet = $arrayAdet[$i];
+            $kiloAdet = 'A';
+        } else {
+            $kalanKilo = $arrayKilo[$i];
+            $kalanAdet = 0;
+            $kiloAdet = 'K';
+
+        }
         if($siparisTur == 'B') {
             $eloksalId = 0;
             $boyaId = $arrayBoyaId[$i];
@@ -70,9 +88,10 @@ if (isset($_POST['siparisekle'])) {
 
         $sql = $sql . " ('$arrayProfil[$i]', '$arrayAdet[$i]', '$arrayKilo[$i]','$siparisTur' , 
         '$arrayAlasimId[$i]', '$musteriId', '$arrayNaylonId[$i]', $arrayAraKagit[$i], $arrayKrepeKagit[$i],
-        '$siparisTarih', '$arrayTermimTarih[$i]', '$arrayAciklama[$i]', '$siparisNo', '$boyaId',
+        '$siparisTarih', '$arrayTermimTarih[$i]', '$arrayIstenilenTermin[$i]', '$siparisNo', '$boyaId',
         '$eloksalId', '$arrayMaxTolerans[$i]', '$arrayBoy[$i]','$satirNo', '0', '$siparisTarihYil', '$ay',
-        '$gun', '$yil', '$hafta'),";
+        '$gun', '$yil', '$hafta', '$kiloAdet', '$kalanAdet','$kalanKilo', '$arrayBaskiAciklama[$i]', 
+         '$arrayPaketAciklama[$i]', '$arrayBoyaAciklama[$i]' ),";
 
         $gunAritmetikSayi++;
 
@@ -131,10 +150,28 @@ if(isset($_POST['guncellesatir'])) {
     $araKagit = $_POST['araKagit'];
     $krepeKagit = $_POST['krepeKagit'];
     $naylonDurum = $_POST['naylonDurum'];
-    $aciklama = $_POST['aciklama'];
+    $istenilenTermin = $_POST['istenilenTermin'];
+    $kiloAdet = $_POST['kiloAdet'];
+    $baskiAciklama = $_POST['baskiAciklama'];
+    $paketAciklama = $_POST['paketAciklama'];
+    $boyaAciklama = $_POST['boyaAciklama'];
     $id = $_POST['id'];
     $siparisTurKod = substr($_POST['siparisTur'],0,1);
     $satirNo[3] = $siparisTurKod;
+
+    $kiloAdet = "";
+    $kalanAdet = "";
+    $kalanKilo = "";
+    if($kiloAdet == "A") {
+        $kalanKilo = 0;
+        $kalanAdet =  $adet;
+        $kiloAdet = 'A';
+    } else {
+        $kalanKilo = $kilo;
+        $kalanAdet = 0;
+        $kiloAdet = 'K';
+
+    }
 
     if($siparisTurKod == 'B') {
         $eloksalId = 0;
@@ -158,10 +195,15 @@ if(isset($_POST['guncellesatir'])) {
         araKagit = '$araKagit',
         krepeKagit = '$krepeKagit',
         naylonDurum = '$naylonDurum',
-        aciklama = '$aciklama',
+        istenilenTermin = '$istenilenTermin',
         satirNo = '$satirNo',
-        siparisTuru = '$siparisTurKod'
-        
+        siparisTuru = '$siparisTurKod',
+        kalanAdet = '$kalanAdet',
+        kalanKilo = '$kalanKilo',
+        kiloAdet = '$kiloAdet',
+        baskiAciklama = '$baskiAciklama',
+        paketAciklama = '$paketAciklama',
+        boyaAciklama = '$boyaAciklama'
 WHERE id='$id'";
 
     mysqli_query($db, $sql);

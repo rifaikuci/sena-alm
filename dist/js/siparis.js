@@ -4,8 +4,9 @@ date.setDate(date.getDate() + 26);
 
 gun = date.getDate().toString().length == 1 ? "0" + date.getDate() : date.getDate();
 ay = date.getMonth().toString().length == 1 ? "0" + date.getMonth() : date.getMonth();
-var date = date.getFullYear() + "-" + ay + "-" + gun
-new Vue({
+var date = date.getFullYear() + "-" + ay + "-" + gun;
+
+var siparisGiris = new Vue({
     el: "#siparis-giris",
     data: {
         isFullSiparisData: false,
@@ -30,8 +31,12 @@ new Vue({
         arrayBoyaAd: [],
         arrayEloksalId: [],
         arrayEloksalAd: [],
-        arrayAciklama: [],
+        arrayBaskiAciklama: [],
+        arrayBoyaAciklama: [],
+        arrayPaketAciklama: [],
         arraySiparisler: [],
+        arrayKiloAdet: [],
+        arrayIstenilenTermin: [],
         siparis: {
             profil: '',
             profilId: '',
@@ -53,37 +58,24 @@ new Vue({
             krepeKagitAd: '',
             naylonId: '',
             naylonAd: '',
-            aciklama: ''
+            baskiAciklama: '',
+            boyaAciklama: '',
+            paketAciklama: '',
+            kiloAdet: '',
+            istenilenTermin: '',
         }
     },
 
 
     methods: {
-        checkAciklama(event) {
-            if (event.target.value &&
-                this.siparis.profilId &&
-                this.siparis.boy &&
-                this.siparis.siparisTur &&
-                this.siparis.alasimId &&
-                this.siparis.termimTarih &&
-                this.siparis.maxTolerans &&
-                this.errorShow == false &&
-                this.siparis.naylonId) {
-                this.isFullSiparisData = true
-
-            } else {
-                this.isFullSiparisData = false
-            }
-
-        },
         checkBoy(event) {
             if (event.target.value &&
                 this.siparis.profilId &&
-                this.siparis.aciklama &&
                 this.siparis.siparisTur &&
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
                 this.siparis.maxTolerans &&
+                this.siparis.istenilenTermin &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
                 this.isFullSiparisData = true
@@ -96,11 +88,11 @@ new Vue({
         checkKagit() {
             if (this.siparis.boy &&
                 this.siparis.profilId &&
-                this.siparis.aciklama &&
                 this.siparis.siparisTur &&
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
                 this.siparis.maxTolerans &&
+                this.siparis.istenilenTermin &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
                 this.isFullSiparisData = true
@@ -125,18 +117,6 @@ new Vue({
             }
         },
 
-
-        profilOnChange(event) {
-            if (event.target.value) {
-                this.siparis.profil = event.target.value
-                let arr = event.target.value.split(";")
-                this.siparis.profilId = arr[0];
-                this.siparis.profilAd = arr[1];
-                this.siparis.adet = '';
-                this.siparis.kilo = '';
-            }
-        },
-
         alasimOnChange(event) {
             if (event.target.value) {
                 this.siparis.alasim = event.target.value
@@ -158,6 +138,7 @@ new Vue({
                     });
 
                     if (kiloBul.ortalama) {
+                        this.siparis.kiloAdet = 'K';
                         this.siparis.adet =
                             Math.round(event.target.value / (
                                 parseInt(kiloBul.ortalama) *
@@ -183,6 +164,7 @@ new Vue({
                     });
 
                     if (kiloBul.ortalama) {
+                        this.siparis.kiloAdet = 'A';
                         this.siparis.kilo = Math.round((parseInt(event.target.value) *
                             parseInt(kiloBul.ortalama) *
                             parseInt(this.siparis.boy)) / 1000000);
@@ -212,11 +194,11 @@ new Vue({
                 if (event.target.value && event.target.value > 0 &&
                     this.siparis.boy &&
                     this.siparis.profilId &&
-                    this.siparis.aciklama &&
                     this.siparis.siparisTur &&
                     this.siparis.alasimId &&
                     this.siparis.termimTarih &&
                     this.siparis.maxTolerans &&
+                    this.siparis.istenilenTermin &&
                     this.errorShow == false &&
                     this.siparis.naylonId) {
                     this.isFullSiparisData = true
@@ -230,15 +212,32 @@ new Vue({
             }
 
         },
+        checkAciklama(event) {
+            if (
+                this.siparis.profilId &&
+                this.siparis.siparisTur &&
+                this.siparis.alasimId &&
+                this.siparis.termimTarih &&
+                this.siparis.maxTolerans &&
+                this.siparis.istenilenTermin &&
+                this.errorShow == false &&
+                this.siparis.naylonId) {
+                this.isFullSiparisData = true
+
+            } else {
+                this.isFullSiparisData = false
+            }
+
+        },
 
         ekle: async function (event) {
             event.preventDefault();
             if (this.siparis.boy &&
                 this.siparis.profilId &&
-                this.siparis.aciklama &&
                 this.siparis.siparisTur &&
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
+                this.siparis.istenilenTermin &&
                 this.siparis.maxTolerans &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
@@ -247,6 +246,7 @@ new Vue({
                     this.siparis.naylonId == "2" ? "Baskısız" : "Yok";
                 this.siparis.araKagitAd = this.siparis.araKagit == true ? "Var" : "Yok"
                 this.siparis.krepeKagitAd = this.siparis.krepeKagit == true ? "Var" : "Yok"
+                this.siparis.boyaAciklama = this.siparis.siparisTur == "Boyalı" ? this.siparis.boyaAciklama : ""
 
                 this.arraySiparisler.push(this.siparis);
                 this.arrayProfilId.push(this.siparis.profilId);
@@ -262,13 +262,15 @@ new Vue({
                 this.arrayNaylonId.push(this.siparis.naylonId);
                 this.arrayBoyaId.push(this.siparis.boyaId);
                 this.arrayEloksalId.push(this.siparis.eloksalId);
-                this.arrayAciklama.push(this.siparis.aciklama);
+                this.arrayKiloAdet.push(this.siparis.kiloAdet);
+                this.arrayBaskiAciklama.push(this.siparis.baskiAciklama);
+                this.arrayPaketAciklama.push(this.siparis.paketAciklama);
+                this.arrayBoyaAciklama.push(this.siparis.boyaAciklama);
+                this.arrayIstenilenTermin.push(this.siparis.istenilenTermin);
 
 
                 this.siparis = {
                     profil: '',
-                    profilId: '',
-                    profilAd: '',
                     boy: '',
                     adet: '',
                     kilo: '',
@@ -286,7 +288,11 @@ new Vue({
                     krepeKagitAd: '',
                     naylonId: '',
                     naylonAd: '',
-                    aciklama: ''
+                    baskiAciklama: '',
+                    paketAciklama: '',
+                    boyaAciklama: '',
+                    kiloAdet: '',
+                    istenilenTermin: '',
                 }
 
                 this.isFullSiparisData = false;
@@ -319,7 +325,11 @@ new Vue({
             this.$delete(this.arrayNaylonId, index);
             this.$delete(this.arrayBoyaId, index);
             this.$delete(this.arrayEloksalId, index);
-            this.$delete(this.arrayAciklama, index);
+            this.$delete(this.arrayPaketAciklama, index);
+            this.$delete(this.arrayBoyaAciklama, index);
+            this.$delete(this.arrayBaskiAciklama, index);
+            this.$delete(this.arrayKiloAdet, index);
+            this.$delete(this.arrayIstenilenTermin, index);
             this.isFullSiparisData = false
 
         },
@@ -389,8 +399,12 @@ new Vue({
             krepeKagitAd: '',
             naylonId: '',
             naylonAd: '',
-            aciklama: '',
-            id: ''
+            baskiAciklama: '',
+            boyaAciklama: '',
+            paketAciklama: '',
+            id: '',
+            kiloAdet: '',
+            istenilenTermin: '',
         },
 
     },
@@ -417,6 +431,7 @@ new Vue({
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
                 this.siparis.maxTolerans &&
+                this.siparis.istenilenTermin &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
                 this.isFullSiparisData = true
@@ -429,11 +444,11 @@ new Vue({
         checkBoy(event) {
             if (event.target.value &&
                 this.siparis.profilId &&
-                this.siparis.aciklama &&
                 this.siparis.siparisTur &&
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
                 this.siparis.maxTolerans &&
+                this.siparis.istenilenTermin &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
                 this.isFullSiparisData = true
@@ -446,10 +461,10 @@ new Vue({
         checkKagit() {
             if (this.siparis.boy &&
                 this.siparis.profilId &&
-                this.siparis.aciklama &&
                 this.siparis.siparisTur &&
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
+                this.siparis.istenilenTermin &&
                 this.siparis.maxTolerans &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
@@ -509,6 +524,7 @@ new Vue({
                     });
 
                     if (kiloBul.ortalama) {
+                        this.siparis.kiloAdet = 'K';
                         this.siparis.adet =
                             Math.round(event.target.value / (
                                 parseInt(kiloBul.ortalama) *
@@ -534,6 +550,7 @@ new Vue({
                     });
 
                     if (kiloBul.ortalama) {
+                        this.siparis.kiloAdet = 'A';
                         this.siparis.kilo = Math.round((parseInt(event.target.value) *
                             parseInt(kiloBul.ortalama) *
                             parseInt(this.siparis.boy)) / 1000000);
@@ -562,11 +579,12 @@ new Vue({
                 if (event.target.value && event.target.value > 0 &&
                     this.siparis.boy &&
                     this.siparis.profilId &&
-                    this.siparis.aciklama &&
+
                     this.siparis.siparisTur &&
                     this.siparis.alasimId &&
                     this.siparis.termimTarih &&
                     this.siparis.maxTolerans &&
+                    this.siparis.istenilenTermin &&
                     this.errorShow == false &&
                     this.siparis.naylonId) {
                     this.isFullSiparisData = true
@@ -610,16 +628,19 @@ new Vue({
                     araKagit: allItems[id].araKagit == 1 ? true : false,
                     krepeKagit: allItems[id].krepeKagit == 1 ? true : false,
                     naylonId: allItems[id].naylonId,
-                    aciklama: allItems[id].aciklama,
+                    baskiAciklama: allItems[id].baskiAciklama,
+                    paketAciklama: allItems[id].paketAciklama,
+                    boyaAciklama: allItems[id].boyaAciklama,
                     profilId: allItems[id].profilId,
                     satirNo: allItems[id].satirNo,
                     alasimId: allItems[id].alasimId,
-                    id: allItems[id].id
+                    id: allItems[id].id,
+                    kiloAdet: allItems[id].kiloAdet,
+                    istenilenTermin: allItems[id].istenilenTermin,
 
                 },
                     this.arraySiparisler = allItems;
                 this.selectedRow = id;
-
 
                 this.isBoya = this.siparis.siparisTur == "Boyalı" ? true : false;
                 this.isEloksal = this.siparis.siparisTur == "Eloksal" ? true : false;
@@ -630,18 +651,37 @@ new Vue({
 
         },
 
-        async guncelle(event) {
-            event.preventDefault();
-            if (this.siparis.boy &&
+        checkAciklama(event) {
+            if (
                 this.siparis.profilId &&
-                this.siparis.aciklama &&
                 this.siparis.siparisTur &&
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
                 this.siparis.maxTolerans &&
+                this.siparis.istenilenTermin &&
+                this.errorShow == false &&
+                this.siparis.naylonId) {
+                this.isFullSiparisData = true
+
+            } else {
+                this.isFullSiparisData = false
+            }
+
+        },
+
+        async guncelle(event) {
+            event.preventDefault();
+            if (this.siparis.boy &&
+                this.siparis.profilId &&
+                this.siparis.siparisTur &&
+                this.siparis.alasimId &&
+                this.siparis.termimTarih &&
+                this.siparis.maxTolerans &&
+                this.siparis.istenilenTermin &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
 
+                this.siparis.boyaAciklama = this.siparis.siparisTur == "Boyalı" ? this.siparis.boyaAciklama : ""
 
                 $.ajax({
                     url: '/sena/netting/siparis/index.php',
@@ -661,9 +701,13 @@ new Vue({
                         araKagit: this.siparis.araKagit == true ? 1 : 0,
                         krepeKagit: this.siparis.krepeKagit == true ? 1 : 0,
                         naylonDurum: this.siparis.naylonId,
-                        aciklama: this.siparis.aciklama,
+                        boyaAciklama: this.siparis.boyaAciklama,
+                        paketAciklama: this.siparis.paketAciklama,
+                        baskiAciklama: this.siparis.baskiAciklama,
                         id: this.siparis.id,
-                        siparisTur: this.siparis.siparisTur
+                        siparisTur: this.siparis.siparisTur,
+                        kiloAdet: this.siparis.kiloAdet,
+                        istenilenTermin: this.siparis.istenilenTermin,
                     },
                     success: function (response) {
 
@@ -692,8 +736,12 @@ new Vue({
                     krepeKagitAd: '',
                     naylonId: '',
                     naylonAd: '',
-                    aciklama: '',
-                    id: ''
+                    paketAciklama: '',
+                    boyaAciklama: '',
+                    baskiAciklama: '',
+                    id: '',
+                    kiloAdet: '',
+                    istenilenTermin: '',
                 }
 
                 this.isFullSiparisData = false;
@@ -723,6 +771,17 @@ new Vue({
         },
 
     }
+
+});
+
+$('#siparisProfilId').on("change", function (value) {
+
+    siparisGiris.siparis.profil = value.target.value
+    let arr = value.target.value.split(";")
+    siparisGiris.siparis.profilId = arr[0];
+    siparisGiris.siparis.profilAd = arr[1];
+    siparisGiris.siparis.adet = '';
+    siparisGiris.siparis.kilo = '';
 
 });
 

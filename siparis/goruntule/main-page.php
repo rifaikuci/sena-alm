@@ -73,7 +73,6 @@ if ($_GET['siparisno']) {
                         <th>Ara K.</th>
                         <th>Krepe K.</th>
                         <th>Naylon</th>
-                        <th>Açıklama</th>
                         <th>###</th>
                     </tr>
                     </thead>
@@ -94,7 +93,6 @@ if ($_GET['siparisno']) {
                         <td>{{row.araKagitAd}}</td>
                         <td>{{row.krepeKagitAd}}</td>
                         <td>{{row.naylonAd}}</td>
-                        <td>{{row.aciklama}}</td>
                         <td><a onclick="return confirm('Silmek istediğinizden emin misiniz?')"
                                :href="row.silmeLinki" class="btn btn-outline-danger">
                                 <i class="fa fa-trash"></i>
@@ -110,16 +108,17 @@ if ($_GET['siparisno']) {
 
     <div class="card card-info" v-if="selectedRow != null">
         <div class="row">
-            <div class="col-md-6" >
-                    <div style="text-align: right; margin: 5px"  >
-                        <h5 style="color: #2b6b4f">Sipariş Detayı</h5>
-                    </div>
+            <div class="col-md-6">
+                <div style="text-align: right; margin: 5px">
+                    <h5 style="color: #2b6b4f">Sipariş Detayı</h5>
+                </div>
             </div>
 
             <div class="col-md-5">
                 <div style="text-align: center;padding: 5px">
                     <div style="text-align: right">
-                        <button style="margin: 5px" @click="trashrow()" class="btn btn-outline-danger" > <i class="fa fa-trash"></i>  Temizle
+                        <button style="margin: 5px" @click="trashrow()" class="btn btn-outline-danger"><i
+                                    class="fa fa-trash"></i> Temizle
                         </button>
                     </div>
                 </div>
@@ -134,14 +133,14 @@ if ($_GET['siparisno']) {
                                     <label>No</label>
                                     <input v-model="siparis.satirNo" type="text"
                                            class="form-control form-control-lg"
-                                          disabled>
+                                           disabled>
                                 </div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Profiller</label>
                                     <select @change="profilOnChange($event)" v-model="siparis.profil"
-                                            name="profilId" class="form-control">
+                                            name="profilId" class="form-control select2">
                                         <option selected disabled value="">Profil Seçiniz</option>
                                         <?php while ($profil = $profiller->fetch_array()) { ?>
                                             <option
@@ -293,18 +292,51 @@ if ($_GET['siparisno']) {
                                 </div>
                             </div>
 
-                            <div class="col-sm-12">
+                            <div class="col-sm-5">
                                 <div class="form-group">
-                                    <label>Açıklama</label>
-                                    <input v-model="siparis.aciklama" type="text"
-                                           class="form-control form-control-lg" name="aciklama"
+                                    <label>İstenilen Termin</label>
+                                    <select v-model="siparis.istenilenTermin" name="istenilenTermin"
+                                            class="form-control">
+                                        <option selected disabled value="">İstenilen Termin</option>
+                                        <option value="Termiksiz">0</option>
+                                        <option value="Yarı Termikli">4 - 7</option>
+                                        <option value="Termikli">10 - 14</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Baskı Açıklama</label>
+                                    <input v-model="siparis.baskiAciklama" type="text"
+                                           class="form-control form-control-lg" name="baskiAciklama"
                                            @input="checkAciklama($event)"
-                                           placeholder="Açıklama Giriniz ">
+                                           placeholder="Baskı Açıklama Giriniz ">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Paket Açıklama</label>
+                                    <input v-model="siparis.paketAciklama" type="text"
+                                           class="form-control form-control-lg" name="paketAciklama"
+                                           @input="checkAciklama($event)"
+                                           placeholder=" Paket Açıklama Giriniz ">
+                                </div>
+                            </div>
+
+                            <div v-if="siparis.siparisTur == 'Boyalı' " class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Boya Açıklama</label>
+                                    <input v-model="siparis.boyaAciklama" type="text"
+                                           class="form-control form-control-lg" name="boyaAciklama"
+                                           @input="checkAciklama($event)"
+                                           placeholder="Boya Açıklama Giriniz ">
                                 </div>
                             </div>
                             <div class="col-sm-12">
                                 <div style="text-align: right">
-                                    <button @click="guncelle($event)"  class="btn btn-dark float-right">Güncelle
+                                    <button @click="guncelle($event)" class="btn btn-dark float-right">Güncelle
                                     </button>
                                 </div>
                             </div>

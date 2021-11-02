@@ -85,9 +85,14 @@ if ($received_data->action == 'siparislerlistesi') {
         $siparis['maxTolerans'] =  $row['maxTolerans'];
         $siparis['boy'] =  $row['boy'];
         $siparis['satirNo'] =  $row['satirNo'];
-        $siparis['aciklama'] =  $row['aciklama'];
+        $siparis['istenilenTermin'] =  $row['istenilenTermin'];
+        $siparis['paketAciklama'] =  $row['paketAciklama'];
+        $siparis['boyaAciklama'] =  $row['boyaAciklama'];
+        $siparis['baskiAciklama'] =  $row['baskiAciklama'];
+        $siparis['kiloAdet'] =  $row['kiloAdet'];
+        $siparis['kalanAdet'] =  $row['kalanAdet'];
+        $siparis['kalanKilo'] =  $row['kalanKilo'];
         $siparis['silmeLinki'] =  base_url()."netting/siparis/index.php/?satirsil=". $row['satirNo']."&siparisno=".$row['siparisNo'];
-        $siparis['aciklamaKisa'] =  kelimeAyirma($row['aciklama'],3);
         array_push($datam,$siparis);
     }
     echo json_encode($datam);

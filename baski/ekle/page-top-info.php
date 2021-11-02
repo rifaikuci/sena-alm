@@ -5,8 +5,8 @@
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="<?php echo base_url() ?>">Anasayfa</a></li>
-                    <li class="breadcrumb-item"><a href="../"> Parçalar</a></li>
-                    <li class="breadcrumb-item active">Ekle</li>
+                    <li class="breadcrumb-item"><a href="../"> Baskılar</a></li>
+                    <li class="breadcrumb-item active">Oluşturma</li>
                 </ol>
             </div>
         </div>

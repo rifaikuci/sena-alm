@@ -81,8 +81,8 @@ $result = $db->query($sql);
 
                                     <td style="text-align: center">
                                         <?php if(isTableSevkiyat($db,"tblstokbiyet", $row['id']) > 0) { ?>
-                                        <a class="btn btn-default " target="_blank"
-                                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a> <?php  }?>
+                                        <a class="btn btn-default"
+                                           href="<?php echo '../../netting/sevkiyat/pdf.php?biyet='.$row['id'];?>"><i class="fa fa-print" aria-hidden="true"></i></a> <?php  }?>
 
                                         <?php if(isTableSevkiyat($db,"tblstokboya", $row['id']) > 0) { ?>
                                         <a class="btn btn-warning " target="_blank"

@@ -58,7 +58,6 @@ $firstrow = mysqli_fetch_assoc($resultfirst);
             <th>Ara K.</th>
             <th>Krepe K.</th>
             <th>Naylon</th>
-            <th>Açıklama</th>
         </tr>
         </thead>
         <tbody>
@@ -75,7 +74,6 @@ $firstrow = mysqli_fetch_assoc($resultfirst);
             <td><?php  echo $row['araKagit'] == "1" ? "Var" : "Yok";?></td>
             <td><?php  echo $row['krepeKagit'] == "1" ? "Var" : "Yok";?></td>
             <td><?php  echo $row['naylonDurum'] == 1 ? "Baskılı" : ($row['naylonDurum'] == 2 ? "Baskısız" : "Yok") ;?></td>
-            <td><?php  echo kelimeAyirma($row['aciklama'],3);?></td>
 
         </tr>
         <?php } ?>

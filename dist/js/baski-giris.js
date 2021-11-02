@@ -2,7 +2,10 @@ var deneme = ""
 var app =new Vue({
         el: "#baski-giris",
         data: {
-            deneme: "dssdfd"
+            satirNo: "",
+            profilNo: "ds",
+            profilAd: "sdssd",
+            isSelected:true,
         },
 
 

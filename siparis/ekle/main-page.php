@@ -42,12 +42,16 @@ $alasimlar = $db->query($alasimsql);
                         <input name="arrayNaylonId" :value="arrayNaylonId" type="hidden">
                         <input name="arrayBoyaId" :value="arrayBoyaId" type="hidden">
                         <input name="arrayEloksalId" :value="arrayEloksalId" type="hidden">
-                        <input name="arrayAciklama" :value="arrayAciklama" type="hidden">
+                        <input name="arrayKiloAdet" :value="arrayKiloAdet" type="hidden">
+                        <input name="arrayBaskiAciklama" :value="arrayBaskiAciklama" type="hidden">
+                        <input name="arrayBoyaAciklama" :value="arrayBoyaAciklama" type="hidden">
+                        <input name="arrayPaketAciklama" :value="arrayPaketAciklama" type="hidden">
+                        <input name="arrayIstenilenTermin" :value="arrayIstenilenTermin" type="hidden">
 
 
                         <div class="form-group">
                             <label>Müşteri</label>
-                            <select required name="musteriId" class="form-control">
+                            <select required name="musteriId" class="form-control select2" style="width: 100%;">
                                 <option selected disabled value="">Müşteri Seçiniz</option>
                                 <?php while ($firma = $firmalar->fetch_array()) { ?>
                                     <option
@@ -85,8 +89,8 @@ $alasimlar = $db->query($alasimsql);
                                     <div class="col-sm-3">
                                         <div class="form-group">
                                             <label>Profiller</label>
-                                            <select @change="profilOnChange($event)" v-model="siparis.profil"
-                                                    name="profilId" class="form-control">
+                                            <select id="siparisProfilId"  v-model="siparis.profil"
+                                                    name="profilId" class="form-control select2" style="width: 100%;">
                                                 <option selected disabled value="">Profil Seçiniz</option>
                                                 <?php while ($profil = $profiller->fetch_array()) { ?>
                                                     <option
@@ -195,6 +199,30 @@ $alasimlar = $db->query($alasimsql);
                                         </div>
                                     </div>
 
+                                    <div class="col-sm-5">
+                                        <div class="form-group">
+                                            <label>İstenilen Termin</label>
+                                            <select v-model="siparis.istenilenTermin" name="istenilenTermin" class="form-control">
+                                                <option selected disabled value="">İstenilen Termin</option>
+                                                <option value="Termiksiz">0</option>
+                                                <option value="Yarı Termikli">4 - 7</option>
+                                                <option value="Termikli">10 - 14</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label>Naylon</label>
+                                            <select v-model="siparis.naylonId" name="naylonDurum" class="form-control">
+                                                <option selected disabled value="">Naylon Seçiniz</option>
+                                                <option value="1">Baskılı</option>
+                                                <option value="2">Baskısız</option>
+                                                <option value="3">Yok</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
                                     <div class="col-sm-2">
                                         <div class="form-group">
                                             <label>~~</label>
@@ -226,25 +254,33 @@ $alasimlar = $db->query($alasimsql);
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-2">
+
+                                    <div class="col-sm-4">
                                         <div class="form-group">
-                                            <label>Naylon</label>
-                                            <select v-model="siparis.naylonId" name="naylonDurum" class="form-control">
-                                                <option selected disabled value="">Naylon Seçiniz</option>
-                                                <option value="1">Baskılı</option>
-                                                <option value="2">Baskısız</option>
-                                                <option value="3">Yok</option>
-                                            </select>
+                                            <label>Baskı Açıklama</label>
+                                            <input v-model="siparis.baskiAciklama" type="text"
+                                                   class="form-control form-control-lg" name="baskiAciklama"
+                                                   @input="checkAciklama($event)"
+                                                   placeholder="Baskı Açıklama Giriniz ">
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="form-group">
+                                            <label>Paket Açıklama</label>
+                                            <input v-model="siparis.paketAciklama" type="text"
+                                                   class="form-control form-control-lg" name="paketAciklama"
+                                                   @input="checkAciklama($event)"
+                                                   placeholder=" Paket Açıklama Giriniz ">
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-12">
+                                    <div v-if="siparis.siparisTur == 'Boyalı' " class="col-sm-4">
                                         <div class="form-group">
-                                            <label>Açıklama</label>
-                                            <input v-model="siparis.aciklama" type="text"
-                                                   class="form-control form-control-lg" name="aciklama"
+                                            <label>Boya Açıklama</label>
+                                            <input v-model="siparis.boyaAciklama" type="text"
+                                                   class="form-control form-control-lg" name="boyaAciklama"
                                                    @input="checkAciklama($event)"
-                                                   placeholder="Açıklama Giriniz ">
+                                                   placeholder="Boya Açıklama Giriniz ">
                                         </div>
                                     </div>
                                     <br>
