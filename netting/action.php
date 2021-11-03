@@ -51,7 +51,7 @@ if ($received_data->action == 'alasimId') {
     foreach ($result as $row) {
         $data['id'] = $row['id'];
         $data['ad'] = $row['ad'];
-        $data['ozkutle'] = $row['ozkutle'];
+        $data['biyetBirimGramaj'] = $row['biyetBirimGramaj'];
     }
 
     echo json_encode($data);

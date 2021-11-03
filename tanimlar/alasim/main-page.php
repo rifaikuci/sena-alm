@@ -1,5 +1,6 @@
 <?php
 include "../../netting/baglan.php";
+require_once "../../include/sql.php";
 
 $sql = "SELECT * FROM tblalasim order by id desc";
 $result = $db->query($sql);
@@ -40,7 +41,8 @@ $result = $db->query($sql);
                             <tr>
                                 <th>#</th>
                                 <th>Ad</th>
-                                <th>Özkütle</th>
+                                <th>Biyet Birim Gramajı</th>
+                                <th>Firma</th>
                                 <th>İşlem</th>
                             </tr>
                             </thead>
@@ -50,7 +52,8 @@ $result = $db->query($sql);
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['ad']; ?></td>
-                                    <td><?php echo $row['ozkutle']; ?></td>
+                                    <td><?php echo $row['biyetBirimGramaj']; ?></td>
+                                    <td><?php echo firmaBul($row['firmaId'],$db,'firmaAd'); ?></td>
                                     <td>
                                         <a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
                                            btn-warning">Düzenle</a>

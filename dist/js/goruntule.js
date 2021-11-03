@@ -65,16 +65,11 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('.biyetim').click(function () {
-        var partino = $(this).data('partino');
-        var firmaId = $(this).data('firma');
-        var alasimId = $(this).data('alasim');
-        var adet = $(this).data('adet');
-        var boy = $(this).data('boy');
-        var cap = $(this).data('cap');
-        $.ajax({
+        var id = $(this).data('id');
+            $.ajax({
             url: '/sena/netting/goruntule/biyet.php',
             type: 'post',
-            data: {partino: partino, firmaId: firmaId, alasimId: alasimId, adet: adet, boy: boy, cap: cap},
+            data: {id: id},
             success: function (response) {
                 $('.modal-body').html(response);
                 $('#biyet').modal('show');

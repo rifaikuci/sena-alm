@@ -42,9 +42,9 @@ var app = new Vue({
             biyetfirmaAd: [],
             biyetalasimId: [],
             biyetalasimAd: [],
-            biyetadetbiyet: [],
+            biyetOrtalamaBoy: [],
+            biyetToplamKg: [],
             biyetcap: [],
-            biyetboy: [],
             biyetler: [],
             biyet: {
                 partino: '',
@@ -52,11 +52,9 @@ var app = new Vue({
                 firmaAd: '',
                 alasimId: '',
                 alasimAd: '',
-                adetbiyet: '',
                 cap: '',
-                boy: '',
-                toplamkilo: '',
-                toplamboy: ''
+                toplamKg: '',
+                ortalamaBoy: '',
             },
             isFullBiyetData: false,
 
@@ -142,13 +140,10 @@ var app = new Vue({
                 if (this.biyet.partino &&
                     this.biyet.firmaId &&
                     this.biyet.alasimId &&
-                    this.biyet.adetbiyet &&
                     this.biyet.cap &&
-                    this.biyet.boy) {
+                    this.biyet.toplamKg) {
 
-                    this.biyet.toplamkilo = ((this.biyet.adetbiyet * alasimbul.ozkutle *
-                        (Math.PI * this.biyet.boy * Math.pow(this.biyet.cap, 2)) / 4) / 1000000).toFixed(3);
-                    this.biyet.toplamboy = this.biyet.adetbiyet * this.biyet.boy / 10;
+                    this.biyet.ortalamaBoy = (this.biyet.toplamKg / alasimbul.biyetBirimGramaj).toFixed(3).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
                     this.biyetler.push(this.biyet);
 
@@ -157,9 +152,9 @@ var app = new Vue({
                     this.biyetfirmaAd.push(this.biyet.firmaAd);
                     this.biyetalasimId.push(this.biyet.alasimId);
                     this.biyetalasimAd.push(this.biyet.alasimAd);
-                    this.biyetadetbiyet.push(this.biyet.adetbiyet);
                     this.biyetcap.push(this.biyet.cap);
-                    this.biyetboy.push(this.biyet.boy);
+                    this.biyetToplamKg.push(this.biyet.toplamKg);
+                    this.biyetOrtalamaBoy.push(this.biyet.ortalamaBoy);
                     this.isFullBiyetData = false;
                     this.biyet = {
                         partino: '',
@@ -169,22 +164,20 @@ var app = new Vue({
                         alasimAd: '',
                         adetbiyet: '',
                         cap: '',
-                        boy: '',
-                        toplamkilo: '',
-                        toplamboy: ''
+                        toplamKg: '',
+                        ortalamaBoy: ''
                     }
 
                 }
 
 
             },
-            checkboy(event) {
+            checkToplamKg(event) {
                 this.biyet.firmaId = biyetFirmaId;
                 if (event.target.value &&
                     this.biyet.partino &&
                     this.biyet.firmaId &&
                     this.biyet.alasimId &&
-                    this.biyet.adetbiyet &&
                     this.biyet.cap) {
                     this.isFullBiyetData = true;
                 } else {
@@ -195,10 +188,9 @@ var app = new Vue({
             checkpartino(event) {
                 this.biyet.firmaId = biyetFirmaId;
                 if (event.target.value &&
-                    this.biyet.boy &&
                     this.biyet.firmaId &&
                     this.biyet.alasimId &&
-                    this.biyet.adetbiyet &&
+                    this.biyet.toplamKg &&
                     this.biyet.cap) {
                     this.isFullBiyetData = true;
                 } else {
@@ -206,20 +198,7 @@ var app = new Vue({
                 }
 
             },
-            checkadetbiyet(event) {
-                this.biyet.firmaId = biyetFirmaId;
-                if (event.target.value &&
-                    this.biyet.boy &&
-                    this.biyet.firmaId &&
-                    this.biyet.alasimId &&
-                    this.biyet.partino &&
-                    this.biyet.cap) {
-                    this.isFullBiyetData = true;
-                } else {
-                    this.isFullBiyetData = false;
-                }
 
-            },
             biyetSil: function (index) {
                 this.$delete(this.biyetler, index);
                 this.$delete(this.biyetpartino, index);
@@ -227,9 +206,9 @@ var app = new Vue({
                 this.$delete(this.biyetfirmaAd, index);
                 this.$delete(this.biyetalasimId, index);
                 this.$delete(this.biyetalasimAd, index);
-                this.$delete(this.biyetadetbiyet, index);
                 this.$delete(this.biyetcap, index);
-                this.$delete(this.biyetboy, index);
+                this.$delete(this.biyetToplamKg, index);
+                this.$delete(this.biyetOrtalamaBoy, index);
                 this.isFullBiyetData = false;
             },
 

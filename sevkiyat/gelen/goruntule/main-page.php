@@ -60,7 +60,7 @@ if ($_GET['id']) {
                 </div>
 
                 <?php if (isTableSevkiyat($db, "tblstokbiyet", $detail['id']) > 0) {
-                    $sqlbiyet = "SELECT * FROM `tblstokbiyet` where sevkiyatId =" . $detail['id'] . " group  by cap, boy, adet,alasimId,firmaId, partino";
+                    $sqlbiyet = "SELECT * FROM `tblstokbiyet` where sevkiyatId =" . $detail['id'] ;
                     $resultbiyet = $db->query($sqlbiyet);
 
                     ?>
@@ -79,11 +79,9 @@ if ($_GET['id']) {
                                     <th>Parti No</th>
                                     <th>Firma</th>
                                     <th>Alaşım</th>
-                                    <th>Adet</th>
                                     <th>Çap</th>
-                                    <th>Boy</th>
                                     <th>Toplam Kilo</th>
-                                    <th>Toplam Boy</th>
+                                    <th>Ortalama Boy</th>
                                     <th>Detay</th>
                                 </tr>
                                 </thead>
@@ -95,22 +93,13 @@ if ($_GET['id']) {
                                         <td> <?php echo $biyet['partino'] ?></td>
                                         <td> <?php echo firmaBul($biyet["firmaId"], $db, 'firmaAd') ?></td>
                                         <td> <?php echo alasimBul($biyet["alasimId"], $db, 'ad') ?></td>
-                                        <td> <?php echo $biyet['adet'] ?></td>
                                         <td> <?php echo $biyet["cap"] ?></td>
-                                        <td> <?php echo $biyet["boy"] ?></td>
-                                        <td> <?php echo biyetToplamKilo($biyet['alasimId'], $biyet['adet'], $biyet["cap"], $biyet["boy"], $db) ?>
-                                            Kg
-                                        </td>
-                                        <td> <?php echo biyetToplamBoy($biyet['adet'], $biyet["boy"]) ?> Cm</td>
+                                        <td> <?php echo $biyet["toplamKg"]. " Kg" ?></td>
+                                        <td> <?php echo $biyet["ortalamaBoy"]. " Cm"  ?></td>
                                         <td>
                                             <button type="button" class="btn btn-outline-primary biyetim"
                                                     data-toggle="modal" data-target="#biyet"
-                                                    data-cap="<?php echo $biyet['cap'] ?>"
-                                                    data-boy="<?php echo $biyet['boy'] ?>"
-                                                    data-adet="<?php echo $biyet['adet'] ?>"
-                                                    data-alasim="<?php echo $biyet['alasimId'] ?>"
-                                                    data-firma="<?php echo $biyet['firmaId'] ?>"
-                                                    data-partino="<?php echo $biyet['partino'] ?>"
+                                                    data-id="<?php echo $biyet['id'] ?>"
                                             ><i class="fa fa-expand"></i></button>
                                         </td>
                                     </tr>
@@ -242,7 +231,7 @@ if ($_GET['id']) {
                 <?php } ?>
 
                 <?php if (isTableSevkiyat($db, "tblstokprofil", $detail['id']) > 0) {
-                    $sqlprofil = "SELECT * FROM `tblstokprofil` where sevkiyatId =" . $detail['id'] . "";
+                    $sqlprofil = "SELECT * FROM `tblstokprofil` where sevkiyatId =" . $detail['id'] ;
                     $resultprofil = $db->query($sqlprofil);
                     ?>
                     <div class="card">

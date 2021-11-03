@@ -157,9 +157,9 @@ $profiller = $db->query($profillerrsql);
                                                     <input name="biyetfirmaAd" :value="biyetfirmaAd" type="hidden">
                                                     <input name="biyetalasimId" :value="biyetalasimId" type="hidden">
                                                     <input name="biyetalasimAd" :value="biyetalasimAd" type="hidden">
-                                                    <input name="biyetadetbiyet" :value="biyetadetbiyet" type="hidden">
                                                     <input name="biyetcap" :value="biyetcap" type="hidden">
-                                                    <input name="biyetboy" :value="biyetboy" type="hidden">
+                                                    <input name="biyetOrtalamaBoy" :value="biyetOrtalamaBoy" type="hidden">
+                                                    <input name="biyetToplamKg" :value="biyetToplamKg" type="hidden">
 
                                                 </div>
 
@@ -195,16 +195,6 @@ $profiller = $db->query($profillerrsql);
 
                                             <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <label>Adet</label>
-                                                    <input v-model="biyet.adetbiyet" type="number"
-                                                           class="form-control form-control-lg"
-                                                           @input="checkadetbiyet($event)"
-                                                           name="adetbiyet" placeholder="0" step="1">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
                                                     <label>Çap (mm)</label>
                                                     <select v-model="biyet.cap" class="form-control"
                                                             style="width: 100%;">
@@ -216,11 +206,11 @@ $profiller = $db->query($profillerrsql);
 
                                             <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <label>Boy(mm)</label>
-                                                    <input v-model="biyet.boy" type="number"
+                                                    <label>Toplam (Kg)</label>
+                                                    <input v-model="biyet.toplamKg" type="number"
                                                            class="form-control form-control-lg"
-                                                           name="boy" placeholder="0" step="1"
-                                                           @input="checkboy($event)">
+                                                           name="toplamKg" placeholder="0" step="1"
+                                                           @input="checkToplamKg($event)">
                                                 </div>
                                             </div>
 
@@ -240,11 +230,9 @@ $profiller = $db->query($profillerrsql);
                                                     <th>Parti No</th>
                                                     <th>Firma</th>
                                                     <th>Alaşım</th>
-                                                    <th>Adet</th>
                                                     <th>Çap</th>
-                                                    <th>Boy</th>
                                                     <th>Toplam Kilo</th>
-                                                    <th>Toplam Boy</th>
+                                                    <th>Ortalama Boy</th>
                                                     <th>İşlem</th>
                                                 </tr>
                                                 </thead>
@@ -254,11 +242,9 @@ $profiller = $db->query($profillerrsql);
                                                     <td> {{biyet.partino}}</td>
                                                     <td> {{biyet.firmaAd}}</td>
                                                     <td> {{biyet.alasimAd}}</td>
-                                                    <td> {{biyet.adetbiyet}}</td>
                                                     <td> {{biyet.cap}}</td>
-                                                    <td> {{biyet.boy}}</td>
-                                                    <td> {{biyet.toplamkilo}} Kg</td>
-                                                    <td> {{biyet.toplamboy}} Cm</td>
+                                                    <td> {{biyet.toplamKg}} Kg</td>
+                                                    <td> {{biyet.ortalamaBoy}} Cm</td>
                                                     <td><a style="color: white" v-on:click="biyetSil(index)"
                                                            class="btn btn-danger">Sil</a></td>
                                                 </tr>

@@ -4,15 +4,9 @@ require_once "../../include/sql.php";
 require_once "../../include/helper.php";
 
 
-$partino = $_POST['partino'];
-$firmaId = $_POST['firmaId'];
-$alasimId = $_POST['alasimId'];
-$adet = $_POST['adet'];
-$boy = $_POST['boy'];
-$cap = $_POST['cap'];
+$id = $_POST['id'];
 
-
-$sql = "SELECT * FROM tblstokbiyet  where partino = '$partino' AND firmaId = '$firmaId' AND alasimId= '$alasimId' AND   adet = '$adet' AND boy = '$boy' AND cap = '$cap'";
+$sql = "SELECT * FROM tblstokbiyet  where id = '$id'";
 $result = $db->query($sql);
 
 
@@ -21,13 +15,13 @@ $result = $db->query($sql);
     <table class="table table-dark table-hover text-nowrap">
         <thead>
         <tr>
-            <th scope="col">Barkod</th>
+            <th scope="col">Sipariş No</th>
             <th scope="col">Parti No</th>
             <th scope="col">Firma</th>
             <th scope="col">Alaşım</th>
-            <th scope="col">Adet</th>
             <th scope="col">Çap</th>
-            <th scope="col">Boy</th>
+            <th scope="col">Toplam Kg</th>
+            <th scope="col">Ortalama Boy</th>
         </tr>
         </thead>
         <tbody>
@@ -39,9 +33,9 @@ $result = $db->query($sql);
                 <td> <?php echo $biyet['partino'] ?></td>
                 <td> <?php echo firmaBul($biyet["firmaId"], $db, 'firmaAd') ?></td>
                 <td> <?php echo alasimBul($biyet["alasimId"], $db, 'ad') ?></td>
-                <td> <?php echo $biyet['adet'] ?></td>
                 <td> <?php echo $biyet["cap"] ?></td>
-                <td> <?php echo $biyet["boy"] ?></td>
+                <td> <?php echo $biyet["toplamKg"]. " Kg" ?></td>
+                <td> <?php echo $biyet["ortalamaBoy"]. " Cm"  ?></td>
             </tr>
         <?php } ?>
         </tbody>

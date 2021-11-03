@@ -9,10 +9,11 @@ if (isset($_POST['alasimekleme'])) {
 
     try {
         $ad = $_POST['ad'];
-        $ozkutle = $_POST['ozkutle'];
+        $firmaId = $_POST['firmaId'];
+        $biyetBirimGramaj = $_POST['biyetBirimGramaj'];
         $seo = seo($ad);
 
-        $sql = "INSERT INTO tblalasim (ad, ozkutle,seo) VALUES ('$ad', '$ozkutle','$seo')";
+        $sql = "INSERT INTO tblalasim (ad, biyetBirimGramaj,seo,firmaId) VALUES ('$ad', '$biyetBirimGramaj','$seo', '$firmaId')";
 
         if (mysqli_query($db, $sql)) {
             header("Location:../../tanimlar/alasim/?durumekle=ok");
@@ -42,11 +43,12 @@ if (isset($_GET['alasimsil'])) {
 if (isset($_POST['alasimguncelleme'])) {
     $id = $_POST['id'];
     $ad = $_POST['ad'];
-    $ozkutle = $_POST['ozkutle'];
+    $firmaId = $_POST['firmaId'];
+    $biyetBirimGramaj = $_POST['biyetBirimGramaj'];
     $seo = seo($ad);
 
     $sql = "UPDATE tblalasim set 
-        ad = '$ad', ozkutle = '$ozkutle', seo = '$seo' WHERE id='$id'";
+        ad = '$ad', biyetBirimGramaj = '$biyetBirimGramaj', seo = '$seo', firmaId = '$firmaId' WHERE id='$id'";
 
     if (mysqli_query($db, $sql)) {
         header("Location:../../tanimlar/alasim/?durumguncelleme=ok");
