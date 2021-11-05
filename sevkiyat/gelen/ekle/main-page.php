@@ -145,6 +145,23 @@ $profiller = $db->query($profillerrsql);
                                     <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel"
                                          aria-labelledby="biyet">
                                         <div class="row">
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Firma Adı</label>
+                                                    <select id="sevkiyatBiyetFirmaId"
+                                                            class="form-control select2"
+                                                            style="width: 100%;">
+                                                        <option selected disabled value="">Firma Seçiniz</option>
+                                                        <?php while ($firma = $firmalar->fetch_array()) { ?>
+                                                            <option
+                                                                    value="<?php echo $firma['id']; ?>"><?php echo $firma['firmaAd']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>Parti Numarası</label>
@@ -162,35 +179,6 @@ $profiller = $db->query($profillerrsql);
                                                     <input name="biyetToplamKg" :value="biyetToplamKg" type="hidden">
 
                                                 </div>
-
-                                            </div>
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label>Firma Adı</label>
-                                                    <select id="sevkiyatBiyetFirmaId"
-                                                            class="form-control select2"
-                                                            style="width: 100%;">
-                                                        <option selected disabled value="">Firma Seçiniz</option>
-                                                        <?php while ($firma = $firmalar->fetch_array()) { ?>
-                                                            <option
-                                                                    value="<?php echo $firma['id']; ?>"><?php echo $firma['firmaAd']; ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label>Alaşım Türü</label>
-                                                    <select v-model="biyet.alasimId" name="alasimId"
-                                                            class="form-control"
-                                                            style="width: 100%;">
-                                                        <option selected disabled value="">Alaşım Seçiniz</option>
-                                                        <?php while ($alasim = $alasimlar->fetch_array()) { ?>
-                                                            <option value="<?php echo $alasim['id']; ?>"><?php echo $alasim['ad']; ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
                                             </div>
 
                                             <div class="col-sm-4">
@@ -198,7 +186,7 @@ $profiller = $db->query($profillerrsql);
                                                     <label>Çap (mm)</label>
                                                     <select v-model="biyet.cap" class="form-control"
                                                             style="width: 100%;">
-                                                        <option selected disabled value="">Çap Seçiniz</option>
+                                                        <option @change="onChangeCap($event)" selected disabled value="">Çap Seçiniz</option>
                                                         <option value="127">127</option>
                                                     </select>
                                                 </div>
@@ -211,6 +199,18 @@ $profiller = $db->query($profillerrsql);
                                                            class="form-control form-control-lg"
                                                            name="toplamKg" placeholder="0" step="1"
                                                            @input="checkToplamKg($event)">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>Alaşım Türü</label>
+                                                    <select v-model="biyet.alasimId" class="form-control"
+                                                            @change="onChangeAlasim($event)"
+                                                            style="width: 100%;">
+                                                        <option selected disabled value="">Alaşım Seçiniz</option>
+                                                        <option v-for="alasim in alasimlar" v-bind:value="alasim.id">{{alasim.ad}}</option>
+                                                    </select>
                                                 </div>
                                             </div>
 

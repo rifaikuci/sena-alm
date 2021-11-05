@@ -24,7 +24,7 @@ $result = $db->query($sql);
         durumDanger("Parça Stoktan Güncellenirken Bir Hata Oluştu.");
     } ?>
     <div style="text-align: center">
-        <h4 style="color: #0b93d5">Parçalar</h4>
+        <h4 style="color: #0b93d5">Baskılar</h4>
     </div>
     <div class="card-body">
         <div class="row">

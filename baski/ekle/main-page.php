@@ -1,8 +1,11 @@
 <?php
 include "../../netting/baglan.php";
-
-$siparissql = "SELECT * FROM tblsiparis where kalanKilo > 0 OR kalanAdet > 0 ";
+require_once "../../include/sql.php";
+$siparissql = "SELECT * FROM tblsiparis where baskiDurum = 0 order by termimTarih asc";
 $siparisler = $db->query($siparissql);
+
+date_default_timezone_set('Europe/Istanbul');
+
 ?>
 
 <section class="content">
@@ -17,34 +20,96 @@ $siparisler = $db->query($siparissql);
                     <div class="col-sm-12">
                         <div class="card card-secondary">
                             <div class="card-header">
-                                <h3 class="card-title">{{satirNo}}</h3>
+                                <h3 class="card-title">Sipariş Bilgileri</h3>
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                     <div class="col-sm-3">
+                                    <div class="col-sm-2">
+
+                                    </div>
+                                    <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label>
-                                                Profil :
-                                                <span style="color: #2b6b4f">{{profilNo }} -  {{profilAd}} </span>
-                                            </label>
+                                            <div>
+                                                <H2>
+
+                                                    {{satirNo}}
+                                                    <span style="color: #2b6b4f"> </span>
+                                                </H2>
+                                            </div>
                                         </div>
 
                                     </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label>
-                                                deneme
-                                            </label>
-                                        </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h6>
+                                            <span style="color: darkcyan; font-weight: bold"> Müşteri: </span>
+                                            {{musteriAd}}
+                                        </h6>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h6>
+                                            <span style="color: darkcyan; font-weight: bold"> Profil: </span>
+                                            {{profil}}
+                                        </h6>
 
                                     </div>
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label>
-                                                deneme
-                                            </label>
-                                        </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h6>
+                                            <span style="color: darkcyan; font-weight: bold"> Alaşım: </span>
+                                            {{alasim}}
+                                        </h6>
 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h6>
+                                            <span style="color: darkcyan; font-weight: bold"> Tolerans: </span>
+                                            {{tolerans}}
+                                        </h6>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h6>
+                                            <span style="color: darkcyan; font-weight: bold"> Boy: </span>
+                                            {{boy}}
+                                        </h6>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h6>
+                                            <span style="color: darkcyan; font-weight: bold"> Kilo: </span>
+                                            {{kg}}
+                                        </h6>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h6>
+                                            <span style="color: darkcyan; font-weight: bold"> Adet: </span>
+                                            {{adet}}
+                                        </h6>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-2">
+
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <h3 style="color: red">
+                                            {{aciklama}}
+                                        </h3>
                                     </div>
                                 </div>
                             </div>
@@ -52,16 +117,58 @@ $siparisler = $db->query($siparissql);
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
+                        <div style="text-align: right">
+                            <label>
+                                <?php echo "Tarih: " . date("d.m.Y H:i"); ?>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
                         <div class="form-group">
                             <label>Sipariş</label>
-                            <select name="satirNo" required class="form-control select2" style="width: 100%;">
-                                <option selected disabled value="">Baskıyı Seçiniz</option>
+
+                            <select name="satirNo" required class="form-control select2" id="supplier_id"
+                                    style="width: 100%;">
+                                <option selected disabled value="">
+                                    Sipariş No - Termim Tarih - Müşteri - Profil No - Profil Ad - Boy - Tür - Tür Detayı
+                                    - İstenen/Basılan K/A
+                                </option>
+
                                 <?php while ($siparis = $siparisler->fetch_array()) { ?>
+
                                     <option
-                                            value="<?php echo $siparis['id']; ?>"><?php echo $siparis['satirNo']; ?></option>
+                                            value="<?php echo $siparis['id']; ?>">
+                                        <?php
+                                        $siparisTuru = $siparis['siparisTuru'] == "H" ? "Ham" :
+                                            ($siparis['siparisTuru'] == "B" ? "Boyalı" : "Eloksal");
+
+                                        $tur = $siparis['siparisTuru'] == "H" ? "Yok" :
+                                            ($siparis['siparisTuru'] == "B" ? boyaBul($siparis['boyaId'], $db) :
+                                                eloksalBul($siparis['eloksalId'], $db));
+                                        $kiloVeyaAdet = $siparis['kiloAdet'] == "K" ? $siparis['kilo'] . "/" :
+                                            $siparis['adet'] . "/";
+
+                                        $basilanKiloVeyaAdet = $siparis['kiloAdet'] == "K" ? $siparis['basilanKilo'] . " Kilo" :
+                                            $siparis['basilanAdet'] . " Adet";
+                                        echo
+                                            $siparis['satirNo'] . " - " .
+                                            tarih($siparis['termimTarih']) . " - " .
+                                            firmaBul($siparis['musteriId'], $db, 'firmaAd') . " - " .
+                                            profilbul($siparis['profilId'], $db, 'profilNo') . " -" .
+                                            profilbul($siparis['profilId'], $db, 'profilAdi') . " -" .
+                                            $siparis['boy'] . " - " .
+                                            alasimBul($siparis['alasimId'], $db, 'ad') . " - " .
+                                            $siparisTuru . " - " . $tur . " - " . $kiloVeyaAdet . $basilanKiloVeyaAdet;;
+
+                                        ?>
+
+                                    </option>
+
                                 <?php } ?>
+
                             </select>
+
                         </div>
                     </div>
 

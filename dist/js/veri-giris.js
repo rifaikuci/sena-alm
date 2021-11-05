@@ -5,6 +5,7 @@ var malzemeFirmaId = "";
 var sevkiyatProfilId = "";
 var sevkiyatGeldigiFirma = "";
 var sevkiyatMusteriId = "";
+var alasimlar = [];
 
 
 var app = new Vue({
@@ -46,6 +47,7 @@ var app = new Vue({
             biyetToplamKg: [],
             biyetcap: [],
             biyetler: [],
+            alasimlar:alasimlar,
             biyet: {
                 partino: '',
                 firmaId: '',
@@ -174,6 +176,7 @@ var app = new Vue({
             },
             checkToplamKg(event) {
                 this.biyet.firmaId = biyetFirmaId;
+                this.alasimlar = alasimlar;
                 if (event.target.value &&
                     this.biyet.partino &&
                     this.biyet.firmaId &&
@@ -187,9 +190,38 @@ var app = new Vue({
             },
             checkpartino(event) {
                 this.biyet.firmaId = biyetFirmaId;
+                this.alasimlar = alasimlar;
                 if (event.target.value &&
                     this.biyet.firmaId &&
                     this.biyet.alasimId &&
+                    this.biyet.toplamKg &&
+                    this.biyet.partino) {
+                    this.isFullBiyetData = true;
+                } else {
+                    this.isFullBiyetData = false;
+                }
+
+            },
+            onChangeCap(event) {
+                this.biyet.firmaId = biyetFirmaId;
+                this.alasimlar = alasimlar;
+                if (event.target.value &&
+                    this.biyet.firmaId &&
+                    this.biyet.alasimId &&
+                    this.biyet.toplamKg &&
+                    this.biyet.partino) {
+                    this.isFullBiyetData = true;
+                } else {
+                    this.isFullBiyetData = false;
+                }
+
+            },
+            onChangeAlasim(event) {
+                this.biyet.firmaId = biyetFirmaId;
+                this.alasimlar = alasimlar;
+                if (event.target.value &&
+                    this.biyet.firmaId &&
+                    this.biyet.partino &&
                     this.biyet.toplamKg &&
                     this.biyet.cap) {
                     this.isFullBiyetData = true;
@@ -585,14 +617,28 @@ var app = new Vue({
             },
 
 
+
+
         }
 
     }
 );
 
-$('#sevkiyatBiyetFirmaId').on("change",function(value){
+$('#sevkiyatBiyetFirmaId').on("change", async  function(value){
     biyetFirmaId = value.target.value
+
+    alasimlar = await axios.post('/sena/netting/action.php', {
+        action: 'alasimlar',
+        firmaid: biyetFirmaId
+    }).then((response) => {
+        return response.data
+    });
+
+    app.alasimlar = alasimlar;
+
 });
+
+$('#sevkiyatBiyetFirmaId').select2({});
 
 $('#sevkiyatBoyaFirmaId').on("change",function(value){
     boyaFirmaId = value.target.value

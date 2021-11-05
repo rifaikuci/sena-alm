@@ -33,7 +33,7 @@ if ($_GET['id']) {
 
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Biyet Br Gramaj</label>
+                            <label>Biyet Br Gramaj (Cm)</label>
                             <input required type="number" step="0.01" class="form-control form-control-lg"
                                    value="<?php echo $row['biyetBirimGramaj'] ?>"
                                    name="biyetBirimGramaj"

@@ -121,4 +121,21 @@ if ($received_data->action == 'destekId') {
 
 }
 
+if ($received_data->action == 'alasimlar') {
+
+    $firmaId = $received_data->firmaid;
+    $sql = "SELECT * FROM tblalasim WHERE firmaId = '$firmaId' ";
+
+    $result = $db->query($sql);
+    $listedestekler = array();
+    while ($row = $result->fetch_array()) {
+        $data['ad'] = $row['ad'];
+        $data['id'] = $row['id'];
+        $data['biyetBirimGramaj'] = $row['biyetBirimGramaj'];
+        $data['firmaId'] = $row['firmaId'];
+        array_push($listedestekler, $data);
+    }
+    echo json_encode($listedestekler);
+}
+
 ?>

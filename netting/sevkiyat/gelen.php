@@ -43,7 +43,7 @@ if (isset($_POST['sevkiyatekle'])) {
         $sqlBiyet = "INSERT INTO tblstokbiyet (partino, firmaId, alasimId, cap, sevkiyatId, barkodNo, toplamKg, ortalamaBoy)  VALUES ";
         for ($i = 0; $i < count($biyetpartino); $i++) {
 
-            $barkodNo = "SN" . mt_rand();
+            $barkodNo = "FSN" . mt_rand();
             $sqlBiyet = $sqlBiyet . " ('$biyetpartino[$i]', '$biyetfirmaId[$i]', '$biyetalasimId[$i]','$biyetcap[$i]' , '$sevkiyatId', '$barkodNo', '$biyetToplamKg[$i]',
             '$biyetOrtalamaBoy[$i]'),";
         }

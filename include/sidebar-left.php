@@ -105,6 +105,23 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a href="<?php echo base_url() . "baski/" ?> " class="nav-link">
+                    <i class="nav-icon fas fa-print"></i>
+                    <p>
+                        Baskılar
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="<?php echo base_url() . "ayar/" ?> " class="nav-link">
+                    <i class="nav-icon fas fa-cogs"></i>
+                    <p>
+                        Ayarlar
+                    </p>
+                </a>
+            </li>
 
             <li class="nav-item">
                 <a href="https://rifaikuci.com/" class="nav-link">

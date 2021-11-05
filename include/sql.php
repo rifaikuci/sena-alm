@@ -157,4 +157,12 @@ function siparisHaftaBul ($db, $yil, $hafta) {
 
 }
 
+function eloksalBul($id, $db)
+{
+    $sql = "SELECT * FROM tbleloksal WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row['ad'];
+}
+
 ?>
