@@ -7,10 +7,10 @@ $personeller = $db->query($personelsql);
 $personelsql2 = "SELECT * FROM tblpersonel where rolId = 10";
 $personeller2 = $db->query($personelsql2);
 
-$firmasql = "SELECT * FROM tblfirma where firmaTurId =23 ";
+$firmasql = "SELECT * FROM tblfirma where firmaTurId =1 ";
 $firmalar = $db->query($firmasql);
 
-$firmaboyasql = "SELECT * FROM tblfirma where firmaTurId =20";
+$firmaboyasql = "SELECT * FROM tblfirma where firmaTurId =2";
 $firmalarboya = $db->query($firmaboyasql);
 
 $alasimsql = "SELECT * FROM tblalasim";
@@ -22,7 +22,7 @@ $boyalar = $db->query($boyasql);
 $malzemelersql = "SELECT * FROM tblmalzemeler";
 $malzemeler = $db->query($malzemelersql);
 
-$malzemelerfirmasql = "SELECT * FROM tblfirma where firmaTurId =21";
+$malzemelerfirmasql = "SELECT * FROM tblfirma where firmaTurId =3";
 $malzemelerfirma = $db->query($malzemelerfirmasql);
 
 $profilfirmasql = "SELECT * FROM tblfirma";

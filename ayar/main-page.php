@@ -39,7 +39,7 @@ if ($_GET['ayarok'] == "ok") {
                 </div>
                 <div class="card-footer">
                     <div>
-                        <button type="submit" name="ayarguncelleme" class="btn btn-info float-right">Güncelleme
+                        <button type="submit" name="ayarguncelleme" class="btn btn-info float-right">Kaydet
                         </button>
                         <a href="../"
                            class="btn btn-warning float-left">Vazgeç</a>

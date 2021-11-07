@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Europe/Istanbul');
 
 function base_url()
 {
@@ -153,6 +154,28 @@ function toleransBul($mgr, $profilId, $db)
 function sayiFormatla($sayi, $digit)
 {
     return number_format((float)$sayi, $digit, '.', ',');
+}
+
+function vardiyaBul($vardiya){
+    $now = date('H:i');
+    if ($vardiya == 3) {
+        if ($now >= date("H:i", strtotime("00:00")) && $now < date("H:i", strtotime("07:59")))
+            return "3A";
+        else if ($now >= date("H:i", strtotime("08:00")) && $now < date("H:i", strtotime("15:59")))
+            return "3B";
+        else
+            return "3C";
+
+    } else if ($vardiya == 2) {
+        if ($now >= date("H:i", strtotime("08:00")) && $now < date("H:i", strtotime("17:59")))
+            return "2A";
+        else if ($now >= date("H:i", strtotime("20:00")) && $now < date("H:i", strtotime("23:59")) ||
+            $now >= date("H:i", strtotime("00:00")) && $now < date("H:i", strtotime("05:59")))
+            return "2B";
+
+    } else if ($vardiya == 1) {
+        return "1A";
+    }
 }
 
 ?>

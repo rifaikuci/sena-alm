@@ -40,12 +40,12 @@ if (isset($_POST['sevkiyatekle'])) {
         $biyetOrtalamaBoy = explode(",", $_POST['biyetOrtalamaBoy']);
         $biyetcap = explode(",", $_POST['biyetcap']);
         $biyetToplamKg = explode(",", $_POST['biyetToplamKg']);
-        $sqlBiyet = "INSERT INTO tblstokbiyet (partino, firmaId, alasimId, cap, sevkiyatId, barkodNo, toplamKg, ortalamaBoy)  VALUES ";
+        $sqlBiyet = "INSERT INTO tblstokbiyet (partino, firmaId, alasimId, cap, sevkiyatId, barkodNo, toplamKg, ortalamaBoy, kalanKg)  VALUES ";
         for ($i = 0; $i < count($biyetpartino); $i++) {
 
             $barkodNo = "FSN" . mt_rand();
             $sqlBiyet = $sqlBiyet . " ('$biyetpartino[$i]', '$biyetfirmaId[$i]', '$biyetalasimId[$i]','$biyetcap[$i]' , '$sevkiyatId', '$barkodNo', '$biyetToplamKg[$i]',
-            '$biyetOrtalamaBoy[$i]'),";
+            '$biyetOrtalamaBoy[$i]', '$biyetToplamKg[$i]'),";
         }
         $sqlBiyet[strlen($sqlBiyet) - 1] = ";";
 
@@ -114,7 +114,7 @@ if (isset($_POST['sevkiyatekle'])) {
         $sqlProfil = "INSERT INTO tblstokprofil (profilId, firmaId, musteriId, tur, gelisAmaci, boy, toplamKg, icAdet, paketAdet, toplamAdet, siparisNo, sevkiyatId)  VALUES ";
         for ($i = 0; $i < count($profilprofilId); $i++) {
 
-            $siparisno = "SN" . mt_rand();
+            $siparisno = "FSN" . mt_rand();
             $sqlProfil = $sqlProfil . " ('$profilprofilId[$i]', '$profilfirmaId[$i]', '$profilmusteriId[$i]','$profiltur[$i]' , '$profilgelisAmaci[$i]', '$profilboy[$i]', '$profiltoplamkilo[$i]',
             '$profilicadet[$i]', '$profilpaketAdet[$i]', '$profiltoplamadet[$i]','$siparisno', '$sevkiyatId'),";
         }

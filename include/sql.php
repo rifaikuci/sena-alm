@@ -165,4 +165,12 @@ function eloksalBul($id, $db)
     return $row['ad'];
 }
 
+function ayarSqlBul($id, $db, $sutun)
+{
+    $sql = "SELECT * FROM tblayar WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row[$sutun];
+}
+
 ?>
