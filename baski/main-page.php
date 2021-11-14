@@ -2,7 +2,7 @@
 
 include "../netting/baglan.php";
 include "../include/sql.php";
-$sql = "SELECT * FROM tblkalipparcalar order by id desc ";
+$sql = "SELECT * FROM tblbaski order by id desc ";
 $result = $db->query($sql);
 
 ?>
@@ -11,17 +11,17 @@ $result = $db->query($sql);
 
     <?php
     if ($_GET['durumekle'] == "ok") {
-        durumSuccess("Parça Stoğa Başarılı Bir Şekilde Eklendi. ");
+        durumSuccess("Baskı Başarılı Bir Şekilde Sonlandı. ");
     } else if ($_GET['durumekle'] == "no") {
-        durumDanger("Parça Stoğa Eklenirken Bir Hata Oluştu !");
+        durumDanger("Baskı Sonlanırken bir hata oluştu !");
     } else if ($_GET['durumsil'] == "ok") {
-        durumSuccess("Parça Stoktan Başarılı Bir Şekilde Silindi. ");
+        durumSuccess("Baskı Başarılı Bir Şekilde Silindi. ");
     } else if ($_GET['durumsil'] == "no") {
-        durumDanger("Parça Stoktan Silinirken Bir Hata Oluştu.");
+        durumDanger("Baskı Silinirken Bir Hata Oluştu.");
     } else if ($_GET['durumguncelleme'] == "ok") {
-        durumSuccess("Parça Stoktan Başarılı Bir Şekilde Güncellendi. ");
+        durumSuccess("Baskı Başarılı Bir Şekilde Güncellendi. ");
     } else if ($_GET['durumguncelleme'] == "no") {
-        durumDanger("Parça Stoktan Güncellenirken Bir Hata Oluştu.");
+        durumDanger("Baskı Güncellenirken Bir Hata Oluştu.");
     } ?>
     <div style="text-align: center">
         <h4 style="color: #0b93d5">Baskılar</h4>
@@ -33,22 +33,18 @@ $result = $db->query($sql);
                     <a href="ekle/" class="btn btn-primary"><i class="fa fa-plus"><?php echo "\t\t\t\t" ?>
                             Ekle</i></a>
                 </div>
+
+                <!-- TODO buraya operatorId zamanında tabloya kullanıcının bilgileri de gösterilecek !-->
                 <br>
                 <div class="card">
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
-                        <thead>
+                            <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Sena No</th>
-                                <th>Profil</th>
-                                <th>Firma</th>
-                                <th>Parça</th>
-                                <th>Parça</th>
-                                <th>Çap</th>
-                                <th>Kalıpçı No</th>
-                                <th>Durum</th>
                                 <th>Takım</th>
+                                <th>Baslangıç Zamanı</th>
+                                <th>Bitirilme Durumu</th>
                                 <th style="text-align: center">İşlem</th>
                             </tr>
                             </thead>
@@ -57,24 +53,25 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td><?php echo $row['senaNo']; ?></td>
-                                    <td><?php echo profilbul($row['profilId'], $db, "profilNo"); ?></td>
-                                    <td><?php echo firmaBul($row['firmaId'], $db, 'firmaAd'); ?></td>
-                                    <td><?php echo kalipBul($row['kalipCins']); ?></td>
-                                    <td><?php echo trim(parcaBul($row['parca'])); ?></td>
-                                    <td><?php echo $row['cap']; ?></td>
+                                    <td><?php echo takimBul($row['takimId'], $db, 'takimNo'); ?></td>
                                     <td><?php echo
-                                        firmaBul($row['firmaId'],$db,'kisaKod').
-                                        $row['kalipciNo']; ?></td>
-                                    <td style="color: <?php echo $row['durum'] == 1 ? '#00b44e' : ($row['durum'] == 2 ? '#d55537' : '#b8860b') ?>">
-                                        <b>
-                                            <?php echo $row['durum'] == 1 ? "Aktif" : ($row['durum'] == 2 ? 'Pasif' : 'Çöp')
-                                            ?></b></td>
-                                    <td><b><?php echo $row['takimNo']; ?></b></td>
-                                    <td><a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
-                                           btn-warning">Düzenle</a>
-                                        <?php if (!$row['takimNo']) { ?>
-                                            <a href=<?php echo base_url() . "netting/kalipci/index.php?kalipsil=" . $row['id']; ?> class="btn
+
+                                            tarih(explode(" ", $row['baslaZamani'])[0]) . " " . explode(" ", $row['baslaZamani'])[1]; ?></td>
+                                    <td><?php echo $row['bitisZamani'] == "" ? "Yarıda Kaldı" : "Tamamlandı"; ?></td>
+                                    <td>
+                                        <?php if (!$row['bitisZamani']) { ?>
+                                            <a href=<?php echo "yari-guncelle/index.php?baski=" . $row['id']; ?> class="btn
+                                               btn-warning">Güncelle</a>
+                                        <?php } else { ?>
+                                            <a href="#" class="btn
+                                               btn-warning">Güncelle</a>
+                                        <?php } ?>
+
+                                        <?php if (!$row['bitisZamani']) { ?>
+                                            <a href=<?php echo base_url() . "netting/baski/index.php?baskisil=" . $row['id']; ?> class="btn
+                                               btn-danger">Sil</a>
+                                        <?php } else { ?>
+                                            <a href=<?php echo base_url() . "netting/baski/index.php?baskisilinecek=" . $row['id']; ?> class="btn
                                                btn-danger">Sil</a>
                                         <?php } ?>
                                     </td>

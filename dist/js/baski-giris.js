@@ -1,8 +1,8 @@
 var deneme = ""
-var app = new Vue({
+var baskigiris = new Vue({
         el: "#baski-giris",
         data: {
-            satirNo: "",
+            satirNo: 0,
             musteriAd: "",
             profil: "",
             alasim: "",
@@ -42,6 +42,8 @@ var app = new Vue({
             basilanAdet: '',
             kiloAdet: '',
             isCheck : false,
+            baskiDurum: false,
+            kalanKg: 0
 
         },
 
@@ -91,6 +93,7 @@ var app = new Vue({
             },
 
             handleBiyetBoy(event) {
+                
                 if (event.target.value && event.target.value > 0 &&
                     this.verilenBiyet && this.verilenBiyet > 0 &&
                     this.biyetBirimGramaj && this.biyetBirimGramaj > 0) {
@@ -132,9 +135,8 @@ var app = new Vue({
             },
 
             checkBitir() {
-                debugger;
                 if (this.basilanNetKg && this.basilanNetKg > 0 && this.kg && this.kg > 0) {
-                    var kalan = this.kg - this.basilanNetKg;
+                    var kalan = ( this.kalanKg - this.basilanNetKg);
                     var bitirebilirDeger = (this.kg / 10);
 
 
@@ -143,9 +145,11 @@ var app = new Vue({
                             this.isCheck = true;
                         } else {
                             this.isCheck = false;
+                            this.baskiDurum = false;
                         }
                     } else {
                         this.isCheck = false;
+                        this.baskiDurum = true;
                     }
                 }
             },
@@ -199,22 +203,24 @@ $('#supplier_id').on("change", async function () {
         return response.data
     });
 
+
     if (selectedRow) {
-        app.isSelected = true;
-        app.satirNo = selectedRow.satirNo;
-        app.musteriAd = selectedRow.musteriAd;
-        app.profil = selectedRow.profil;
-        app.alasim = selectedRow.alasim;
-        app.tolerans = selectedRow.tolerans;
-        app.boy = selectedRow.boy;
-        app.kg = selectedRow.kg;
-        app.adet = selectedRow.adet;
-        app.aciklama = selectedRow.aciklama;
-        app.biyetBirimGramaj = selectedRow.biyetBirimGramaj;
-        app.basilanKilo = selectedRow.basilanKilo;
-        app.basilanAdet = selectedRow.basilanAdet;
-        app.kiloAdet = selectedRow.kiloAdet;
-        app.siparisId = $(this).val();
+        baskigiris.isSelected = true;
+        baskigiris.satirNo = selectedRow.satirNo;
+        baskigiris.musteriAd = selectedRow.musteriAd;
+        baskigiris.profil = selectedRow.profil;
+        baskigiris.alasim = selectedRow.alasim;
+        baskigiris.tolerans = selectedRow.tolerans;
+        baskigiris.boy = selectedRow.boy;
+        baskigiris.kg = selectedRow.kg;
+        baskigiris.adet = selectedRow.adet;
+        baskigiris.aciklama = selectedRow.aciklama;
+        baskigiris.biyetBirimGramaj = selectedRow.biyetBirimGramaj;
+        baskigiris.basilanKilo = selectedRow.basilanKilo;
+        baskigiris.basilanAdet = selectedRow.basilanAdet;
+        baskigiris.kiloAdet = selectedRow.kiloAdet;
+        baskigiris.kalanKg = selectedRow.kalanKg;
+        baskigiris.siparisId = $(this).val();
 
         const takimlar = await axios.post('/sena/netting/baski/action.php', {
             action: 'takimgetir',
@@ -223,10 +229,10 @@ $('#supplier_id').on("change", async function () {
             return response.data
         });
 
-        app.takimlar = takimlar;
+        baskigiris.takimlar = takimlar;
 
     } else {
-        app.isSelected = false;
+        baskigiris.isSelected = false;
     }
 
 
@@ -234,7 +240,7 @@ $('#supplier_id').on("change", async function () {
 
 $('#takim_id').on("change", async function () {
 
-    app.takimId = $(this).val();
+    baskigiris.takimId = $(this).val();
 });
 
 $('#supplier_id').select2({});

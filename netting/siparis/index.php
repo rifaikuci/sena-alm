@@ -46,14 +46,16 @@ if (isset($_POST['siparisekle'])) {
     $siparisNo = "SEN-" . $yil . $hafta . $haftaKod;
 
 
-    $gunAritmetikSayi = siparisGunBul($db, $yil, $hafta,$gun);
+    $gunAritmetikSayi = siparisGunBul($db, $yil, $hafta, $gun);
     $gunAritmetik = str_pad($gunAritmetikSayi, 2, "0", STR_PAD_LEFT);
 
 
     $sql = "INSERT INTO tblsiparis (profilId, adet, kilo, siparisTuru, alasimId, musteriId, naylonDurum,
                         araKagit, krepeKagit, siparisTarih, termimTarih, istenilenTermin, siparisNo, boyaId,
                         eloksalId, maxTolerans, boy, satirNo, durum,siparisTarihYil,ay, gun, yil, hafta,
-                        kiloAdet, kalanAdet, kalanKilo, baskiAciklama, paketAciklama, boyaAciklama)  VALUES ";
+                        kiloAdet, kalanAdet, kalanKilo, baskiAciklama, paketAciklama, boyaAciklama, konum )  VALUES ";
+
+    $sqlprofil = "INSERT INTO tblstokprofil (profilId, firmaId,musteriId,tur,gelisAmaci, boy, toplamKg, icAdet,paketAdet,toplamAdet, siparisNo, sevkiyatId, istenilenTermin, siparis) VALUES ";
 
     for ($i = 0; $i < count($arrayProfil); $i++) {
 
@@ -64,7 +66,7 @@ if (isset($_POST['siparisekle'])) {
         $kiloAdet = "";
         $kalanAdet = "";
         $kalanKilo = "";
-        if($arrayKiloAdet[$i] == "A") {
+        if ($arrayKiloAdet[$i] == "A") {
             $kalanKilo = 0;
             $kalanAdet = $arrayAdet[$i];
             $kiloAdet = 'A';
@@ -74,13 +76,17 @@ if (isset($_POST['siparisekle'])) {
             $kiloAdet = 'K';
 
         }
-        if($siparisTur == 'B') {
+        if ($siparisTur == 'B') {
+            $profilTur = "Boyalı";
             $eloksalId = 0;
             $boyaId = $arrayBoyaId[$i];
         } else if ($siparisTur == 'E') {
+            $profilTur = "Eloksal";
+
             $boyaId = 0;
             $eloksalId = $arrayEloksalId[$i];
         } else {
+            $profilTur = "Ham";
             $eloksalId = 0;
             $boyaId = 0;
         }
@@ -91,17 +97,20 @@ if (isset($_POST['siparisekle'])) {
         '$siparisTarih', '$arrayTermimTarih[$i]', '$arrayIstenilenTermin[$i]', '$siparisNo', '$boyaId',
         '$eloksalId', '$arrayMaxTolerans[$i]', '$arrayBoy[$i]','$satirNo', '0', '$siparisTarihYil', '$ay',
         '$gun', '$yil', '$hafta', '$kiloAdet', '$kalanAdet','$kalanKilo', '$arrayBaskiAciklama[$i]', 
-         '$arrayPaketAciklama[$i]', '$arrayBoyaAciklama[$i]' ),";
+         '$arrayPaketAciklama[$i]', '$arrayBoyaAciklama[$i]', 'baski'),";
+
+        $sqlprofil = $sqlprofil . "('$arrayProfil[$i]', '0', '$musteriId', '$profilTur', 'uretim', '$arrayBoy[$i]', '0','0','0','0','0','0','$arrayIstenilenTermin[$i]', '$satirNo' ),";
 
         $gunAritmetikSayi++;
 
     }
     $sql[strlen($sql) - 1] = ";";
+    $sqlprofil[strlen($sqlprofil) - 1] = ";";
 
 
     if (mysqli_query($db, $sql)) {
 
-
+        mysqli_query($db, $sqlprofil);
         header("Location:../../siparis/?durumekle=ok");
         exit();
     } else {
@@ -128,15 +137,15 @@ if (isset($_GET['satirsil'])) {
     $siparisno = $_GET['siparisno'];
     $sql = "DELETE FROM tblsiparis where satirNo = '$satirNo' ";
     if (mysqli_query($db, $sql)) {
-        header("Location:/sena/siparis/goruntule?siparisno=".$siparisno);
+        header("Location:/sena/siparis/goruntule?siparisno=" . $siparisno);
         exit();
     } else {
-        header("Location:/sena/siparis/goruntule?siparisno=".$siparisno);
+        header("Location:/sena/siparis/goruntule?siparisno=" . $siparisno);
         exit();
     }
 }
 
-if(isset($_POST['guncellesatir'])) {
+if (isset($_POST['guncellesatir'])) {
     $satirNo = $_POST['satirNo'];
     $profilId = $_POST['profilId'];
     $boy = $_POST['boy'];
@@ -156,15 +165,15 @@ if(isset($_POST['guncellesatir'])) {
     $paketAciklama = $_POST['paketAciklama'];
     $boyaAciklama = $_POST['boyaAciklama'];
     $id = $_POST['id'];
-    $siparisTurKod = substr($_POST['siparisTur'],0,1);
+    $siparisTurKod = substr($_POST['siparisTur'], 0, 1);
     $satirNo[3] = $siparisTurKod;
 
     $kiloAdet = "";
     $kalanAdet = "";
     $kalanKilo = "";
-    if($kiloAdet == "A") {
+    if ($kiloAdet == "A") {
         $kalanKilo = 0;
-        $kalanAdet =  $adet;
+        $kalanAdet = $adet;
         $kiloAdet = 'A';
     } else {
         $kalanKilo = $kilo;
@@ -173,7 +182,7 @@ if(isset($_POST['guncellesatir'])) {
 
     }
 
-    if($siparisTurKod == 'B') {
+    if ($siparisTurKod == 'B') {
         $eloksalId = 0;
     } else if ($siparisTurKod == 'E') {
         $boyaId = 0;

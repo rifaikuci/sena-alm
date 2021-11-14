@@ -1,8 +1,36 @@
 <?php
 include "../../netting/baglan.php";
 require_once "../../include/sql.php";
+
+
+if ($_GET['baski']) {
+    $baskiId = $_GET['baski'];
+    $sql = "SELECT * FROM tblbaski WHERE id = '$baskiId'";
+    $result = mysqli_query($db, $sql);
+    $baski = $result->fetch_assoc();
+
+
+    $siparisId = $baski['siparisId'];
+    $sqlsiparis = "SELECT * FROM tblsiparis WHERE id = '$siparisId'";
+    $resultsiparis = mysqli_query($db, $sqlsiparis);
+    $siparis = $resultsiparis->fetch_assoc();
+
+    $takimId = $baski['takimId'];
+    $profilId = takimBul($takimId, $db, 'profilId');
+
+    $sqltakimlar = "SELECT * FROM tbltakim WHERE durum = '1' AND profilId = '$profilId' order by sonGramaj asc ";
+
+    $takimlar = $db->query($sqltakimlar);
+    $biyetgr = alasimBul($siparis['alasimId'], $db, "biyetBirimGramaj");
+
+}
+
+ini_set('display_errors', 1);
+
+
 $siparissql = "SELECT * FROM tblsiparis where baskiDurum = 0 order by termimTarih asc";
 $siparisler = $db->query($siparissql);
+
 
 $biyetSql = "SELECT * FROM tblstokbiyet where durum = 1 and kalanKg > 0";
 $biyetler = $db->query($biyetSql);
@@ -17,10 +45,17 @@ date_default_timezone_set('Europe/Istanbul');
         <div class="card-header">
             Baskı Oluşturma Alanı
         </div>
-        <div class="card-body" id="baski-giris">
+        <div class="card-body" id="baski-yari-guncelle"
+             :value="<?php echo $siparis['boy'] ?>"
+             :birimgr="<?php echo $biyetgr ?>"
+             :kg="<?php echo $siparis['kilo'] ?>"
+             :kalanKgG="<?php echo $siparis['kilo'] - $siparis['basilanKilo'] ?>"
+
+
+        >
             <form method="post" action="<?php echo base_url() . 'netting/baski/index.php' ?>"
                   enctype="multipart/form-data">
-                <div class="row" v-if="isSelected">
+                <div class="row">
                     <div class="col-sm-12">
                         <div class="card card-secondary">
                             <div class="card-header">
@@ -35,8 +70,7 @@ date_default_timezone_set('Europe/Istanbul');
                                         <div class="form-group">
                                             <div>
                                                 <H2>
-
-                                                    {{satirNo}}
+                                                    <?php echo $siparis['satirNo']; ?>
                                                     <span style="color: #2b6b4f"> </span>
                                                 </H2>
                                             </div>
@@ -48,7 +82,7 @@ date_default_timezone_set('Europe/Istanbul');
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Müşteri: </span>
-                                            {{musteriAd}}
+                                            <?php echo firmaBul($siparis['musteriId'], $db, 'firmaAd') ?>
                                         </h6>
                                     </div>
                                 </div>
@@ -56,7 +90,7 @@ date_default_timezone_set('Europe/Istanbul');
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Profil: </span>
-                                            {{profil}}
+                                            <?php echo profilbul($siparis['profilId'], $db, 'profilAdi') ?>
                                         </h6>
 
                                     </div>
@@ -65,7 +99,8 @@ date_default_timezone_set('Europe/Istanbul');
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Alaşım: </span>
-                                            {{alasim}}
+                                            <?php echo alasimBul($siparis['alasimId'], $db, 'ad') ?>
+                                        </h6>
                                         </h6>
 
                                     </div>
@@ -74,7 +109,7 @@ date_default_timezone_set('Europe/Istanbul');
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Tolerans: </span>
-                                            {{tolerans}}
+                                            <?php echo $siparis['maxTolerans'] ?>
                                         </h6>
 
                                     </div>
@@ -83,7 +118,7 @@ date_default_timezone_set('Europe/Istanbul');
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Boy: </span>
-                                            {{boy}}
+                                            <?php echo $siparis['boy'] ?>
                                         </h6>
 
                                     </div>
@@ -92,7 +127,7 @@ date_default_timezone_set('Europe/Istanbul');
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Kilo: </span>
-                                            {{kg}}
+                                            <?php echo $siparis['kilo'] ?>
                                         </h6>
                                     </div>
                                 </div>
@@ -100,7 +135,8 @@ date_default_timezone_set('Europe/Istanbul');
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Basılan Kg - Kalan Kg: </span>
-                                            {{basilanKilo}} - {{kalanKg}}
+
+                                            <?php echo $siparis['basilanKilo'], " - ", $siparis['kilo'] - $siparis['basilanKilo'] ?>
                                         </h6>
                                     </div>
                                 </div>
@@ -109,7 +145,7 @@ date_default_timezone_set('Europe/Istanbul');
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Adet: </span>
-                                            {{adet}}
+                                            <?php echo $siparis['basilanAdet'] ?>
                                         </h6>
                                     </div>
                                 </div>
@@ -120,7 +156,7 @@ date_default_timezone_set('Europe/Istanbul');
                                     </div>
                                     <div class="col-sm-8">
                                         <h3 style="color: red">
-                                            {{aciklama}}
+                                            <?php echo $siparis['baskiAciklama'] ?>
                                         </h3>
                                     </div>
                                 </div>
@@ -132,7 +168,7 @@ date_default_timezone_set('Europe/Istanbul');
                     <div class="col-sm-12">
                         <div style="text-align: right">
                             <label>
-                                <?php echo "Tarih: " . date("d.m.Y"); ?>
+                                <?php echo "Tarih: " . tarih(explode(" ", $baski['kayitTarih'])[0]) . " " . explode(" ", $baski['kayitTarih'])[1]; ?>
                             </label>
                         </div>
                     </div>
@@ -140,37 +176,33 @@ date_default_timezone_set('Europe/Istanbul');
                         <div class="form-group">
                             <label>Sipariş</label>
 
-                            <select name="siparisId" required class="form-control select2" id="supplier_id"
+                            <select required class="form-control select2" disabled
+                                    value="<?php echo $baski['siparisId'] ?>"
                                     style="width: 100%;">
-                                <option selected disabled value="">
-                                    Sipariş No - Termim Tarih - Müşteri - Profil No - Profil Ad - Boy - Tür - Tür Detayı
-                                    - İstenen/Basılan K/A
-                                </option>
-
-                                <?php while ($siparis = $siparisler->fetch_array()) { ?>
+                                <?php while ($row = $siparisler->fetch_array()) { ?>
 
                                     <option
-                                            value="<?php echo $siparis['id']; ?>">
+                                            value="<?php echo $row['id']; ?>">
                                         <?php
-                                        $siparisTuru = $siparis['siparisTuru'] == "H" ? "Ham" :
-                                            ($siparis['siparisTuru'] == "B" ? "Boyalı" : "Eloksal");
+                                        $siparisTuru = $row['siparisTuru'] == "H" ? "Ham" :
+                                            ($row['siparisTuru'] == "B" ? "Boyalı" : "Eloksal");
 
-                                        $tur = $siparis['siparisTuru'] == "H" ? "Yok" :
-                                            ($siparis['siparisTuru'] == "B" ? boyaBul($siparis['boyaId'], $db) :
-                                                eloksalBul($siparis['eloksalId'], $db));
-                                        $kiloVeyaAdet = $siparis['kiloAdet'] == "K" ? $siparis['kilo'] . "/" :
-                                            $siparis['adet'] . "/";
+                                        $tur = $row['siparisTuru'] == "H" ? "Yok" :
+                                            ($row['siparisTuru'] == "B" ? boyaBul($row['boyaId'], $db) :
+                                                eloksalBul($row['eloksalId'], $db));
+                                        $kiloVeyaAdet = $row['kiloAdet'] == "K" ? $row['kilo'] . "/" :
+                                            $row['adet'] . "/";
 
-                                        $basilanKiloVeyaAdet = $siparis['kiloAdet'] == "K" ? $siparis['basilanKilo'] . " Kilo" :
-                                            $siparis['basilanAdet'] . " Adet";
+                                        $basilanKiloVeyaAdet = $row['kiloAdet'] == "K" ? $row['basilanKilo'] . " Kilo" :
+                                            $row['basilanAdet'] . " Adet";
                                         echo
-                                            $siparis['satirNo'] . " - " .
-                                            tarih($siparis['termimTarih']) . " - " .
-                                            firmaBul($siparis['musteriId'], $db, 'firmaAd') . " - " .
-                                            profilbul($siparis['profilId'], $db, 'profilNo') . " -" .
-                                            profilbul($siparis['profilId'], $db, 'profilAdi') . " -" .
-                                            $siparis['boy'] . " - " .
-                                            alasimBul($siparis['alasimId'], $db, 'ad') . " - " .
+                                            $row['satirNo'] . " - " .
+                                            tarih($row['termimTarih']) . " - " .
+                                            firmaBul($row['musteriId'], $db, 'firmaAd') . " - " .
+                                            profilbul($row['profilId'], $db, 'profilNo') . " -" .
+                                            profilbul($row['profilId'], $db, 'profilAdi') . " -" .
+                                            $row['boy'] . " - " .
+                                            alasimBul($row['alasimId'], $db, 'ad') . " - " .
                                             $siparisTuru . " - " . $tur . " - " . $kiloVeyaAdet . $basilanKiloVeyaAdet;;
 
                                         ?>
@@ -188,34 +220,31 @@ date_default_timezone_set('Europe/Istanbul');
                         <div class="form-group">
                             <label>Takımlar</label>
 
-                            <select class="form-control select2" id="takim_id" name="takimId"
-                                    required
+                            <select required class="form-control" disabled
+                                    value="<?php echo $baski['takimId'] ?>"
                                     style="width: 100%;">
-                                <option selected disabled value="">
-                                    Takım No - Kalıp - Çap
-                                </option>
+                                <?php while ($takim = $takimlar->fetch_array()) { ?>
 
-                                <option v-for="takim in takimlar" :value="takim.id">
-                                    {{takim.takimNo}} - {{ takim.kalipCins }} - {{takim.cap}}
-                                </option>
+                                    <option
+                                            value="<?php echo $takim['id']; ?>">
+                                        <?php echo $takim['takimNo'] . " - " . kalipBul($takim['kalipCins']) . " - " . $takim['cap'] ?>
+
+                                    </option>
+
+                                <?php } ?>
 
                             </select>
 
                         </div>
                     </div>
 
+                    <div class="col-sm-1">
 
-                    <div class="col-sm-2" style="margin-top: 30px;">
-                        <button :disabled="baskiBasla == true"
-                                onclick="return confirm('Baskıyı Başlatılıyor emin misiniz?')"
-                                type="submit"
-                                v-on:click="baskiekle($event)"
-                                name="baskiekle" class="btn btn-info float-right">Baskıyı Başlat
-                        </button>
                     </div>
-                    <div class="col-sm-2" style="margin-top: 30px;">
-                        <label v-if="baskiBasla == true">
-                            Baskı Başlama Zamanı: {{baslazamani}}
+
+                    <div class="col-sm-5" style="margin-top: 30px;">
+                        <label>
+                            <?php echo "Baskı Başlama Zamanı: " . tarih(explode(" ", $baski['baslaZamani'])[0]) . " " . explode(" ", $baski['baslaZamani'])[1]; ?>
                         </label>
                     </div>
                 </div>
@@ -227,7 +256,7 @@ date_default_timezone_set('Europe/Istanbul');
                         <div class="form-group">
                             <label>Biyetler</label>
 
-                            <select class="form-control select2" id="biyet_id"
+                            <select class="form-control select2"
                                     required name="biyetId"
                                     style="width: 100%;">
                                 <option selected disabled value="">
@@ -248,11 +277,10 @@ date_default_timezone_set('Europe/Istanbul');
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Biyet Boy</label>
-
-                            <input v-model="biyetBoy"
-                                   @change="handleBiyetBoy($event)"
-                                   required name="biyetBoy"
-                                   class="form-control" type="number" name="biyetBoy" step="0.001"
+                            <input v-model="biyetBoyG"
+                                   @change="handleBiyetBoyG($event)"
+                                   required name="biyetBoyG"
+                                   class="form-control" type="number" step="0.001"
                                    placeholder="0,1">
 
                         </div>
@@ -261,8 +289,8 @@ date_default_timezone_set('Europe/Istanbul');
                         <div class="form-group">
                             <label>Ara iş Fire</label>
 
-                            <input v-model="araIsFire" class="form-control" name="araIsFire"
-                                   required type="number" name="araIsFire" step="0.001"
+                            <input class="form-control" name="araIsFire"
+                                   required type="number" step="0.001"
                                    placeholder="0,1">
 
                         </div>
@@ -271,10 +299,10 @@ date_default_timezone_set('Europe/Istanbul');
                         <div class="form-group">
                             <label>Konveyör Boy</label>
 
-                            <input v-model="konveyorBoy"
+                            <input v-model="konveyorBoyG"
                                    @change="handleChangeKonveyor($event)"
                                    required
-                                   class="form-control" type="number" name="konveyorBoy"
+                                   class="form-control" type="number" name="konveyorBoyG"
                                    step="0.001" placeholder="0,1">
 
                         </div>
@@ -283,10 +311,10 @@ date_default_timezone_set('Europe/Istanbul');
                         <div class="form-group">
                             <label>Boylam Fire</label>
 
-                            <input v-model="boylamFire"
-                                   @change="handleBoylamFire($event)"
-                                   required name="boylamFire"
-                                   class="form-control" type="number" name="boylamFire" step="0.001"
+                            <input v-model="boylamFireG"
+                                   @change="handleBoylamFireG($event)"
+                                   required
+                                   class="form-control" type="number" name="boylamFireG" step="0.001"
                                    placeholder="0,1">
 
                         </div>
@@ -295,13 +323,12 @@ date_default_timezone_set('Europe/Istanbul');
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Baskı Fire</label>
-                            <input v-model="baskiFire" disabled
+                            <input v-model="baskiFireG" disabled
                                    required
                                    class="form-control" type="number"
                                    step="0.001"
                                    placeholder="0,1">
-                            <input type="hidden" v-model="baskiFire" name="baskiFire" :value="baskiFire">
-                            <input type="hidden" v-model="satirNo" name="satirNo" :value="satirNo">
+                            <input type="hidden" v-model="baskiFireG" name="baskiFireG" :value="baskiFireG">
 
                         </div>
                     </div>
@@ -321,10 +348,10 @@ date_default_timezone_set('Europe/Istanbul');
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Verilen Biyet</label>
-                            <input v-model="verilenBiyet"
+                            <input v-model="verilenBiyetG"
                                    required
-                                   @change="handleVerilenBiyet($event)"
-                                   class="form-control" type="number" name="verilenBiyet"
+                                   @change="handleverilenBiyetG($event)"
+                                   class="form-control" type="number" name="verilenBiyetG"
                                    step="0.001"
                                    placeholder="0,1">
                         </div>
@@ -333,10 +360,10 @@ date_default_timezone_set('Europe/Istanbul');
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Güncel Gr</label>
-                            <input v-model="guncelGr"
+                            <input v-model="guncelGrG"
                                    required
-                                   @change="handleGuncelGr($event)"
-                                   class="form-control" type="number" name="guncelGr"
+                                   @change="handleguncelGrG($event)"
+                                   class="form-control" type="number" name="guncelGrG"
                                    step="0.001"
                                    placeholder="0,1">
                         </div>
@@ -345,21 +372,21 @@ date_default_timezone_set('Europe/Istanbul');
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Basılan Brüt Kg</label>
-                            <input v-model="basilanBrutKg" disabled
-                                   class="form-control" type="number" name="basilanBrutKg"
+                            <input v-model="basilanBrutKgG" disabled
+                                   class="form-control" type="number" name="basilanBrutKgG"
                                    step="0.001"
                                    placeholder="0,1">
-                            <input type="hidden" v-model="basilanBrutKg" name="basilanBrutKg" :value="basilanBrutKg">
+                            <input type="hidden" v-model="basilanBrutKgG" name="basilanBrutKgG" :value="basilanBrutKgG">
                         </div>
                     </div>
 
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Basılan Net Adet</label>
-                            <input v-model="basilanNetAdet"
+                            <input v-model="basilanNetAdetG"
                                    required
-                                   @change="handleBasilanNetAdet($event)"
-                                   class="form-control" type="number" name="basilanNetAdet"
+                                   @change="handlebasilanNetAdetG($event)"
+                                   class="form-control" type="number" name="basilanNetAdetG"
                                    step="0.001"
                                    placeholder="0,1">
                         </div>
@@ -368,22 +395,21 @@ date_default_timezone_set('Europe/Istanbul');
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Basılan Net Kg</label>
-                            <input v-model="basilanNetKg" disabled
-                                   class="form-control" type="number" name="basilanNetKg"
+                            <input v-model="basilanNetKgG" disabled
+                                   class="form-control" type="number" name="basilanNetKgG"
                                    step="0.001"
                                    placeholder="0,1">
-                            <input type="hidden" v-model="basilanNetKg" name="basilanNetKg" :value="basilanNetKg">
-                            <input type="hidden" v-model="baslazamani" name="baslaZamani" :value="baslazamani">
+                            <input type="hidden" v-model="basilanNetKgG" name="basilanNetKgG" :value="basilanNetKgG">
                         </div>
                     </div>
 
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Kovan Sıcaklığı</label>
-                            <input v-model="kovanSicaklik"
+                            <input v-model="kovanSicaklikG"
                                    required
-                                   @change="handleKovanSicaklik($event)"
-                                   class="form-control" type="number" name="kovanSicaklik"
+                                   @change="handlekovanSicaklikG($event)"
+                                   class="form-control" type="number" name="kovanSicaklikG"
                                    step="0.001"
                                    placeholder="0,1">
                         </div>
@@ -392,9 +418,9 @@ date_default_timezone_set('Europe/Istanbul');
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Kalıp Sıcaklığı</label>
-                            <input v-model="kalipSicaklik"
-                                   @change="handleKalipSicaklik($event)"
-                                   class="form-control" type="number" name="kalipSicaklik"
+                            <input v-model="kalipSicaklikG"
+                                   @change="handlekalipSicaklikG($event)"
+                                   class="form-control" type="number" name="kalipSicaklikG"
                                    step="0.001" required
                                    placeholder="0,1">
                         </div>
@@ -403,9 +429,9 @@ date_default_timezone_set('Europe/Istanbul');
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Biyet Sıcaklığı</label>
-                            <input v-model="biyetSicaklik"
-                                   @change="handleBiyetSicaklik($event)"
-                                   class="form-control" type="number" name="biyetSicaklik"
+                            <input v-model="biyetSicaklikG"
+                                   @change="handlebiyetSicaklikG($event)"
+                                   class="form-control" type="number" name="biyetSicaklikG"
                                    step="0.001" required
                                    placeholder="0,1">
                         </div>
@@ -413,10 +439,10 @@ date_default_timezone_set('Europe/Istanbul');
 
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Hız</label>
-                            <input v-model="hiz"
-                                   @change="handleHiz($event)"
-                                   class="form-control" type="number" name="hiz"
+                            <label>hizG</label>
+                            <input v-model="hizG"
+                                   @change="handlehizG($event)"
+                                   class="form-control" type="number" name="hizG"
                                    step="0.001" required
                                    placeholder="0,1">
                         </div>
@@ -425,12 +451,16 @@ date_default_timezone_set('Europe/Istanbul');
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Fire</label>
-                            <input v-model="fire" disabled
-                                   class="form-control" type="number" name="fire"
+                            <input v-model="fireG" disabled
+                                   class="form-control" type="number" name="fireG"
                                    step="0.001"
                                    placeholder="0,1">
-                            <input type="hidden" v-model="fire" name="fire" :value="fire">
-                            <input type="hidden" v-model="baskiId" name="baskiId" :value="baskiId">
+                            <input type="hidden" v-model="fireG" name="fireG" :value="fireG">
+                            <input type="hidden" name="baskiIdG" value="<?php echo $baskiId ?>">
+                            <input type="hidden" name="siparisId" value="<?php echo $siparisId ?>">
+                            <input type="hidden" name="takimId" value="<?php echo $takimId ?>">
+                            <input type="hidden" name="satirNo" value="<?php echo $siparis['satirNo'] ?>">
+                            <input type="hidden" name="baslaZamani" value="<?php echo $baski['baslaZamani'] ?>">
 
                         </div>
                     </div>
@@ -463,17 +493,17 @@ date_default_timezone_set('Europe/Istanbul');
                             <input required
                                    class="form-control" type="text" name="aciklama"
                                    placeholder="Açıklama Giriniz...">
-                            <input type="hidden" v-model="baskiDurum" :value="baskiDurum" name="baskiDurum">
+                            <input type="hidden" v-model="baskiDurumG" :value="baskiDurumG" name="baskiDurumG">
 
                         </div>
                     </div>
 
-                    <div class="col-sm-2" v-if="isCheck">
+                    <div class="col-sm-2" v-if="isCheckG">
                         <div class="form-group">
                             <label>~~</label>
                             <div class="form-group clearfix">
                                 <div class="icheck-primary d-inline">
-                                    <input v-model="baskiDurum" type="checkbox" id="checkboxPrimary2">
+                                    <input v-model="baskiDurumG" type="checkbox" id="checkboxPrimary2">
                                     <label style="color: #0e84b5" :key="checkboxPrimary2" for="checkboxPrimary2">
                                         Sipariş Bitirilsin Mi
                                     </label>
@@ -481,12 +511,12 @@ date_default_timezone_set('Europe/Istanbul');
                             </div>
                         </div>
                     </div>
-                    <div v-if="!baskiDurum" class="col-sm-4">
+                    <div v-if="!baskiDurumG" class="col-sm-4">
                         <div class="form-group">
                             <label>Baskı Sonlanma Nedeni</label>
 
                             <select class="form-control select2" name="sonlanmaNeden"
-                                    :required="!baskiDurum"
+                                    :required="!baskiDurumG"
                                     style="width: 100%;">
                                 <option selected disabled value="">
                                     Baskı Bitirilme Nedeni
@@ -503,9 +533,10 @@ date_default_timezone_set('Europe/Istanbul');
                     </div>
                 </div>
 
+
                 <div class="card-footer">
                     <div>
-                        <button v-if="baskiBitir" type="submit" name="baskiekle"
+                        <button v-if="baskiBitirG" type="submit" name="baskiyariekle"
                                 onclick="return confirm('Baskıyı Bitirmek İstediğinizden emin misiniz?')"
                                 class="btn btn-info float-right">
                             Baskıyı Bitir

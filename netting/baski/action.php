@@ -11,7 +11,8 @@ $data = array();
 if ($received_data->action == 'baskigetir') {
 
     $id = $received_data->id;
-    $sql = "SELECT * FROM tblsiparis WHERE id = '$id' ";
+    $id = intval($id);
+    $sql = "SELECT * FROM tblsiparis WHERE id = $id ";
 
     $result = $db->query($sql);
     while ($row = $result->fetch_array()) {
@@ -30,7 +31,7 @@ if ($received_data->action == 'baskigetir') {
         $data['basilanKilo'] = $row['basilanKilo'];
         $data['basilanAdet'] = $row['basilanAdet'];
         $data['kiloAdet'] = $row['kiloAdet'];
-
+        $data['kalanKg'] = $row['kilo'] - $row['basilanKilo'];
     }
 
     echo json_encode($data);

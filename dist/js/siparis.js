@@ -7,7 +7,6 @@ ay = date.getMonth().toString().length == 1 ? "0" + date.getMonth() : date.getMo
 if(ay == "00")
     ay = "01"
 var date = date.getFullYear() + "-" + ay + "-" + gun;
-debugger;
 
 var siparisGiris = new Vue({
     el: "#siparis-giris",

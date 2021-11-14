@@ -110,13 +110,14 @@ if (isset($_POST['sevkiyatekle'])) {
         $profilicadet = explode(",", $_POST['profilicadet']);
         $profilpaketAdet = explode(",", $_POST['profilpaketAdet']);
         $profiltoplamadet = explode(",", $_POST['profiltoplamadet']);
+        $profilIstenilenTermin = explode(",", $_POST['profilIstenilenTermin']);
 
-        $sqlProfil = "INSERT INTO tblstokprofil (profilId, firmaId, musteriId, tur, gelisAmaci, boy, toplamKg, icAdet, paketAdet, toplamAdet, siparisNo, sevkiyatId)  VALUES ";
+        $sqlProfil = "INSERT INTO tblstokprofil (profilId, firmaId, musteriId, tur, gelisAmaci, boy, toplamKg, icAdet, paketAdet, toplamAdet, siparisNo, sevkiyatId, istenilenTermin)  VALUES ";
         for ($i = 0; $i < count($profilprofilId); $i++) {
 
             $siparisno = "FSN" . mt_rand();
             $sqlProfil = $sqlProfil . " ('$profilprofilId[$i]', '$profilfirmaId[$i]', '$profilmusteriId[$i]','$profiltur[$i]' , '$profilgelisAmaci[$i]', '$profilboy[$i]', '$profiltoplamkilo[$i]',
-            '$profilicadet[$i]', '$profilpaketAdet[$i]', '$profiltoplamadet[$i]','$siparisno', '$sevkiyatId'),";
+            '$profilicadet[$i]', '$profilpaketAdet[$i]', '$profiltoplamadet[$i]','$siparisno', '$sevkiyatId', '$profilIstenilenTermin[$i]'),";
         }
         $sqlProfil[strlen($sqlProfil) - 1] = ";";
         try {

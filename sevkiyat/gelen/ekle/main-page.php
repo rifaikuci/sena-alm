@@ -517,6 +517,7 @@ $profiller = $db->query($profillerrsql);
                                                     <input name="profilboy" :value="profilboy" type="hidden">
                                                     <input name="profilfirmaId" :value="profilfirmaId" type="hidden">
                                                     <input name="profilfirmaAd" :value="profilfirmaAd" type="hidden">
+                                                    <input name="profilIstenilenTermin" :value="profilIstenilenTermin" type="hidden">
                                                     <input name="profilmusteriId" :value="profilmusteriId"
                                                            type="hidden">
                                                     <input name="profilmusteriAd" :value="profilmusteriAd"
@@ -564,7 +565,7 @@ $profiller = $db->query($profillerrsql);
                                                     <select v-model="profil.tur" class="form-control"
                                                             style="width: 100%;">
                                                         <option selected value="">Profil Tür Seçiniz</option>
-                                                        <option value="Pres">Pres</option>
+                                                        <option value="Ham">Ham</option>
                                                         <option value="Boyalı">Boyalı</option>
                                                         <option value="Eloksallı">Eloksallı</option>
 
@@ -636,6 +637,19 @@ $profiller = $db->query($profillerrsql);
                                                     <input v-model="profil.toplamadet" type="number"
                                                            class="form-control form-control-lg" placeholder="0"
                                                            step="1">
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label>İstenilen Termin</label>
+                                                    <select v-model="profil.istenilenTermin" name="istenilenTermin"
+                                                            @change="onChangeIstenilenTermin($event)"
+                                                            class="form-control">
+                                                        <option selected disabled value="">İstenilen Termin</option>
+                                                        <option value="Termiksiz">0</option>
+                                                        <option value="Yarı Termikli">4 - 7</option>
+                                                        <option value="Termikli">10 - 14</option>
+                                                    </select>
                                                 </div>
                                             </div>
 

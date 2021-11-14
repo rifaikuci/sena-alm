@@ -8,7 +8,7 @@ var sevkiyatMusteriId = "";
 var alasimlar = [];
 
 
-var app = new Vue({
+var veri = new Vue({
         el: "#stok-giris",
         data: {
             //boyalar
@@ -95,6 +95,7 @@ var app = new Vue({
             profiller: [],
             profiltoplamadet: [],
             profiltoplamkilo: [],
+            profilIstenilenTermin: [],
             profil: {
                 firmaId: '',
                 firmaAd: '',
@@ -111,7 +112,8 @@ var app = new Vue({
                 toplamadet: '',
                 toplamkilo: '',
                 mGr: '',
-                tolerans: ''
+                tolerans: '',
+                istenilenTermin: ''
             },
             isFullProfilData: false,
         },
@@ -492,6 +494,7 @@ var app = new Vue({
                     this.profil.profilId &&
                     this.profil.adet &&
                     this.profil.boy &&
+                    this.profil.istenilenTermin &&
                     this.profil.paketAdet &&
                     this.profil.tur &&
                     this.profil.gelis) {
@@ -510,6 +513,7 @@ var app = new Vue({
                     this.profilgelis.push(this.profil.gelis);
                     this.profiltoplamadet.push(this.profil.toplamadet);
                     this.profiltoplamkilo.push(this.profil.toplamkilo);
+                    this.profilIstenilenTermin.push(this.profil.istenilenTermin);
                     this.profil.boy = (this.profil.boy / 1000).toFixed(3);
                     this.profil.mGr = (((this.profil.toplamkilo / this.profil.toplamadet) / this.profil.boy) * 1000).toFixed(3);
                     this.profil.tolerans = (((this.profil.mGr - data.agirlik) / this.profil.mGr) * 100).toFixed(2);
@@ -530,7 +534,8 @@ var app = new Vue({
                         toplamadet: '',
                         toplamkilo: '',
                         mGr: '',
-                        tolerans: ''
+                        tolerans: '',
+                        istenilenTermin: '',
                     }
                 }
 
@@ -546,6 +551,7 @@ var app = new Vue({
                     this.profil.profilId &&
                     this.profil.adet &&
                     this.profil.boy &&
+                    this.profil.istenilenTermin &&
                     this.profil.paketAdet &&
                     this.profil.tur &&
                     this.profil.gelis) {
@@ -568,6 +574,7 @@ var app = new Vue({
                     this.profil.profilId &&
                     this.profil.adet &&
                     this.profil.boy &&
+                    this.profil.istenilenTermin &&
                     this.profil.paketAdet &&
                     this.profil.tur &&
                     this.profil.gelis) {
@@ -590,6 +597,7 @@ var app = new Vue({
                     this.profil.profilId &&
                     this.profil.adet &&
                     this.profil.boy &&
+                    this.profil.istenilenTermin &&
                     this.profil.paketAdet &&
                     this.profil.tur &&
                     this.profil.gelis) {
@@ -613,12 +621,32 @@ var app = new Vue({
                 this.$delete(this.profiltoplamadet, index);
                 this.$delete(this.profiltoplamkilo, index);
                 this.$delete(this.profiltur, index);
+                this.$delete(this.profilIstenilenTermin, index);
                 this.isFullProfilData = false;
             },
+            onChangeIstenilenTermin(event) {
+                this.profil.profilId = sevkiyatProfilId;
+                this.profil.firmaId = sevkiyatGeldigiFirma;
+                this.profil.musteriId = sevkiyatMusteriId;
+                if (this.profil.adet && this.profil.paketAdet) {
+                    this.profil.toplamadet = this.profil.adet * this.profil.paketAdet;
+                }
 
-
-
-
+                if (event.target.value &&
+                    this.profil.firmaId &&
+                    this.profil.musteriId &&
+                    this.profil.profilId &&
+                    this.profil.adet &&
+                    this.profil.boy &&
+                    this.profil.istenilenTermin &&
+                    this.profil.paketAdet &&
+                    this.profil.tur &&
+                    this.profil.gelis) {
+                    this.isFullProfilData = true;
+                } else {
+                    this.isFullProfilData = false;
+                }
+            },
         }
 
     }
@@ -634,7 +662,7 @@ $('#sevkiyatBiyetFirmaId').on("change", async  function(value){
         return response.data
     });
 
-    app.alasimlar = alasimlar;
+    veri.alasimlar = alasimlar;
 
 });
 

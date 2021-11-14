@@ -104,7 +104,7 @@ function parcaBul($id)
     return array_search($id, $arrayKalip);
 }
 
-function firmaTakimNoBul($db, $table, $firmaId,$profilId)
+function firmaTakimNoBul($db, $table, $firmaId, $profilId)
 {
 
     $sql = "SELECT COUNT(*)  FROM $table where firmaId = '$firmaId' AND profilId = '$profilId'";
@@ -123,33 +123,34 @@ function parcalarsqlbul($id, $db, $sutun)
     return $row[$sutun];
 }
 
-function siparisGunBul($db,$yil, $hafta, $gun )
+function siparisGunBul($db, $yil, $hafta, $gun)
 {
 
     $sql = "select * from tblsiparis where yil ='$yil' AND hafta = '$hafta' AND gun = '$gun'";
     $result = mysqli_query($db, $sql);
     $num_rows = mysqli_num_rows($result);
 
-    if($num_rows >0 ) {
+    if ($num_rows > 0) {
         $sql2 = "SELECT * from tblsiparis order by id desc";
         $resultfirst = $db->query($sql2);
         $firstrow = mysqli_fetch_assoc($resultfirst);
-        $num_rows = substr($firstrow['satirNo'],-2);
+        $num_rows = substr($firstrow['satirNo'], -2);
 
     }
     return $num_rows + 1;
 }
 
-function siparisHaftaBul ($db, $yil, $hafta) {
+function siparisHaftaBul($db, $yil, $hafta)
+{
     $sql = "select * from tblsiparis where yil ='$yil' AND hafta = '$hafta'  group by yil,hafta";
     $result = mysqli_query($db, $sql);
     $num_rows = mysqli_num_rows($result);
 
-    if($num_rows >0 ) {
+    if ($num_rows > 0) {
         $sql2 = "SELECT * from tblsiparis order by id desc";
         $resultfirst = $db->query($sql2);
         $firstrow = mysqli_fetch_assoc($resultfirst);
-        $num_rows = substr($firstrow['siparisNo'],-3);
+        $num_rows = substr($firstrow['siparisNo'], -3);
 
     }
 
@@ -168,6 +169,38 @@ function eloksalBul($id, $db)
 function ayarSqlBul($id, $db, $sutun)
 {
     $sql = "SELECT * FROM tblayar WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row[$sutun];
+}
+
+function takimBul($id, $db, $sutun)
+{
+    $sql = "SELECT * FROM tbltakim WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row[$sutun];
+}
+
+function baskiBul($id, $db, $sutun)
+{
+    $sql = "SELECT * FROM tblbaski WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row[$sutun];
+}
+
+function siparisBul($id, $db, $sutun)
+{
+    $sql = "SELECT * FROM tblsiparis WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row[$sutun];
+}
+
+function biyetbul($id, $db, $sutun)
+{
+    $sql = "SELECT * FROM tblstokbiyet WHERE id = '$id'";
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_assoc();
     return $row[$sutun];
