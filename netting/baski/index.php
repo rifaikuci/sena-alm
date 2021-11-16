@@ -155,7 +155,7 @@ if (isset($_POST['baskiekle'])) {
     mysqli_query($db, $sqlbiyet);
 
     $basilanNetAdetSiparis = $basilanNetAdet + siparisBul($siparisId, $db, 'basilanNetAdet');
-    $basilanNetKgSiparis = $basilanNetAdet + siparisBul($siparisId, $db, 'basilanNetKilo');
+    $basilanNetKgSiparis = $basilanNetKg + siparisBul($siparisId, $db, 'basilanNetKilo');
 
     $sqlSiparis = "UPDATE tblsiparis set
                     basilanAdet = '$basilanNetAdetSiparis',

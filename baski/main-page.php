@@ -57,7 +57,7 @@ $result = $db->query($sql);
                                     <td><?php echo
 
                                             tarih(explode(" ", $row['baslaZamani'])[0]) . " " . explode(" ", $row['baslaZamani'])[1]; ?></td>
-                                    <td><?php echo $row['bitisZamani'] == "" ? "Yarıda Kaldı" : "Tamamlandı"; ?></td>
+                                    <td><?php echo $row['bitisZamani'] == "" ? "Baskı Kesildi" : "Bitirildi"; ?></td>
                                     <td>
                                         <?php if (!$row['bitisZamani']) { ?>
                                             <a href=<?php echo "yari-guncelle/index.php?baski=" . $row['id']; ?> class="btn
