@@ -156,8 +156,8 @@ function sayiFormatla($sayi, $digit)
     return number_format((float)$sayi, $digit, '.', ',');
 }
 
-function vardiyaBul($vardiya){
-    $now = date('H:i');
+function vardiyaBul($vardiya, $saat){
+    $now = $saat ? $saat :  date('H:i');
     if ($vardiya == 3) {
         if ($now >= date("H:i", strtotime("00:00")) && $now < date("H:i", strtotime("07:59")))
             return "3A";

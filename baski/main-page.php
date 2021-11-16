@@ -63,7 +63,7 @@ $result = $db->query($sql);
                                             <a href=<?php echo "yari-guncelle/index.php?baski=" . $row['id']; ?> class="btn
                                                btn-warning">Güncelle</a>
                                         <?php } else { ?>
-                                            <a href="#" class="btn
+                                            <a href=<?php echo "guncelle/index.php?baski=" . $row['id']; ?> class="btn
                                                btn-warning">Güncelle</a>
                                         <?php } ?>
 

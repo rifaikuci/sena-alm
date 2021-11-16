@@ -64,9 +64,10 @@ if ($received_data->action == 'baskibaslat') {
     $baslazamani = $received_data->baslazamani;
     $siparisId = $received_data->siparisId;
     $takimId = $received_data->takimId;
+    $kayitTarih = date("Y-m-d H:i:s");
 
-    $sql = "INSERT INTO tblbaski ( baslaZamani, siparisId, takimId)
-                VALUES ('$baslazamani','$siparisId','$takimId')";
+    $sql = "INSERT INTO tblbaski ( baslaZamani, siparisId, takimId, kayitTarih)
+                VALUES ('$baslazamani','$siparisId','$takimId', '$kayitTarih')";
 
     if (mysqli_query($db, $sql)) {
 
@@ -78,5 +79,53 @@ if ($received_data->action == 'baskibaslat') {
     echo json_encode($data);
 }
 
+if ($received_data->action == 'baskiguncellegetir') {
+
+    $id = $received_data->id;
+    $id = intval($id);
+    $sql = "SELECT * FROM tblbaski WHERE id = $id ";
+
+    $result = $db->query($sql);
+    while ($row = $result->fetch_array()) {
+        $data['id'] = $row['id'];
+        $data['siparisId'] = $row['siparisId'];
+        $data['takimId'] = $row['takimId'];
+        $data['baslaSaat'] = explode(" ",$row['baslaZamani'])[1];
+        $data['bitisSaat'] = explode(" ",$row['bitisZamani'])[1];
+        $data['baslaTarih'] =  explode(" ",$row['baslaZamani'])[0];
+        $data['bitisTarih'] =  date("Y-m-d", strtotime( explode(" ",$row['bitisZamani'])[0]));
+        $data['kayitTarih'] = $row['kayitTarih'];
+        $data['vardiyaKod'] = $row['vardiyaKod'];
+        $data['vardiya'] = $row['vardiya'];
+        $data['operatorId'] = $row['operatorId'];
+        $data['biyetId'] = $row['biyetId'];
+        $data['biyetBoy'] = $row['biyetBoy'];
+        $data['araIsFire'] = $row['araIsFire'];
+        $data['konveyorBoy'] = $row['konveyorBoy'];
+        $data['boylamFire'] = $row['boylamFire'];
+        $data['baskiFire'] = $row['baskiFire'];
+        $data['biyetFire'] = $row['biyetFire'];
+        $data['verilenBiyet'] = $row['verilenBiyet'];
+        $data['guncelGr'] = $row['guncelGr'];
+        $data['basilanBrutKg'] = $row['basilanBrutKg'];
+        $data['basilanNetKg'] = $row['basilanNetKg'];
+        $data['basilanNetAdet'] = $row['basilanNetAdet'];
+        $data['kovanSicaklik'] = $row['kovanSicaklik'];
+        $data['kalipSicaklik'] = $row['kalipSicaklik'];
+        $data['biyetSicaklik'] = $row['biyetSicaklik'];
+        $data['hiz'] = $row['hiz'];
+        $data['fire'] = $row['fire'];
+        $data['performans'] = $row['performans'];
+        $data['takimSonDurum'] = $row['takimSonDurum'];
+        $data['aciklama'] = $row['aciklama'];
+        $data['sonlanmaNeden'] = $row['sonlanmaNeden'];
+        $data['profilId'] = siparisBul($row['siparisId'],$db,'profilId');
+
+
+
+        }
+
+    echo json_encode($data);
+}
 
 ?>

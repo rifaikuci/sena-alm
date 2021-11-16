@@ -21,3 +21,4 @@
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/takim-goster.js" ?>></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/baski-giris.js" ?>></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/baski-yari-guncelle.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/baski-guncelle.js" ?>></script>

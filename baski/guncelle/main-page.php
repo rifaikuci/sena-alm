@@ -1,12 +1,21 @@
 <?php
 include "../../netting/baglan.php";
 require_once "../../include/sql.php";
-$siparissql = "SELECT * FROM tblsiparis where baskiDurum = 0 order by termimTarih asc";
-$siparisler = $db->query($siparissql);
 
-$biyetSql = "SELECT * FROM tblstokbiyet where durum = 1 and kalanKg > 0";
-$biyetler = $db->query($biyetSql);
+$baskiId = 0;
+if (isset($_GET['baski'])) {
+    $baskiId = $_GET['baski'];
 
+    $sql = "SELECT * FROM tblbaski WHERE id = '$baskiId'";
+    $result = mysqli_query($db, $sql);
+    $baski = $result->fetch_assoc();
+
+    $biyetSql = "SELECT * FROM tblstokbiyet where durum = 1 and kalanKg > 0";
+    $biyetler = $db->query($biyetSql);
+
+    $siparissql = "SELECT * FROM tblsiparis where baskiDurum = 0 order by termimTarih asc";
+    $siparisler = $db->query($siparissql);
+}
 
 date_default_timezone_set('Europe/Istanbul');
 
@@ -17,7 +26,7 @@ date_default_timezone_set('Europe/Istanbul');
         <div class="card-header">
             Baskı Oluşturma Alanı
         </div>
-        <div class="card-body" id="baski-giris">
+        <div class="card-body" id="baski-guncelle" :baski="<?php echo $baskiId; ?>">
             <form method="post" action="<?php echo base_url() . 'netting/baski/index.php' ?>"
                   enctype="multipart/form-data">
                 <div class="row" v-if="isSelected">
@@ -136,20 +145,19 @@ date_default_timezone_set('Europe/Istanbul');
                             </label>
                         </div>
                     </div>
-                    <div class="col-sm-12">
+                    <div class="col-sm-8">
                         <div class="form-group">
                             <label>Sipariş</label>
 
-                            <select name="siparisId" required class="form-control select2" id="supplier_id"
+                            <select name="siparisId" required class="form-control select2" id="siparis_guncelle"
                                     style="width: 100%;">
-                                <option selected disabled value="">
+                                <option disabled value="">
                                     Sipariş No - Termim Tarih - Müşteri - Profil No - Profil Ad - Boy - Tür - Tür Detayı
                                     - İstenen/Basılan K/A
                                 </option>
-
                                 <?php while ($siparis = $siparisler->fetch_array()) { ?>
 
-                                    <option
+                                    <option <?php echo $siparis['id'] == $baski['siparisId'] ? "selected" : "" ?>
                                             value="<?php echo $siparis['id']; ?>">
                                         <?php
                                         $siparisTuru = $siparis['siparisTuru'] == "H" ? "Ham" :
@@ -184,18 +192,18 @@ date_default_timezone_set('Europe/Istanbul');
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label>Takımlar</label>
 
-                            <select class="form-control select2" id="takim_id" name="takimId"
+                            <select class="form-control select2" id="takim_id_guncelle" name="takimId"
                                     required
                                     style="width: 100%;">
                                 <option selected disabled value="">
                                     Takım No - Kalıp - Çap
                                 </option>
 
-                                <option v-for="takim in takimlar" :value="takim.id">
+                                <option v-for="takim in takimlar" :value="takim.id" :selected="takim.id == takimId">
                                     {{takim.takimNo}} - {{ takim.kalipCins }} - {{takim.cap}}
                                 </option>
 
@@ -204,20 +212,38 @@ date_default_timezone_set('Europe/Istanbul');
                         </div>
                     </div>
 
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Başlama Tarihi</label>
+                            <input required type="date" class="form-control form-control-lg" name="baslaTarih"
+                                   :value="baslaTarih">
+                        </div>
+                    </div>
 
-                    <div class="col-sm-2" style="margin-top: 30px;">
-                        <button :disabled="baskiBasla == true"
-                                onclick="return confirm('Baskıyı Başlatılıyor emin misiniz?')"
-                                type="submit"
-                                v-on:click="baskiekle($event)"
-                                name="baskiekle" class="btn btn-info float-right">Baskıyı Başlat
-                        </button>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Başlama Saat</label>
+                            <input required type="time" class="form-control form-control-lg" name="baslaSaat"
+                                   :value="baslaSaat">
+                        </div>
                     </div>
-                    <div class="col-sm-2" style="margin-top: 30px;">
-                        <label v-if="baskiBasla == true">
-                            Baskı Başlama Zamanı: {{baslazamani}}
-                        </label>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Bitiş Tarihi</label>
+                            <input required type="date" class="form-control form-control-lg" name="bitisTarih"
+                                   :value="bitisTarih">
+                        </div>
                     </div>
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Bitiş Saat</label>
+                            <input required type="time" class="form-control form-control-lg" name="bitisSaat"
+                                   :value="bitisSaat">
+                        </div>
+                    </div>
+
                 </div>
                 <br>
                 <br>
@@ -227,14 +253,13 @@ date_default_timezone_set('Europe/Istanbul');
                         <div class="form-group">
                             <label>Biyetler</label>
 
-                            <select class="form-control select2" id="biyet_id"
+                            <select class="form-control select2"
                                     required name="biyetId"
                                     style="width: 100%;">
-                                <option selected disabled value="">
-                                    Parti No - Alaşım - Firma
-                                </option>
                                 <?php while ($biyet = $biyetler->fetch_array()) { ?>
-                                    <option value="<?php echo $biyet['id']; ?>">
+                                    <option
+                                        <?php echo $baski['biyetId'] == $biyet['id'] ? "selected" : "" ?>
+                                            value="<?php echo $biyet['id']; ?>">
                                         <?php echo $biyet['partino'] . " - " .
                                             alasimBul($biyet['alasimId'], $db, 'ad') . " - " .
                                             firmaBul($biyet['firmaId'], $db, 'firmaAd'); ?>
@@ -302,7 +327,7 @@ date_default_timezone_set('Europe/Istanbul');
                                    placeholder="0,1">
                             <input type="hidden" v-model="baskiFire" name="baskiFire" :value="baskiFire">
                             <input type="hidden" v-model="satirNo" name="satirNo" :value="satirNo">
-                            <input type="hidden" value="baski-ekle" name="baskiekle">
+                            <input type="hidden"  name="baskiguncelle" value="baski-guncelle">
 
                         </div>
                     </div>
@@ -444,15 +469,21 @@ date_default_timezone_set('Europe/Istanbul');
                                     required
                                     id="takimSonDurum"
                                     style="width: 100%;">
-                                <option selected disabled value="">
-                                    Takım Son Durumu Seçiniz
+                                <option <?php echo $baski['takimSonDurum'] == "Pres" ? "selected" : "" ?>
+                                        value="Pres">PRES
                                 </option>
-
-                                <option value="Pres">PRES</option>
-                                <option value="Kostik">KOSTİK</option>
-                                <option value="Tenefer">TENEFER</option>
-                                <option value="Sevk">SEVK</option>
-                                <option value="Raf">RAF</option>
+                                <option <?php echo $baski['takimSonDurum'] == "Kostik" ? "selected" : "" ?>
+                                        value="Kostik">KOSTİK
+                                </option>
+                                <option <?php echo $baski['takimSonDurum'] == "Tenefer" ? "selected" : "" ?>
+                                        value="Tenefer">TENEFER
+                                </option>
+                                <option <?php echo $baski['takimSonDurum'] == "Sevk" ? "selected" : "" ?>
+                                        value="Sevk">SEVK
+                                </option>
+                                <option <?php echo $baski['takimSonDurum'] == "Raf" ? "selected" : "" ?>
+                                        value="Raf">RAF
+                                </option>
                             </select>
 
                         </div>
@@ -463,53 +494,59 @@ date_default_timezone_set('Europe/Istanbul');
                             <label>Açıklama</label>
                             <input required
                                    class="form-control" type="text" name="aciklama"
+                                   value="<?php echo $baski['aciklama'] ?>"
                                    placeholder="Açıklama Giriniz...">
                             <input type="hidden" v-model="baskiDurum" :value="baskiDurum" name="baskiDurum">
 
                         </div>
                     </div>
 
-                    <div class="col-sm-2" v-if="isCheck">
-                        <div class="form-group">
-                            <label>~~</label>
-                            <div class="form-group clearfix">
-                                <div class="icheck-primary d-inline">
-                                    <input v-model="baskiDurum" type="checkbox" id="checkboxPrimary2">
-                                    <label style="color: #0e84b5" :key="checkboxPrimary2" for="checkboxPrimary2">
-                                        Sipariş Bitirilsin Mi
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div v-if="!baskiDurum" class="col-sm-4">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label>Baskı Sonlanma Nedeni</label>
 
                             <select class="form-control select2" name="sonlanmaNeden"
                                     :required="!baskiDurum"
                                     style="width: 100%;">
-                                <option selected disabled value="">
-                                    Baskı Bitirilme Nedeni
+                                <option <?php echo $baski['sonlanmaNeden'] == "Kalıp Kırıldı" ? "selected" : "" ?>
+                                        value="Kalıp Kırıldı">Kalıp Kırıldı
                                 </option>
-
-                                <option value="Kalıp Kırıldı">Kalıp Kırıldı</option>
-                                <option value="Kalıp Dinlenme">Kalıp Dinlenme</option>
-                                <option value="Kalıp Boy Farkı">Kalıp Boy Farkı</option>
-                                <option value="Mühre Kırıldı">Mühre Kırıldı</option>
-                                <option value="Bolster Kırıldı">Bolster Kırıldı</option>
+                                <option <?php echo $baski['sonlanmaNeden'] == "Kalıp Dinlenme" ? "selected" : "" ?>
+                                        value="Kalıp Dinlenme">Kalıp Dinlenme
+                                </option>
+                                <option <?php echo $baski['sonlanmaNeden'] == "Kalıp Boy Farkı" ? "selected" : "" ?>
+                                        value="Kalıp Boy Farkı">Kalıp Boy Farkı
+                                </option>
+                                <option <?php echo $baski['sonlanmaNeden'] == "Mühre Kırıldı" ? "selected" : "" ?>
+                                        value="Mühre Kırıldı">Mühre Kırıldı
+                                </option>
+                                <option <?php echo $baski['sonlanmaNeden'] == "Bolster Kırıldı" ? "selected" : "" ?>
+                                        value="Bolster Kırıldı">Bolster Kırıldı
+                                </option>
+                                <option <?php echo $baski['sonlanmaNeden'] == "Tamamlandı" ? "selected" : "" ?>
+                                        value="Tamamlandı">Tamamlandı
+                                </option>
                             </select>
 
                         </div>
                     </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>~~</label>
+                            <p style="color: darkcyan; font-weight: bold">* Tamamlandı seçilirse baskı
+                                bitirilecektir.</p>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="card-footer">
                     <div>
-                        <button v-if="baskiBitir" type="submit" name="baskiekle"
-                                onclick="return confirm('Baskıyı Bitirmek İstediğinizden emin misiniz?')"
+                        <button type="submit"
+                                onclick="return confirm('Baskıyı Güncellemek İstediğinizden emin misiniz?')"
                                 class="btn btn-info float-right">
-                            Baskıyı Bitir
+                            Baskıyı Güncelle
                         </button>
                     </div>
                 </div>
