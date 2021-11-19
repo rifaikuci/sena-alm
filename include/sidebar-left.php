@@ -106,6 +106,15 @@
             </li>
 
             <li class="nav-item">
+                <a href="<?php echo base_url() . "siparis-satir/" ?> " class="nav-link">
+                    <i class="nav-icon fas fa-shopping-cart"></i>
+                    <p>
+                        Sipariş Satır Bazlı
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a href="<?php echo base_url() . "baski/" ?> " class="nav-link">
                     <i class="nav-icon fas fa-print"></i>
                     <p>

@@ -1,4 +1,3 @@
-var deneme = ""
 var baskiguncelle = new Vue({
         el: "#baski-guncelle",
         data: {

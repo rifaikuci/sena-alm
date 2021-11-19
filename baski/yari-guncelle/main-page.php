@@ -480,7 +480,6 @@ date_default_timezone_set('Europe/Istanbul');
                                 <option value="Pres">PRES</option>
                                 <option value="Kostik">KOSTİK</option>
                                 <option value="Tenefer">TENEFER</option>
-                                <option value="Sevk">SEVK</option>
                                 <option value="Raf">RAF</option>
                             </select>
 

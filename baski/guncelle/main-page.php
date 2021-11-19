@@ -478,9 +478,7 @@ date_default_timezone_set('Europe/Istanbul');
                                 <option <?php echo $baski['takimSonDurum'] == "Tenefer" ? "selected" : "" ?>
                                         value="Tenefer">TENEFER
                                 </option>
-                                <option <?php echo $baski['takimSonDurum'] == "Sevk" ? "selected" : "" ?>
-                                        value="Sevk">SEVK
-                                </option>
+
                                 <option <?php echo $baski['takimSonDurum'] == "Raf" ? "selected" : "" ?>
                                         value="Raf">RAF
                                 </option>

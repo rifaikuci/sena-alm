@@ -1,4 +1,3 @@
-var deneme = ""
 var baskigiris = new Vue({
         el: "#baski-giris",
         data: {
@@ -41,7 +40,7 @@ var baskigiris = new Vue({
             basilanKilo: '',
             basilanAdet: '',
             kiloAdet: '',
-            isCheck : false,
+            isCheck: false,
             baskiDurum: false,
             kalanKg: 0
 
@@ -59,8 +58,10 @@ var baskigiris = new Vue({
                 if (ay == "00")
                     ay = "01"
 
-                var day = date.getFullYear() + '-' + ay + '-' + gun + " " + date.getHours() + ":" + date.getMinutes();
-                var baslazamani = gun + "." + ay + "." + date.getFullYear() + " " + date.getHours() + ":" + date.getMinutes()
+                saat = date.getHours().toString().length == 1 ? "0" + date.getHours() : date.getHours();
+                dakika = date.getMinutes().toString().length == 1 ? "0" + date.getMinutes() : date.getMinutes();
+                var day = date.getFullYear() + '-' + ay + '-' + gun + " " + saat + ":" + dakika;
+                var baslazamani = gun + "." + ay + "." + date.getFullYear() + " " + saat + ":" + dakika
 
 
                 const response = await axios.post('/sena/netting/baski/action.php', {
@@ -93,7 +94,7 @@ var baskigiris = new Vue({
             },
 
             handleBiyetBoy(event) {
-                
+
                 if (event.target.value && event.target.value > 0 &&
                     this.verilenBiyet && this.verilenBiyet > 0 &&
                     this.biyetBirimGramaj && this.biyetBirimGramaj > 0) {
@@ -136,7 +137,7 @@ var baskigiris = new Vue({
 
             checkBitir() {
                 if (this.basilanNetKg && this.basilanNetKg > 0 && this.kg && this.kg > 0) {
-                    var kalan = ( this.kalanKg - this.basilanNetKg);
+                    var kalan = (this.kalanKg - this.basilanNetKg);
                     var bitirebilirDeger = (this.kg / 10);
 
 

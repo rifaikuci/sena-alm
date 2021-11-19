@@ -4,7 +4,7 @@ date.setDate(date.getDate() + 26);
 
 gun = date.getDate().toString().length == 1 ? "0" + date.getDate() : date.getDate();
 ay = date.getMonth().toString().length == 1 ? "0" + date.getMonth() : date.getMonth();
-if(ay == "00")
+if (ay == "00")
     ay = "01"
 var date = date.getFullYear() + "-" + ay + "-" + gun;
 
