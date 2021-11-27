@@ -19,7 +19,7 @@ if (isset($_POST['kesimekle'])) {
     $sepet3 = $_POST['sepet3'] == "" ? 0 : $_POST['sepet3'];
 
     $vardiya = ayarSqlBul(1, $db, 'vardiya');
-    $vardiyaKod = vardiyaBul($vardiya, "H:i");
+    $vardiyaKod = vardiyaBul($vardiya, date("H:i"));
     $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
 
     $netAdet = $_POST['netAdet'];
@@ -76,12 +76,9 @@ if (isset($_POST['kesimekle'])) {
         $icindekiler1 = sepetbul($sepet1, $db, 'icindekiler');
         $sepet1Icındekiler = $icindekiler1 . $kesimId . ";";
 
-        $icindekilerAdet1 = sepetbul($sepet1, $db, 'icindekilerAdet');
-        $sepet1IcındekilerAdet = $icindekilerAdet1 . $sepet1Adet . ";";
 
         $sqlsepet1 = "UPDATE tblsepet set
                         icindekiler = '$sepet1Icındekiler',
-                        icindekilerAdet = '$sepet1IcındekilerAdet',
                         durum = '$isSepet1Dolu'
                     where id = '$sepet1'";
         mysqli_query($db, $sqlsepet1);
@@ -92,12 +89,9 @@ if (isset($_POST['kesimekle'])) {
         $icindekiler2 = sepetbul($sepet2, $db, 'icindekiler');
         $sepet2Icındekiler = $icindekiler2 . $kesimId . ";";
 
-        $icindekilerAdet2 = sepetbul($sepet2, $db, 'icindekilerAdet');
-        $sepet2IcındekilerAdet = $icindekilerAdet2 . $sepet2Adet . ";";
 
         $sqlsepet2 = "UPDATE tblsepet set
                         icindekiler = '$sepet2Icındekiler',
-                        icindekilerAdet = '$sepet2IcındekilerAdet',
                         durum = '$isSepet2Dolu'
                     where id = '$sepet2'";
         mysqli_query($db, $sqlsepet2);
@@ -108,12 +102,9 @@ if (isset($_POST['kesimekle'])) {
         $icindekiler3 = sepetbul($sepet3, $db, 'icindekiler');
         $sepet3Icındekiler = $icindekiler3 . $kesimId . ";";
 
-        $icindekilerAdet3 = sepetbul($sepet3, $db, 'icindekilerAdet');
-        $sepet3IcındekilerAdet = $icindekilerAdet3 . $sepet3Adet . ";";
 
         $sqlsepet3 = "UPDATE tblsepet set
                         icindekiler = '$sepet3Icındekiler',
-                        icindekilerAdet = '$sepet3IcındekilerAdet',
                         durum = '$isSepet3Dolu'
                     where id = '$sepet3'";
         mysqli_query($db, $sqlsepet3);
@@ -132,5 +123,82 @@ if (isset($_POST['kesimekle'])) {
         header("Location:../../kesim/?durumekle=no");
         exit();
     }
+}
 
+if (isset($_GET['kesimsil'])) {
+    $id = $_GET['kesimsil'];
+
+    $sqlkesim = "SELECT * FROM tblkesim where id = '$id'";
+    $kesim = mysqli_query($db, $sqlkesim)->fetch_assoc();
+
+    $baskiId = $kesim['baskiId'];
+
+    $sqlBaski = "UPDATE tblbaski set
+                        kesimId = '0'
+                    where id = '$baskiId'";
+    mysqli_query($db, $sqlBaski);
+
+    $sqlHurda = "DELETE FROM tblhurda where kesimId = '$id'";
+    mysqli_query($db, $sqlHurda);
+
+    $siparisId = baskiBul($baskiId, $db, 'siparisId');
+    $satirNo = siparisBul($siparisId, $db, 'satirNo');
+    $hurdaAdet = -1 * ($kesim['hurdaAdet']);
+
+    $sqlstokprofil = "DELETE FROM tblstokprofil where toplamAdet = '$hurdaAdet' AND gelisAmaci = 'kesim' AND siparis = '$satirNo'";
+    mysqli_query($db, $sqlstokprofil);
+
+
+    $sqlsiparis = "UPDATE tblsiparis set
+                        konum = 'baski'
+                    where id = '$siparisId'";
+
+    if ($kesim['sepetId1'] > 0) {
+        $sepet1 = $kesim['sepetId1'];
+        $icindekiler1 = sepetbul($sepet1, $db, 'icindekiler');
+        $sepet1Icındekiler = str_replace($id . ";", "", $icindekiler1);
+
+
+        $sqlsepet1 = "UPDATE tblsepet set
+                        icindekiler = '$sepet1Icındekiler',
+                        durum = '0'
+                    where id = '$sepet1'";
+        mysqli_query($db, $sqlsepet1);
+    }
+
+    if ($kesim['sepetId2'] > 0) {
+        $sepet2 = $kesim['sepetId2'];
+        $icindekiler2 = sepetbul($sepet2, $db, 'icindekiler');
+        $sepet2Icındekiler = str_replace($id . ";", "", $icindekiler2);
+
+
+        $sqlsepet2 = "UPDATE tblsepet set
+                        icindekiler = '$sepet2Icındekiler',
+                        durum = '0'
+                    where id = '$sepet2'";
+        mysqli_query($db, $sqlsepet2);
+    }
+
+    if ($kesim['sepetId3'] > 0) {
+        $sepet3 = $kesim['sepetId3'];
+        $icindekiler3 = sepetbul($sepet3, $db, 'icindekiler');
+        $sepet3Icındekiler = str_replace($id . ";", "", $icindekiler3);
+
+
+        $sqlsepet3 = "UPDATE tblsepet set
+                        icindekiler = '$sepet3Icındekiler',
+                        durum = '0'
+                    where id = '$sepet3'";
+        mysqli_query($db, $sqlsepet3);
+    }
+
+    $sqlkesim = "DELETE FROM tblkesim where id = '$id'";
+
+    if (mysqli_query($db, $sqlkesim)) {
+        header("Location:../../kesim/?durumsil=ok");
+        exit();
+    } else {
+        header("Location:../../kesim/?durumsil=no");
+        exit();
+    }
 }

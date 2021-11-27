@@ -56,8 +56,12 @@ $result = $db->query($sql);
                                     <td><?php echo $row['kesilenBoy']; ?></td>
                                     <td><?php echo $row['hurdaAdet']; ?></td>
                                     <td><?php echo $row['netAdet']; ?></td>
-                                    <td><a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
+                                    <td>
+                                        <a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
                                            btn-warning">Düzenle</a>
+                                        <a href=<?php echo base_url() . "netting/kesim/index.php?kesimsil=" . $row['id']; ?> class="btn
+                                           btn-danger">Sil</a>
+
                                     </td>
                                 </tr>
                                 <?php $sira++;

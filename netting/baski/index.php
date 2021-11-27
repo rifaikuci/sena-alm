@@ -18,7 +18,7 @@ if (isset($_POST['baskiekle'])) {
     $bitisZamani = date("d.m.Y H:i");
     $kayitTarih = date("d.m.Y");
     $vardiya = ayarSqlBul(1, $db, 'vardiya');
-    $vardiyaKod = vardiyaBul($vardiya, "H:i");
+    $vardiyaKod = vardiyaBul($vardiya, date("H:i"));
     $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $biyetId = $_POST['biyetId'];
     $biyetBoy = $_POST['biyetBoy'];
