@@ -213,4 +213,12 @@ function konumBul($id)
     return array_search($id, $arrayKonum);
 }
 
+function sepetbul($id, $db, $sutun)
+{
+    $sql = "SELECT * FROM tblsepet WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row[$sutun];
+}
+
 ?>

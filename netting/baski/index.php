@@ -77,8 +77,8 @@ if (isset($_POST['baskiekle'])) {
     mysqli_query($db, $sqlBaski);
 
 
-    $sqlHurda = "INSERT INTO tblhurda (toplamKg, aciklama,operatorId,baskiId) 
-                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id')";
+    $sqlHurda = "INSERT INTO tblhurda (toplamKg, aciklama,operatorId,baskiId, geldigiYer) 
+                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id','baski')";
 
     mysqli_query($db, $sqlHurda);
 
@@ -139,7 +139,8 @@ if (isset($_POST['baskiekle'])) {
 
     $sqlprofilguncelle = "UPDATE tblstokprofil set
                     toplamKg = '$profilNetKilo',
-                    toplamAdet = '$profilNetAdet'
+                    toplamAdet = '$profilNetAdet',
+                    gelisAmaci = 'baski'
                     where siparis= '$satirNo'";
 
     mysqli_query($db, $sqlprofilguncelle);
@@ -286,7 +287,8 @@ if (isset($_GET['baskisilinecek'])) {
 
     $sqlprofilguncelle = "UPDATE tblstokprofil set
                     toplamKg = '$profilNetKilo',
-                    toplamAdet = '$profilNetAdet'
+                    toplamAdet = '$profilNetAdet',
+                    gelisAmaci = 'baski'
                     where siparis= '$satirNo'";
     mysqli_query($db, $sqlprofilguncelle);
 
@@ -408,8 +410,8 @@ if (isset($_POST['baskiIdG'])) {
     mysqli_query($db, $sqlBaski);
 
 
-    $sqlHurda = "INSERT INTO tblhurda (toplamKg, aciklama,operatorId,baskiId) 
-                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id')";
+    $sqlHurda = "INSERT INTO tblhurda (toplamKg, aciklama,operatorId,baskiId,geldigiYer) 
+                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id', 'baski')";
 
     mysqli_query($db, $sqlHurda);
 
@@ -470,7 +472,8 @@ if (isset($_POST['baskiIdG'])) {
 
     $sqlprofilguncelle = "UPDATE tblstokprofil set
                     toplamKg = '$profilNetKilo',
-                    toplamAdet = '$profilNetAdet'
+                    toplamAdet = '$profilNetAdet',
+                    gelisAmaci = 'baski'
                     where siparis= '$satirNo'";
 
     mysqli_query($db, $sqlprofilguncelle);
@@ -801,7 +804,8 @@ if (isset($_POST['baskiguncelle'])) {
 
         $sqlprofilguncelleEski = "UPDATE tblstokprofil set
                     toplamKg = '$profilNetKiloEski',
-                    toplamAdet = '$profilNetAdetEski'
+                    toplamAdet = '$profilNetAdetEski',
+                    gelisAmaci = 'baski'
                     where siparis= '$eskiSatirNo'";
 
         mysqli_query($db, $sqlprofilguncelleEski);
@@ -816,7 +820,8 @@ if (isset($_POST['baskiguncelle'])) {
 
         $sqlprofilguncelleYeni = "UPDATE tblstokprofil set
                     toplamKg = '$profilNetKiloYeni',
-                    toplamAdet = '$profilNetAdetYeni'
+                    toplamAdet = '$profilNetAdetYeni',
+                    gelisAmaci = 'baski'
                     where siparis= '$satirNo'";
 
         mysqli_query($db, $sqlprofilguncelleYeni);
@@ -832,7 +837,8 @@ if (isset($_POST['baskiguncelle'])) {
 
         $sqlprofilguncelle = "UPDATE tblstokprofil set
                     toplamKg = '$profilNetKilo',
-                    toplamAdet = '$profilNetAdet'
+                    toplamAdet = '$profilNetAdet',
+                    gelisAmaci = 'baski'
                     where siparis= '$satirNo'";
 
         mysqli_query($db, $sqlprofilguncelle);

@@ -70,8 +70,8 @@ if (isset($_POST['baskiekle'])) {
     mysqli_query($db, $sqlBaski);
 
 
-    $sqlHurda = "INSERT INTO tblhurda (toplamKg, aciklama,operatorId,baskiId) 
-                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id')";
+    $sqlHurda = "INSERT INTO tblhurda (toplamKg, aciklama,operatorId,baskiId, geldigiYer) 
+                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id' 'baski')";
 
     mysqli_query($db, $sqlHurda);
 
@@ -132,7 +132,8 @@ if (isset($_POST['baskiekle'])) {
 
     $sqlprofilguncelle = "UPDATE tblstokprofil set
                     toplamKg = '$profilNetKilo',
-                    toplamAdet = '$profilNetAdet'
+                    toplamAdet = '$profilNetAdet',
+                    gelisAmaci = 'baski'
                     where siparis= '$satirNo'";
 
     mysqli_query($db, $sqlprofilguncelle);
@@ -164,8 +165,6 @@ if (isset($_POST['baskiekle'])) {
     }
 
 }
-
-
 
 
 ?>
