@@ -12,7 +12,7 @@ var kesimgiris = new Vue({
             sepet3Adet: 0,
             netAdet: 0,
             satirNo: "",
-            kayitTarih: "",
+            kayitTarih : "",
             profil: "",
             istenilenBoy: "",
             siparisTur: "",

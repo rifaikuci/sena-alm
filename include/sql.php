@@ -221,4 +221,12 @@ function sepetbul($id, $db, $sutun)
     return $row[$sutun];
 }
 
+function hurdabul($id, $db, $sutun)
+{
+    $sql = "SELECT * FROM tblhurda WHERE kesimId = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row[$sutun];
+}
+
 ?>

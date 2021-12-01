@@ -24,7 +24,7 @@ date_default_timezone_set('Europe/Istanbul');
 <section class="content">
     <div class="card card-info">
         <div class="card-header">
-            Baskı Oluşturma Alanı
+            Baskı Güncelleme Alanı
         </div>
         <div class="card-body" id="baski-guncelle" :baski="<?php echo $baskiId; ?>">
             <form method="post" action="<?php echo base_url() . 'netting/baski/index.php' ?>"

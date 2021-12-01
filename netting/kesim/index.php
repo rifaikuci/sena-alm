@@ -202,3 +202,108 @@ if (isset($_GET['kesimsil'])) {
         exit();
     }
 }
+
+if (isset($_POST['kesimguncelle'])) {
+    $isSepet1Dolu = strval($_POST['isSepet1Dolu']) == "true" ? 1 : 0;
+    $isSepet2Dolu = strval($_POST['isSepet2Dolu']) == "true" ? 1 : 0;
+    $isSepet3Dolu = strval($_POST['isSepet3Dolu']) == "true" ? 1 : 0;
+    $kesimId = $_POST['kesimId'];
+    $sepet1Adet = $_POST['sepet1Adet'];
+    $sepet2Adet = $_POST['sepet2Adet'];
+    $sepet3Adet = $_POST['sepet3Adet'];
+    $sepetId1 = $_POST['sepet1'];
+    $sepetId2 = $_POST['sepet2'] == "" ? 0 : $_POST['sepet2'];
+    $sepetId3 = $_POST['sepet3'] == "" ? 0 : $_POST['sepet3'];
+
+    $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
+
+    $netAdet = $_POST['netAdet'];
+    $satirNo = $_POST['satirNo'];
+    $baskiId = $_POST['baskiId'];
+    $siparisTur = $_POST['siparisTur'];
+    $kesilenBoy = $_POST['kesilenBoy'];
+    $basilanNetAdet = $_POST['basilanNetAdet'];
+    $istenilenTermik = $_POST['istenilenTermik'];
+    $aciklama = $_POST['aciklama'];
+    $siparisId = $_POST['siparisId'];
+    $hurdaAdet = $_POST['hurdaAdet'];
+    $eskiHurdaAdet = $_POST['eskiHurdaAdet'];
+    $eskiHurdaAdet = -1 * $eskiHurdaAdet;
+
+
+    $sqlKesim = "UPDATE tblkesim set
+    kesilenBoy = '$kesilenBoy',
+    operatorId = '$operatorId',
+    sepetId1 = '$sepetId1',
+    sepetId2 = '$sepetId2',
+    sepetId3 = '$sepetId3',
+    hurdaAdet = '$hurdaAdet',
+    netAdet = '$netAdet',
+    sepet1Adet = '$sepet1Adet',
+    sepet2Adet = '$sepet2Adet',
+    sepet3Adet = '$sepet3Adet'
+    where id = '$kesimId'";
+
+
+    $sqlHurda = "UPDATE tblhurda set
+    toplamKg = '$hurdaAdet',
+    aciklama = '$aciklama',
+    operatorId = '$operatorId'
+    where kesimId = '$kesimId'";
+
+    mysqli_query($db, $sqlHurda);
+
+
+    $guncelGr = baskiBul($baskiId, $db, 'guncelGr');
+    $adet = -1 * ($hurdaAdet);
+    $kilo = $adet * $guncelGr * $kesilenBoy;
+
+
+    $sqlprofilrow = "select * from tblstokprofil where profilId = '0'
+                              and gelisAmaci = 'kesim' 
+                              and toplamAdet = '$eskiHurdaAdet' 
+                              and siparis = '$satirNo' LIMIT 1";
+    $profil = mysqli_query($db, $sqlprofilrow)->fetch_assoc();
+    $profilId = $profil['id'];
+
+
+    $sqlstokprofil = "UPDATE tblstokprofil set
+    toplamKg = '$kilo',
+    toplamAdet = '$adet'                    
+    where id = '$profilId'";
+    mysqli_query($db, $sqlstokprofil);
+
+    if ($sepetId1 > 0) {
+
+        $sqlsepet1 = "UPDATE tblsepet set
+                        durum = '$isSepet1Dolu'
+                    where id = '$sepetId1'";
+        mysqli_query($db, $sqlsepet1);
+    }
+
+    if ($sepetId2 > 0) {
+
+        $sqlsepet2 = "UPDATE tblsepet set
+                        durum = '$isSepet2Dolu'
+                    where id = '$sepetId2'";
+        mysqli_query($db, $sqlsepet2);
+    }
+
+    if ($sepetId3 > 0) {
+
+
+        $sqlsepet3 = "UPDATE tblsepet set
+                        durum = '$isSepet3Dolu'
+                    where id = '$sepetId3'";
+        mysqli_query($db, $sqlsepet3);
+    }
+
+
+    if (mysqli_query($db, $sqlKesim)) {
+        header("Location:../../kesim/?durumguncelleme=ok");
+        exit();
+    } else {
+        header("Location:../../kesim/?durumguncelleme=no");
+        exit();
+    }
+}

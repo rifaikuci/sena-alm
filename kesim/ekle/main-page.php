@@ -100,7 +100,7 @@ $baskilar = $db->query($kesimsql);
                                 <option selected disabled value="">Sipariş No - Sipariş Türü - Tarih</option>
                                 <?php while ($baski = $baskilar->fetch_array()) { ?>
                                     <option
-                                            value="<?php echo $baski['id']; ?>"><?php echo siparisBul($baski['siparisId'], $db, 'satirNo') . " - " . siparisBul($baski['siparisId'], $db, 'siparisTuru')." - " .$baski['kayitTarih']; ?></option>
+                                            value="<?php echo $baski['id']; ?>"><?php echo siparisBul($baski['siparisId'], $db, 'satirNo') . " - " . siparisBul($baski['siparisId'], $db, 'siparisTuru') . " - " . $baski['kayitTarih']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
