@@ -6,7 +6,7 @@ if ($_GET['id']) {
     include "../../../include/sql.php";
     require_once "../../../include/helper.php";
 
-    $sql = "SELECT * FROM tblSevkiyat WHERE id = '$id'";
+    $sql = "SELECT * FROM tblsevkiyat WHERE id = '$id'";
     $result = mysqli_query($db, $sql);
     $detail = $result->fetch_assoc();
 

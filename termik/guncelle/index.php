@@ -31,7 +31,6 @@
     <?php include '../../include/footer.php' ?>
     <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/kalipci/kalipci.js" ?>></script>
 <?php include('../../include/script.php') ?>
 </body>
 </html>

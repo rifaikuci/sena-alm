@@ -11,17 +11,14 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/goruntule.js" ?>></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/datatable.js" ?>></script>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/veri-giris.js" ?>></script>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/kalipci.js" ?>></script>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/takim.js" ?>></script>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/siparis.js" ?>></script>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/takim-goster.js" ?>></script>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/baski-giris.js" ?>></script>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/kesim-giris.js" ?>></script>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/kesim-guncelle.js" ?>></script>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/baski-yari-guncelle.js" ?>></script>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/baski-guncelle.js" ?>></script>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/siparis-guncelle.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/takim/takim.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/takim/takim-goster.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/siparis/siparis.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/siparis/siparis-guncelle.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/baski/baski-guncelle.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/baski/baski-giris.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/baski/baski-yari-guncelle.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/kesim/kesim-giris.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/kesim/kesim-guncelle.js" ?>></script>

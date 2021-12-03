@@ -3,16 +3,8 @@ include "../../netting/baglan.php";
 include "../../include/sql.php";
 
 
-$kesimId = 0;
-if (isset($_GET['kesim'])) {
-    $kesimId = $_GET['kesim'];
-
-    $sql = "SELECT * FROM tblkesim WHERE id = '$kesimId'";
-    $kesim = mysqli_query($db, $sql)->fetch_assoc();
-
-}
-
-date_default_timezone_set('Europe/Istanbul');
+$kesimsql = "SELECT * FROM tblbaski where kesimId =  0 and bitisZamani !='' ";
+$baskilar = $db->query($kesimsql);
 
 
 ?>
@@ -20,9 +12,9 @@ date_default_timezone_set('Europe/Istanbul');
 <section class="content">
     <div class="card card-info">
         <div class="card-header">
-            Kesim Güncelleme
+            Kesim Alanı
         </div>
-        <div class="card-body" id="kesim-guncelle" :kesim="<?php echo $kesimId; ?>">
+        <div class="card-body" id="kesim-giris">
             <form method="post" action="<?php echo base_url() . 'netting/kesim/index.php' ?>"
                   enctype="multipart/form-data">
                 <div class="row" v-if="baskiId > 0">
@@ -99,18 +91,17 @@ date_default_timezone_set('Europe/Istanbul');
                         </div>
                     </div>
                 </div>
-
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="form-group">
                             <label></label>
-                            <select disabled id="kesim_baski_guncelle_id" name="baskiId" v-model="baskiId" required
-                                    class="form-control select2"
+                            <select id="kesim_baski_id" name="baskiId" required class="form-control select2"
                                     style="width: 100%;">
                                 <option selected disabled value="">Sipariş No - Sipariş Türü - Tarih</option>
-                                <option v-for="baski in baskilar" :value="baski.id">{{baski.satirNo}} - {{baski.tur}} -
-                                    {{baski.kayitTarih}}
-                                </option>
+                                <?php while ($baski = $baskilar->fetch_array()) { ?>
+                                    <option
+                                            value="<?php echo $baski['id']; ?>"><?php echo siparisBul($baski['siparisId'], $db, 'satirNo') . " - " . siparisBul($baski['siparisId'], $db, 'siparisTuru') . " - " . $baski['kayitTarih']; ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
@@ -124,10 +115,7 @@ date_default_timezone_set('Europe/Istanbul');
                             <input type="hidden" name="sepet1Adet" :value="sepet1Adet">
                             <input type="hidden" name="sepet2Adet" :value="sepet2Adet">
                             <input type="hidden" name="sepet3Adet" :value="sepet3Adet">
-                            <input type="hidden" name="hurdaAdet" :value="hurdaAdet">
-                            <input type="hidden" name="eskiHurdaAdet" :value="eskiHurdaAdet">
                             <input type="hidden" name="netAdet" :value="netAdet">
-                            <input type="hidden" name="kesimId" value="<?php echo $kesimId ?>">
                             <input type="hidden" name="satirNo" :value="satirNo">
                             <input type="hidden" name="siparisId" :value="siparisId">
                             <input type="hidden" name="istenilenBoy" :value="istenilenBoy">
@@ -135,7 +123,7 @@ date_default_timezone_set('Europe/Istanbul');
                             <input type="hidden" name="istenilenTermik" :value="istenilenTermik">
                             <input type="hidden" name="baskiId" :value="baskiId">
                             <input type="hidden" name="basilanNetAdet" :value="basilanNetAdet">
-                            <input type="hidden" name="kesimguncelle" value="true">
+                            <input type="hidden" name="kesimekle" value="true">
                             <input type="hidden" name="sepet1" :value="sepet1">
                             <input type="hidden" name="sepet2" :value="sepet2">
                             <input type="hidden" name="sepet3" :value="sepet3">
@@ -150,7 +138,7 @@ date_default_timezone_set('Europe/Istanbul');
                         <div class="form-group">
                             <label>Hurda Adet</label>
                             <input @input="() => {netAdet = basilanNetAdet - hurdaAdet}" v-model="hurdaAdet" required
-                                   type="number" class="form-control form-control-lg"
+                                   type="number" class="form-control form-control-lg" name="hurdaAdet"
                                    min="0.1" step="0.1"
                                    placeholder="0.1">
                         </div>
@@ -158,8 +146,7 @@ date_default_timezone_set('Europe/Istanbul');
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Hurdaya Atılma Sebebi</label>
-                            <select name="aciklama" v-model="aciklama" required class="form-control select2"
-                                    style="width: 100%;">
+                            <select name="aciklama" required class="form-control select2" style="width: 100%;">
                                 <option selected disabled value="">Sipariş No - Sipariş Türü</option>
                                 <option value="ezik var">Ezik Var</option>
                                 <option value="boy kurtarmadı">Boy Kurtarmadı</option>
@@ -183,14 +170,14 @@ date_default_timezone_set('Europe/Istanbul');
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Sepet 1 </label>
-                            <select v-model="sepet1" name="sepet1" class="form-control select2"
+                            <select v-model="sepet1" id="kesim_sepet1" class="form-control select2"
                                     style="width: 100%;">
+                                <option selected disabled value="">Sepet</option>
 
                                 <option v-for="sepet in sepetler1" :value="sepet.id">{{sepet.ad }}</option>
                             </select>
                         </div>
                     </div>
-
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Adet </label>
@@ -201,7 +188,7 @@ date_default_timezone_set('Europe/Istanbul');
                     </div>
                     <div class="col-sm-4" v-if=" sepet1Adet && sepet1Adet > 0 ">
                         <div class="form-group">
-                            <label>{{isSepet1Dolu}}</label>
+                            <label>~~</label>
                             <div class="form-group clearfix">
                                 <div class="icheck-primary d-inline">
                                     <input v-model="isSepet1Dolu" type="checkbox" id="checkboxPrimary3"
@@ -287,7 +274,7 @@ date_default_timezone_set('Europe/Istanbul');
 
                 <div class="card-footer">
                     <div>
-                        <button type="submit" class="btn btn-info float-right">Güncelle</button>
+                        <button type="submit" class="btn btn-info float-right">Ekle</button>
                         <a href="../"
                            class="btn btn-warning float-left">Vazgeç</a>
                     </div>
