@@ -31,6 +31,9 @@
     <?php require_once '../../include/footer.php' ?>
     <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
+
 <?php require_once('../../include/script.php') ?>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/baski/baski-yari-guncelle.js" ?>></script>
+
 </body>
 </html>

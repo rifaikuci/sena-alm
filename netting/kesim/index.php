@@ -36,18 +36,22 @@ if (isset($_POST['kesimekle'])) {
     $konum = "termik";
     if ($istenilenTermik == "Termikli" || $istenilenTermik == "Yarı Termikli") {
         $konum = "termik";
+        $termikId = 0;
     } else {
         if ($siparisTur = "Boyalı") {
             $konum = "kromat";
+            $termikId = -1;
+
         } else {
             $konum = "paketleme";
+            $termikId = -2;
         }
     }
 
     $sqlKesim = "INSERT INTO tblkesim (baskiId, kesilenBoy, operatorId, sepetId1, sepetId2, sepetId3, 
-                      hurdaAdet, netAdet, vardiyaKod, sepet1Adet, sepet2Adet, sepet3Adet, durum) 
+                      hurdaAdet, netAdet, vardiyaKod, sepet1Adet, sepet2Adet, sepet3Adet, durum, termikId) 
                 VALUES ('$baskiId', '$kesilenBoy', '$operatorId', '$sepet1', '$sepet2', '$sepet3',
-                        '$hurdaAdet', '$netAdet', '$vardiyaKod', '$sepet1Adet', '$sepet2Adet', '$sepet3Adet', '$konum')";
+                        '$hurdaAdet', '$netAdet', '$vardiyaKod', '$sepet1Adet', '$sepet2Adet', '$sepet3Adet', '$konum', '$termikId')";
 
     mysqli_query($db, $sqlKesim);
 

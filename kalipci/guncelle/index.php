@@ -32,5 +32,7 @@
     <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
 <?php include('../../include/script.php') ?>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/kalipci/kalipci.js" ?>></script>
+
 </body>
 </html>

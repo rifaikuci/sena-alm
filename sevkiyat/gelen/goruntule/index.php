@@ -32,8 +32,8 @@
     <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
 
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/sevkiyat/goruntule.js" ?>></script>
 <?php include('../../../include/script.php') ?>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/sevkiyat/goruntule.js" ?>></script>
 
 </body>
 </html>

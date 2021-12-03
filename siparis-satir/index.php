@@ -31,6 +31,10 @@
     <?php include '../include/footer.php' ?>
     <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
+
+
 <?php include('../include/script.php') ?>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/siparis/siparis-detay-goster.js" ?>></script>
+
 </body>
 </html>
