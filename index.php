@@ -15,7 +15,7 @@
         <a href=<?php echo base_url() ?> class="brand-link">
             <div style="text-align: center">
 
-                <span style="color: #0b93d5;font-weight: bold" class="brand-text"><?php echo base_title(); ?></span>
+                <span style="color: #0b93d5;font-weight: bold" class="brand-text">b2</span>
             </div>
 
         </a>
