@@ -229,4 +229,27 @@ function hurdabul($id, $db, $sutun)
     return $row[$sutun];
 }
 
+function termikbul($id, $db, $sutun)
+{
+    $sql = "SELECT * FROM tbltermik WHERE id = '$id'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row[$sutun];
+}
+
+function tablosil($tablename, $id)
+{
+
+    return "DELETE FROM " . $tablename . " WHERE id =  '$id'";
+}
+
+function tablogetir($table, $kriter, $deger, $db)
+{
+    $sql = "SELECT * FROM $table WHERE $kriter = '$deger'";
+    $result = mysqli_query($db, $sql);
+    $row = $result->fetch_assoc();
+    return $row;
+}
+
+
 ?>

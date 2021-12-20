@@ -133,6 +133,15 @@
             </li>
 
             <li class="nav-item">
+                <a href="<?php echo base_url() . "termik/" ?> " class="nav-link">
+                    <i class="nav-icon fas fa-cut"></i>
+                    <p>
+                        Termikler
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a href="<?php echo base_url() . "ayar/" ?> " class="nav-link">
                     <i class="nav-icon fas fa-cogs"></i>
                     <p>

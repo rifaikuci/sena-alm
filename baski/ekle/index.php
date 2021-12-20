@@ -33,7 +33,7 @@
 </div>
 
 <?php include('../../include/script.php') ?>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/baski/baski-giris.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/baski/termik-giris.js" ?>></script>
 
 </body>
 </html>

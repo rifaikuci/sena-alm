@@ -11,20 +11,20 @@ $result = $db->query($sql);
 
     <?php
     if ($_GET['durumekle'] == "ok") {
-        durumSuccess("Kesim Başarılı Bir Şekilde Eklendi. ");
+        durumSuccess("Termik Başarılı Bir Şekilde Eklendi. ");
     } else if ($_GET['durumekle'] == "no") {
-        durumDanger("Kesim Eklenirken Bir Hata Oluştu !");
+        durumDanger("Termik Eklenirken Bir Hata Oluştu !");
     } else if ($_GET['durumsil'] == "ok") {
-        durumSuccess("Kesim Başarılı Bir Şekilde Silindi. ");
+        durumSuccess("Termik Başarılı Bir Şekilde Silindi. ");
     } else if ($_GET['durumsil'] == "no") {
-        durumDanger("Kesim Silinirken Bir Hata Oluştu.");
+        durumDanger("Termik Silinirken Bir Hata Oluştu.");
     } else if ($_GET['durumguncelleme'] == "ok") {
-        durumSuccess("Kesim Başarılı Bir Şekilde Güncellendi. ");
+        durumSuccess("Termik Başarılı Bir Şekilde Bitirildi. ");
     } else if ($_GET['durumguncelleme'] == "no") {
-        durumDanger("Kesim Güncellenirken Bir Hata Oluştu.");
+        durumDanger("Termik Bitirilirken Bir Hata Oluştu.");
     } ?>
     <div style="text-align: center">
-        <h4 style="color: #0b93d5">Kesimler</h4>
+        <h4 style="color: #0b93d5">Termikler</h4>
     </div>
     <div class="card-body">
         <div class="row">
@@ -40,11 +40,11 @@ $result = $db->query($sql);
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Tarih</th>
-                                <th>Kesilen Boy</th>
-                                <th>Hurda Adet</th>
-                                <th>Net Adet</th>
-                                <th style="text-align: center">İşlem</th>
+                                <th>Baş. Tar.</th>
+                                <th>Sepetler</th>
+                                <th>Kesimler</th>
+                                <th>Durum</th>
+                                <th style="text-align: center">İşlem /Bitirilme Zam.</th>
                             </tr>
                             </thead>
 
@@ -52,15 +52,22 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td><?php echo tarih($row['tarih']); ?></td>
-                                    <td><?php echo $row['kesilenBoy']; ?></td>
-                                    <td><?php echo $row['hurdaAdet']; ?></td>
-                                    <td><?php echo $row['netAdet']; ?></td>
+                                    <td><?php echo tarihsaat($row['baslaTarih']); ?></td>
+                                    <td><?php echo $row['sepetler']; ?></td>
+                                    <td><?php echo $row['kesimler']; ?></td>
+                                    <td><?php echo $row['bitisTarih'] ? "Termik Bitti" : "Termik Devam Ediyor"; ?></td>
                                     <td>
-                                        <a href=<?php echo "guncelle/?kesim=" . $row['id']; ?> class="btn
-                                           btn-warning">Düzenle</a>
-                                        <a href=<?php echo base_url() . "netting/kesim/index.php?kesimsil=" . $row['id']; ?> class="btn
-                                           btn-danger">Sil</a>
+                                        <?php
+                                        if (!$row['bitisTarih']) { ?>
+                                            <a href=<?php echo "devam/?termik=" . $row['id']; ?> class="btn
+                                               btn-warning">Bitir</a>
+                                        <?php } else {
+                                            echo $row['bitisTarih'];
+                                        } ?>
+                                        <?php if (!$row['bitisTarih']) { ?>
+                                            <a href=<?php echo base_url() . "netting/termik/index.php?termiksil=" . $row['id']; ?> class="btn
+                                               btn-danger">Sil</a>
+                                        <?php } ?>
 
                                     </td>
                                 </tr>

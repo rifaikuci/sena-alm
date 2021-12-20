@@ -62,6 +62,13 @@ function tarih($tarih)
     return $tarih;
 }
 
+function tarihsaat($tarih)
+{
+    $tarih = date("d.m.Y H:i");
+
+    return $tarih;
+}
+
 function imageUpload($image, $path)
 {
 
