@@ -11,4 +11,6 @@ sofor -9
 bietci ->10
 
 
-Kalip durum -> 1 Aktif, 2 Pasif 3 Çöp
+Kalip (takim) durum -> 1 Aktif, 2 Pasif 3 Çöp
+
+Sepetler eğer 1000 ile başlarsa termik, 3000 ile başlarsa kromat, eğer 5000 ile başlarsa araba değerindedir.,

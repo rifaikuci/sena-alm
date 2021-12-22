@@ -186,7 +186,7 @@ $baskilar = $db->query($kesimsql);
 
                         </div>
                     </div>
-                    <div class="col-sm-4" v-if=" sepet1Adet && sepet1Adet > 0 ">
+                    <div class="col-sm-4" v-if=" sepet1Adet && sepet1Adet > 0  && adim != 'araba' ">
                         <div class="form-group">
                             <label>~~</label>
                             <div class="form-group clearfix">

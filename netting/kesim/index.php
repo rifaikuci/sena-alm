@@ -32,13 +32,12 @@ if (isset($_POST['kesimekle'])) {
     $aciklama = $_POST['aciklama'];
     $siparisId = $_POST['siparisId'];
     $hurdaAdet = $_POST['hurdaAdet'];
-
     $konum = "termik";
     if ($istenilenTermik == "Termikli" || $istenilenTermik == "Yarı Termikli") {
         $konum = "termik";
         $termikId = 0;
     } else {
-        if ($siparisTur = "Boyalı") {
+        if ($siparisTur == "Boyalı") {
             $konum = "kromat";
             $termikId = -1;
 
@@ -118,6 +117,7 @@ if (isset($_POST['kesimekle'])) {
     $sqlsiparis = "UPDATE tblsiparis set
                         konum = '$konum'
                     where id = '$siparisId'";
+
 
 
     if (mysqli_query($db, $sqlsiparis)) {

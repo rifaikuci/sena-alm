@@ -107,8 +107,8 @@ if (isset($_POST['termikbitir'])) {
 
     $sepetler = termikbul($id, $db, 'sepetler');
     $sepetler = str_replace(";", ",", $sepetler);
-
-    $sqlSepetUpdate = "Update tblsepet set isTermik = 0, durum = 0 where id in($sepetler)";
+    // durum 2 olduğunda termik işlemi bitirildi anlamaına gelsin.
+    $sqlSepetUpdate = "Update tblsepet set isTermik = 0, durum = 2, icindekiler = '' where id in($sepetler)";
     mysqli_query($db, $sqlSepetUpdate);
 
 

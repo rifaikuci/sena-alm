@@ -23,20 +23,14 @@ var kesimgiris = new Vue({
             sepet1: 0,
             sepet2: 0,
             sepet3: 0,
-            siparisId: 0
+            siparisId: 0,
+            hurdaAdet: 0,
+            adim: ""
 
         },
 
         mounted: async function () {
-            const response = await axios.post('/sena/netting/kesim/action.php', {
-                action: 'sepetgetir',
-            }).then((response) => {
-                return response.data
-            });
 
-            this.sepetler1 = response;
-            this.sepetler2 = response;
-            this.sepetler3 = response;
         },
 
         methods: {
@@ -47,7 +41,9 @@ var kesimgiris = new Vue({
 
 $('#kesim_baski_id').on("change", async function () {
 
-
+    kesimgiris.sepetler1 = [];
+    kesimgiris.sepetler2 = [];
+    kesimgiris.sepetler3 = [];
     kesimgiris.baskiId = $(this).val();
     const response = await axios.post('/sena/netting/kesim/action.php', {
         action: 'baskigetir',
@@ -66,6 +62,31 @@ $('#kesim_baski_id').on("change", async function () {
         kesimgiris.basilanNetAdet = response.basilanNetAdet;
         kesimgiris.siparisId = response.siparisId;
         kesimgiris.kayitTarih = response.kayitTarih;
+
+        if(kesimgiris.istenilenTermik  == "Termiksiz") {
+
+            if(kesimgiris.siparisTur == "Boyalı") {
+                kesimgiris.adim = "kromat"
+            } else {
+                kesimgiris.adim = "araba"
+            }
+        } else {
+            kesimgiris.adim = "termik"
+        }
+
+        const response2 = await axios.post('/sena/netting/kesim/action.php', {
+            action: 'sepetgetir',
+            tur : kesimgiris.adim
+
+        }).then((response2) => {
+            return response2.data
+        });
+
+
+
+        kesimgiris.sepetler1 = response2;
+        kesimgiris.sepetler2 = response2;
+        kesimgiris.sepetler3 = response2;
 
     } else {
        this.baskiId = 0

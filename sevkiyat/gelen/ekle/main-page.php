@@ -579,11 +579,10 @@ $profiller = $db->query($profillerrsql);
                                                     <select v-model="profil.gelis" class="form-control"
                                                             style="width: 100%;">
                                                         <option selected value="">Geliş Amacı Seçiniz</option>
-                                                        <option value="Boya">Boya</option>
-                                                        <option value="Kesim">Kesim</option>
-                                                        <option value="Delim">Delim</option>
-                                                        <option value="Sertleştirm">Sertleştirm</option>
-                                                        <option value="Paketleme">Paketleme</option>
+                                                        <option value="boya">Boya</option>
+                                                        <option value="kesim">Kesim</option>
+                                                        <option value="termik">Termik</option>
+                                                        <option value="paketleme">Paketleme</option>
 
                                                     </select>
                                                 </div>

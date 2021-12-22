@@ -199,9 +199,9 @@ date_default_timezone_set('Europe/Istanbul');
 
                         </div>
                     </div>
-                    <div class="col-sm-4" v-if=" sepet1Adet && sepet1Adet > 0 ">
+                    <div class="col-sm-4" v-if=" sepet1Adet && sepet1Adet > 0 && adim != 'araba'  ">
                         <div class="form-group">
-                            <label>{{isSepet1Dolu}}</label>
+                            <label>Sepet 1 Dolu Mu</label>
                             <div class="form-group clearfix">
                                 <div class="icheck-primary d-inline">
                                     <input v-model="isSepet1Dolu" type="checkbox" id="checkboxPrimary3"
@@ -219,7 +219,7 @@ date_default_timezone_set('Europe/Istanbul');
 
                     <div class="col-sm-4" v-if="isSepet1Dolu">
                         <div class="form-group">
-                            <label>Sepet 2 </label>
+                            <label>~~</label>
                             <select v-model="sepet2" id="kesim_sepet2" class="form-control" style="width: 100%;">
                                 <option selected disabled value="">Sepet</option>
 

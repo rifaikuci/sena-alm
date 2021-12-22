@@ -28,6 +28,7 @@ var kesimguncelle = new Vue({
             eskiHurdaAdet: 0,
             aciklama: '',
             baskilar: [],
+            adim: ""
 
         },
 
@@ -66,6 +67,17 @@ var kesimguncelle = new Vue({
             this.eskiHurdaAdet = kesim.hurdaAdet
             this.aciklama = kesim.aciklama
             this.baskilar = kesim.baskilar
+
+            if(this.istenilenTermik  == "Termiksiz") {
+
+                if(this.siparisTur == "Boyalı") {
+                    this.adim = "kromat"
+                } else {
+                    this.adim = "araba"
+                }
+            } else {
+                this.adim = "termik"
+            }
 
             if (this.sepet1) {
                 isSepet1Dolu = this.sepetler1.find(x => x.id == this.sepet1).durum

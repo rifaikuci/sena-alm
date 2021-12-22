@@ -10,7 +10,15 @@ $data = array();
 if ($received_data->action == 'sepetgetir') {
 
 
-    $sql = "SELECT  * from tblsepet where tur = 'termik' and durum = 0";
+     $tur  = $received_data->tur;
+     if($tur == "araba") {
+         $sql = "SELECT  * from tblsepet where tur = '$tur'";
+
+
+     } else {
+         $sql = "SELECT  * from tblsepet where tur = '$tur' and durum = 0 and isTermik = 0";
+
+     }
     $result = $db->query($sql);
     $datam = array();
     $sepet = null;
