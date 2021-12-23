@@ -54,9 +54,9 @@ $result = $db->query($sql);
                     data-senano="<?php echo $parca['senaNo'] ?>">
                     <?php echo $parca['senaNo'] ?>
                 </td>
-                <td> <?php echo firmaBul($parca["firmaId"], $db, 'firmaAd') ?></td>
+                <td> <?php echo tablogetir('tblfirma','id',$parca['firmaId'], $db)['firmaAd']; ?></td>
                 <td><?php echo $parca['kalipciNo'] ?></td>
-                <td> <?php echo profilbul($parca["profilId"], $db, 'profilNo') ?></td>
+                <td> <?php echo tablogetir('tblprofil','id',$parca["profilId"], $db)['profilNo']; ?></td>
                 <td><?php echo trim(parcaBul($parca['parca'])); ?></td>
                 <td> <?php echo $parca['cap'] ?></td>
                 <td> <?php echo $parca['kalite']; ?></td>

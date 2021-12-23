@@ -35,10 +35,10 @@ $result = $db->query($sql);
             $tolerans = toleransBul($mgr, $profil['profilId'], $db);
             ?>
             <tr>
-                <td><?php echo profilbul($profil['profilId'], $db, "profilNo"); ?></td>
+                <td><?php echo tablogetir('tblprofil','id',$profil['profilId'], $db )['profilNo']; ?></td>
                 <td><?php echo $profil['boy'] ?></td>
-                <td><?php echo firmaBul($profil["firmaId"], $db, 'firmaAd') ?></td>
-                <td><?php echo firmaBul($profil['musteriId'], $db, 'firmaAd') ?></td>
+                <td><?php echo tablogetir('tblfirma','id',$profil['firmaId'], $db)['firmaAd'] ?> </td>
+                <td><?php echo tablogetir('tblfirma','id',$profil['musteriId'], $db)['firmaAd'] ?> </td>
                 <td><?php echo $profil['tur'] ?></td>
                 <td><?php echo $profil['gelisAmaci'] ?></td>
                 <td><?php echo $profil['icAdet'] ?></td>

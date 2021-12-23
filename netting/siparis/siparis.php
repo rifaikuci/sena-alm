@@ -29,7 +29,7 @@ $firstrow = mysqli_fetch_assoc($resultfirst);
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group">
-            <label style="color: #0b2e13">Müşteri Adı: <?php echo firmaBul($firstrow['musteriId'],$db,'firmaAd')?></label>
+            <label style="color: #0b2e13">Müşteri Adı: <?php echo tablogetir('tblfirma','id',$firstrow['musteriId'], $db)['firmaAd'] ?></label>
         </div>
     </div>
 </div>
@@ -68,7 +68,7 @@ $firstrow = mysqli_fetch_assoc($resultfirst);
             <td><?php  echo $row['boy'];?></td>
             <td><?php  echo $row['adet'];?></td>
             <td><?php  echo $row['kilo'];?></td>
-            <td><?php  echo alasimBul($row['alasimId'],$db,'ad');?></td>
+            <td><?php  echo tablogetir('tblalasim','id',$row['alasimId'], $db )['ad'];?></td>
             <td><?php  echo tarih($row['termimTarih']);?></td>
             <td><?php  echo "%".$row['maxTolerans'];?></td>
             <td><?php  echo $row['araKagit'] == "1" ? "Var" : "Yok";?></td>

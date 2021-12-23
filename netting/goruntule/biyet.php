@@ -31,8 +31,8 @@ $result = $db->query($sql);
             <tr>
                 <td><?php echo $biyet['barkodNo'] ?></td>
                 <td> <?php echo $biyet['partino'] ?></td>
-                <td> <?php echo firmaBul($biyet["firmaId"], $db, 'firmaAd') ?></td>
-                <td> <?php echo alasimBul($biyet["alasimId"], $db, 'ad') ?></td>
+                <td> <?php echo tablogetir('tblfirma','id',$biyet['firmaId'], $db)['firmaAd'] ?></td>
+                <td> <?php echo tablogetir('tblalasim','id',$biyet['alasimId'], $db)['ad'] ?></td>
                 <td> <?php echo $biyet["cap"] ?></td>
                 <td> <?php echo $biyet["toplamKg"]. " Kg" ?></td>
                 <td> <?php echo $biyet["ortalamaBoy"]. " Cm"  ?></td>

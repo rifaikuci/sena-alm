@@ -12,14 +12,14 @@ if (isset($_POST['termikekle'])) {
     $baslaOperator = isset($_POST['operator']) ? $_POST['operator'] : 0;
     $sepetTermik = "";
     $kesimler = "";
-    $vardiya = ayarSqlBul(1, $db, 'vardiya');
+    $vardiya = tablogetir('tblayar','id','1', $db)['vardiya'];
     $baslaVardiya = vardiyaBul($vardiya, date("H:i"));
     $baslaTarih = date("d.m.Y H:i");
 
     for ($i = 0; $i < count($sepetler); $i++) {
         $sepetId = $sepetler[$i];
         $sepetTermik = $sepetTermik . $sepetId . ",";
-        $kesimler = $kesimler . sepetbul($sepetId, $db, 'icindekiler') . ";";
+        $kesimler = $kesimler . tablogetir('tblsepet','id',$sepetIdt, $db)['icindekiler'] . ";";
 
     }
 
@@ -46,14 +46,14 @@ if (isset($_POST['termikekle'])) {
 if (isset($_GET['termiksil'])) {
 
     $id = $_GET['termiksil'];
-    $sepetler = termikbul($id, $db, 'sepetler');
+    $sepetler = tablogetir('tbltermik','id',$id, $db)['sepetler'];
     $sepetler = str_replace(";", ",", $sepetler);
 
     $sqlSepetUpdate = "Update tblsepet set isTermik = 0 where id in($sepetler)";
     mysqli_query($db, $sqlSepetUpdate);
 
 
-    $sql = tablosil('tbltermik', $id);
+    $sql = deleteRow('tbltermik', $id);
     if (mysqli_query($db, $sql)) {
         header("Location:../../termik/?durumsil=ok");
         exit();
@@ -67,7 +67,7 @@ if (isset($_POST['termikbitir'])) {
 
     $termikId = $_POST['id'];
     $bitisOperator = isset($_POST['operator']) ? $_POST['operator'] : 0;
-    $vardiya = ayarSqlBul(1, $db, 'vardiya');
+    $vardiya = tablogetir('tblayar','id','1', $db)['vardiya'];
     $bitisVardiya = vardiyaBul($vardiya, date("H:i"));
     $bitisTarih = date("d.m.Y H:i");
 
@@ -105,7 +105,7 @@ if (isset($_POST['termikbitir'])) {
     }
 
 
-    $sepetler = termikbul($id, $db, 'sepetler');
+    $sepetler = tablogetir('tbltermik','id',$termikId, $db)['sepetler'];
     $sepetler = str_replace(";", ",", $sepetler);
     // durum 2 olduğunda termik işlemi bitirildi anlamaına gelsin.
     $sqlSepetUpdate = "Update tblsepet set isTermik = 0, durum = 2, icindekiler = '' where id in($sepetler)";

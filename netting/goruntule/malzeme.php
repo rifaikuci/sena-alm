@@ -30,14 +30,14 @@ $sira = 1;
         <tbody>
         <?php
         while ($malzeme = $result->fetch_array()) {
+            $malzemegetir = tablogetir('tblmalzemeler','id',$malzeme["malzemeId"], $db);
             ?>
             <tr>
                 <td><?php echo $malzeme['barkod'] ?></td>
                 <td><?php echo $malzeme['partino'] ?></td>
-                <td> <?php echo firmaBul($malzeme["firmaId"], $db, 'firmaAd') ?></td>
-                <td> <?php echo malzemeBul($malzeme["malzemeId"], $db, "ad") ?></td>
-                <td> <?php echo malzemeBul($malzeme["malzemeId"], $db, "birimMiktari") ?></td>
-
+                <td> <?php echo tablogetir('tblfirma','id',$malzeme['firmaId'], $db)['firmaAd']; ?></td>
+                <td> <?php echo $malzemegetir['ad'] ?></td>
+                <td> <?php echo $malzemegetir['birimMiktari'] ?></td>
             </tr>
         <?php } ?>
         </tbody>

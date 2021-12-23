@@ -37,7 +37,7 @@ $result = $db->query($sql);
                 <div class="card">
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
-                        <thead>
+                            <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Sena No</th>
@@ -54,18 +54,18 @@ $result = $db->query($sql);
                             </thead>
 
                             <?php $sira = 1;
-                            while ($row = $result->fetch_array()) { ?>
+                            while ($row = $result->fetch_array()) {
+                                $firma = tablogetir('tblfirma', 'id', $row['firmaId'], $db)
+                                ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['senaNo']; ?></td>
-                                    <td><?php echo profilbul($row['profilId'], $db, "profilNo"); ?></td>
-                                    <td><?php echo firmaBul($row['firmaId'], $db, 'firmaAd'); ?></td>
+                                    <td><?php echo tablogetir('tblprofil', 'id', $row['profilId'], $db)['profilNo']; ?></td>
+                                    <td><?php echo $firma['firmaAd']; ?></td>
                                     <td><?php echo kalipBul($row['kalipCins']); ?></td>
                                     <td><?php echo trim(parcaBul($row['parca'])); ?></td>
                                     <td><?php echo $row['cap']; ?></td>
-                                    <td><?php echo
-                                        firmaBul($row['firmaId'],$db,'kisaKod').
-                                        $row['kalipciNo']; ?></td>
+                                    <td><?php echo $firma['kisaKod'] . $row['kalipciNo']; ?></td>
                                     <td style="color: <?php echo $row['durum'] == 1 ? '#00b44e' : ($row['durum'] == 2 ? '#d55537' : '#b8860b') ?>">
                                         <b>
                                             <?php echo $row['durum'] == 1 ? "Aktif" : ($row['durum'] == 2 ? 'Pasif' : 'Çöp')

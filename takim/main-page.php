@@ -25,7 +25,7 @@ $result = $db->query($sql);
         durumSuccess("Takıma ait Destek ve Bolster Güncellendi");
     } else if ($_GET['desbols'] == "no") {
         durumDanger("Takıma ait Destek ve Bolster Güncellenirken bir hata oluştu");
-    }  else if ($_GET['durumdegis'] == "ok") {
+    } else if ($_GET['durumdegis'] == "ok") {
         durumSuccess("Takıma parçası değiştirildi");
     } else if ($_GET['durumdegis'] == "no") {
         durumDanger("Takıma parçası değiştirilirken bir hata oluştu");
@@ -64,8 +64,9 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td><?php echo $row['takimNo']; ?></td>
-                                    <td><?php echo $row['profilId'] ? profilbul($row['profilId'], $db, "profilNo") : "-"; ?></td>
-                                    <td><?php echo firmaBul($row['firmaId'], $db, 'firmaAd'); ?></td>
+                                    <td><?php echo $row['profilId'] ?
+                                            tablogetir('tblprofil', 'id', $row['profilId'], $db)['profilNo'] : "-"; ?></td>
+                                    <td><?php echo tablogetir('tblfirma', 'id', $row['firmaId'], $db)['firmaAd']; ?></td>
                                     <td><?php echo trim(kalipBul($row['kalipCins'])); ?></td>
                                     <td><?php echo $row['cap']; ?></td>
                                     <td><?php echo $row['parca1'] ?></td>
@@ -128,5 +129,5 @@ $result = $db->query($sql);
 
                 </div>
             </div>
-    </div>
+        </div>
 </section>

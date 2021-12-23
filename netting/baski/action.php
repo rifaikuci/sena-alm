@@ -16,12 +16,16 @@ if ($received_data->action == 'baskigetir') {
 
     $result = $db->query($sql);
     while ($row = $result->fetch_array()) {
+        $profil = tablogetir('tblprofil','id',$row['profilId'], $db );
+        $alasim  = tablogetir('tblalasim','id',$row['alasimId'], $db);
+
         $data['id'] = $row['id'];
         $data['satirNo'] = $row['satirNo'];
-        $data['musteriAd'] = firmaBul($row['musteriId'], $db, 'firmaAd');
-        $data['profil'] = profilbul($row['profilId'], $db, 'profilAdi') . " - " . profilbul($row['profilId'], $db, 'profilNo');
-        $data['alasim'] = alasimBul($row['alasimId'], $db, 'ad');
-        $data['biyetBirimGramaj'] = alasimBul($row['alasimId'], $db, 'biyetBirimGramaj');
+        $data['musteriAd'] = tablogetir('tblfirma','id',$row['musteriId'], $db)['firmaAd'];
+        $data['profil'] = $profil['profilAdi'] . " - " . $profil['profilNo'];
+        $data['alasim'] =  $alasim['ad'];
+
+        $data['biyetBirimGramaj'] =  $alasim['biyetBirimGramaj'];
         $data['tolerans'] = $row['maxTolerans'];
         $data['boy'] = $row['boy'];
         $data['kg'] = $row['kilo'];
@@ -50,7 +54,7 @@ if ($received_data->action == 'takimgetir') {
         $data['parca1'] = $row['parca1'];
         $data['parca2'] = $row['parca2'];
         $data['takimNo'] = $row['takimNo'];
-        $data['firma'] = firmaBul($row['firmaId'], $db, 'firmaAd');
+        $data['firma'] = tablogetir('tblfirma','id',$row['firmaId'], $db)['firmaAd'];
         $data['sonGramaj'] = $row['sonGramaj'];
         $data['cap'] = $row['cap'];
         $data['kalipCins'] = kalipBul($row['kalipCins']);
@@ -119,7 +123,7 @@ if ($received_data->action == 'baskiguncellegetir') {
         $data['takimSonDurum'] = $row['takimSonDurum'];
         $data['aciklama'] = $row['aciklama'];
         $data['sonlanmaNeden'] = $row['sonlanmaNeden'];
-        $data['profilId'] = siparisBul($row['siparisId'],$db,'profilId');
+        $data['profilId'] = tablogetir('tblsiparis','id',$row['siparisId'], $db)['profilId'];
 
 
 

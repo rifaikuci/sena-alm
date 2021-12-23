@@ -45,7 +45,7 @@ if ($_GET['siparisno']) {
                             Sipariş No: <?php echo $detail['siparisNo'] ?></label>
                         <br>
                         <label style="color: #7f8c8d">Müşteri
-                            Adı: <?php echo firmaBul($detail['musteriId'], $db, 'firmaAd') ?></label>
+                            Adı: <?php echo tablogetir('tblfirma','id',$detail['musteriId'], $db)['firmaAd']; ?></label>
                         <br>
                         <label style="color: #7f8c8d">Sipariş
                             Tarihi: <?php echo tarih($detail['siparisTarih']) ?></label>

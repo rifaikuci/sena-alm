@@ -53,7 +53,7 @@ $result = $db->query($sql);
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['ad']; ?></td>
                                     <td><?php echo $row['biyetBirimGramaj']; ?></td>
-                                    <td><?php echo firmaBul($row['firmaId'],$db,'firmaAd'); ?></td>
+                                    <td><?php echo tablogetir('tblfirma','id',$row['firmaId'], $db)['firmaAd']; ?></td>
                                     <td>
                                         <a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
                                            btn-warning">Düzenle</a>

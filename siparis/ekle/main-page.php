@@ -47,6 +47,8 @@ $alasimlar = $db->query($alasimsql);
                         <input name="arrayBoyaAciklama" :value="arrayBoyaAciklama" type="hidden">
                         <input name="arrayPaketAciklama" :value="arrayPaketAciklama" type="hidden">
                         <input name="arrayIstenilenTermin" :value="arrayIstenilenTermin" type="hidden">
+                        <input type="hidden" value="<?php echo isset($_SESSION['operatorId']) ?  $_SESSION['operatorId'] : 0; ?>" name="operatorId">
+
 
 
                         <div class="form-group">

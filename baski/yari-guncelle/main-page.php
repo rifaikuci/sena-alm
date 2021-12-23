@@ -16,12 +16,12 @@ if ($_GET['baski']) {
     $siparis = $resultsiparis->fetch_assoc();
 
     $takimId = $baski['takimId'];
-    $profilId = takimBul($takimId, $db, 'profilId');
+    $profilId = tablogetir('tbltakim', 'id', $takimId, $db)['profilId'];
 
     $sqltakimlar = "SELECT * FROM tbltakim WHERE durum = '1' AND profilId = '$profilId' order by sonGramaj asc ";
 
     $takimlar = $db->query($sqltakimlar);
-    $biyetgr = alasimBul($siparis['alasimId'], $db, "biyetBirimGramaj");
+    $biyetgr = tablogetir('tblalasim', 'id', $siparis['alasimId'], $db)['biyetBirimGramaj'];
 
 }
 
@@ -82,7 +82,7 @@ date_default_timezone_set('Europe/Istanbul');
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Müşteri: </span>
-                                            <?php echo firmaBul($siparis['musteriId'], $db, 'firmaAd') ?>
+                                            <?php echo tablogetir('tblfirma', 'id', $siparis['musteriId'], $db)['firmaAd']; ?>
                                         </h6>
                                     </div>
                                 </div>
@@ -90,7 +90,7 @@ date_default_timezone_set('Europe/Istanbul');
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Profil: </span>
-                                            <?php echo profilbul($siparis['profilId'], $db, 'profilAdi') ?>
+                                            <?php echo tablogetir('tblprofil', 'id', $siparis['profilId'], $db)['profilAdi'] ?>
                                         </h6>
 
                                     </div>
@@ -99,7 +99,7 @@ date_default_timezone_set('Europe/Istanbul');
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Alaşım: </span>
-                                            <?php echo alasimBul($siparis['alasimId'], $db, 'ad') ?>
+                                            <?php echo tablogetir('tblalasim', 'id', $siparis['alasimId'], $db)['ad']; ?>
                                         </h6>
                                         </h6>
 
@@ -188,21 +188,22 @@ date_default_timezone_set('Europe/Istanbul');
                                             ($row['siparisTuru'] == "B" ? "Boyalı" : "Eloksal");
 
                                         $tur = $row['siparisTuru'] == "H" ? "Yok" :
-                                            ($row['siparisTuru'] == "B" ? boyaBul($row['boyaId'], $db) :
-                                                eloksalBul($row['eloksalId'], $db));
+                                            ($row['siparisTuru'] == "B" ? tablogetir('tblboya', 'id', $row['boyaId'], $db)['ad'] :
+                                                tablogetir('tbleloksal', 'id', $row['eloksalId'], $db)['ad']);
                                         $kiloVeyaAdet = $row['kiloAdet'] == "K" ? $row['kilo'] . "/" :
                                             $row['adet'] . "/";
 
                                         $basilanKiloVeyaAdet = $row['kiloAdet'] == "K" ? $row['basilanKilo'] . " Kilo" :
                                             $row['basilanAdet'] . " Adet";
+                                        $profil = tablogetir('tblprofil', 'id', $siparis['profilId'], $db);
                                         echo
                                             $row['satirNo'] . " - " .
                                             tarih($row['termimTarih']) . " - " .
-                                            firmaBul($row['musteriId'], $db, 'firmaAd') . " - " .
-                                            profilbul($row['profilId'], $db, 'profilNo') . " -" .
-                                            profilbul($row['profilId'], $db, 'profilAdi') . " -" .
+                                            tablogetir('tblfirma', 'id', $siparis['musteriId'], $db)['firmaAd'] . " - " .
+                                            $profil['profilNo'] . " -" .
+                                            $profil['profilAdi'] . " -" .
                                             $row['boy'] . " - " .
-                                            alasimBul($row['alasimId'], $db, 'ad') . " - " .
+                                            tablogetir('tblalasim', 'id', $siparis['alasimId'], $db)['ad'] . " - " .
                                             $siparisTuru . " - " . $tur . " - " . $kiloVeyaAdet . $basilanKiloVeyaAdet;;
 
                                         ?>
@@ -265,8 +266,8 @@ date_default_timezone_set('Europe/Istanbul');
                                 <?php while ($biyet = $biyetler->fetch_array()) { ?>
                                     <option value="<?php echo $biyet['id']; ?>">
                                         <?php echo $biyet['partino'] . " - " .
-                                            alasimBul($biyet['alasimId'], $db, 'ad') . " - " .
-                                            firmaBul($biyet['firmaId'], $db, 'firmaAd'); ?>
+                                            tablogetir('tblalasim', 'id', $biyet['alasimId'], $db)['ad'] . " - " .
+                                            tablogetir('tblfirma', 'id', $biyet['firmaId'], $db)['firmaAd']; ?>
                                     </option>
                                 <?php } ?>
 
@@ -329,6 +330,10 @@ date_default_timezone_set('Europe/Istanbul');
                                    step="0.001"
                                    placeholder="0,1">
                             <input type="hidden" v-model="baskiFireG" name="baskiFireG" :value="baskiFireG">
+                            <input type="hidden"
+                                   value="<?php echo isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0; ?>"
+                                   name="operatorId">
+
 
                         </div>
                     </div>

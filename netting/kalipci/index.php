@@ -64,7 +64,7 @@ if (isset($_POST['kalipciekle'])) {
 
 if (isset($_GET['kalipsil'])) {
     $id = $_GET['kalipsil'];
-    $cizim = parcalarsqlbul($id, $db, 'cizim');
+    $cizim = tablogetir('tblkalipparcalar','id',$id, $db)['cizim'];
     if (file_exists("../../" . $cizim)) {
         unlink("../../" . $cizim);
     }
@@ -89,7 +89,7 @@ if (isset($_POST['kalipciguncelleme'])) {
     $boy = $_POST['boy'];
     $kalite = $_POST['kalite'];
     $figurSayi = $_POST['figurSayi'];
-    $cizim = parcalarsqlbul($id, $db, 'cizim');
+    $cizim = tablogetir('tblkalipparcalar','id',$id, $db)['cizim'];
 
     if ($_FILES['cizim']['name'] != "") {
         if (file_exists("../../" . $cizim)) {

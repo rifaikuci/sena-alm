@@ -23,6 +23,7 @@ if (isset($_GET['siparissatirSil'])) {
 
 if (isset($_POST['siparissaitrguncelle'])) {
     $satirNo = $_POST['satirNo'];
+    $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $profilId = $_POST['profilId'];
     $boy = $_POST['boy'];
     $adet = $_POST['adet'];
@@ -80,7 +81,8 @@ if (isset($_POST['siparissaitrguncelle'])) {
         paketAciklama = '$paketAciklama',
         boyaAciklama = '$boyaAciklama',
         profilId = '$profilId',
-        konum = '$konum'
+        konum = '$konum',
+        operatorId = '$operatorId'              
 WHERE id='$id'";
 
     if (mysqli_query($db, $sql)) {

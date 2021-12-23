@@ -38,8 +38,9 @@ if ($_GET['id']) {
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Şoförler: </label> <?php
-                            echo $detail['personelId2'] ? personelBul($detail['personelId1'], $db) . "- " . personelBul($detail['personelId2'], $db) :
-                                personelBul($detail['personelId1'], $db); ?>
+                            $personel1 = tablogetir('tblpersonel', 'id', $detail['personelId1'], $db)['adsoyad'];
+                            echo $detail['personelId2'] ? $personel1 . "- " . tablogetir('tblpersonel', 'id', $detail['personelId2'], $db)['adsoyad'] :
+                                $personel1; ?>
 
                         </div>
                     </div>
@@ -91,8 +92,8 @@ if ($_GET['id']) {
                                     <tr>
                                         <td> <?php echo $sira; ?></td>
                                         <td> <?php echo $biyet['partino'] ?></td>
-                                        <td> <?php echo firmaBul($biyet["firmaId"], $db, 'firmaAd') ?></td>
-                                        <td> <?php echo alasimBul($biyet["alasimId"], $db, 'ad') ?></td>
+                                        <td> <?php echo tablogetir('tblfirma','id',$biyet['firmaId'], $db)['firmaAd'] ?></td>
+                                        <td> <?php echo tablogetir('tblalasim','id',$biyet['alasimId'], $db)['ad'] ?></td>
                                         <td> <?php echo $biyet["cap"] ?></td>
                                         <td> <?php echo $biyet["toplamKg"]. " Kg" ?></td>
                                         <td> <?php echo $biyet["ortalamaBoy"]. " Cm"  ?></td>
@@ -145,8 +146,8 @@ if ($_GET['id']) {
                                     <tr>
                                         <td> <?php echo $sira; ?></td>
                                         <td> <?php echo $boya['partino'] ?></td>
-                                        <td> <?php echo firmaBul($boya["firmaId"], $db, 'firmaAd') ?></td>
-                                        <td> <?php echo boyaBul($boya["boyaTuru"], $db) ?></td>
+                                        <td> <?php echo tablogetir('tblfirma','id',$boya['firmaId'], $db)['firmaAd'] ?></td>
+                                        <td> <?php echo tablogetir('tblboya','id',$boya["boyaTuru"], $db)['ad'] ?></td>
                                         <td> <?php echo $boya['sicaklik'] ?></td>
                                         <td> <?php echo $boya['cins'] ?></td>
                                         <td> <?php echo $boya['adet'] ?></td>
@@ -201,14 +202,16 @@ if ($_GET['id']) {
                                 </thead>
                                 <tbody>
                                 <?php $sira = 1;
-                                while ($malzeme = $resultmalzeme->fetch_array()) { ?>
+                                while ($malzeme = $resultmalzeme->fetch_array()) {
+                                    $malzemegetir = tablogetir('tblmalzemeler','id',$malzeme["malzemeId"], $db)
+                                    ?>
                                     <tr>
                                         <td> <?php echo $sira; ?></td>
                                         <td> <?php echo $malzeme['partino'] ?></td>
-                                        <td> <?php echo firmaBul($malzeme["firmaId"], $db, 'firmaAd') ?></td>
-                                        <td> <?php echo malzemeBul($malzeme["malzemeId"], $db, "ad") ?></td>
+                                        <td> <?php echo tablogetir('tblfirma','id',$malzeme['firmaId'], $db)['firmaAd']?></td>
+                                        <td> <?php echo $malzemegetir['ad'] ?></td>
                                         <td> <?php echo $malzeme['adet'] ?></td>
-                                        <td> <?php echo $malzeme['adet'] * malzemeBul($malzeme["malzemeId"], $db, "birimMiktari") ?></td>
+                                        <td> <?php echo $malzeme['adet'] * $malzemegetir['birimMiktari']; ?></td>
                                         <td>
                                             <button id="malzemebilgi" type="button"
                                                     class="btn btn-outline-primary malzemem"
@@ -266,13 +269,14 @@ if ($_GET['id']) {
                                     $mgr = mGrBul($profil['toplamKg'], $profil['toplamAdet'], $profil['boy']);
                                     $tolerans = toleransBul($mgr, $profil['profilId'], $db);
                                     ?>
+
                                     <tr>
                                         <td style="font-weight: bold"><?php echo $sira; ?></td>
                                         <td><?php echo $profil['siparisNo'] ?></td>
-                                        <td><?php echo profilbul($profil['profilId'], $db, "profilNo"); ?></td>
+                                        <td><?php echo tablogetir('tblprofil','id',$profil['profilId'], $db)['profilNo']; ?></td>
                                         <td><?php echo $profil['boy'] ?></td>
-                                        <td><?php echo firmaBul($profil["firmaId"], $db, 'firmaAd') ?></td>
-                                        <td><?php echo firmaBul($profil['musteriId'], $db, 'firmaAd') ?></td>
+                                        <td><?php echo tablogetir('tblfirma','id',$profil['firmaId'], $db)['firmaAd'] ?></td>
+                                        <td><?php echo tablogetir('tblfirma','id',$profil['musteriId'], $db)['firmaAd'] ?></td>
                                         <td><?php echo $profil['icAdet'] ?></td>
                                         <td><?php echo $profil['paketAdet'] ?></td>
                                         <td><?php echo $profil['toplamAdet'] ?></td>

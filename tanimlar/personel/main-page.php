@@ -54,7 +54,7 @@ $result = $db->query($sql);
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['adsoyad']; ?></td>
-                                    <td><?php echo personelTur($row['rolId'], $db); ?></td>
+                                    <td><?php echo tablogetir('tblrol','id',$row['rolId'], $db)['rol']; ?></td>
                                     <td><?php echo $row['telefon']; ?></td>
                                     <td><?php echo $row['mail']; ?></td>
                                     <td><?php echo $row['isecikistarih'] != "0000-00-00 00:00:00.000000" ?

@@ -47,7 +47,7 @@ if ($_GET['takimno']) {
                         <div class="form-group">
                             <label>Profil</label>
                             <input disabled type="text" class="form-control form-control-lg"
-                                   value="<?php echo profilbul($row['profilId'], $db, 'profilNo'); ?>">
+                                   value="<?php echo tablogetir('tblprofil','id',$row['profilId'], $db)['profilNo']; ?>">
                         </div>
                     </div>
 
@@ -55,7 +55,7 @@ if ($_GET['takimno']) {
                         <div class="form-group">
                             <label>Firma</label>
                             <input disabled type="text" class="form-control form-control-lg"
-                                   value="<?php echo firmaBul($row['firmaId'], $db, 'firmaAd'); ?>">
+                                   value="<?php echo tablogetir('tblfirma','id',$row['firmaId'], $db)['firmaAd']; ?>">
                         </div>
                     </div>
 

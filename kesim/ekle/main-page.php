@@ -98,9 +98,11 @@ $baskilar = $db->query($kesimsql);
                             <select id="kesim_baski_id" name="baskiId" required class="form-control select2"
                                     style="width: 100%;">
                                 <option selected disabled value="">Sipariş No - Sipariş Türü - Tarih</option>
-                                <?php while ($baski = $baskilar->fetch_array()) { ?>
+                                <?php while ($baski = $baskilar->fetch_array()) {
+                                    $siparis = tablogetir('tblsiparis','id',$baski['siparisId'], $db)
+                                    ?>
                                     <option
-                                            value="<?php echo $baski['id']; ?>"><?php echo siparisBul($baski['siparisId'], $db, 'satirNo') . " - " . siparisBul($baski['siparisId'], $db, 'siparisTuru') . " - " . $baski['kayitTarih']; ?></option>
+                                            value="<?php echo $baski['id']; ?>"><?php echo $siparis['satirNo'] . " - " . $siparis['siparisTuru'] . " - " . $baski['kayitTarih']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>

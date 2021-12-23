@@ -53,7 +53,9 @@ $result = $db->query($sql);
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['firmaAd']; ?></td>
-                                    <td><?php echo firmaTurBul($row['firmaTurId'], $db,'ad'); ?></td>
+                                    <td><?php
+                                        $firmatur = tablogetir('tblfirmatur', 'id', $row['firmaTurId'], $db);
+                                        echo $firmatur['ad']; ?></td>
                                     <td><?php echo $row['kisaKod']; ?></td>
                                     <td><?php echo $row['yetkiliKisi']; ?></td>
                                     <td>

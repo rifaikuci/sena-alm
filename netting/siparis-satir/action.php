@@ -13,8 +13,10 @@ if ($received_data->action == 'siparisgetir') {
     $sql = "SELECT  * from tblsiparis where satirNo = '$satirno'";
     $result = $db->query($sql);
     while ($row = $result->fetch_array()) {
-        $profilAdi = profilbul($row['profilId'], $db, 'profilAdi');
-        $profilNo = profilbul($row['profilId'], $db, 'profilNo');
+        $profil = tablogetir('tblprofil','id',$row['profilId'], $db );
+        $profilAdi = $profil['profilAdi'];
+        $profilNo = $profil['profilNo'];
+        $alasim = tablogetir('tblalasim', 'id', $row['alasimId'], $db);
         $data['id'] = $row['id'];
         $data['profil'] = $row['profilId'] . ";" . $profilNo . "-" . $profilAdi;
         $data['profilId'] = $row['profilId'];
@@ -22,8 +24,8 @@ if ($received_data->action == 'siparisgetir') {
         $data['adet'] = $row['adet'];
         $data['kilo'] = $row['kilo'];
         $data['siparisTur'] = $row['siparisTuru'] == 'H' ? "Ham" : ($row['siparisTuru'] == 'B' ? "Boyalı" : "Eloksal");
-        $data['alasim'] = $row['alasimId'] . ";" . alasimBul($row['alasimId'], $db, 'ad');
-        $data['alasimAd'] = alasimBul($row['alasimId'], $db, 'ad');
+        $data['alasim'] = $row['alasimId'] . ";" . $alasim['ad'];
+        $data['alasimAd'] =  $alasim['ad'];
         $data['alasimId'] = $row['alasimId'];
         $data['musteriId'] = $row['musteriId'];
         $data['naylonId'] = $row['naylonDurum'];
@@ -89,8 +91,10 @@ if ($received_data->action == 'siparislerlistesi') {
     $datam = array();
     $siparis = null;
     while ($row = $result->fetch_array()) {
-        $profilAdi = profilbul($row['profilId'], $db, 'profilAdi');
-        $profilNo = profilbul($row['profilId'], $db, 'profilNo');
+        $alasim = tablogetir('tblalasim','id',$row['alasimId'], $db );
+        $profil = tablogetir('tblprofil','id',$row['profilId'], $db );
+        $profilAdi =  $profil['profilAdi'];
+        $profilNo =  $profil['profilNo'];
         $siparis['id'] = $row['id'];
         $siparis['profil'] = $row['profilId'] . ";" . $profilNo . "-" . $profilAdi;
         $siparis['profilId'] = $row['profilId'];
@@ -98,8 +102,8 @@ if ($received_data->action == 'siparislerlistesi') {
         $siparis['adet'] = $row['adet'];
         $siparis['kilo'] = $row['kilo'];
         $siparis['siparisTur'] = $row['siparisTuru'] == 'H' ? "Ham" : ($row['siparisTuru'] == 'B' ? "Boyalı" : "Eloksal");
-        $siparis['alasim'] = $row['alasimId'] . ";" . alasimBul($row['alasimId'], $db, 'ad');
-        $siparis['alasimAd'] = alasimBul($row['alasimId'], $db, 'ad');
+        $siparis['alasim'] =  $row['alasimId'].";".$alasim['ad'];
+        $siparis['alasimAd'] = $alasim['ad'];
         $siparis['alasimId'] = $row['alasimId'];
         $siparis['musteriId'] = $row['musteriId'];
         $siparis['naylonId'] = $row['naylonDurum'];

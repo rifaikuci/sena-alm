@@ -16,13 +16,13 @@ if (isset($_POST['profilId']) && isset($_POST['kalipCins']) ) {
     $parca1 = $_POST['parca1SenaNo'];
     $parca2 = $_POST['parca2SenaNo'];
     $profil = $_POST['profil'];
-    $kisaKod = firmaBul($firmaId, $db, 'kisaKod');
+    $kisaKod = tablogetir('tblfirma','id',$firmaId, $db)['kisaKod'];
     $sonEk = firmaTakimNoBul($db, "tbltakim", $firmaId, $profilId);
     $takimNo = "SN-" . $kisaKod . $profil . "-";
     $sonEk = sprintf('%03d', $sonEk);
     $takimNo = $takimNo . $sonEk;
     $parca2 = $parca2 == "Parçayı Seç" ? "" : $parca2;
-    $sonGramaj = profilbul($profilId,$db,'gramaj');
+    $sonGramaj = tablogetir('tblprofil','id',$profilId, $db)['gramaj'];
 
 
     $bolster = "";

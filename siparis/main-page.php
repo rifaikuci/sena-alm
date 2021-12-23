@@ -52,7 +52,7 @@ $result = $db->query($sql);
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['siparisNo']; ?></td>
-                                    <td><?php echo firmaBul($row['musteriId'], $db, 'firmaAd'); ?></td>
+                                    <td><?php echo tablogetir('tblfirma','id',$row['musteriId'], $db)['firmaAd']; ?></td>
                                     <td><?php echo tarih($row['siparisTarih']); ?></td>
 
                                     <td>

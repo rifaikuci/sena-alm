@@ -41,7 +41,7 @@ $alasimlar = $db->query($alasimsql);
                                 Sipariş No: <?php echo $row['siparisNo'] ?></label>
                             <br>
                             <label style="color: #7f8c8d">Müşteri
-                                Adı: <?php echo firmaBul($row['musteriId'], $db, 'firmaAd') ?></label>
+                                Adı: <?php echo tablogetir('tblfirma','id',$row['musteriId'], $db)['firmaAd'] ?></label>
                             <br>
                             <label style="color: #7f8c8d">Sipariş
                                 Tarihi: <?php echo tarih($row['siparisTarih']) ?></label>
@@ -82,6 +82,8 @@ $alasimlar = $db->query($alasimsql);
                                         <input type="hidden" name="araKagit" :value="araKagit">
                                         <input type="hidden" name="krepeKagit" :value="krepeKagit">
                                         <input type="hidden" name="kiloAdet" :value="kiloAdet">
+                                        <input type="hidden" value="<?php echo isset($_SESSION['operatorId']) ?  $_SESSION['operatorId'] : 0; ?>" name="operatorId">
+
                                     </div>
                                 </div>
                                 <div class="col-sm-3">

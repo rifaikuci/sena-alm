@@ -42,16 +42,18 @@ if ($received_data->action == 'baskigetir') {
 
     $result = $db->query($sql);
     while ($row = $result->fetch_array()) {
-        $profilId = siparisBul($row['siparisId'], $db, 'profilId');
-        $siparisTur = siparisBul($row['siparisId'], $db, 'siparisTuru');
+        $siparis = tablogetir('tblsiparis','id',$row['siparisId'], $db);
+        $profilId =$siparis['profilId'];
+        $siparisTur =$siparis['siparisTuru'];
+        $profil = tablogetir('tblprofil','id',$profilId, $db);
         $data['id'] = $row['id'];
-        $data['satirNo'] = siparisBul($row['siparisId'], $db, 'satirNo');
-        $data['istenilenBoy'] = siparisBul($row['siparisId'], $db, 'boy');
-        $data['istenilenTermik'] = siparisBul($row['siparisId'], $db, 'istenilenTermin');
+        $data['satirNo'] = $siparis['satirNo'];
+        $data['istenilenBoy'] = $siparis['boy'];
+        $data['istenilenTermik'] = $siparis['istenilenTermin'];
         $data['basilanNetAdet'] = $row['basilanNetAdet'];
         $data['kayitTarih'] = $row['kayitTarih'];
         $data['siparisId'] = $row['siparisId'];
-        $data['profil'] = profilbul($profilId, $db, 'profilAdi') . " - " . profilbul($profilId, $db, 'profilNo');
+        $data['profil'] = $profil['profilAdi'] . " - " .  $profil['profilNo'];
         $data['siparisTur'] = $siparisTur == "B" ? "Boyalı" : ($siparisTur == "E" ? "Eloksal" : "Ham");
     }
 
@@ -67,7 +69,7 @@ if ($received_data->action == 'kesimgetir') {
     $sepet1 = $row['sepetId1'];
     $sepet2 = $row['sepetId2'];
     $sepet3 = $row['sepetId3'];
-    $siparisId = baskiBul($row['baskiId'], $db, 'siparisId');
+    $siparisId = tablogetir('tblbaski','id',$row['baskiId'], $db)['siparisId'];
 
     $sqlsepet = "SELECT  * from tblsepet where tur = 'termik' and durum = 0 or id in ('$sepet1', '$sepet2', '$sepet3')";
     $result = $db->query($sqlsepet);
@@ -92,16 +94,19 @@ if ($received_data->action == 'kesimgetir') {
     while ($baskisatir = $baski->fetch_array()) {
 
         $tempbaski['id'] = $baskisatir['id'];
-        $tempbaski['satirNo'] = siparisBul($baskisatir['siparisId'],$db,'satirNo');
-        $tempbaski['tur'] = siparisBul($baskisatir['siparisId'], $db, 'siparisTuru');
+        $siparis = tablogetir('tblsiparis','id',$baskisatir['siparisId'], $db);
+        $tempbaski['satirNo'] =$siparis['satirNo'];
+        $tempbaski['tur'] = $siparis['siparisTuru'];
         $tempbaski['kayitTarih'] = $baskisatir['kayitTarih'];
         array_push($baskilar, $tempbaski);
     }
 
-    $profilId = siparisBul($siparisId, $db, 'profilId');
-    $siparisTur = siparisBul($siparisId, $db, 'siparisTuru');
+        $siparisgetir =  tablogetir('tblsiparis','id',$siparisId, $db);
+    $profilId = $siparisgetir['profilId'];
+    $siparisTur = $siparisgetir['siparisTuru'];
 
-
+    $profil = tablogetir('tblprofil','id',$profilId, $db);
+    $hurdalar = tablogetir('tblhurda','id',$id, $db);
 
     $data['id'] = $row['id'];
     $data['baskiId'] = $row['baskiId'];
@@ -116,18 +121,18 @@ if ($received_data->action == 'kesimgetir') {
     $data['hurdaAdet'] = $row['hurdaAdet'];
     $data['netAdet'] = $row['netAdet'];
     $data['kesilenBoy'] = $row['kesilenBoy'];
-    $data['hurdaAdet'] = hurdabul($id,$db,'toplamKg');
-    $data['aciklama'] = hurdabul($id,$db,'aciklama');
+    $data['hurdaAdet'] = $hurdalar['toplamKg'];
+    $data['aciklama'] = $hurdalar['aciklama'];
     $data['tarih'] = date("Y-m-d", strtotime(explode(" ", $row['tarih'])[0]));
     $data['saat'] = date("H:i", strtotime(explode(" ", $row['tarih'])[1]));
     $data['durum'] = $row['durum'];
-    $data['satirNo'] = siparisBul($siparisId, $db, 'satirNo');
+    $data['satirNo'] =  $siparisgetir['satirNo'];
     $data['sepetler'] = $datam;
     $data['baskilar'] = $baskilar;
-    $data['istenilenBoy'] = siparisBul($siparisId, $db, 'boy');
-    $data['istenilenTermik'] = siparisBul($siparisId, $db, 'istenilenTermin');
-    $data['basilanNetAdet'] = baskiBul($row['baskiId'], $db,'basilanNetAdet');
-    $data['profil'] = profilbul($profilId, $db, 'profilAdi') . " - " . profilbul($profilId, $db, 'profilNo');
+    $data['istenilenBoy'] =  $siparisgetir['boy'];
+    $data['istenilenTermik'] =  $siparisgetir['istenilenTermin'];
+    $data['basilanNetAdet'] = tablogetir('tblbaski','id',$row['baskiId'], $db)['basilanNetAdet'];
+    $data['profil'] = $profil['profilAdi'] . " - " . $profil['profilNo'] ;
     $data['siparisTur'] = $siparisTur == "B" ? "Boyalı" : ($siparisTur == "E" ? "Eloksal" : "Ham");
 
 

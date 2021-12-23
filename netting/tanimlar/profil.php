@@ -108,10 +108,11 @@ if (isset($_POST['profilekleme'])) {
 
 if (isset($_GET['profilsil'])) {
     $id = $_GET['profilsil'];
-    $resim = profilbul($id, $db, 'resim');
-    $sepet = profilbul($id, $db, 'sepetDizilmeSekli');
-    $paket = profilbul($id, $db, 'paketlemeSekli');
-    $cizim= profilbul($id, $db, 'cizim');
+    $profil = tablogetir('tblprofil','id',$id, $db);
+    $resim = $profil['resim'];
+    $sepet = $profil['sepetDizilmeSekli'];
+    $paket = $profil['paketlemeSekli'];
+    $cizim = $profil['cizim'];
 
     if (file_exists("../../" . $resim)) {
         unlink("../../" . $resim);

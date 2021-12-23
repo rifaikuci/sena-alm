@@ -12,6 +12,7 @@ if (isset($_POST['sevkiyatekle'])) {
     $plaka = $_POST['plaka'];
     $sevkiyatarih = $_POST['sevkiyatarih'];
     $sevkiyasaat = $_POST['sevkiyasaat'];
+    $operatorId= isset($_POST['operatorId']) ? $_POST['operatorId'] : 0 ;
     $aciklama = $_POST['aciklama'];
     $tarih = $sevkiyatarih . " " . $sevkiyasaat;
 
@@ -24,8 +25,8 @@ if (isset($_POST['sevkiyatekle'])) {
     $kod = date('d.m.Y', strtotime($sevkiyatarih));
     $kod = $kod . "- $gunlukSevkiyat";
 
-    $sql = "INSERT INTO tblsevkiyat (kod, personelId1, personelId2, plaka, sevkiyatTarih, tur, aciklama
-        ) VALUES ('$kod', '$personelId1', '$personelId2', '$plaka', '$tarih', 1, '$aciklama')";
+    $sql = "INSERT INTO tblsevkiyat (kod, personelId1, personelId2, plaka, sevkiyatTarih, tur, aciklama, operatorId
+        ) VALUES ('$kod', '$personelId1', '$personelId2', '$plaka', '$tarih', 1, '$aciklama', '$operatorId')";
 
     $sevkiyatId = maxIdBul($db, 'tblsevkiyat');
 
@@ -68,7 +69,7 @@ if (isset($_POST['sevkiyatekle'])) {
             $boyasicakliksatir = $boyasicaklik[$i];
             $boyacinssatir = $boyacins[$i];
 
-            $firmaKod = firmaBul($boyafirmasatir, $db, 'kisaKod');
+            $firmaKod = tablogetir('tblfirma','id',$boyafirmasatir, $db)['kisaKod'];
 
             for ($j = 0; $j < $boyaadetsatir; $j++) {
                 $barkod = $firmaKod . mt_rand();
@@ -90,7 +91,7 @@ if (isset($_POST['sevkiyatekle'])) {
             $malzemeidsatir = $malzemeId[$i];
             $malzemeadetsatir = $malzemeadet[$i];
 
-            $firmaKod = firmaBul($malzemefirmasatir, $db, 'kisaKod');
+            $firmaKod = tablogetir('tblfirma','id',$malzemefirmasatir, $db)['kisaKod'];
 
             for ($j = 0; $j < $malzemeadetsatir; $j++) {
                 $barkod = $firmaKod . mt_rand();

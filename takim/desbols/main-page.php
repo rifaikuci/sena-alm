@@ -67,7 +67,7 @@ if ($_GET['takimno']) {
                         <div class="form-group">
                             <label>Profil</label>
                             <input disabled type="text" class="form-control form-control-lg"
-                                   value="<?php echo profilbul($row['profilId'], $db, 'profilNo'); ?>">
+                                   value="<?php echo tablogetir('tblprofil','id',$row['profilId'], $db)['profilNo']; ?>">
                         </div>
                     </div>
 
@@ -75,7 +75,7 @@ if ($_GET['takimno']) {
                         <div class="form-group">
                             <label>Firma</label>
                             <input disabled type="text" class="form-control form-control-lg"
-                                   value="<?php echo firmaBul($row['firmaId'], $db, 'firmaAd'); ?>">
+                                   value="<?php echo tablogetir('tblfirma','id',$row['firmaId'], $db)['firmaAd']; ?>">
                         </div>
                     </div>
 
@@ -133,7 +133,7 @@ if ($_GET['takimno']) {
                                         <option value="<?php echo $bolster['id'] ?>"
                                             <?php echo in_array($bolster['id'], $bolsterler) ? "selected" : "" ?>
                                         >
-                                            <?php echo $bolster['senaNo'] . " - " . firmaBul($bolster['firmaId'], $db, "firmaAd") . " - " . $bolster['kalipciNo'] . " - " . $bolster['kalite'] . " - " . $bolster['figurSayi'] ?>
+                                            <?php echo $bolster['senaNo'] . " - " . tablogetir('tblfirma','id',$bolster['firmaId'], $db)['firmaAd'] . " - " . $bolster['kalipciNo'] . " - " . $bolster['kalite'] . " - " . $bolster['figurSayi'] ?>
                                         </option>
                                     <?php } ?>
                                 </select>
@@ -155,7 +155,7 @@ if ($_GET['takimno']) {
                                         <option value="<?php echo $destek['id'] ?>"
                                             <?php echo in_array($destek['id'], $destekler) ? "selected" : "" ?>
                                         >
-                                            <?php echo $destek['senaNo'] . " - " . firmaBul($destek['firmaId'], $db, "firmaAd") . " - " . $destek['kalipciNo'] . " - " . $destek['kalite'] . " - " . $destek['figurSayi'] ?>
+                                            <?php echo $destek['senaNo'] . " - " . tablogetir('tblfirma','id',$destek['firmaId'], $db)['firmaAd']  . " - " . $destek['kalipciNo'] . " - " . $destek['kalite'] . " - " . $destek['figurSayi'] ?>
                                         </option>
                                     <?php } ?>
                                 </select>

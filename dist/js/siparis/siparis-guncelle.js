@@ -1,3 +1,14 @@
+var date = new Date();
+date.setMonth(date.getMonth() + 1);
+date.setDate(date.getDate() + 26);
+
+gun = date.getDate().toString().length == 1 ? "0" + date.getDate() : date.getDate();
+ay = date.getMonth().toString().length == 1 ? "0" + date.getMonth() : date.getMonth();
+if (ay == "00")
+    ay = "01"
+var date = date.getFullYear() + "-" + ay + "-" + gun;
+
+
 var siparissatirguncelle = new Vue({
     el: "#siparisguncelleneceksatir",
     data: {
@@ -37,7 +48,9 @@ var siparissatirguncelle = new Vue({
     },
 
     mounted: async function () {
+        debugger;
         this.satirno = $(this)[0]._vnode.data.attrs.satirno;
+
         const response = await axios.post('/sena/netting/siparis-satir/action.php', {
             action: 'siparisgetir',
             satirno: this.satirno

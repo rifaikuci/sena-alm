@@ -73,8 +73,10 @@ $result = $db->query($sql);
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['kod']; ?></td>
                                     <td><?php
-                                        echo $row['personelId2'] ? personelBul($row['personelId1'], $db) . "- " . personelBul($row['personelId2'], $db) :
-                                            personelBul($row['personelId1'], $db); ?></td>
+                                        $personel1 = tablogetir('tblpersonel', 'id', $row['personelId1'], $db)['adsoyad'];
+                                        echo $row['personelId2'] ? $personel1 . "- " . tablogetir('tblpersonel', 'id', $detail['personelId2'], $db)['adsoyad'] :
+                                            $personel1; ?>
+                                    </td>
                                     <td><?php echo $row['plaka']; ?></td>
                                     <td><?php echo tarih($row['sevkiyatTarih']); ?></td>
                                     <td><?php echo kelimeAyirma($row['aciklama'], 30); ?></td>

@@ -112,8 +112,8 @@ if ($received_data->action == 'destekId') {
         $data['durum'] = $row['durum'];
         $data['netKilo'] = $row['netKilo'];
         $data['brutKilo'] = $row['brutKilo'];
-        $data['profilNo'] = profilbul($row['profilId'], $db, "profilNo");
-        $data['firmaAdi'] = firmaBul($row["firmaId"], $db, 'firmaAd');
+        $data['profilNo'] = tablogetir('tblprofil','id',$row['profilId'], $db)['profilNo'];
+        $data['firmaAdi'] = tablogetir('tblfirma','id',$row['firmaId'], $db)['firmaAd'];
         array_push($listedestekler, $data);
     }
 

@@ -124,7 +124,7 @@ $bolsterler = $db->query($bolstersql);
                                     <?php
                                     while ($bolster = $bolsterler->fetch_array()) { ?>
                                         <option value="<?php echo $bolster['id'] ?>">
-                                            <?php echo $bolster['senaNo'] . " - " . firmaBul($bolster['firmaId'], $db, "firmaAd") . " - " . $bolster['kalipciNo'] . " - " . $bolster['kalite'] . " - " . $bolster['figurSayi'] ?>
+                                            <?php echo $bolster['senaNo'] . " - " . tablogetir('tblfirma','id',$bolster['firmaId'], $db)['firmaAd'] . " - " . $bolster['kalipciNo'] . " - " . $bolster['kalite'] . " - " . $bolster['figurSayi'] ?>
                                         </option>
                                     <?php } ?>
                                 </select>

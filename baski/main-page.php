@@ -53,7 +53,7 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td><?php echo takimBul($row['takimId'], $db, 'takimNo'); ?></td>
+                                    <td><?php echo tablogetir('tbltakim','id',$row['takimId'], $db)['takimNo']; ?></td>
                                     <td><?php echo
 
                                             tarih(explode(" ", $row['baslaZamani'])[0]) . " " . explode(" ", $row['baslaZamani'])[1]; ?></td>

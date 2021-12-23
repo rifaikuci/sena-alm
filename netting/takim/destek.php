@@ -37,11 +37,13 @@ $result = $db->query($sql);
         </thead>
         <tbody>
         <?php
-        while ($row = $result->fetch_array()) { ?>
+        while ($row = $result->fetch_array()) {
+            $firma = tablogetir('tblfirma','id',$row['firmaId'], $db)
+            ?>
             <tr>
                 <td><?php echo $row['senaNo'] ?></td>
-                <td> <?php echo firmaBul($row["firmaId"], $db, 'firmaAd') ?></td>
-                <td><?php echo firmaBul($row['firmaId'],$db,'kisaKod').$row['kalipciNo'] ?></td>
+                <td> <?php echo $firma['firmaAd'] ?></td>
+                <td><?php echo $firma['kisaKod'].$row['kalipciNo'] ?></td>
                 <td>Destek</td>
                 <td> <?php echo $row['cap'] ?></td>
                 <td> <?php echo $row['kalite']; ?></td>

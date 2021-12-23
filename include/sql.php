@@ -3,55 +3,6 @@ include_once '../netting/baglan.php';
 include_once '../include/sql.php';
 
 
-function firmaTurBul($id, $db, $sutun)
-{
-    $sql = "SELECT * FROM tblfirmatur WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row[$sutun];
-}
-
-function firmaBul($id, $db, $sutun)
-{
-    $sql = "SELECT * FROM tblfirma WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row[$sutun];
-}
-
-
-function personelTur($id, $db)
-{
-    $sql = "SELECT * FROM tblrol WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row['rol'];
-}
-
-function alasimBul($id, $db, $sutun)
-{
-    $sql = "SELECT * FROM tblalasim WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row[$sutun];
-}
-
-
-function personelBul($id, $db)
-{
-    $sql = "SELECT * FROM tblpersonel WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row['adsoyad'];
-}
-
-function profilbul($id, $db, $sutun)
-{
-    $sql = "SELECT * FROM tblprofil WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row[$sutun];
-}
 
 function maxIdBul($db, $table)
 {
@@ -61,7 +12,6 @@ function maxIdBul($db, $table)
     return $row['id'];
 }
 
-
 function isTableSevkiyat($db, $table, $sevkiyatId)
 {
 
@@ -70,23 +20,6 @@ function isTableSevkiyat($db, $table, $sevkiyatId)
     $row = $result->fetch_row();
 
     return $row[0];
-}
-
-
-function boyaBul($id, $db)
-{
-    $sql = "SELECT * FROM tblboya WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row['ad'];
-}
-
-function malzemeBul($id, $db, $sutun)
-{
-    $sql = "SELECT * FROM tblmalzemeler WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row[$sutun];
 }
 
 function kalipBul($id)
@@ -112,15 +45,6 @@ function firmaTakimNoBul($db, $table, $firmaId, $profilId)
     $row = $result->fetch_row();
 
     return $row[0] + 1;
-}
-
-
-function parcalarsqlbul($id, $db, $sutun)
-{
-    $sql = "SELECT * FROM tblkalipparcalar WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row[$sutun];
 }
 
 function siparisGunBul($db, $yil, $hafta, $gun)
@@ -158,88 +82,8 @@ function siparisHaftaBul($db, $yil, $hafta)
 
 }
 
-function eloksalBul($id, $db)
+function deleteRow($tablename, $id)
 {
-    $sql = "SELECT * FROM tbleloksal WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row['ad'];
-}
-
-function ayarSqlBul($id, $db, $sutun)
-{
-    $sql = "SELECT * FROM tblayar WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row[$sutun];
-}
-
-function takimBul($id, $db, $sutun)
-{
-    $sql = "SELECT * FROM tbltakim WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row[$sutun];
-}
-
-function baskiBul($id, $db, $sutun)
-{
-    $sql = "SELECT * FROM tblbaski WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row[$sutun];
-}
-
-function siparisBul($id, $db, $sutun)
-{
-    $sql = "SELECT * FROM tblsiparis WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row[$sutun];
-}
-
-function biyetbul($id, $db, $sutun)
-{
-    $sql = "SELECT * FROM tblstokbiyet WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row[$sutun];
-}
-
-function konumBul($id)
-{
-    $arrayKonum = array("Baskı" => "baski", "Kesim" => "kesim");
-
-    return array_search($id, $arrayKonum);
-}
-
-function sepetbul($id, $db, $sutun)
-{
-    $sql = "SELECT * FROM tblsepet WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row[$sutun];
-}
-
-function hurdabul($id, $db, $sutun)
-{
-    $sql = "SELECT * FROM tblhurda WHERE kesimId = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row[$sutun];
-}
-
-function termikbul($id, $db, $sutun)
-{
-    $sql = "SELECT * FROM tbltermik WHERE id = '$id'";
-    $result = mysqli_query($db, $sql);
-    $row = $result->fetch_assoc();
-    return $row[$sutun];
-}
-
-function tablosil($tablename, $id)
-{
-
     return "DELETE FROM " . $tablename . " WHERE id =  '$id'";
 }
 

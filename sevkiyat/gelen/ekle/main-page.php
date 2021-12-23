@@ -72,6 +72,8 @@ $profiller = $db->query($profillerrsql);
                             <label>Plaka</label>
                             <input required type="text" class="form-control form-control-lg" name="plaka"
                                    placeholder="Plaka Bilgisi ">
+                            <input type="hidden" value="<?php echo isset($_SESSION['operatorId']) ?  $_SESSION['operatorId'] : 0; ?>" name="operatorId">
+
                         </div>
                     </div>
 

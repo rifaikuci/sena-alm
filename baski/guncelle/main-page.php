@@ -164,21 +164,23 @@ date_default_timezone_set('Europe/Istanbul');
                                             ($siparis['siparisTuru'] == "B" ? "Boyalı" : "Eloksal");
 
                                         $tur = $siparis['siparisTuru'] == "H" ? "Yok" :
-                                            ($siparis['siparisTuru'] == "B" ? boyaBul($siparis['boyaId'], $db) :
-                                                eloksalBul($siparis['eloksalId'], $db));
+                                            ($siparis['siparisTuru'] == "B" ? tablogetir('tblboya', 'id', $siparis['boyaId'], $db)['ad'] :
+                                                tablogetir('tbleloksal', 'id', $siparis['eloksalId'], $db)['ad']);
                                         $kiloVeyaAdet = $siparis['kiloAdet'] == "K" ? $siparis['kilo'] . "/" :
                                             $siparis['adet'] . "/";
 
                                         $basilanKiloVeyaAdet = $siparis['kiloAdet'] == "K" ? $siparis['basilanKilo'] . " Kilo" :
                                             $siparis['basilanAdet'] . " Adet";
+
+                                        $profil = tablogetir('tblprofil', 'id', $siparis['profilId'], $db);
                                         echo
                                             $siparis['satirNo'] . " - " .
                                             tarih($siparis['termimTarih']) . " - " .
-                                            firmaBul($siparis['musteriId'], $db, 'firmaAd') . " - " .
-                                            profilbul($siparis['profilId'], $db, 'profilNo') . " -" .
-                                            profilbul($siparis['profilId'], $db, 'profilAdi') . " -" .
+                                            tablogetir('tblfirma', 'id', $siparis['musteriId'], $db)['firmaAd'] . " - " .
+                                            $profil['profilNo'] . " -" .
+                                            $profil['profilAdi'] . " -" .
                                             $siparis['boy'] . " - " .
-                                            alasimBul($siparis['alasimId'], $db, 'ad') . " - " .
+                                            tablogetir('tblalasim', 'id', $siparis['alasimId'], $db)['ad'] . " - " .
                                             $siparisTuru . " - " . $tur . " - " . $kiloVeyaAdet . $basilanKiloVeyaAdet;;
 
                                         ?>
@@ -261,8 +263,8 @@ date_default_timezone_set('Europe/Istanbul');
                                         <?php echo $baski['biyetId'] == $biyet['id'] ? "selected" : "" ?>
                                             value="<?php echo $biyet['id']; ?>">
                                         <?php echo $biyet['partino'] . " - " .
-                                            alasimBul($biyet['alasimId'], $db, 'ad') . " - " .
-                                            firmaBul($biyet['firmaId'], $db, 'firmaAd'); ?>
+                                            tablogetir('tblalasim', 'id', $biyet['alasimId'], $db)['ad'] . " - " .
+                                            tablogetir('tblfirma', 'id', $biyet['firmaId'], $db)['firmaAd']; ?>
                                     </option>
                                 <?php } ?>
 
@@ -327,7 +329,10 @@ date_default_timezone_set('Europe/Istanbul');
                                    placeholder="0,1">
                             <input type="hidden" v-model="baskiFire" name="baskiFire" :value="baskiFire">
                             <input type="hidden" v-model="satirNo" name="satirNo" :value="satirNo">
-                            <input type="hidden"  name="baskiguncelle" value="baski-guncelle">
+                            <input type="hidden" name="baskiguncelle" value="baski-guncelle">
+                            <input type="hidden"
+                                   value="<?php echo isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0; ?>"
+                                   name="operatorId">
 
                         </div>
                     </div>

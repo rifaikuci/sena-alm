@@ -38,8 +38,8 @@ $result = $db->query($sql);
             <tr>
                 <td><?php echo $boya['barkodNo'] ?></td>
                 <td><?php echo $boya['partino'] ?></td>
-                <td> <?php echo firmaBul($boya["firmaId"], $db, 'firmaAd') ?></td>
-                <td> <?php echo boyaBul($boya["boyaTuru"], $db) ?></td>
+                <td> <?php echo tablogetir('tblfirma', 'id',$boya["firmaId"], $db )['firmaAd']; ?></td>
+                <td> <?php echo tablogetir('tblboya', 'id',$boya["boyaTuru"], $db )['ad']; ?></td>
                 <td> <?php echo $boya['sicaklik'] ?></td>
                 <td> <?php echo $boya['cins'] ?></td>
                 <td> <?php echo $boya['kilo']; ?></td>

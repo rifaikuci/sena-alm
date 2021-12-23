@@ -53,7 +53,7 @@ $result = $db->query($sql);
                                     <td><?php echo $row['siparisNo']; ?></td>
                                     <td><?php echo $row['satirNo']; ?></td>
                                     <td><?php echo konumBul($row['konum']); ?></td>
-                                    <td><?php echo firmaBul($row['musteriId'], $db, 'firmaAd'); ?></td>
+                                    <td><?php echo tablogetir('tblfirma','id',$row['musteriId'], $db)['firmaAd']; ?></td>
                                     <td><?php echo tarih($row['siparisTarih']); ?></td>
                                     <td><?php echo tarih($row['termimTarih']); ?></td>
 
