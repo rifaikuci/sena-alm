@@ -98,7 +98,7 @@ if (isset($_POST['siparisekle'])) {
         '$siparisTarih', '$arrayTermimTarih[$i]', '$arrayIstenilenTermin[$i]', '$siparisNo', '$boyaId',
         '$eloksalId', '$arrayMaxTolerans[$i]', '$arrayBoy[$i]','$satirNo', '0', '$siparisTarihYil', '$ay',
         '$gun', '$yil', '$hafta', '$kiloAdet', '$kalanAdet','$kalanKilo', '$arrayBaskiAciklama[$i]', 
-         '$arrayPaketAciklama[$i]', '$arrayBoyaAciklama[$i]', 'baski', '$operatorId),";
+         '$arrayPaketAciklama[$i]', '$arrayBoyaAciklama[$i]', 'baski', '$operatorId'),";
 
         $sqlprofil = $sqlprofil . "('$arrayProfil[$i]', '0', '$musteriId', '$profilTur', 'uretim', '$arrayBoy[$i]', '0','0','0','0','0','0','$arrayIstenilenTermin[$i]', '$satirNo' ),";
 
