@@ -2,7 +2,7 @@
 include "../../netting/baglan.php";
 
 
-$firmasql = "SELECT * FROM tblfirma where firmaTurId =3 ";
+$firmasql = "SELECT * FROM tblfirma  ";
 $firmalar = $db->query($firmasql);
 
 $profillerrsql = "SELECT * FROM tblprofil";
