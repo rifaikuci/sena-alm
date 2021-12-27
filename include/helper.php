@@ -3,7 +3,7 @@ date_default_timezone_set('Europe/Istanbul');
 
 function base_url()
 {
-    return "http://localhost:8080/sena/";
+    return "http://localhost/sena/";
 }
 
 function base_title()

@@ -58,7 +58,7 @@ $profiller = $db->query($profillerrsql);
                         <div class="form-group">
                             <label>2. Şoför</label>
                             <select name="personelId2" class="form-control select2" style="width: 100%;">
-                                <option selected value="">2. Şoför Seçiniz</option>
+                                <option selected value="0">2. Şoför Seçiniz</option>
                                 <?php while ($personel2 = $personeller2->fetch_array()) { ?>
                                     <option value="<?php echo $personel2['id']; ?>"><?php echo $personel2['adsoyad']; ?></option>
                                 <?php } ?>

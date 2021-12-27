@@ -10,7 +10,7 @@ if ($_GET['id']) {
 
 }
 
-$firmasql = "SELECT * FROM tblfirma where firmaTurId =21 ";
+$firmasql = "SELECT * FROM tblfirma ";
 $firmalar = $db->query($firmasql);
 
 $profillerrsql = "SELECT * FROM tblprofil";
