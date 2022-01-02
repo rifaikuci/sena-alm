@@ -349,7 +349,7 @@ $alasimlar = $db->query($alasimsql);
 
                 <div class="card-footer">
                     <div>
-                        <button :disabled="arraySiparisler.length == 0"  onclick="return confirm('Kaytdetmek istediğinizden emin misiniz?')"
+                        <button :disabled="arraySiparisler.length == 0"  onclick="return confirm('Kaydetmek istediğinizden emin misiniz?')"
                                  type="submit" name="siparisekle" class="btn btn-info float-right">Kaydet</button>
                         <a href="../"
                            class="btn btn-warning float-left">Vazgeç</a>

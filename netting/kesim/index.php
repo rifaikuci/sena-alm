@@ -18,7 +18,7 @@ if (isset($_POST['kesimekle'])) {
     $sepet2 = $_POST['sepet2'] == "" ? 0 : $_POST['sepet2'];
     $sepet3 = $_POST['sepet3'] == "" ? 0 : $_POST['sepet3'];
 
-    $vardiya =tablogetir('tblayar','id','1', $db)['vardiya'];
+    $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $vardiyaKod = vardiyaBul($vardiya, date("H:i"));
     $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
 
@@ -67,7 +67,7 @@ if (isset($_POST['kesimekle'])) {
                 VALUES ('$hurdaAdet', '$aciklama', '$operatorId','$baskiId', 'kesim', '$kesimId')";
     mysqli_query($db, $sqlHurda);
 
-    $guncelGr = tablogetir('tblbaski','id',$baskiId, $db)['guncelGr'];
+    $guncelGr = tablogetir('tblbaski', 'id', $baskiId, $db)['guncelGr'];
     $adet = -1 * ($hurdaAdet);
     $kilo = $adet * $guncelGr * $kesilenBoy;
     $sqlprofil = "INSERT INTO tblstokprofil (toplamKg, toplamAdet, gelisAmaci,siparis) 
@@ -76,12 +76,16 @@ if (isset($_POST['kesimekle'])) {
 
     if ($sepet1 > 0) {
 
-        $icindekiler1 = tablogetir('tblsepet','id',$sepet1, $db)['icindekiler'];
+        $sepet1getir = tablogetir('tblsepet', 'id', $sepet1, $db);
+        $icindekiler1 = $sepet1getir['icindekiler'];
+        $adetler1 = $sepet1getir['adetler'];
         $sepet1Icındekiler = $icindekiler1 . $kesimId . ";";
+        $sepet1Adetler = $adetler1 . $sepet1Adet . ";";
 
 
         $sqlsepet1 = "UPDATE tblsepet set
                         icindekiler = '$sepet1Icındekiler',
+                        adetler = '$sepet1Adetler',
                         durum = '$isSepet1Dolu'
                     where id = '$sepet1'";
         mysqli_query($db, $sqlsepet1);
@@ -89,25 +93,33 @@ if (isset($_POST['kesimekle'])) {
 
     if ($sepet2 > 0) {
 
-        $icindekiler2 = tablogetir('tblsepet','id',$sepet2, $db)['icindekiler'];
+        $sepet2getir = tablogetir('tblsepet', 'id', $sepet2, $db);
+        $icindekiler2 = $sepet2getir['icindekiler'];
+        $adetler2 = $sepet2getir['adetler'];
         $sepet2Icındekiler = $icindekiler2 . $kesimId . ";";
+        $sepet2Adetler = $adetler2 . $sepet2Adet . ";";
 
 
         $sqlsepet2 = "UPDATE tblsepet set
                         icindekiler = '$sepet2Icındekiler',
+                        adetler = '$sepet2Adetler',
                         durum = '$isSepet2Dolu'
-                    where id = '$sepet2'";
+                    where id = '$sepet1'";
         mysqli_query($db, $sqlsepet2);
     }
 
     if ($sepet3 > 0) {
 
-        $icindekiler3 = tablogetir('tblsepet','id',$sepet3, $db)['icindekiler'];
+        $sepet3getir = tablogetir('tblsepet', 'id', $sepet3, $db);
+        $icindekiler3 = $sepet3getir['icindekiler'];
+        $adetler3 = $sepet3getir['adetler'];
         $sepet3Icındekiler = $icindekiler3 . $kesimId . ";";
+        $sepet3Adetler = $adetler3 . $sepet3Adet . ";";
 
 
         $sqlsepet3 = "UPDATE tblsepet set
                         icindekiler = '$sepet3Icındekiler',
+                        adetler = '$sepet3Adetler',
                         durum = '$isSepet3Dolu'
                     where id = '$sepet3'";
         mysqli_query($db, $sqlsepet3);
@@ -117,7 +129,6 @@ if (isset($_POST['kesimekle'])) {
     $sqlsiparis = "UPDATE tblsiparis set
                         konum = '$konum'
                     where id = '$siparisId'";
-
 
 
     if (mysqli_query($db, $sqlsiparis)) {
@@ -145,8 +156,8 @@ if (isset($_GET['kesimsil'])) {
     $sqlHurda = "DELETE FROM tblhurda where kesimId = '$id'";
     mysqli_query($db, $sqlHurda);
 
-    $siparisId = tablogetir('tblbaski','id',$baskiId, $db)['siparisId'];
-    $satirNo =  tablogetir('tblsiparis','id',$siparisId, $db)['satirNo'];
+    $siparisId = tablogetir('tblbaski', 'id', $baskiId, $db)['siparisId'];
+    $satirNo = tablogetir('tblsiparis', 'id', $siparisId, $db)['satirNo'];
     $hurdaAdet = -1 * ($kesim['hurdaAdet']);
 
     $sqlstokprofil = "DELETE FROM tblstokprofil where toplamAdet = '$hurdaAdet' AND gelisAmaci = 'kesim' AND siparis = '$satirNo'";
@@ -159,12 +170,16 @@ if (isset($_GET['kesimsil'])) {
 
     if ($kesim['sepetId1'] > 0) {
         $sepet1 = $kesim['sepetId1'];
-        $icindekiler1 = tablogetir('tblsepet','id',$sepet1, $db)['icindekiler'];
+        $sepet1getir = tablogetir('tblsepet', 'id', $sepet1, $db);
+        $icindekiler1 = $sepet1getir['icindekiler'];
+        $adetler1 = $sepet1getir['adetler'];
         $sepet1Icındekiler = str_replace($id . ";", "", $icindekiler1);
+        $sepet1Adetler = str_replace($id . ";", "", $adetler1);
 
 
         $sqlsepet1 = "UPDATE tblsepet set
                         icindekiler = '$sepet1Icındekiler',
+                        adetler = '$sepet1Adetler',
                         durum = '0'
                     where id = '$sepet1'";
         mysqli_query($db, $sqlsepet1);
@@ -172,27 +187,35 @@ if (isset($_GET['kesimsil'])) {
 
     if ($kesim['sepetId2'] > 0) {
         $sepet2 = $kesim['sepetId2'];
-        $icindekiler2 = tablogetir('tblsepet','id',$sepet2, $db)['icindekiler'];
+        $sepet2getir = tablogetir('tblsepet', 'id', $sepet2, $db);
+        $icindekiler2 = $sepet2getir['icindekiler'];
+        $adetler2 = $sepet2getir['adetler'];
         $sepet2Icındekiler = str_replace($id . ";", "", $icindekiler2);
+        $sepet2Adetler = str_replace($id . ";", "", $adetler2);
 
 
         $sqlsepet2 = "UPDATE tblsepet set
-                        icindekiler = '$sepet2Icındekiler',
-                        durum = '0'
-                    where id = '$sepet2'";
+            icindekiler = '$sepet2Icındekiler',
+            adetler = '$sepet2Adetler',
+            durum = '0'
+            where id = '$sepet2'";
         mysqli_query($db, $sqlsepet2);
     }
 
     if ($kesim['sepetId3'] > 0) {
         $sepet3 = $kesim['sepetId3'];
-        $icindekiler3 = tablogetir('tblsepet','id',$sepet3, $db)['icindekiler'];
+        $sepet3getir = tablogetir('tblsepet', 'id', $sepet3, $db);
+        $icindekiler3 = $sepet3getir['icindekiler'];
+        $adetler3 = $sepet3getir['adetler'];
         $sepet3Icındekiler = str_replace($id . ";", "", $icindekiler3);
+        $sepet3Adetler = str_replace($id . ";", "", $adetler3);
 
 
         $sqlsepet3 = "UPDATE tblsepet set
-                        icindekiler = '$sepet3Icındekiler',
-                        durum = '0'
-                    where id = '$sepet3'";
+            icindekiler = '$sepet3Icındekiler',
+            adetler = '$sepet3Adetler',
+            durum = '0'
+            where id = '$sepet3'";
         mysqli_query($db, $sqlsepet3);
     }
 
@@ -258,7 +281,7 @@ if (isset($_POST['kesimguncelle'])) {
     mysqli_query($db, $sqlHurda);
 
 
-    $guncelGr = tablogetir('tblbaski','id',$baskiId, $db)['guncelGr'];
+    $guncelGr = tablogetir('tblbaski', 'id', $baskiId, $db)['guncelGr'];
     $adet = -1 * ($hurdaAdet);
     $kilo = $adet * $guncelGr * $kesilenBoy;
 

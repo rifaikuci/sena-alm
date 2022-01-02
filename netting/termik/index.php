@@ -9,7 +9,7 @@ date_default_timezone_set('Europe/Istanbul');
 if (isset($_POST['termikekle'])) {
 
     $sepetler = $_POST['sepetler'];
-    $baslaOperator = isset($_POST['operator']) ? $_POST['operator'] : 0;
+    $baslaOperator = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $sepetTermik = "";
     $kesimler = "";
     $vardiya = tablogetir('tblayar','id','1', $db)['vardiya'];
@@ -19,20 +19,23 @@ if (isset($_POST['termikekle'])) {
     for ($i = 0; $i < count($sepetler); $i++) {
         $sepetId = $sepetler[$i];
         $sepetTermik = $sepetTermik . $sepetId . ",";
-        $kesimler = $kesimler . tablogetir('tblsepet','id',$sepetIdt, $db)['icindekiler'] . ";";
-
+        $kesimler = $kesimler . tablogetir('tblsepet','id',$sepetId, $db)['icindekiler'] . ";";
     }
+
+
 
     $kesimler = str_replace(";;", ";", $kesimler);
     $kesimler = rtrim($kesimler, ";");
     $sepetTermik = rtrim($sepetTermik, ",");
 
     $sqlSepetUpdate = "Update tblsepet set isTermik = 1 where id in($sepetTermik)";
-    mysqli_query($db, $sqlSepetUpdate);
+
+   // mysqli_query($db, $sqlSepetUpdate);
 
 
     $sepetTermik = str_replace(",", ";", $sepetTermik);
     $sqlTermik = "Insert Into tbltermik (baslaOperator,sepetler,kesimler,baslaVardiya, baslaTarih) VALUES ('$baslaOperator', '$sepetTermik', '$kesimler','$baslaVardiya', '$baslaTarih')";
+
 
     if (mysqli_query($db, $sqlTermik)) {
         header("Location:../../termik/?durumekle=ok");
@@ -41,6 +44,7 @@ if (isset($_POST['termikekle'])) {
         header("Location:../../termik/?durumekle=no");
         exit();
     }
+
 }
 
 if (isset($_GET['termiksil'])) {
@@ -66,7 +70,7 @@ if (isset($_GET['termiksil'])) {
 if (isset($_POST['termikbitir'])) {
 
     $termikId = $_POST['id'];
-    $bitisOperator = isset($_POST['operator']) ? $_POST['operator'] : 0;
+    $bitisOperator = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $vardiya = tablogetir('tblayar','id','1', $db)['vardiya'];
     $bitisVardiya = vardiyaBul($vardiya, date("H:i"));
     $bitisTarih = date("d.m.Y H:i");

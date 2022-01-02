@@ -151,6 +151,15 @@
             </li>
 
             <li class="nav-item">
+                <a href="<?php echo base_url() . "havuz/" ?> " class="nav-link">
+                    <i class="nav-icon fas fa-poo-storm"></i>
+                    <p>
+                        Havuzlar
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a href="https://rifaikuci.com/" class="nav-link">
                     <i class="nav-icon far fa-circle text-info"></i>
                     <p>İletişim</p>

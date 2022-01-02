@@ -64,7 +64,8 @@ function tarih($tarih)
 
 function tarihsaat($tarih)
 {
-    $tarih = date("d.m.Y H:i");
+    $tarih = date_create($tarih);
+    $tarih = date_format($tarih,"d.m.Y H:i");
 
     return $tarih;
 }

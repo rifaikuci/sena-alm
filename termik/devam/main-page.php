@@ -11,6 +11,7 @@ if (isset($_GET['termik'])) {
     $termik = mysqli_query($db, $sql)->fetch_assoc();
 
     $kesimler = explode(";", $termik['kesimler']);
+    $kesimler = array_unique($kesimler);
 
 }
 
@@ -61,13 +62,14 @@ date_default_timezone_set('Europe/Istanbul');
                             <div class="col-sm-6">
                                 <div class="form-group">
 
-                                    <label><?php $baski = tablogetir('tblbaski', 'kesimId', $kesimler[$i], $db);
+                                    <label><?php
+                                        $baski = tablogetir('tblbaski', 'kesimId', $kesimler[$i], $db);
                                         $siparis = tablogetir('tblsiparis', 'id', $baski['siparisId'], $db);
                                         $baskilar = $baskilar . $baski['id'] . ",";
                                         $siparisler = $siparisler . $siparis['id'] . ",";
                                         $tur = $tur . $siparis['siparisTuru'] . ",";
                                         $termik = $termik . $siparis['istenilenTermin'] . ",";
-                                        echo "Baskı Numarası  : " . $baski['id'] . " Termik Değeri : " . $siparis['istenilenTermin'];
+                                        echo "Sipariş Numarası : " . $siparis['satirNo'].  " Baskı Numarası  : " . $baski['id'] . " Termik Değeri : " . $siparis['istenilenTermin'] ;
                                         ?></label>
                                     <input name="<?php echo "baski" . $baski['id'] ?>" required class="form-control"
                                            type="number" placeholder="1">
