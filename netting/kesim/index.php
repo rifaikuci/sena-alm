@@ -18,6 +18,7 @@ if (isset($_POST['kesimekle'])) {
     $sepet2 = $_POST['sepet2'] == "" ? 0 : $_POST['sepet2'];
     $sepet3 = $_POST['sepet3'] == "" ? 0 : $_POST['sepet3'];
 
+
     $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $vardiyaKod = vardiyaBul($vardiya, date("H:i"));
     $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
@@ -104,7 +105,7 @@ if (isset($_POST['kesimekle'])) {
                         icindekiler = '$sepet2Icındekiler',
                         adetler = '$sepet2Adetler',
                         durum = '$isSepet2Dolu'
-                    where id = '$sepet1'";
+                    where id = '$sepet2'";
         mysqli_query($db, $sqlsepet2);
     }
 
