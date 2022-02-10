@@ -149,6 +149,14 @@ if(isset($_POST['kromatbitir'])) {
     $bitisVardiya = vardiyaBul($vardiya, date("H:i"));
     $zaman = date("Y-m-d H:i:s");
 
+    $sepetId = tablogetir('tblkromat', 'id', $id, $db)['sepetId'];
+
+    $sqlsepet = "UPDATE tblsepet set
+                     finishedKromat = '1'
+                    where id = '$sepetId'";
+
+    mysqli_query($db, $sqlsepet);
+
     $sqlKromat = "UPDATE tblkromat set
                         bitisVardiya = '$bitisVardiya',
                      bitisZaman = '$zaman'

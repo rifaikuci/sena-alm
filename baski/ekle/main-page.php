@@ -158,7 +158,7 @@ date_default_timezone_set('Europe/Istanbul');
 
                                         $tur = $siparis['siparisTuru'] == "H" ? "Yok" :
                                             ($siparis['siparisTuru'] == "B" ?
-                                                tablogetir('tblboya', 'id', $siparis['boyaId'], $db)['ad'] :
+                                                tablogetir('tblprboya', 'id', $siparis['boyaId'], $db)['ad'] :
                                                 tablogetir('tbleloksal', 'id', $siparis['eloksalId'], $db)['ad']);
 
                                         $kiloVeyaAdet = $siparis['kiloAdet'] == "K" ? $siparis['kilo'] . "/" :
@@ -252,7 +252,6 @@ date_default_timezone_set('Europe/Istanbul');
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Biyet Boy</label>
-
                             <input v-model="biyetBoy"
                                    @change="handleBiyetBoy($event)"
                                    required name="biyetBoy"

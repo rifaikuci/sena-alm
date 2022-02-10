@@ -99,7 +99,7 @@ $kromatSepet = $db->query($kromatSql);
                             <label>Hurdaya Atılma Sebebi</label>
                             <select :required="kesim.hurdaAdet > 0" v-model="kesim.sebep" class="form-control"
                                     style="width: 100%;">
-                                <option selected value="">Sipariş No - Sipariş Türü</option>
+                                <option selected value=""> Sebep Seçiniz</option>
                                 <option value="ezik var">Ezik Var</option>
                                 <option value="boy kurtarmadı">Boy Kurtarmadı</option>
                                 <option value="delik var">Delik Var</option>

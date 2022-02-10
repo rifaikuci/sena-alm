@@ -188,7 +188,7 @@ date_default_timezone_set('Europe/Istanbul');
                                             ($row['siparisTuru'] == "B" ? "Boyalı" : "Eloksal");
 
                                         $tur = $row['siparisTuru'] == "H" ? "Yok" :
-                                            ($row['siparisTuru'] == "B" ? tablogetir('tblboya', 'id', $row['boyaId'], $db)['ad'] :
+                                            ($row['siparisTuru'] == "B" ? tablogetir('tblprboya', 'id', $row['boyaId'], $db)['ad'] :
                                                 tablogetir('tbleloksal', 'id', $row['eloksalId'], $db)['ad']);
                                         $kiloVeyaAdet = $row['kiloAdet'] == "K" ? $row['kilo'] . "/" :
                                             $row['adet'] . "/";

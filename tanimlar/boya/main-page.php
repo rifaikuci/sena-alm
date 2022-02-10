@@ -1,7 +1,7 @@
 <?php
 include "../../netting/baglan.php";
 
-$sql = "SELECT * FROM tblboya order by id desc";
+$sql = "SELECT * FROM tblprboya order by id desc";
 $result = $db->query($sql);
 
 ?>

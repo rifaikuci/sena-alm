@@ -12,6 +12,7 @@ if (isset($_POST['profilekleme'])) {
         $profilAdi = $_POST['profilAdi'];
         $sektorId = $_POST['sektorId'];
         $gramaj = $_POST['gramaj'];
+        $boyaMaxAdet = $_POST['boyaMaxAdet'];
         $alan = $_POST['alan'];
         $cevre = $_POST['cevre'];
         $paketAdet = $_POST['paketAdet'];
@@ -89,10 +90,10 @@ if (isset($_POST['profilekleme'])) {
 
         $sql = "INSERT INTO tblprofil (profilNo, sektorId, gramaj, alan, cevre, paketAdet,
                                       paketEn, paketBoy, balyaAdet, maxGramaj, ezilmeKatsayisi, aciklama,
-                                      seo, resim, paketlemeSekli, sepetDizilmeSekli, cizim, profilAdi )
+                                      seo, resim, paketlemeSekli, sepetDizilmeSekli, cizim, profilAdi, boyaMaxAdet )
                 VALUES ('$profilNo', '$sektorId','$gramaj', '$alan','$cevre', '$paketAdet',
                         '$paketEn', '$paketBoy', '$balyaAdet','$maxGramaj', '$ezilmeKatsayisi','$aciklama',
-                        '$seo', '$resim', '$paketlemeSekli', '$sepetDizilmeSekli', '$cizim', '$profilAdi')";
+                        '$seo', '$resim', '$paketlemeSekli', '$sepetDizilmeSekli', '$cizim', '$profilAdi', '$boyaMaxAdet')";
 
         if (mysqli_query($db, $sql)) {
             header("Location:../../tanimlar/profil/?durumekle=ok");
@@ -147,6 +148,7 @@ if (isset($_POST['profilguncelleme'])) {
     $profilAdi = $_POST['profilAdi'];
     $sektorId = $_POST['sektorId'];
     $gramaj = $_POST['gramaj'];
+    $boyaMaxAdet = $_POST['boyaMaxAdet'];
     $alan = $_POST['alan'];
     $cevre = $_POST['cevre'];
     $paketAdet = $_POST['paketAdet'];
@@ -254,7 +256,7 @@ if (isset($_POST['profilguncelleme'])) {
         cevre = '$cevre', paketAdet = '$paketAdet', paketEn = '$paketEn', paketBoy = '$paketBoy', balyaAdet = '$balyaAdet', 
                        maxGramaj = '$maxGramaj', ezilmeKatsayisi ='$ezilmeKatsayisi', aciklama = '$aciklama',
                     seo = '$seo', resim = '$resimyol', paketlemeSekli = '$paketyol' , sepetDizilmeSekli  = '$sepetyol', cizim = '$cizim',
-                     profilAdi = '$profilAdi'
+                     profilAdi = '$profilAdi', boyaMaxAdet = '$boyaMaxAdet'
             WHERE id='$id'";
 
     if (mysqli_query($db, $sql)) {

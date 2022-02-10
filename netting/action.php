@@ -59,7 +59,7 @@ if ($received_data->action == 'alasimId') {
 
 if ($received_data->action == 'boyaId') {
 
-    $sql = "SELECT * FROM tblboya WHERE id = '$received_data->id'";
+    $sql = "SELECT * FROM tblprboya WHERE id = '$received_data->id'";
 
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_assoc();

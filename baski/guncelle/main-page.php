@@ -164,7 +164,7 @@ date_default_timezone_set('Europe/Istanbul');
                                             ($siparis['siparisTuru'] == "B" ? "Boyalı" : "Eloksal");
 
                                         $tur = $siparis['siparisTuru'] == "H" ? "Yok" :
-                                            ($siparis['siparisTuru'] == "B" ? tablogetir('tblboya', 'id', $siparis['boyaId'], $db)['ad'] :
+                                            ($siparis['siparisTuru'] == "B" ? tablogetir('tblprboya', 'id', $siparis['boyaId'], $db)['ad'] :
                                                 tablogetir('tbleloksal', 'id', $siparis['eloksalId'], $db)['ad']);
                                         $kiloVeyaAdet = $siparis['kiloAdet'] == "K" ? $siparis['kilo'] . "/" :
                                             $siparis['adet'] . "/";

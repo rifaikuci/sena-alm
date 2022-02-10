@@ -64,7 +64,7 @@ if (isset($_POST['kesimekle'])) {
     mysqli_query($db, $sqlBaski);
 
 
-    $sqlHurda = "INSERT INTO tblhurda (toplamKg, aciklama,operatorId,baskiId, geldigiYer, kesimId) 
+    $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer, kesimId) 
                 VALUES ('$hurdaAdet', '$aciklama', '$operatorId','$baskiId', 'kesim', '$kesimId')";
     mysqli_query($db, $sqlHurda);
 
@@ -274,7 +274,7 @@ if (isset($_POST['kesimguncelle'])) {
 
 
     $sqlHurda = "UPDATE tblhurda set
-    toplamKg = '$hurdaAdet',
+    adet = '$hurdaAdet',
     aciklama = '$aciklama',
     operatorId = '$operatorId'
     where kesimId = '$kesimId'";

@@ -120,6 +120,14 @@ if ($_GET['id']) {
                         </div>
                     </div>
 
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Boya Max Adet</label>
+                            <input required type="number" class="form-control form-control-lg" step="0.1"
+                                   name="boyaMaxAdet" value="<?php echo $row['boyaMaxAdet'] ?>">
+                        </div>
+                    </div>
+
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Balya Adet</label>

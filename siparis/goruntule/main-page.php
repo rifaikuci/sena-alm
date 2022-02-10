@@ -17,7 +17,7 @@ if ($_GET['siparisno']) {
     $profillerrsql = "SELECT * FROM tblprofil";
     $profiller = $db->query($profillerrsql);
 
-    $boyasql = "SELECT * FROM tblboya";
+    $boyasql = "SELECT * FROM tblprboya";
     $boyalar = $db->query($boyasql);
 
     $eloksalsql = "SELECT * FROM tbleloksal";

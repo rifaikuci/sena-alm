@@ -16,7 +16,7 @@ $firmalarboya = $db->query($firmaboyasql);
 $alasimsql = "SELECT * FROM tblalasim";
 $alasimlar = $db->query($alasimsql);
 
-$boyasql = "SELECT * FROM tblboya";
+$boyasql = "SELECT * FROM tblprboya";
 $boyalar = $db->query($boyasql);
 
 $malzemelersql = "SELECT * FROM tblmalzemeler";

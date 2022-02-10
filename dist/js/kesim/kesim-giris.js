@@ -74,13 +74,7 @@ $('#kesim_baski_id').on("change", async function () {
             kesimgiris.adim = "termik"
         }
 
-        const response2 = await axios.post('/sena/netting/kesim/action.php', {
-            action: 'sepetgetir',
-            tur : kesimgiris.adim
 
-        }).then((response2) => {
-            return response2.data
-        });
 
 
 

@@ -5,7 +5,7 @@ if ($_GET['id']) {
 
     include '../../../netting/baglan.php';
 
-    $sql = "SELECT * FROM tblboya WHERE id = '$id'";
+    $sql = "SELECT * FROM tblprboya WHERE id = '$id'";
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_assoc();
 } ?>

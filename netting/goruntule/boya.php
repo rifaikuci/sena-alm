@@ -39,7 +39,7 @@ $result = $db->query($sql);
                 <td><?php echo $boya['barkodNo'] ?></td>
                 <td><?php echo $boya['partino'] ?></td>
                 <td> <?php echo tablogetir('tblfirma', 'id',$boya["firmaId"], $db )['firmaAd']; ?></td>
-                <td> <?php echo tablogetir('tblboya', 'id',$boya["boyaTuru"], $db )['ad']; ?></td>
+                <td> <?php echo tablogetir('tblprboya', 'id',$boya["boyaTuru"], $db )['ad']; ?></td>
                 <td> <?php echo $boya['sicaklik'] ?></td>
                 <td> <?php echo $boya['cins'] ?></td>
                 <td> <?php echo $boya['kilo']; ?></td>

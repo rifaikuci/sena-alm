@@ -77,7 +77,7 @@ if (isset($_POST['baskiekle'])) {
     mysqli_query($db, $sqlBaski);
 
 
-    $sqlHurda = "INSERT INTO tblhurda (toplamKg, aciklama,operatorId,baskiId, geldigiYer) 
+    $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer) 
                 VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id','baski')";
 
     mysqli_query($db, $sqlHurda);
@@ -411,7 +411,7 @@ if (isset($_POST['baskiIdG'])) {
     mysqli_query($db, $sqlBaski);
 
 
-    $sqlHurda = "INSERT INTO tblhurda (toplamKg, aciklama,operatorId,baskiId,geldigiYer) 
+    $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId,geldigiYer) 
                 VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id', 'baski')";
 
     mysqli_query($db, $sqlHurda);
@@ -582,7 +582,7 @@ if (isset($_POST['baskiguncelle'])) {
 
 
     $sqlHurdaGuncelle = "UPDATE tblhurda set
-                    toplamKg = '$fire',
+                    adet = '$fire',
                     operatorId = '$operatorId'
                     where baskiId = '$baskiId'";
     mysqli_query($db, $sqlHurdaGuncelle);
