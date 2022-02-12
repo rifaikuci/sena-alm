@@ -40,13 +40,25 @@ $result = $db->query($sql);
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Baş. Tar.</th>
-                                <th>Sepetler</th>
-                                <th>Kesimler</th>
-                                <th>Durum</th>
-                                <th style="text-align: center">İşlem /Bitirilme Zam.</th>
+                                <th>İşlem Tarihi</th>
+                                <th>Sepet</th>
+                                <th>Parti No</th>
+                                <th>Kesim</th>
                             </tr>
                             </thead>
+
+                            <?php $sira = 1;
+                            while ($row = $result->fetch_array()) { ?>
+                                <tr>
+                                    <td style="font-weight: bold"><?php echo $sira; ?></td>
+                                    <td><?php echo tarihsaat($row['baslaZaman']) ; ?></td>
+                                    <td><?php echo tablogetir('tblsepet', 'id',$row['sepetId'], $db)['ad']; ?></td>
+                                    <td><?php echo tablogetir('tblstokboya', 'id',$row['boyaId'], $db)['partino']; ?></td>
+                                    <td><?php echo $row['kesimId']; ?></td>
+
+                                </tr>
+                                <?php $sira++;
+                            } ?>
                         </table>
                     </div>
                 </div>
