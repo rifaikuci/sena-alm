@@ -81,7 +81,6 @@ $('#boyanma_sepet').on("change", async function () {
         boyaGiris.baskiId = array[4];
         boyaGiris.profilId = array[5];
 
-        debugger;
 
         if (boyaGiris.topAdet && boyaGiris.topAdet > 0) {
             boyaGiris.oran = boyaGiris.maxAdet / boyaGiris.topAdet;

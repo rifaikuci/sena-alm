@@ -89,7 +89,6 @@ var kesimguncelle = new Vue({
             if (this.sepet2) {
                 isSepet2Dolu = this.sepetler2.find(x => x.id == this.sepet2).durum
                 this.isSepet2Dolu = isSepet2Dolu == 1 ? true : false
-                    debugger;
                 this.sepetler3 = this.sepetler2.filter(e => e.id != this.sepet2)
             }
 
