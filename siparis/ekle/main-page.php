@@ -40,6 +40,7 @@ $alasimlar = $db->query($alasimsql);
                         <input name="arrayAraKagit" :value="arrayAraKagit" type="hidden">
                         <input name="arrayKrepeKagit" :value="arrayKrepeKagit" type="hidden">
                         <input name="arrayNaylonId" :value="arrayNaylonId" type="hidden">
+                        <input name="arrayKorumaBandi" :value="arrayKorumaBandi" type="hidden">
                         <input name="arrayBoyaId" :value="arrayBoyaId" type="hidden">
                         <input name="arrayEloksalId" :value="arrayEloksalId" type="hidden">
                         <input name="arrayKiloAdet" :value="arrayKiloAdet" type="hidden">
@@ -218,6 +219,18 @@ $alasimlar = $db->query($alasimsql);
                                             <label>Naylon</label>
                                             <select v-model="siparis.naylonId" name="naylonDurum" class="form-control">
                                                 <option selected disabled value="">Naylon Seçiniz</option>
+                                                <option value="1">Baskılı</option>
+                                                <option value="2">Baskısız</option>
+                                                <option value="3">Yok</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2">
+                                        <div class="form-group">
+                                            <label>Koruma Bandı</label>
+                                            <select v-model="siparis.korumaBandi" name="korumaBandi" class="form-control">
+                                                <option selected disabled value="">Koruma Bandı Seçiniz</option>
                                                 <option value="1">Baskılı</option>
                                                 <option value="2">Baskısız</option>
                                                 <option value="3">Yok</option>

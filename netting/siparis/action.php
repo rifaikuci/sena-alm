@@ -74,6 +74,7 @@ if ($received_data->action == 'siparislerlistesi') {
         $siparis['alasimId'] = $row['alasimId'];
         $siparis['musteriId'] =  $row['musteriId'];
         $siparis['naylonId'] =  $row['naylonDurum'];
+        $siparis['korumaBandi'] =  $row['korumaBandi'];
         $siparis['naylonAd'] =  $row['naylonDurum'] == 1 ?"Baskılı" : ($row['naylonDurum'] == 2 ? "Baskısız" : "Yok");
         $siparis['araKagit'] =  $row['araKagit'];
         $siparis['araKagitAd'] =  $row['araKagit'] == 1  ? "Var" : "Yok";

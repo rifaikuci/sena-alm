@@ -41,6 +41,7 @@ new Vue({
             araKagitAd: '',
             krepeKagitAd: '',
             naylonId: '',
+            korumaBandi: '',
             naylonAd: '',
             baskiAciklama: '',
             boyaAciklama: '',
@@ -73,6 +74,7 @@ new Vue({
                 this.siparis.siparisTur &&
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
+                this.siparis.korumaBandi &&
                 this.siparis.maxTolerans &&
                 this.siparis.istenilenTermin &&
                 this.errorShow == false &&
@@ -90,6 +92,7 @@ new Vue({
                 this.siparis.siparisTur &&
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
+                this.siparis.korumaBandi &&
                 this.siparis.maxTolerans &&
                 this.siparis.istenilenTermin &&
                 this.errorShow == false &&
@@ -108,6 +111,7 @@ new Vue({
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
                 this.siparis.istenilenTermin &&
+                this.siparis.korumaBandi &&
                 this.siparis.maxTolerans &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
@@ -227,6 +231,7 @@ new Vue({
                     this.siparis.alasimId &&
                     this.siparis.termimTarih &&
                     this.siparis.maxTolerans &&
+                    this.siparis.korumaBandi &&
                     this.siparis.istenilenTermin &&
                     this.errorShow == false &&
                     this.siparis.naylonId) {
@@ -271,6 +276,7 @@ new Vue({
                     araKagit: allItems[id].araKagit == 1 ? true : false,
                     krepeKagit: allItems[id].krepeKagit == 1 ? true : false,
                     naylonId: allItems[id].naylonId,
+                    korumaBandi: allItems[id].korumaBandi,
                     baskiAciklama: allItems[id].baskiAciklama,
                     paketAciklama: allItems[id].paketAciklama,
                     boyaAciklama: allItems[id].boyaAciklama,
@@ -302,6 +308,7 @@ new Vue({
                 this.siparis.termimTarih &&
                 this.siparis.maxTolerans &&
                 this.siparis.istenilenTermin &&
+                this.siparis.korumaBandi &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
                 this.isFullSiparisData = true
@@ -320,6 +327,7 @@ new Vue({
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
                 this.siparis.maxTolerans &&
+                this.siparis.korumaBandi &&
                 this.siparis.istenilenTermin &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
@@ -344,6 +352,7 @@ new Vue({
                         araKagit: this.siparis.araKagit == true ? 1 : 0,
                         krepeKagit: this.siparis.krepeKagit == true ? 1 : 0,
                         naylonDurum: this.siparis.naylonId,
+                        korumaBandi: this.siparis.korumaBandi,
                         boyaAciklama: this.siparis.boyaAciklama,
                         paketAciklama: this.siparis.paketAciklama,
                         baskiAciklama: this.siparis.baskiAciklama,
@@ -378,6 +387,7 @@ new Vue({
                     araKagitAd: '',
                     krepeKagitAd: '',
                     naylonId: '',
+                    korumaBandi: '',
                     naylonAd: '',
                     paketAciklama: '',
                     boyaAciklama: '',

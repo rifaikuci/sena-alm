@@ -38,6 +38,7 @@ var siparissatirguncelle = new Vue({
         araKagitAd: '',
         krepeKagitAd: '',
         naylonId: '',
+        korumaBandi: '',
         naylonAd: '',
         baskiAciklama: '',
         boyaAciklama: '',
@@ -48,7 +49,6 @@ var siparissatirguncelle = new Vue({
     },
 
     mounted: async function () {
-        debugger;
         this.satirno = $(this)[0]._vnode.data.attrs.satirno;
 
         const response = await axios.post('/sena/netting/siparis-satir/action.php', {
@@ -71,6 +71,7 @@ var siparissatirguncelle = new Vue({
             this.araKagit = response.araKagit == 1 ? true : false,
             this.krepeKagit = response.krepeKagit == 1 ? true : false,
             this.naylonId = response.naylonId,
+            this.korumaBandi = response.korumaBandi,
             this.baskiAciklama = response.baskiAciklama,
             this.paketAciklama = response.paketAciklama,
             this.boyaAciklama = response.boyaAciklama,
@@ -95,6 +96,7 @@ var siparissatirguncelle = new Vue({
                 this.termimTarih &&
                 this.maxTolerans &&
                 this.istenilenTermin &&
+                this.korumaBandi &&
                 this.errorShow == false &&
                 this.naylonId) {
                 this.isFullSiparisData = true
@@ -112,6 +114,7 @@ var siparissatirguncelle = new Vue({
                 this.termimTarih &&
                 this.maxTolerans &&
                 this.istenilenTermin &&
+                this.korumaBandi &&
                 this.errorShow == false &&
                 this.naylonId) {
                 this.isFullSiparisData = true
@@ -188,6 +191,7 @@ var siparissatirguncelle = new Vue({
                 this.siparisTur &&
                 this.alasimId &&
                 this.termimTarih &&
+                this.korumaBandi &&
                 this.maxTolerans &&
                 this.istenilenTermin &&
                 this.errorShow == false &&
@@ -229,6 +233,7 @@ var siparissatirguncelle = new Vue({
                 this.alasimId &&
                 this.termimTarih &&
                 this.maxTolerans &&
+                this.korumaBandi &&
                 this.istenilenTermin &&
                 this.errorShow == false &&
                 this.naylonId) {
@@ -260,6 +265,7 @@ var siparissatirguncelle = new Vue({
                     this.alasimId &&
                     this.termimTarih &&
                     this.maxTolerans &&
+                    this.korumaBandi &&
                     this.istenilenTermin &&
                     this.errorShow == false &&
                     this.naylonId) {
@@ -281,6 +287,7 @@ var siparissatirguncelle = new Vue({
                 this.alasimId &&
                 this.termimTarih &&
                 this.maxTolerans &&
+                this.korumaBandi &&
                 this.istenilenTermin &&
                 this.errorShow == false &&
                 this.naylonId) {

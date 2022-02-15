@@ -254,6 +254,18 @@ $alasimlar = $db->query($alasimsql);
                                     </div>
                                 </div>
 
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label>Koruma Bandı</label>
+                                        <select v-model="korumaBandi" name="korumaBandi" class="form-control">
+                                            <option selected disabled value="">Koruma Bandı Seçiniz</option>
+                                            <option value="1">Baskılı</option>
+                                            <option value="2">Baskısız</option>
+                                            <option value="3">Yok</option>
+                                        </select>
+                                    </div>
+                                </div>
+
                                 <div class="col-sm-5">
                                     <div class="form-group">
                                         <label>İstenilen Termin</label>

@@ -29,6 +29,7 @@ var siparisGiris = new Vue({
         arrayAraKagit: [],
         arrayKrepeKagit: [],
         arrayNaylonId: [],
+        arrayKorumaBandi: [],
         arrayBoyaId: [],
         arrayBoyaAd: [],
         arrayEloksalId: [],
@@ -59,6 +60,7 @@ var siparisGiris = new Vue({
             araKagitAd: '',
             krepeKagitAd: '',
             naylonId: '',
+            korumaBandi: '',
             naylonAd: '',
             baskiAciklama: '',
             boyaAciklama: '',
@@ -78,6 +80,7 @@ var siparisGiris = new Vue({
                 this.siparis.termimTarih &&
                 this.siparis.maxTolerans &&
                 this.siparis.istenilenTermin &&
+                this.siparis.korumaBandi &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
                 this.isFullSiparisData = true
@@ -95,6 +98,7 @@ var siparisGiris = new Vue({
                 this.siparis.termimTarih &&
                 this.siparis.maxTolerans &&
                 this.siparis.istenilenTermin &&
+                this.siparis.korumaBandi &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
                 this.isFullSiparisData = true
@@ -201,6 +205,7 @@ var siparisGiris = new Vue({
                     this.siparis.termimTarih &&
                     this.siparis.maxTolerans &&
                     this.siparis.istenilenTermin &&
+                    this.siparis.korumaBandi &&
                     this.errorShow == false &&
                     this.siparis.naylonId) {
                     this.isFullSiparisData = true
@@ -222,6 +227,7 @@ var siparisGiris = new Vue({
                 this.siparis.termimTarih &&
                 this.siparis.maxTolerans &&
                 this.siparis.istenilenTermin &&
+                this.siparis.korumaBandi &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
                 this.isFullSiparisData = true
@@ -241,6 +247,7 @@ var siparisGiris = new Vue({
                 this.siparis.termimTarih &&
                 this.siparis.istenilenTermin &&
                 this.siparis.maxTolerans &&
+                this.siparis.korumaBandi &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
 
@@ -262,6 +269,7 @@ var siparisGiris = new Vue({
                 this.arrayAraKagit.push(this.siparis.araKagit);
                 this.arrayKrepeKagit.push(this.siparis.krepeKagit);
                 this.arrayNaylonId.push(this.siparis.naylonId);
+                this.arrayKorumaBandi.push(this.siparis.korumaBandi);
                 this.arrayBoyaId.push(this.siparis.boyaId);
                 this.arrayEloksalId.push(this.siparis.eloksalId);
                 this.arrayKiloAdet.push(this.siparis.kiloAdet);
@@ -289,6 +297,7 @@ var siparisGiris = new Vue({
                     araKagitAd: '',
                     krepeKagitAd: '',
                     naylonId: '',
+                    korumaBandi: '',
                     naylonAd: '',
                     baskiAciklama: '',
                     paketAciklama: '',
@@ -325,6 +334,7 @@ var siparisGiris = new Vue({
             this.$delete(this.arrayAraKagit, index);
             this.$delete(this.arrayKrepeKagit, index);
             this.$delete(this.arrayNaylonId, index);
+            this.$delete(this.arrayKorumaBandi, index);
             this.$delete(this.arrayBoyaId, index);
             this.$delete(this.arrayEloksalId, index);
             this.$delete(this.arrayPaketAciklama, index);
