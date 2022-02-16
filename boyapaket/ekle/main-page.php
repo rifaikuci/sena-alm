@@ -2,7 +2,7 @@
 include "../../netting/baglan.php";
 include "../../include/sql.php";
 
-$boyaSql = "SELECT * FROM tblboya where isFirin = '1'";
+$boyaSql = "SELECT * FROM tblboya where isFirin = '1' and isPaket = '0'";
 $boyaSepet = $db->query($boyaSql);
 
 ?>
@@ -114,6 +114,16 @@ $boyaSepet = $db->query($boyaSql);
                                 </div>
 
                                 <div class="row">
+                                    <div class="col-sm-8">
+                                        <h6>
+                                            <span style="color: darkcyan; font-weight: bold"> Ara Kağıt: </span>
+                                            {{araKagitAd}}
+                                        </h6>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
                                     <div class="col-sm-2">
 
                                     </div>
@@ -146,11 +156,10 @@ $boyaSepet = $db->query($boyaSql);
                                     $satirNo = $siparis['satirNo'];
                                     $koruma = $siparis['korumaBandi'];
                                     $value = $satirNo . " - " . $boya['topAdet'] . " - " . $kesimId;
-                                    $key = $kesimId . ";" . $baskiId . ";" . $siparisId . ";".$boya['topAdet'] . ";".$koruma?>
+                                    $key = $kesimId . ";" . $baskiId . ";" . $siparisId . ";" . $boya['topAdet'] . ";" . $koruma. ";". $boya['id'] ?>
                                     <option value="<?php echo $key ?>"> <?php echo $value ?></option>
                                 <?php } ?>
                             </select>
-                            <input type="hidden" name="operatorId" value="<?php echo $_SESSION['operatorId'] ?>">
                         </div>
                     </div>
 
@@ -162,6 +171,15 @@ $boyaSepet = $db->query($boyaSql);
                                    @change="netAdetCalculate($event)"
                                    class="form-control" type="number"
                                    placeholder="0">
+                            <input type="hidden" name="operatorId" value="<?php echo $_SESSION['operatorId'] ?>">
+                            <input name="boyapaketbaslat" value="boyapaketbaslat" type="hidden">
+                            <input type="hidden" name="netAdet" :value="netAdet">
+                            <input type="hidden" name="kesimId" :value="kesimId">
+                            <input type="hidden" name="baskiId" :value="baskiId">
+                            <input type="hidden" name="profilId" :value="profilId">
+                            <input type="hidden" name="satirNo" :value="satirNo">
+                            <input type="hidden" name="boyaId" :value="boyaId">
+
                         </div>
                     </div>
 
@@ -221,7 +239,9 @@ $boyaSepet = $db->query($boyaSql);
 
                 <div class="card-footer">
                     <div>
-                        <button type="submit" class="btn btn-info float-right">Ekle</button>
+                        <button  v-on:click="bitir($event)" type="submit"
+                                class="btn btn-info float-right">Ekle
+                        </button>
                         <a href="../"
                            class="btn btn-warning float-left">Vazgeç</a>
                     </div>

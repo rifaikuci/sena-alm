@@ -3,7 +3,8 @@
 include "../netting/baglan.php";
 include "../include/sql.php";
 
-
+$sql = "SELECT * FROM tblboyapaket order by id desc ";
+$result = $db->query($sql);
 ?>
 
 <section class="content">
@@ -40,13 +41,28 @@ include "../include/sql.php";
 
                             <tr>
                                 <th>#</th>
-                                <th>Başlama Tarih</th>
-                                <th>Sepet</th>
-                                <th>Havuz Boya Paketleme</th>
-                                <th>Havuz Asidi</th>
-                                <th>Durum</th>
+                                <th>Satır No</th>
+                                <th>Tarih</th>
+                                <th>Net Adet</th>
                                 <th style="text-align: center">İşlem</th>
                             </tr>
+                            </thead>
+
+                            <?php $sira = 1;
+                            while ($row = $result->fetch_array()) { ?>
+                                <tr>
+                                    <td style="font-weight: bold"><?php echo $sira; ?></td>
+                                    <td><?php echo $row['satirNo']; ?></td>
+                                    <td><?php echo tarihsaat($row['zaman']); ?></td>
+                                    <td><?php echo $row['netAdet']; ?></td>
+                                    <td style="text-align: center">
+                                        <a onclick="return confirm('İşleminiz Silmek istediğinizden emin misiniz?')" href="<?php echo base_url() . "netting/boyapaket/index.php?boyapaketsil=" . $row['id']; ?>"
+                                           class="btn btn-danger">Sil</a>
+                                    </td>
+
+                                </tr>
+                                <?php $sira++;
+                            } ?>
                         </table>
                     </div>
                 </div>

@@ -23,7 +23,15 @@ var boyaPaketGiris = new Vue({
             netAdet: 0,
             paketIcAdet: 0,
             korumaBandiId: "",
-            korumaBandiAd: ""
+            korumaBandiAd: "",
+            araKagitId : "",
+            araKagitAd: "",
+            confirmContent : "",
+            kesimId : 0,
+            baskiId: 0,
+            profilId: 0,
+            boyaId: 0,
+
 
         },
         methods: {
@@ -33,6 +41,32 @@ var boyaPaketGiris = new Vue({
                 this.topAdet = this.topAdet ? this.topAdet : 0;
                 this.netAdet = this.topAdet - this.rutusAdet - this.hurdaAdet;
 
+            },
+           async bitir (event) {
+                if(this.araKagitId == 1 && (this.korumaBandiId == 1 || this.korumaBandiId == 2) &&  this.satirNo ) {
+                     this.confirmContent =  await confirm("Ara Kağıt ve koruma Bandı yerleştirildi mi ?")
+                    if(!this.confirmContent ) {
+                        event.preventDefault();
+                    }
+                } else if (this.araKagitId == 1 && !(this.korumaBandiId == 1 || this.korumaBandiId == 2) && this.satirNo  ){
+                    this.confirmContent = confirm("Ara Kağıt yerleştirildi mi ?")
+                    if(!this.confirmContent) {
+                        event.preventDefault();
+                    }
+                } else if (this.araKagitId == 0 && (this.korumaBandiId == 1 || this.korumaBandiId == 2) && this.satirNo  ){
+                    this.confirmContent = confirm("Koruma Bandı yerleştirildi mi ?")
+                    if(!this.confirmContent) {
+                        event.preventDefault();
+                    }
+                } else if (this.araKagitId == 0 && !(this.korumaBandiId == 1 || this.korumaBandiId == 2) && this.satirNo  ){
+                    this.confirmContent = confirm("Paketleme işlemi kapatılıyor ?")
+                    if(!this.confirmContent) {
+                        event.preventDefault();
+                    }
+                } else  {
+                    this.confirmContent = confirm("Verileri Doldurunuz ?")
+                    event.preventDefault();
+                }
             }
         }
 
@@ -45,7 +79,10 @@ $('#boya-paket-giris').on("change", async function () {
     let array = $(this).val().split(";");
     let siparisId = array[2];
     boyaPaketGiris.topAdet = array[3];
+    boyaPaketGiris.kesimId = array[0];
+    boyaPaketGiris.baskiId = array[1];
     boyaPaketGiris.korumaBandiId = array[4];
+    boyaPaketGiris.boyaId = array[5];
     boyaPaketGiris.korumaBandiAd = boyaPaketGiris.korumaBandiId == 1 ? "Baskılı" :
         boyaPaketGiris.korumaBandiId == 2 ? "Baskısız" : boyaPaketGiris.korumaBandiId == 3 ? "Yok" : "";
 
@@ -62,6 +99,7 @@ $('#boya-paket-giris').on("change", async function () {
         boyaPaketGiris.satirNo = selectedRow.satirNo;
         boyaPaketGiris.musteriAd = selectedRow.musteriAd;
         boyaPaketGiris.profil = selectedRow.profil;
+        boyaPaketGiris.profilId = selectedRow.profilId;
         boyaPaketGiris.alasim = selectedRow.alasim;
         boyaPaketGiris.tolerans = selectedRow.tolerans;
         boyaPaketGiris.boy = selectedRow.boy;
@@ -74,6 +112,9 @@ $('#boya-paket-giris').on("change", async function () {
         boyaPaketGiris.kiloAdet = selectedRow.kiloAdet;
         boyaPaketGiris.kalanKg = selectedRow.kalanKg;
         boyaPaketGiris.paketIcAdet = selectedRow.paketIcAdet;
+        boyaPaketGiris.araKagitId = selectedRow.araKagit;
+        boyaPaketGiris.araKagitAd = selectedRow.araKagit == 1 ? "Var" : "Yok";
+
 
     } else {
         boyaPaketGiris.isSelected = false;
