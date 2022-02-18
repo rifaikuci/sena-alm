@@ -72,14 +72,14 @@ if (isset($_POST['boyabaslat'])) {
                     where id = '$sepetId'";
 
 
-       // mysqli_query($db, $sqlSepet);
+     mysqli_query($db, $sqlSepet);
     } else {
         $sqlSepet = "UPDATE tblsepet set
                         icindekiler = '$icindeTablo',
                         adetler = '$adetTablo',
                         isTermik = '0'
                     where id = '$sepetId'";
-    //    mysqli_query($db, $sqlSepet);
+     mysqli_query($db, $sqlSepet);
     }
 
 
@@ -88,11 +88,11 @@ if (isset($_POST['boyabaslat'])) {
         $geciciAdet = -1 * ($hurdaAdet);
         $sqlprofil = "INSERT INTO tblstokprofil (toplamAdet, gelisAmaci,siparis) 
                 VALUES ( '$geciciAdet', 'boya', '$satirNo')";
-//        mysqli_query($db, $sqlprofil);
+       mysqli_query($db, $sqlprofil);
 
         $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer, kesimId) 
                 VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId','$baskiId', 'boya', '$kesimId')";
-  //      mysqli_query($db, $sqlHurda);
+     mysqli_query($db, $sqlHurda);
     }
 
 
@@ -100,7 +100,7 @@ if (isset($_POST['boyabaslat'])) {
     if ($siklonAyrilanKg > 0) {
         $sqlSiklon = "INSERT INTO tblsiklon (kilo, kalan,boyaId) 
                 VALUES ( '$siklonAyrilanKg', '$siklonAyrilanKg', '$boyaId')";
-     //   mysqli_query($db, $sqlSiklon);
+       mysqli_query($db, $sqlSiklon);
     }
 
     // boyanın düşürülmesi
@@ -111,7 +111,7 @@ if (isset($_POST['boyabaslat'])) {
         $sqlstokboya = "UPDATE tblstokboya set
                         kalan = '$kalan'
                     where id = '$boyaId'";
-        //mysqli_query($db, $sqlstokboya);
+        mysqli_query($db, $sqlstokboya);
     }
 
     // rutus düşürülmesi
@@ -122,7 +122,7 @@ if (isset($_POST['boyabaslat'])) {
         $sqlRutusAyrilan = "UPDATE tblrutusprofil set
                         kalan = '$kalan'
                     where id = '$rutusId'";
-     //   mysqli_query($db, $sqlRutusAyrilan);
+        mysqli_query($db, $sqlRutusAyrilan);
     }
 
 
@@ -134,7 +134,7 @@ if (isset($_POST['boyabaslat'])) {
         $sqlisiklon = "UPDATE tblsiklon set
                         kalan = '$kalan'
                     where id = '$siklonId'";
-    //    mysqli_query($db, $sqlisiklon);
+        mysqli_query($db, $sqlisiklon);
     }
 
 

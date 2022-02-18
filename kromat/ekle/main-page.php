@@ -22,7 +22,7 @@ $kromatSepet = $db->query($kromatSql);
 
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <label></label>
+                            <label>Sepet</label>
                             <select required name="kromatSepet" class="select2"
                                     data-dropdown-css-class="select2-blue"
                                     data-placeholder="Sepet "

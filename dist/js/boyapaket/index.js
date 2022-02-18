@@ -31,6 +31,10 @@ var boyaPaketGiris = new Vue({
             baskiId: 0,
             profilId: 0,
             boyaId: 0,
+            tamPaket : 0,
+            yarimPaket: 0,
+            toplamPaket : 0,
+            kalanAdet : 0
 
 
         },
@@ -40,6 +44,19 @@ var boyaPaketGiris = new Vue({
                 this.rutusAdet = this.rutusAdet ? this.rutusAdet : 0;
                 this.topAdet = this.topAdet ? this.topAdet : 0;
                 this.netAdet = this.topAdet - this.rutusAdet - this.hurdaAdet;
+
+                if(this.netAdet % this.paketIcAdet === 0 ) {
+                    this.tamPaket =  this.netAdet / this.paketIcAdet
+                    this.yarimPaket = 0
+                    this.kalanAdet = 0
+                    this.toplamPaket = this.tamPaket;
+                } else {
+                     this.kalanAdet= this.netAdet % this.paketIcAdet;
+                    let kalanTam = this.netAdet - this.kalanAdet;
+                    this.tamPaket = kalanTam / this.paketIcAdet;
+                    this.yarimPaket = 1;
+                    this.toplamPaket = this.tamPaket + this.yarimPaket;
+                }
 
             },
            async bitir (event) {

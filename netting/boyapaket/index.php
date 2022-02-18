@@ -18,6 +18,7 @@ if (isset($_POST['boyapaketbaslat'])) {
     $satirNo = $_POST['satirNo'];
     $rutusAdet = $_POST['rutusAdet'];
     $rutusSebep = $_POST['rutusSebep'];
+    $naylonDurum = tablogetir('tblsiparis', 'satirNo',$satirNo, $db)['naylonDurum'];
 
     $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $vardiya = vardiyaBul($vardiya, date("H:i"));
@@ -48,6 +49,7 @@ if (isset($_POST['boyapaketbaslat'])) {
     mysqli_query($db, $sqlboya);
     $sqlboyapaket = "INSERT INTO tblboyapaket  (
                         boyaId,
+                        kesimId,
                         hurdaAdet,
                         hurdaSebep,
                         netAdet,
@@ -56,9 +58,11 @@ if (isset($_POST['boyapaketbaslat'])) {
                         rutusSebep,
                         zaman,
                         vardiya,
+                        naylonDurum,
                         operatorId)
                    VALUES  (
                         '$boyaId',
+                        '$kesimId',
                         '$hurdaAdet',
                         '$hurdaSebep',
                         '$netAdet',
@@ -67,6 +71,7 @@ if (isset($_POST['boyapaketbaslat'])) {
                         '$rutusSebep',
                         '$zaman',
                         '$vardiya',
+                        '$naylonDurum',
                         '$operatorId'
     
                    )";

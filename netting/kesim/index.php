@@ -33,6 +33,7 @@ if (isset($_POST['kesimekle'])) {
     $aciklama = $_POST['aciklama'];
     $siparisId = $_POST['siparisId'];
     $hurdaAdet = $_POST['hurdaAdet'];
+    $naylonDurum = tablogetir("tblsiparis",'id',$siparisId, $db)['naylonDurum'];
     $konum = "termik";
     if ($istenilenTermik == "Termikli" || $istenilenTermik == "Yarı Termikli") {
         $konum = "termik";

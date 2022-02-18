@@ -2,18 +2,18 @@
 include "../../netting/baglan.php";
 include "../../include/sql.php";
 
-$boyaSql = "SELECT * FROM tblboya where isFirin = '1' and isPaket = '0'";
-$boyaSepet = $db->query($boyaSql);
+$sepetsql = "SELECT * FROM tblsepet where tur = 'araba' and icindekiler != ''";
+$sepetler = $db->query($sepetsql);
 
 ?>
 
 <section class="content">
     <div class="card card-info">
         <div class="card-header">
-            Boya Paket Alanı
+            Paket Alanı
         </div>
-        <div class="card-body" id="boya-paket">
-            <form method="post" action="<?php echo base_url() . 'netting/boyapaket/index.php' ?>">
+        <div class="card-body" id="paket-giris">
+            <form method="post" action="<?php echo base_url() . 'netting/paket/index.php' ?>">
                 <div class="row" v-if="isSelected">
                     <div class="col-sm-12">
                         <div class="card card-secondary">
@@ -86,6 +86,16 @@ $boyaSepet = $db->query($boyaSql);
                                 <div class="row">
                                     <div class="col-sm-8">
                                         <h6>
+                                            <span style="color: darkcyan; font-weight: bold"> Sepetten Alınan Adet: </span>
+                                            {{sepetAlinanAdet}}
+                                        </h6>
+
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Paket Iç Adet: </span>
                                             {{paketIcAdet}}
                                         </h6>
@@ -145,25 +155,36 @@ $boyaSepet = $db->query($boyaSql);
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <label></label>
-                            <select required name="boyaId" class="select2"
-                                    id="boya-paket-giris"
-                                    data-dropdown-css-class="select2-blue"
-                                    data-placeholder="Paketlenecek Ürünü Seçiniz "
+                            <label>Sepet</label>
+                            <select required  id="paket-giris-select" class="select2"
+                                    data-dropdown-css-class="select2-gray"
+                                    data-placeholder="Sepet - Kesim -  Adet "
                                     style="width: 100%;">
-                                <option selected value="0">Satır No - Toplam Adet - Kesim No</option>
-                                <?php while ($boya = $boyaSepet->fetch_array()) {
-                                    $kesimId = $boya['kesimId'];
-                                    $baskiId = tablogetir('tblkesim', 'id', $kesimId, $db)['baskiId'];
-                                    $siparisId = tablogetir('tblbaski', 'id', $baskiId, $db)['siparisId'];
-                                    $siparis = tablogetir('tblsiparis', 'id', $siparisId, $db);
-                                    $satirNo = $siparis['satirNo'];
-                                    $koruma = $siparis['korumaBandi'];
-                                    $value = $satirNo . " - " . $boya['topAdet'] . " - " . $kesimId;
-                                    $key = $kesimId . ";" . $baskiId . ";" . $siparisId . ";" . $boya['topAdet'] . ";" . $koruma . ";" . $boya['id'] ?>
-                                    <option value="<?php echo $key ?>"> <?php echo $value ?></option>
-                                <?php } ?>
+                                <option selected disabled value="0">Sepet - Kesim - Adet</option>
+                                <?php while ($sepet = $sepetler->fetch_array()) {
+                                    $icindekiler = rtrim($sepet['icindekiler'], ";");
+                                    $icindekiler = explode(";", $icindekiler);
+                                    $adetler = rtrim($sepet['adetler'], ";");
+                                    $adetler = explode(";", $adetler);
+
+                                    for ($i = 0; $i < count($icindekiler); $i++) {
+                                        ?>
+                                        <option value="<?php echo $sepet['id'] . ";" . $icindekiler[$i] . ";" . $adetler[$i] ?>"> <?php echo $sepet['ad'] . " - " . $icindekiler[$i] . " - " . $adetler[$i] ?></option>
+                                    <?php }
+                                } ?>
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Sepetten Alınan  Adet</label>
+                            <input name="sepetAlinanAdet"
+                                   v-model="sepetAlinanAdet"
+                                   @change="netAdetCalculate($event)"
+                                   class="form-control" type="number"
+                                   placeholder="0">
+
                         </div>
                     </div>
 
@@ -176,13 +197,13 @@ $boyaSepet = $db->query($boyaSql);
                                    class="form-control" type="number"
                                    placeholder="0">
                             <input type="hidden" name="operatorId" value="<?php echo $_SESSION['operatorId'] ?>">
-                            <input name="boyapaketbaslat" value="boyapaketbaslat" type="hidden">
+                            <input name="paketbaslat" value="paketbaslat" type="hidden">
                             <input type="hidden" name="netAdet" :value="netAdet">
                             <input type="hidden" name="kesimId" :value="kesimId">
+                            <input type="hidden" name="sepetId" :value="sepetId">
                             <input type="hidden" name="baskiId" :value="baskiId">
                             <input type="hidden" name="profilId" :value="profilId">
                             <input type="hidden" name="satirNo" :value="satirNo">
-                            <input type="hidden" name="boyaId" :value="boyaId">
 
                         </div>
                     </div>
@@ -200,32 +221,6 @@ $boyaSepet = $db->query($boyaSql);
                                 <option value="eksenel yamuk">Eksenel Yamuk</option>
                                 <option value="olcu uygunsuz">Ölçü Uygunsuz</option>
                                 <option value="yüzey lekeli">Yüzey Lekeli</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label>Rutuş Adet</label>
-                            <input name="rutusAdet"
-                                   v-model="rutusAdet"
-                                   @change="netAdetCalculate($event)"
-                                   class="form-control" type="number"
-                                   placeholder="0">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-2" v-if="rutusAdet && rutusAdet > 0">
-                        <div class="form-group">
-                            <label>Rütuş Sebebi</label>
-                            <select class="form-control"
-                                    name="rutusSebep"
-                                    style="width: 100%;">
-                                <option selected value=""> Sebep Seçiniz</option>
-                                <option value="Rutuş 1">Rutuş 1</option>
-                                <option value="Rutuş 2">Rutuş 2</option>
-                                <option value="Rutuş 3">Rutuş 3</option>
-                                <option value="Rutuş 4">Rutuş 4</option>
                             </select>
                         </div>
                     </div>

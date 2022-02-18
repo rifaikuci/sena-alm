@@ -75,12 +75,19 @@ $('#kesim_baski_id').on("change", async function () {
         }
 
 
+        const response2 = await axios.post('/sena/netting/kesim/action.php', {
+            action: 'sepetgetir',
+            tur: kesimgiris.adim,
+        }).then((res2) => {
+            return res2.data
+        });
 
-
+        console.log(response2)
 
         kesimgiris.sepetler1 = response2;
         kesimgiris.sepetler2 = response2;
         kesimgiris.sepetler3 = response2;
+        debugger;
 
     } else {
        this.baskiId = 0
