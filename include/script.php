@@ -9,8 +9,6 @@
 <script src=<?php echo base_url() . "plugins/datatables-responsive/js/dataTables.responsive.min.js" ?>></script>
 <script src=<?php echo base_url() . "plugins/datatables-responsive/js/responsive.bootstrap4.min.js" ?>></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-*.min.js"></script>
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script type="text/javascript" src=<?php echo base_url() . "dist/js/datatable.js" ?>></script>

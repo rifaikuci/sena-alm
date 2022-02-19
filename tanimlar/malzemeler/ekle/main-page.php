@@ -21,6 +21,7 @@
                                 <option selected value="">Birimi Seçiniz</option>
                                 <option value="kg">Kg</option>
                                 <option value="lt">Lt</option>
+                                <option value="adet">Adet</option>
                             </select>
                         </div>
                     </div>

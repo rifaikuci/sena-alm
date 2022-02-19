@@ -203,6 +203,14 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a href="<?php echo base_url() . "naylon/" ?> " class="nav-link">
+                    <i class="nav-icon fas fa-poo-storm"></i>
+                    Naylon
+                    </p>
+                </a>
+            </li>
+
 
             <li class="nav-item">
                 <a href="https://rifaikuci.com/" class="nav-link">

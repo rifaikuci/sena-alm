@@ -84,7 +84,7 @@ if (isset($_POST['sevkiyatekle'])) {
         $malzemeId = explode(",", $_POST['malzememalzemeId']);
         $malzemeadet = explode(",", $_POST['malzemeadet']);
 
-        $sqlMalzeme = "INSERT INTO tblstokmalzeme (partino, firmaId, malzemeId, sevkiyatId, barkod, adet)  VALUES ";
+        $sqlMalzeme = "INSERT INTO tblstokmalzeme (partino, firmaId, malzemeId, sevkiyatId, barkod, adet, kalan)  VALUES ";
         for ($i = 0; $i < count($malzemepartino); $i++) {
             $malzemepartinosatir = $malzemepartino[$i];
             $malzemefirmasatir = $malzemefirmaId[$i];
@@ -95,7 +95,8 @@ if (isset($_POST['sevkiyatekle'])) {
 
             for ($j = 0; $j < $malzemeadetsatir; $j++) {
                 $barkod = $firmaKod . mt_rand();
-                $sqlMalzeme = $sqlMalzeme . " ('$malzemepartinosatir', '$malzemefirmasatir', '$malzemeidsatir', '$sevkiyatId', '$barkod', '$malzemeadetsatir'),";
+                $adetbirim = tablogetir("tblmalzemeler", 'id', $malzemeidsatir, $db)['birimMiktari'];
+                $sqlMalzeme = $sqlMalzeme . " ('$malzemepartinosatir', '$malzemefirmasatir', '$malzemeidsatir', '$sevkiyatId', '$barkod', '$adetbirim', '$adetbirim'),";
             }
         }
 

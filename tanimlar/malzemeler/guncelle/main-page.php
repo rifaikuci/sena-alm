@@ -35,6 +35,7 @@ if ($_GET['id']) {
                                 <option value="">Birimi Seçiniz</option>
                                 <option <?php echo $row['birim'] == 'kg' ? "selected" : "" ?> value="kg">Kg</option>
                                 <option <?php echo $row['birim'] == 'lt' ? "selected" : "" ?> value="lt">Lt</option>
+                                <option <?php echo $row['birim'] == 'adet' ? "selected" : "" ?> value="adet">Adet</option>
                             </select>
                         </div>
                     </div>
