@@ -1,5 +1,6 @@
 <?php
 include "../../netting/baglan.php";
+include "../../include/data.php";
 
 
 $firmasql = "SELECT * FROM tblfirma  ";
@@ -137,9 +138,10 @@ $alasimlar = $db->query($alasimsql);
                                             <select @change="onChangeSiparis($event)" v-model="siparis.siparisTur"
                                                     name="siparisTur" class="form-control">
                                                 <option selected disabled value="">Sipariş Türü Seçiniz</option>
-                                                <option value="Ham">Ham</option>
-                                                <option value="Boyalı">Boyalı</option>
-                                                <option value="Eloksal">Eloksal</option>
+                                                <option selected value="">Profil Tür Seçiniz</option>
+                                                <?php for ($i = 0; $i < count($profilTur); $i++) { ?>
+                                                    <option value="<?php echo $profilTur[$i] ?>"><?php echo $profilTur[$i] ?></option>
+                                                <?php } ?>
                                             </select>
                                         </div>
                                     </div>
@@ -207,9 +209,9 @@ $alasimlar = $db->query($alasimsql);
                                             <label>İstenilen Termin</label>
                                             <select v-model="siparis.istenilenTermin" name="istenilenTermin" class="form-control">
                                                 <option selected disabled value="">İstenilen Termin</option>
-                                                <option value="Termiksiz">0</option>
-                                                <option value="Yarı Termikli">4 - 7</option>
-                                                <option value="Termikli">10 - 14</option>
+                                                <?php for ($i = 0; $i < count($termikDurum); $i++) { ?>
+                                                    <option value="<?php echo $termikDurum[$i] ?>"><?php echo $termikDurum[$i] ?></option>
+                                                <?php } ?>>
                                             </select>
                                         </div>
                                     </div>

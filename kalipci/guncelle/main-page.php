@@ -1,6 +1,8 @@
 <?php
 include "../../netting/baglan.php";
 include "../../include/sql.php";
+require_once "../../include/data.php";
+
 if ($_GET['id']) {
     $id = $_GET['id'];
 
@@ -120,9 +122,9 @@ $profiller = $db->query($profillerrsql);
                             <label>Kalite</label>
                             <select name="kalite" required class="form-control" style="width: 100%;">
                                 <option value="">Kalite</option>
-                                <option <?php echo $row['kalite'] == "2344" ? "selected" : "" ?> value="2344">2344 </option>
-                                <option <?php echo $row['kalite'] == "2716" ? "selected" : "" ?> value="2716">2716 </option>
-                                <option <?php echo $row['kalite'] == "Dievar" ? "selected" : "" ?> value="Dievar"> Dievar </option>
+                                <?php for ($i = 0; $i < count($kaliteler); $i++) { ?>
+                                    <option  <?php echo $row['kalite'] == $kaliteler[$i] ? "selected" : "" ?> value="<?php echo $kaliteler[$i] ?>"><?php echo $kaliteler[$i] ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>

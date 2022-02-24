@@ -2,6 +2,7 @@
 
 include "../netting/baglan.php";
 include "../include/sql.php";
+require_once "../include/data.php";
 $sql = "SELECT * FROM tblbaski order by id desc ";
 $result = $db->query($sql);
 
@@ -53,10 +54,8 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td><?php echo tablogetir('tbltakim','id',$row['takimId'], $db)['takimNo']; ?></td>
-                                    <td><?php echo
-
-                                            tarih(explode(" ", $row['baslaZamani'])[0]) . " " . explode(" ", $row['baslaZamani'])[1]; ?></td>
+                                    <td><?php echo tablogetir('tbltakim', 'id', $row['takimId'], $db)['takimNo']; ?></td>
+                                    <td><?php echo tarihsaat($row['baslaZamani']); ?></td>
                                     <td><?php echo $row['bitisZamani'] == "" ? "Baskı Kesildi" : "Bitirildi"; ?></td>
                                     <td>
                                         <?php if (!$row['bitisZamani']) { ?>

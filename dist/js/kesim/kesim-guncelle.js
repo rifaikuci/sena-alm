@@ -26,7 +26,7 @@ var kesimguncelle = new Vue({
             kesimId: 0,
             hurdaAdet: 0,
             eskiHurdaAdet: 0,
-            aciklama: '',
+            hurdaSebep: '',
             baskilar: [],
             adim: ""
 
@@ -35,13 +35,13 @@ var kesimguncelle = new Vue({
         mounted: async function () {
 
             this.kesimId = $(this)[0]._vnode.data.attrs.kesim;
+            this.hurdaAdet = $(this)[0]._vnode.data.attrs.hurdaadet;
             const kesim = await axios.post('/sena/netting/kesim/action.php', {
                 action: 'kesimgetir',
                 id: this.kesimId
             }).then((response) => {
                 return response.data
             });
-
 
             this.sepetler1 = kesim.sepetler
             this.sepetler2 = kesim.sepetler
@@ -65,7 +65,7 @@ var kesimguncelle = new Vue({
             this.kesimId = kesim.id
             this.hurdaAdet = kesim.hurdaAdet
             this.eskiHurdaAdet = kesim.hurdaAdet
-            this.aciklama = kesim.aciklama
+            this.hurdaSebep = kesim.hurdaSebep
             this.baskilar = kesim.baskilar
 
             if(this.istenilenTermik  == "Termiksiz") {

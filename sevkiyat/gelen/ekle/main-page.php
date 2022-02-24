@@ -1,5 +1,6 @@
 <?php
 include "../../../netting/baglan.php";
+include "../../../include/data.php";
 
 $personelsql = "SELECT * FROM tblpersonel";
 $personeller = $db->query($personelsql);
@@ -72,7 +73,9 @@ $profiller = $db->query($profillerrsql);
                             <label>Plaka</label>
                             <input required type="text" class="form-control form-control-lg" name="plaka"
                                    placeholder="Plaka Bilgisi ">
-                            <input type="hidden" value="<?php echo isset($_SESSION['operatorId']) ?  $_SESSION['operatorId'] : 0; ?>" name="operatorId">
+                            <input type="hidden"
+                                   value="<?php echo isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0; ?>"
+                                   name="operatorId">
 
                         </div>
                     </div>
@@ -177,7 +180,8 @@ $profiller = $db->query($profillerrsql);
                                                     <input name="biyetalasimId" :value="biyetalasimId" type="hidden">
                                                     <input name="biyetalasimAd" :value="biyetalasimAd" type="hidden">
                                                     <input name="biyetcap" :value="biyetcap" type="hidden">
-                                                    <input name="biyetOrtalamaBoy" :value="biyetOrtalamaBoy" type="hidden">
+                                                    <input name="biyetOrtalamaBoy" :value="biyetOrtalamaBoy"
+                                                           type="hidden">
                                                     <input name="biyetToplamKg" :value="biyetToplamKg" type="hidden">
 
                                                 </div>
@@ -188,8 +192,12 @@ $profiller = $db->query($profillerrsql);
                                                     <label>Çap (mm)</label>
                                                     <select v-model="biyet.cap" class="form-control"
                                                             style="width: 100%;">
-                                                        <option @change="onChangeCap($event)" selected disabled value="">Çap Seçiniz</option>
-                                                        <option value="127">127</option>
+                                                        <option @change="onChangeCap($event)" selected disabled
+                                                                value="0">Çap Seçiniz
+                                                        </option>
+                                                        <?php for ($i = 0; $i < count($caplar); $i++) { ?>
+                                                            <option value="<?php echo $caplar[$i] ?>"><?php echo $caplar[$i] ?></option>
+                                                        <?php } ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -211,7 +219,9 @@ $profiller = $db->query($profillerrsql);
                                                             @change="onChangeAlasim($event)"
                                                             style="width: 100%;">
                                                         <option selected disabled value="">Alaşım Seçiniz</option>
-                                                        <option v-for="alasim in alasimlar" v-bind:value="alasim.id">{{alasim.ad}}</option>
+                                                        <option v-for="alasim in alasimlar" v-bind:value="alasim.id">
+                                                            {{alasim.ad}}
+                                                        </option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -311,8 +321,9 @@ $profiller = $db->query($profillerrsql);
                                                     <select v-model="boya.sicaklik" class="form-control"
                                                             style="width: 100%;">
                                                         <option selected disabled value="">Kürlenme Sıcaklığı</option>
-                                                        <option value="180">180</option>
-                                                        <option value="200">200</option>
+                                                        <?php for ($i = 0; $i < count($firinSicaklik); $i++) { ?>
+                                                            <option value="<?php echo $firinSicaklik[$i] ?>"><?php echo $firinSicaklik[$i] ?></option>
+                                                        <?php } ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -323,12 +334,9 @@ $profiller = $db->query($profillerrsql);
                                                     <select v-model="boya.cins" class="form-control"
                                                             style="width: 100%;">
                                                         <option selected disabled value="">Cins</option>
-                                                        <option value="Mat">Mat</option>
-                                                        <option value="Parlak">Parlak</option>
-                                                        <option value="Yarı Mat">Yarı Mat</option>
-                                                        <option value="Metalik">Metalik</option>
-                                                        <option value="Simli">Simli</option>
-                                                        <option value="Texture">Texture</option>
+                                                        <?php for ($i = 0; $i < count($boyaCins); $i++) { ?>
+                                                            <option value="<?php echo $boyaCins[$i] ?>"><?php echo $boyaCins[$i] ?></option>
+                                                        <?php } ?>
                                                     </select>
                                                 </div>
                                             </div>
@@ -519,7 +527,8 @@ $profiller = $db->query($profillerrsql);
                                                     <input name="profilboy" :value="profilboy" type="hidden">
                                                     <input name="profilfirmaId" :value="profilfirmaId" type="hidden">
                                                     <input name="profilfirmaAd" :value="profilfirmaAd" type="hidden">
-                                                    <input name="profilIstenilenTermin" :value="profilIstenilenTermin" type="hidden">
+                                                    <input name="profilIstenilenTermin" :value="profilIstenilenTermin"
+                                                           type="hidden">
                                                     <input name="profilmusteriId" :value="profilmusteriId"
                                                            type="hidden">
                                                     <input name="profilmusteriAd" :value="profilmusteriAd"
@@ -567,9 +576,9 @@ $profiller = $db->query($profillerrsql);
                                                     <select v-model="profil.tur" class="form-control"
                                                             style="width: 100%;">
                                                         <option selected value="">Profil Tür Seçiniz</option>
-                                                        <option value="Ham">Ham</option>
-                                                        <option value="Boyalı">Boyalı</option>
-                                                        <option value="Eloksallı">Eloksallı</option>
+                                                        <?php for ($i = 0; $i < count($profilTur); $i++) { ?>
+                                                            <option value="<?php echo $profilTur[$i] ?>"><?php echo $profilTur[$i] ?></option>
+                                                        <?php } ?>
 
                                                     </select>
                                                 </div>
@@ -581,10 +590,9 @@ $profiller = $db->query($profillerrsql);
                                                     <select v-model="profil.gelis" class="form-control"
                                                             style="width: 100%;">
                                                         <option selected value="">Geliş Amacı Seçiniz</option>
-                                                        <option value="boya">Boya</option>
-                                                        <option value="kesim">Kesim</option>
-                                                        <option value="termik">Termik</option>
-                                                        <option value="paketleme">Paketleme</option>
+                                                        <?php for ($i = 0; $i < count($gelisTur); $i++) { ?>
+                                                            <option value="<?php echo $gelisTur[$i] ?>"><?php echo $gelisTur[$i] ?></option>
+                                                        <?php } ?>
 
                                                     </select>
                                                 </div>
@@ -647,9 +655,9 @@ $profiller = $db->query($profillerrsql);
                                                             @change="onChangeIstenilenTermin($event)"
                                                             class="form-control">
                                                         <option selected disabled value="">İstenilen Termin</option>
-                                                        <option value="Termiksiz">0</option>
-                                                        <option value="Yarı Termikli">4 - 7</option>
-                                                        <option value="Termikli">10 - 14</option>
+                                                        <?php for ($i = 0; $i < count($termikDurum); $i++) { ?>
+                                                            <option value="<?php echo $termikDurum[$i] ?>"><?php echo $termikDurum[$i] ?></option>
+                                                        <?php } ?>
                                                     </select>
                                                 </div>
                                             </div>

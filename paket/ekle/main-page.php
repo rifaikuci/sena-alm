@@ -1,7 +1,7 @@
 <?php
 include "../../netting/baglan.php";
 include "../../include/sql.php";
-
+require_once "../../include/data.php";
 $sepetsql = "SELECT * FROM tblsepet where tur = 'araba' and icindekiler != ''";
 $sepetler = $db->query($sepetsql);
 
@@ -214,13 +214,10 @@ $sepetler = $db->query($sepetsql);
                             <select class="form-control"
                                     name="hurdaSebep"
                                     style="width: 100%;">
-                                <option selected value=""> Sebep Seçiniz</option>
-                                <option value="ezik var">Ezik Var</option>
-                                <option value="boy kurtarmadı">Boy Kurtarmadı</option>
-                                <option value="delik var">Delik Var</option>
-                                <option value="eksenel yamuk">Eksenel Yamuk</option>
-                                <option value="olcu uygunsuz">Ölçü Uygunsuz</option>
-                                <option value="yüzey lekeli">Yüzey Lekeli</option>
+                                <option selected disabled value="0">Sebep seçiniz</option>
+                                <?php for ($i = 0; $i < count($hurdaSebep); $i++) { ?>
+                                    <option value="<?php echo $hurdaSebep[$i] ?>"><?php echo $hurdaSebep[$i] ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>

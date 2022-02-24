@@ -1,6 +1,7 @@
 <?php
 include "../../netting/baglan.php";
 include "../../include/sql.php";
+require_once "../../include/data.php";
 
 $boyaSql = "SELECT * FROM tblboya where isFirin = '1' and isPaket = '0'";
 $boyaSepet = $db->query($boyaSql);
@@ -193,13 +194,10 @@ $boyaSepet = $db->query($boyaSql);
                             <select class="form-control"
                                     name="hurdaSebep"
                                     style="width: 100%;">
-                                <option selected value=""> Sebep Seçiniz</option>
-                                <option value="ezik var">Ezik Var</option>
-                                <option value="boy kurtarmadı">Boy Kurtarmadı</option>
-                                <option value="delik var">Delik Var</option>
-                                <option value="eksenel yamuk">Eksenel Yamuk</option>
-                                <option value="olcu uygunsuz">Ölçü Uygunsuz</option>
-                                <option value="yüzey lekeli">Yüzey Lekeli</option>
+                                <option selected value="0"> Sebep Seçiniz</option>
+                                <?php for ($i = 0; $i < count($hurdaSebep); $i++) { ?>
+                                    <option value="<?php echo $hurdaSebep[$i] ?>"><?php echo $hurdaSebep[$i] ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
@@ -221,11 +219,10 @@ $boyaSepet = $db->query($boyaSql);
                             <select class="form-control"
                                     name="rutusSebep"
                                     style="width: 100%;">
-                                <option selected value=""> Sebep Seçiniz</option>
-                                <option value="Rutuş 1">Rutuş 1</option>
-                                <option value="Rutuş 2">Rutuş 2</option>
-                                <option value="Rutuş 3">Rutuş 3</option>
-                                <option value="Rutuş 4">Rutuş 4</option>
+                                <option selected value="0"> Sebep Seçiniz</option>
+                                <?php for ($i = 0; $i < count($rutusSebep); $i++) { ?>
+                                    <option value="<?php echo $rutusSebep[$i] ?>"><?php echo $rutusSebep[$i] ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
@@ -244,7 +241,7 @@ $boyaSepet = $db->query($boyaSql);
                 <div class="card-footer">
                     <div>
                         <button v-on:click="bitir($event)" type="submit"
-                                class="btn btn-info float-right">Ekle
+                                class="btn btn-info float-right">Bitir
                         </button>
                         <a href="../"
                            class="btn btn-warning float-left">Vazgeç</a>

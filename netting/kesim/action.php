@@ -52,6 +52,7 @@ if ($received_data->action == 'baskigetir') {
         $data['istenilenTermik'] = $siparis['istenilenTermin'];
         $data['basilanNetAdet'] = $row['basilanNetAdet'];
         $data['kayitTarih'] = $row['kayitTarih'];
+        $data['hurdaAdet'] = $row['hurdaAdet'];
         $data['siparisId'] = $row['siparisId'];
         $data['profil'] = $profil['profilAdi'] . " - " .  $profil['profilNo'];
         $data['siparisTur'] = $siparisTur == "B" ? "Boyalı" : ($siparisTur == "E" ? "Eloksal" : "Ham");
@@ -106,7 +107,6 @@ if ($received_data->action == 'kesimgetir') {
     $siparisTur = $siparisgetir['siparisTuru'];
 
     $profil = tablogetir('tblprofil','id',$profilId, $db);
-    $hurdalar = tablogetir('tblhurda','id',$id, $db);
 
     $data['id'] = $row['id'];
     $data['baskiId'] = $row['baskiId'];
@@ -118,11 +118,10 @@ if ($received_data->action == 'kesimgetir') {
     $data['sepet1Adet'] = $row['sepet1Adet'];
     $data['sepet2Adet'] = $row['sepet2Adet'];
     $data['sepet3Adet'] = $row['sepet3Adet'];
-    $data['hurdaAdet'] = $row['hurdaAdet'];
     $data['netAdet'] = $row['netAdet'];
     $data['kesilenBoy'] = $row['kesilenBoy'];
-    $data['hurdaAdet'] = $hurdalar['toplamKg'];
-    $data['aciklama'] = $hurdalar['aciklama'];
+    $data['hurdaAdet'] = $row['hurdaAdet'];
+    $data['hurdaSebep'] =$row['hurdaSebep'];
     $data['tarih'] = date("Y-m-d", strtotime(explode(" ", $row['tarih'])[0]));
     $data['saat'] = date("H:i", strtotime(explode(" ", $row['tarih'])[1]));
     $data['durum'] = $row['durum'];

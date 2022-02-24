@@ -1,5 +1,6 @@
 <?php
 include "../../netting/baglan.php";
+include "../../include/data.php";
 
 
 $firmasql = "SELECT * FROM tblfirma  ";
@@ -107,9 +108,9 @@ $profiller = $db->query($profillerrsql);
                             <label>Kalite</label>
                             <select name="kalite" required class="form-control" style="width: 100%;">
                                 <option selected value="">Kalite</option>
-                                <option value="2344">2344</option>
-                                <option value="2716">2716</option>
-                                <option value="Dievar">Dievar</option>
+                                <?php for ($i = 0; $i < count($kaliteler); $i++) { ?>
+                                    <option value="<?php echo $kaliteler[$i] ?>"><?php echo $kaliteler[$i] ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>

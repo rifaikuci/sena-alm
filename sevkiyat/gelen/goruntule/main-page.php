@@ -5,6 +5,7 @@ if ($_GET['id']) {
     include '../../../netting/baglan.php';
     include "../../../include/sql.php";
     require_once "../../../include/helper.php";
+    require_once "../../../include/data.php";
 
     $sql = "SELECT * FROM tblsevkiyat WHERE id = '$id'";
     $result = mysqli_query($db, $sql);
@@ -61,7 +62,7 @@ if ($_GET['id']) {
                 </div>
 
                 <?php if (isTableSevkiyat($db, "tblstokbiyet", $detail['id']) > 0) {
-                    $sqlbiyet = "SELECT * FROM `tblstokbiyet` where sevkiyatId =" . $detail['id'] ;
+                    $sqlbiyet = "SELECT * FROM tblstokbiyet where sevkiyatId =" . $detail['id'] ;
                     $resultbiyet = $db->query($sqlbiyet);
 
                     ?>

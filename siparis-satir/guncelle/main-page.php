@@ -2,6 +2,7 @@
 include '../../netting/baglan.php';
 include "../../include/sql.php";
 require_once "../../include/helper.php";
+require_once "../../include/data.php";
 
 $satirno = 0;
 if (isset($_GET['satirno'])) {
@@ -134,9 +135,9 @@ $alasimlar = $db->query($alasimsql);
                                         <select @change="onChangeSiparis($event)" v-model="siparisTur"
                                                 name="siparisTur" class="form-control">
                                             <option selected disabled value="">Sipariş Türü Seçiniz</option>
-                                            <option value="Ham">Ham</option>
-                                            <option value="Boyalı">Boyalı</option>
-                                            <option value="Eloksal">Eloksal</option>
+                                            <?php for ($i = 0; $i < count($profilTur); $i++) { ?>
+                                                <option value="<?php echo $profilTur[$i] ?>"><?php echo $profilTur[$i] ?></option>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                 </div>
@@ -203,8 +204,9 @@ $alasimlar = $db->query($alasimsql);
                                         <label>Sipariş Durumu</label>
                                         <select v-model="konum" name="konum" class="form-control">
                                             <option selected disabled value="">Konum Seçiniz</option>
-                                            <option value="baski">Baskı</option>
-                                            <option value="kesim">Kesim</option>
+                                            <?php for ($i = 0; $i < count($konumlar); $i++) { ?>
+                                                <option value="<?php echo $konumlar[$i] ?>"><?php echo $konumlar[$i] ?></option>
+                                            <?php } ?>
                                         </select>
                                     </div>
                                 </div>

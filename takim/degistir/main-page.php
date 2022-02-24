@@ -1,7 +1,7 @@
 <?php
 include "../../netting/baglan.php";
 include "../../include/sql.php";
-if ($_GET['takimno']) {
+require_once "../../include/data.php";if ($_GET['takimno']) {
     $takimno = $_GET['takimno'];
     $sql = "SELECT * FROM tbltakim WHERE takimNo = '$takimno'";
     $result = mysqli_query($db, $sql);

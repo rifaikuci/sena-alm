@@ -1,6 +1,7 @@
 <?php
 include "../../netting/baglan.php";
 include "../../include/sql.php";
+require_once "../../include/data.php";
 
 
 

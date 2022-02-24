@@ -1,3 +1,7 @@
+<?
+require_once "../../../include/data.php";
+?>
+
 <section class="content">
     <div class="card card-info">
         <div class="card-header">
@@ -19,9 +23,9 @@
                             <label>Birim</label>
                             <select required name="birim" class="select2" style="width: 100%;">
                                 <option selected value="">Birimi Seçiniz</option>
-                                <option value="kg">Kg</option>
-                                <option value="lt">Lt</option>
-                                <option value="adet">Adet</option>
+                              <?php for($i = 0; $i < count($birimler); $i++) {   ?>
+                                <option value="<?php echo $birimler[$i]; ?>"><?php echo $birimler[$i]; ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
@@ -39,13 +43,9 @@
                             <label>Kullanıldığı Alan</label>
                             <select required name="kullanildigiAlanlar" class="select2" style="width: 100%;">
                                 <option selected value="">Kullanıldığı Alan</option>
-                                <option value="kaliphane">Kalıphane</option>
-                                <option value="boyahane">Boyahane</option>
-                                <option value="kromat">Kromat</option>
-                                <option value="pres">Pres</option>
-                                <option value="stok">Stok</option>
-                                <option value="paketleme">Paketleme</option>
-                                <option value="sevkiyat">Sevkiyat</option>
+                                <?php for($i = 0; $i < count($kullanildigiAlanlar); $i++) {   ?>
+                                    <option value="<?php echo $kullanildigiAlanlar[$i]; ?>"><?php echo $kullanildigiAlanlar[$i]; ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>

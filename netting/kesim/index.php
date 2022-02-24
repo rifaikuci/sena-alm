@@ -30,7 +30,7 @@ if (isset($_POST['kesimekle'])) {
     $kesilenBoy = $_POST['kesilenBoy'];
     $basilanNetAdet = $_POST['basilanNetAdet'];
     $istenilenTermik = $_POST['istenilenTermik'];
-    $aciklama = $_POST['aciklama'];
+    $hurdaSebep = $_POST['hurdaSebep'];
     $siparisId = $_POST['siparisId'];
     $hurdaAdet = $_POST['hurdaAdet'];
     $naylonDurum = tablogetir("tblsiparis",'id',$siparisId, $db)['naylonDurum'];
@@ -49,9 +49,9 @@ if (isset($_POST['kesimekle'])) {
         }
     }
 
-    $sqlKesim = "INSERT INTO tblkesim (baskiId, kesilenBoy, operatorId, sepetId1, sepetId2, sepetId3, 
+    $sqlKesim = "INSERT INTO tblkesim (baskiId, kesilenBoy, operatorId, sepetId1, sepetId2, sepetId3, hurdaSebep, 
                       hurdaAdet, netAdet, vardiyaKod, sepet1Adet, sepet2Adet, sepet3Adet, durum, termikId) 
-                VALUES ('$baskiId', '$kesilenBoy', '$operatorId', '$sepet1', '$sepet2', '$sepet3',
+                VALUES ('$baskiId', '$kesilenBoy', '$operatorId', '$sepet1', '$sepet2', '$sepet3', '$hurdaSebep', 
                         '$hurdaAdet', '$netAdet', '$vardiyaKod', '$sepet1Adet', '$sepet2Adet', '$sepet3Adet', '$konum', '$termikId')";
 
     mysqli_query($db, $sqlKesim);
@@ -66,7 +66,7 @@ if (isset($_POST['kesimekle'])) {
 
 
     $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer, kesimId) 
-                VALUES ('$hurdaAdet', '$aciklama', '$operatorId','$baskiId', 'kesim', '$kesimId')";
+                VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId','$baskiId', 'kesim', '$kesimId')";
     mysqli_query($db, $sqlHurda);
 
     $guncelGr = tablogetir('tblbaski', 'id', $baskiId, $db)['guncelGr'];
@@ -253,7 +253,7 @@ if (isset($_POST['kesimguncelle'])) {
     $kesilenBoy = $_POST['kesilenBoy'];
     $basilanNetAdet = $_POST['basilanNetAdet'];
     $istenilenTermik = $_POST['istenilenTermik'];
-    $aciklama = $_POST['aciklama'];
+    $hurdaSebep = $_POST['hurdaSebep'];
     $siparisId = $_POST['siparisId'];
     $hurdaAdet = $_POST['hurdaAdet'];
     $eskiHurdaAdet = $_POST['eskiHurdaAdet'];
@@ -267,6 +267,7 @@ if (isset($_POST['kesimguncelle'])) {
     sepetId2 = '$sepetId2',
     sepetId3 = '$sepetId3',
     hurdaAdet = '$hurdaAdet',
+    hurdaSebep = '$hurdaSebep',
     netAdet = '$netAdet',
     sepet1Adet = '$sepet1Adet',
     sepet2Adet = '$sepet2Adet',
@@ -276,7 +277,7 @@ if (isset($_POST['kesimguncelle'])) {
 
     $sqlHurda = "UPDATE tblhurda set
     adet = '$hurdaAdet',
-    aciklama = '$aciklama',
+    aciklama = '$hurdaSebep',
     operatorId = '$operatorId'
     where kesimId = '$kesimId'";
 

@@ -1,6 +1,7 @@
 <?php
 include "../../netting/baglan.php";
 include "../../include/sql.php";
+require_once "../../include/data.php";
 
 
 $kesimsql = "SELECT * FROM tblbaski where kesimId =  0 and bitisZamani !='' ";
@@ -148,14 +149,11 @@ $baskilar = $db->query($kesimsql);
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Hurdaya Atılma Sebebi</label>
-                            <select name="aciklama" required class="form-control select2" style="width: 100%;">
-                                <option selected disabled value="">Sipariş No - Sipariş Türü</option>
-                                <option value="ezik var">Ezik Var</option>
-                                <option value="boy kurtarmadı">Boy Kurtarmadı</option>
-                                <option value="delik var">Delik Var</option>
-                                <option value="eksenel yamuk">Eksenel Yamuk</option>
-                                <option value="olcu uygunsuz">Ölçü Uygunsuz</option>
-                                <option value="yüzey lekeli">Yüzey Lekeli</option>
+                            <select name="hurdaSebep" required class="form-control select2" style="width: 100%;">
+                                <option selected disabled value="0">Sebep seçiniz</option>
+                                <?php for ($i = 0; $i < count($hurdaSebep); $i++) { ?>
+                                    <option value="<?php echo $hurdaSebep[$i] ?>"><?php echo $hurdaSebep[$i] ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>

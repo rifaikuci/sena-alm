@@ -1,6 +1,7 @@
 <?php
 include "../../netting/baglan.php";
 include "../../include/sql.php";
+require_once "../../include/data.php";
 
 
 $kesimId = 0;
@@ -22,7 +23,8 @@ date_default_timezone_set('Europe/Istanbul');
         <div class="card-header">
             Kesim Güncelleme
         </div>
-        <div class="card-body" id="kesim-guncelle" :kesim="<?php echo $kesimId; ?>">
+        <div class="card-body" id="kesim-guncelle" :kesim="<?php echo $kesimId; ?>"
+             :hurdaAdet="<?php echo $kesim['hurdaAdet']; ?>">
             <form method="post" action="<?php echo base_url() . 'netting/kesim/index.php' ?>"
                   enctype="multipart/form-data">
                 <div class="row" v-if="baskiId > 0">
@@ -150,6 +152,7 @@ date_default_timezone_set('Europe/Istanbul');
                         <div class="form-group">
                             <label>Hurda Adet</label>
                             <input @input="() => {netAdet = basilanNetAdet - hurdaAdet}" v-model="hurdaAdet" required
+                                   name="hurdaAdet"
                                    type="number" class="form-control form-control-lg"
                                    min="0.1" step="0.1"
                                    placeholder="0.1">
@@ -158,15 +161,13 @@ date_default_timezone_set('Europe/Istanbul');
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Hurdaya Atılma Sebebi</label>
-                            <select name="aciklama" v-model="aciklama" required class="form-control select2"
+                            <select v-model="hurdaSebep" name="hurdaSebep" required class="form-control select2"
                                     style="width: 100%;">
-                                <option selected disabled value="">Sipariş No - Sipariş Türü</option>
-                                <option value="ezik var">Ezik Var</option>
-                                <option value="boy kurtarmadı">Boy Kurtarmadı</option>
-                                <option value="delik var">Delik Var</option>
-                                <option value="eksenel yamuk">Eksenel Yamuk</option>
-                                <option value="olcu uygunsuz">Ölçü Uygunsuz</option>
-                                <option value="yüzey lekeli">Yüzey Lekeli</option>
+                                <option selected value="0">Sebep Seçiniz</option>
+                                <?php for ($i = 0; $i < count($hurdaSebep); $i++) { ?>
+                                    <option <?php echo $hurdaSebep[$i] == $kesim['hurdaSebep'] ? "selected" : "" ?>
+                                            value="<?php echo $hurdaSebep[$i] ?>"><?php echo $hurdaSebep[$i] ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>

@@ -1,6 +1,7 @@
 <?php
 include "../../netting/baglan.php";
 include "../../include/sql.php";
+require_once "../../include/data.php";
 
 $sepetsql = "SELECT * FROM tblsepet where  (durum =  2 and isTermik != '1' and icindekiler != '' and tur = 'termik') or  (tur = 'kromat' and icindekiler != '')";
 $sepetler = $db->query($sepetsql);
@@ -34,11 +35,11 @@ $kromatSepet = $db->query($kromatSql);
                             </select>
                             <input type="hidden" name="kromatbaslat" value="kromatbaslat">
                             <input type="hidden" name="arraysepet[]" v-model="sepetler">
-                            <input type="hidden" name="arraykesim[]"  v-model="kesimlerId">
-                            <input type="hidden" name="arrayadet[]"  v-model="adetler">
-                            <input type="hidden" name="arrayhurda[]"  v-model="hurdaAdetler">
-                            <input type="hidden" name="arraysebep[]"  v-model="sebepler">
-                            <input type="hidden" name="operatorId"  value="<?php echo $_SESSION['operatorId']?>">
+                            <input type="hidden" name="arraykesim[]" v-model="kesimlerId">
+                            <input type="hidden" name="arrayadet[]" v-model="adetler">
+                            <input type="hidden" name="arrayhurda[]" v-model="hurdaAdetler">
+                            <input type="hidden" name="arraysebep[]" v-model="sebepler">
+                            <input type="hidden" name="operatorId" value="<?php echo $_SESSION['operatorId'] ?>">
                         </div>
                     </div>
 
@@ -99,13 +100,10 @@ $kromatSepet = $db->query($kromatSql);
                             <label>Hurdaya Atılma Sebebi</label>
                             <select :required="kesim.hurdaAdet > 0" v-model="kesim.sebep" class="form-control"
                                     style="width: 100%;">
-                                <option selected value=""> Sebep Seçiniz</option>
-                                <option value="ezik var">Ezik Var</option>
-                                <option value="boy kurtarmadı">Boy Kurtarmadı</option>
-                                <option value="delik var">Delik Var</option>
-                                <option value="eksenel yamuk">Eksenel Yamuk</option>
-                                <option value="olcu uygunsuz">Ölçü Uygunsuz</option>
-                                <option value="yüzey lekeli">Yüzey Lekeli</option>
+                                <option selected value="0"> Sebep Seçiniz</option>
+                                <?php for ($i = 0; $i < count($hurdaSebep); $i++) { ?>
+                                    <option value="<?php echo $hurdaSebep[$i] ?>"><?php echo $hurdaSebep[$i] ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
@@ -113,7 +111,7 @@ $kromatSepet = $db->query($kromatSql);
 
                 <div class="card-footer">
                     <div>
-                        <button  v-on:click="kromatekle" type="submit" class="btn btn-info float-right">Ekle</button>
+                        <button v-on:click="kromatekle" type="submit" class="btn btn-info float-right">Ekle</button>
                         <a href="../"
                            class="btn btn-warning float-left">Vazgeç</a>
                     </div>

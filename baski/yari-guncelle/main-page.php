@@ -1,6 +1,7 @@
 <?php
 include "../../netting/baglan.php";
 require_once "../../include/sql.php";
+require_once "../../include/data.php";
 
 
 if ($_GET['baski']) {
@@ -32,7 +33,7 @@ $siparissql = "SELECT * FROM tblsiparis where baskiDurum = 0 order by termimTari
 $siparisler = $db->query($siparissql);
 
 
-$biyetSql = "SELECT * FROM tblstokbiyet where durum = 1 and kalanKg > 0";
+$biyetSql = "SELECT * FROM tblstokbiyet where kalanKg > 0";
 $biyetler = $db->query($biyetSql);
 
 
@@ -180,36 +181,9 @@ date_default_timezone_set('Europe/Istanbul');
                                     value="<?php echo $baski['siparisId'] ?>"
                                     style="width: 100%;">
                                 <?php while ($row = $siparisler->fetch_array()) { ?>
-
-                                    <option
-                                            value="<?php echo $row['id']; ?>">
-                                        <?php
-                                        $siparisTuru = $row['siparisTuru'] == "H" ? "Ham" :
-                                            ($row['siparisTuru'] == "B" ? "Boyalı" : "Eloksal");
-
-                                        $tur = $row['siparisTuru'] == "H" ? "Yok" :
-                                            ($row['siparisTuru'] == "B" ? tablogetir('tblprboya', 'id', $row['boyaId'], $db)['ad'] :
-                                                tablogetir('tbleloksal', 'id', $row['eloksalId'], $db)['ad']);
-                                        $kiloVeyaAdet = $row['kiloAdet'] == "K" ? $row['kilo'] . "/" :
-                                            $row['adet'] . "/";
-
-                                        $basilanKiloVeyaAdet = $row['kiloAdet'] == "K" ? $row['basilanKilo'] . " Kilo" :
-                                            $row['basilanAdet'] . " Adet";
-                                        $profil = tablogetir('tblprofil', 'id', $siparis['profilId'], $db);
-                                        echo
-                                            $row['satirNo'] . " - " .
-                                            tarih($row['termimTarih']) . " - " .
-                                            tablogetir('tblfirma', 'id', $siparis['musteriId'], $db)['firmaAd'] . " - " .
-                                            $profil['profilNo'] . " -" .
-                                            $profil['profilAdi'] . " -" .
-                                            $row['boy'] . " - " .
-                                            tablogetir('tblalasim', 'id', $siparis['alasimId'], $db)['ad'] . " - " .
-                                            $siparisTuru . " - " . $tur . " - " . $kiloVeyaAdet . $basilanKiloVeyaAdet;;
-
-                                        ?>
-
+                                    <option value="<?php echo $row['id']; ?>">
+                                        <?php echo $row['satirNo'] ?>
                                     </option>
-
                                 <?php } ?>
 
                             </select>
@@ -482,10 +456,11 @@ date_default_timezone_set('Europe/Istanbul');
                                     Takım Son Durumu Seçiniz
                                 </option>
 
-                                <option value="Pres">PRES</option>
-                                <option value="Kostik">KOSTİK</option>
-                                <option value="Tenefer">TENEFER</option>
-                                <option value="Raf">RAF</option>
+                                <?php for ($i = 0; $i < count($takimSonDurum); $i++) { ?>
+                                    <option <?php echo $baski['takimSonDurum'] == $takimSonDurum[$i] ? "selected" : "" ?>
+                                            value="<?php echo $takimSonDurum[$i] ?>"><?php echo $takimSonDurum[$i] ?>
+                                    </option>
+                                <?php } ?>
                             </select>
 
                         </div>
@@ -525,12 +500,9 @@ date_default_timezone_set('Europe/Istanbul');
                                 <option selected disabled value="">
                                     Baskı Bitirilme Nedeni
                                 </option>
-
-                                <option value="Kalıp Kırıldı">Kalıp Kırıldı</option>
-                                <option value="Kalıp Dinlenme">Kalıp Dinlenme</option>
-                                <option value="Kalıp Boy Farkı">Kalıp Boy Farkı</option>
-                                <option value="Mühre Kırıldı">Mühre Kırıldı</option>
-                                <option value="Bolster Kırıldı">Bolster Kırıldı</option>
+                                <?php for ($i = 0; $i < count($baskiBitirilmeNeden); $i++) { ?>
+                                    <option value="<?php echo $baskiBitirilmeNeden[$i] ?>"><?php echo $baskiBitirilmeNeden[$i] ?></option>
+                                <?php } ?>
                             </select>
 
                         </div>

@@ -1,7 +1,7 @@
 <?php
 include "../../netting/baglan.php";
 include "../../include/sql.php";
-
+require_once "../../include/data.php";
 $sql = "SELECT * FROM tblsevkiyat order by id desc ";
 $result = $db->query($sql);
 

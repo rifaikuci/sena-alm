@@ -1,7 +1,7 @@
 <?php
 include "../../netting/baglan.php";
 include "../../include/sql.php";
-
+require_once "../../include/data.php";
 
 $firmasql = "SELECT * FROM tblfirma where firmaTurId =1 ";
 $firmalar = $db->query($firmasql);

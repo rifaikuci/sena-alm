@@ -4,6 +4,7 @@ if ($_GET['id']) {
     $id = $_GET['id'];
 
     include '../../../netting/baglan.php';
+    include '../../../include/data.php';
 
     $sql = "SELECT * FROM tblmalzemeler WHERE id = '$id'";
     $result = mysqli_query($db, $sql);
@@ -33,9 +34,10 @@ if ($_GET['id']) {
                             <label>Birim</label>
                             <select required name="birim" class="select2" style="width: 100%;">
                                 <option value="">Birimi Seçiniz</option>
-                                <option <?php echo $row['birim'] == 'kg' ? "selected" : "" ?> value="kg">Kg</option>
-                                <option <?php echo $row['birim'] == 'lt' ? "selected" : "" ?> value="lt">Lt</option>
-                                <option <?php echo $row['birim'] == 'adet' ? "selected" : "" ?> value="adet">Adet</option>
+                                <?php for ($i = 0; $i < count($birimler); $i++) { ?>
+                                    <option <?php echo $row['birim'] == $birimler[$i] ? "selected" : "" ?>
+                                            value="<?php echo $birimler[$i]; ?>"><?php echo $birimler[$i]; ?></option>
+                                <?php } ?>
                             </select>
                         </div>
                     </div>
@@ -53,27 +55,11 @@ if ($_GET['id']) {
                             <label>Kullanıldığı Alan</label>
                             <select required name="kullanildigiAlanlar" class="select2" style="width: 100%;">
                                 <option selected value="">Kullanıldığı Alan</option>
-                                <option <?php echo $row['kullanildigiAlanlar'] == 'kaliphane' ? "selected" : "" ?>
-                                        value="kaliphane">Kalıphane
-                                </option>
-                                <option <?php echo $row['kullanildigiAlanlar'] == 'boyahane' ? "selected" : "" ?>
-                                        value="boyahane">Boyahane
-                                </option>
-                                <option <?php echo $row['kullanildigiAlanlar'] == 'kromat' ? "selected" : "" ?>
-                                        value="kromat">Kromat
-                                </option>
-                                <option <?php echo $row['kullanildigiAlanlar'] == 'pres' ? "selected" : "" ?>
-                                        value="pres">Pres
-                                </option>
-                                <option <?php echo $row['kullanildigiAlanlar'] == 'stok' ? "selected" : "" ?>
-                                        value="stok">Stok
-                                </option>
-                                <option <?php echo $row['kullanildigiAlanlar'] == 'paketleme' ? "selected" : "" ?>
-                                        value="paketleme">Paketleme
-                                </option>
-                                <option <?php echo $row['kullanildigiAlanlar'] == 'sevkiyat' ? "selected" : "" ?>
-                                        value="sevkiyat">Sevkiyat
-                                </option>
+                                <?php for ($i = 0; $i < count($kullanildigiAlanlar); $i++) { ?>
+                                    <option <?php echo $row['kullanildigiAlanlar'] == $kullanildigiAlanlar[$i] ? "selected" : "" ?>
+                                            value="<?php echo $kullanildigiAlanlar[$i]; ?>"><?php echo $kullanildigiAlanlar[$i]; ?></option>
+                                <?php } ?>
+
                             </select>
                         </div>
                     </div>
