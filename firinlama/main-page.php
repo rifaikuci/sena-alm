@@ -44,6 +44,7 @@ $result = $db->query($sql);
                                 <th>Boyananlar</th>
                                 <th style="text-align: center">Durum</th>
                                 <th style="text-align: center">İşlem Bitiş</th>
+                                <th style="text-align: center">Görüntüleme</th>
 
                             </tr>
                             </thead>
@@ -59,14 +60,18 @@ $result = $db->query($sql);
                                         if (!$row['bitisTarih']) { ?>
                                             <?php $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0; ?>
                                             <a onclick=" return confirm('Fırınlama Tamamlanıyor')"
-                                                    href="<?php echo base_url() . "netting/firinlama/index.php?operator=" . $operatorId . "&firinlamabitir=" . $row['id']; ?>"
+                                               href="<?php echo base_url() . "netting/firinlama/index.php?operator=" . $operatorId . "&firinlamabitir=" . $row['id']; ?>"
                                                class="btn btn-warning">Bitir</a>
                                             <a onclick=" return confirm('Fırınlama İptal Ediliyor')"
-                                                    href="<?php echo base_url() . "netting/firinlama/index.php?firinlamasil=" . $row['id']; ?>"
+                                               href="<?php echo base_url() . "netting/firinlama/index.php?firinlamasil=" . $row['id']; ?>"
                                                class="btn btn-danger">Sil</a>
                                         <?php } else {
                                             echo $row['bitisTarih'];
                                         } ?>
+                                    </td>
+                                    <td>
+                                        <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
+                                           class="btn btn-outline-primary">Görüntüle</a>
                                     </td>
                                 </tr>
                                 <?php $sira++;

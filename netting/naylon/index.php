@@ -65,6 +65,7 @@ if (isset($_POST['naylonbaslat'])) {
                     kullanilan1,
                     kullanilan2,
                     operatorId,
+                    adet,
                     zaman,
                     vardiya  )
                    VALUES  (
@@ -75,6 +76,7 @@ if (isset($_POST['naylonbaslat'])) {
                         '$kullanilan1',
                         '$kullanilan2',
                         '$operatorId',
+                        '$netAdet',
                         '$zaman',
                         '$vardiya' )";
 

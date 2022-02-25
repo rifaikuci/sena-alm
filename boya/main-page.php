@@ -44,6 +44,7 @@ $result = $db->query($sql);
                                 <th>Sepet</th>
                                 <th>Parti No</th>
                                 <th>Kesim</th>
+                                <th>Durum</th>
                             </tr>
                             </thead>
 
@@ -51,10 +52,12 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td><?php echo tarihsaat($row['baslaZaman']) ; ?></td>
-                                    <td><?php echo tablogetir('tblsepet', 'id',$row['sepetId'], $db)['ad']; ?></td>
-                                    <td><?php echo tablogetir('tblstokboya', 'id',$row['boyaId'], $db)['partino']; ?></td>
+                                    <td><?php echo tarihsaat($row['baslaZaman']); ?></td>
+                                    <td><?php echo tablogetir('tblsepet', 'id', $row['sepetId'], $db)['ad']; ?></td>
+                                    <td><?php echo tablogetir('tblstokboya', 'id', $row['boyaId'], $db)['partino']; ?></td>
                                     <td><?php echo $row['kesimId']; ?></td>
+                                    <td><a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
+                                           class="btn btn-outline-primary">Görüntüle</a></td>
 
                                 </tr>
                                 <?php $sira++;

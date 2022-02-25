@@ -28,12 +28,14 @@ if (isset($_POST['kromatbaslat'])) {
     $kromatAdetler = "";
     $kromatHurdalar = "";
     $kromatSebepler = "";
+    $kromatSepetler = "";
     $kromatIcındekiler = "";
     for ($j = 0; $j < count($adetler); $j++) {
         $kromatAdetler = $kromatAdetler . "" . $adetler[$j] . ";";
         $kromatIcındekiler = $kromatIcındekiler . "" . $kesimler[$j] . ";";
         $kromatSebepler = $kromatSebepler . "" . $sebepler[$j] . ";";
         $kromatHurdalar = $kromatHurdalar . "" . $hurdalar[$j] . ";";
+        $kromatSepetler = $kromatSepetler . "" . $sepetler[$j] . ";";
     }
 
 
@@ -129,8 +131,8 @@ if (isset($_POST['kromatbaslat'])) {
 
     $zaman = date("Y-m-d H:i:s");
 
-    $sqlKromat = "INSERT INTO tblkromat (baslaVardiya, baslaZaman, sepetId,havuzKromatId, havuzAsitId, adetler, hurdalar, sebepler ) 
-                VALUES ('$baslaVardiya','$zaman', '$kromatsepet', '$kromatHavuz', '$asitHavuz', '$kromatAdetler', '$kromatHurdalar', '$kromatSebepler')";
+    $sqlKromat = "INSERT INTO tblkromat (baslaVardiya, baslaZaman, sepetId,havuzKromatId, havuzAsitId, adetler, hurdalar, sebepler, sepetler ) 
+                VALUES ('$baslaVardiya','$zaman', '$kromatsepet', '$kromatHavuz', '$asitHavuz', '$kromatAdetler', '$kromatHurdalar', '$kromatSebepler', '$kromatSepetler')";
     if (mysqli_query($db, $sqlKromat)) {
         header("Location:../../kromat/?durumekle=ok");
         exit();

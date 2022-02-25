@@ -44,6 +44,7 @@ $result = $db->query($sql);
                                 <th>Satır No</th>
                                 <th>Tarih</th>
                                 <th>Net Adet</th>
+                                <th style="text-align: center">İşlem</th>
                             </tr>
                             </thead>
 
@@ -54,6 +55,12 @@ $result = $db->query($sql);
                                     <td><?php echo $row['satirNo']; ?></td>
                                     <td><?php echo tarihsaat($row['zaman']); ?></td>
                                     <td><?php echo $row['netAdet']; ?></td>
+                                    <td style="text-align: center">
+                                        <a onclick="return confirm('İşleminiz Silmek istediğinizden emin misiniz?')" href="<?php echo base_url() . "netting/boyapaket/index.php?boyapaketsil=" . $row['id']; ?>"
+                                           class="btn btn-danger">Sil</a>
+                                        <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
+                                           class="btn btn-outline-primary">Görüntüle</a>
+                                    </td>
 
                                 </tr>
                                 <?php $sira++;

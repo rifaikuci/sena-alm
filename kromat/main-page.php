@@ -55,17 +55,23 @@ $result = $db->query($sql);
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo tarihsaat($row['baslaTarih']); ?></td>
-                                    <td><?php echo tablogetir('tblsepet', 'id',$row['sepetId'], $db)['ad']; ?></td>
+                                    <td><?php echo tablogetir('tblsepet', 'id', $row['sepetId'], $db)['ad']; ?></td>
                                     <td><?php echo $row['havuzKromatId']; ?></td>
                                     <td><?php echo $row['havuzAsitId']; ?></td>
-                                    <td><?php echo $row['bitisZaman'] ? "Kromat Bitti" : "Kromat Devam Ediyor"; ?></td>
+                                    <td><?php if ($row['bitisZaman']) { ?>
+                                            <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
+                                               class="btn btn-outline-primary">Görüntüle</a>
+                                        <?php } else { ?>
+                                            Kromat Devam Ediyor <?php } ?>
+                                    </td>
                                     <td>
                                         <?php
                                         if (!$row['bitisZaman']) { ?>
                                             <a href=<?php echo "devam/?kromat=" . $row['id']; ?> class="btn
                                                btn-warning">Bitir</a>
                                         <?php } else {
-                                            echo $row['bitisZaman'];
+                                            echo tarihsaat($row['bitisZaman']);
+
                                         } ?>
                                     </td>
                                 </tr>

@@ -43,6 +43,7 @@ $result = $db->query($sql);
                                 <th>#</th>
                                 <th>Satır No</th>
                                 <th>Tarih</th>
+                                <th>İşlem</th>
                             </tr>
                             </thead>
 
@@ -52,7 +53,10 @@ $result = $db->query($sql);
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['satirNo']; ?></td>
                                     <td><?php echo tarihsaat($row['zaman']); ?></td>
-
+                                    <td style="text-align: center">
+                                        <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
+                                           class="btn btn-outline-primary">Görüntüle</a>
+                                    </td>
                                 </tr>
                                 <?php $sira++;
                             } ?>
