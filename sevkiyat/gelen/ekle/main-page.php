@@ -527,7 +527,7 @@ $profiller = $db->query($profillerrsql);
                                                     <input name="profilboy" :value="profilboy" type="hidden">
                                                     <input name="profilfirmaId" :value="profilfirmaId" type="hidden">
                                                     <input name="profilfirmaAd" :value="profilfirmaAd" type="hidden">
-                                                    <input name="profilIstenilenTermin" :value="profilIstenilenTermin"
+                                                    <input name="profilistenilenTermik" :value="profilistenilenTermik"
                                                            type="hidden">
                                                     <input name="profilmusteriId" :value="profilmusteriId"
                                                            type="hidden">
@@ -651,8 +651,8 @@ $profiller = $db->query($profillerrsql);
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label>İstenilen Termin</label>
-                                                    <select v-model="profil.istenilenTermin" name="istenilenTermin"
-                                                            @change="onChangeIstenilenTermin($event)"
+                                                    <select v-model="profil.istenilenTermik" name="istenilenTermik"
+                                                            @change="onChangeistenilenTermik($event)"
                                                             class="form-control">
                                                         <option selected disabled value="">İstenilen Termin</option>
                                                         <?php for ($i = 0; $i < count($termikDurum); $i++) { ?>

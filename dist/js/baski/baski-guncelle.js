@@ -30,6 +30,7 @@ var baskiguncelle = new Vue({
             basilanNetAdet: 0,
             basilanNetKg: 0,
             kovanSicaklik: '',
+            istenilenTermik: '',
             kalipSicaklik: '',
             biyetSicaklik: '',
             hiz: '',
@@ -62,7 +63,6 @@ var baskiguncelle = new Vue({
             }).then((response) => {
                 return response.data
             });
-
             this.profilId = baskiresponse.profilId;
             this.siparisId = baskiresponse.siparisId;
             this.takimId = baskiresponse.takimId;
@@ -84,6 +84,7 @@ var baskiguncelle = new Vue({
             this.verilenBiyet = baskiresponse.verilenBiyet;
             this.guncelGr = baskiresponse.guncelGr;
             this.basilanBrutKg = baskiresponse.basilanBrutKg;
+            this.istenilenTermik = baskiresponse.istenilenTermik;
             this.basilanNetKg = baskiresponse.basilanNetKg;
             this.basilanNetAdet = baskiresponse.basilanNetAdet;
             this.kovanSicaklik = baskiresponse.kovanSicaklik;
@@ -297,6 +298,7 @@ $('#siparis_guncelle').on("change", async function () {
     if (selectedRow) {
         baskiguncelle.isSelected = true;
         baskiguncelle.satirNo = selectedRow.satirNo;
+        baskiguncelle.istenilenTermik = selectedRow.istenilenTermik;
         baskiguncelle.musteriAd = selectedRow.musteriAd;
         baskiguncelle.profil = selectedRow.profil;
         baskiguncelle.alasim = selectedRow.alasim;

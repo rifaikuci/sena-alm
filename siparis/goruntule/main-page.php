@@ -6,6 +6,7 @@ if ($_GET['siparisno']) {
     include '../../netting/baglan.php';
     include "../../include/sql.php";
     require_once "../../include/helper.php";
+    require_once "../../include/data.php";
 
     $sql = "SELECT * FROM tblsiparis WHERE siparisno = '$siparisNo' group by siparisNo";
     $result = mysqli_query($db, $sql);
@@ -45,7 +46,7 @@ if ($_GET['siparisno']) {
                             Sipariş No: <?php echo $detail['siparisNo'] ?></label>
                         <br>
                         <label style="color: #7f8c8d">Müşteri
-                            Adı: <?php echo tablogetir('tblfirma','id',$detail['musteriId'], $db)['firmaAd']; ?></label>
+                            Adı: <?php echo tablogetir('tblfirma', 'id', $detail['musteriId'], $db)['firmaAd']; ?></label>
                         <br>
                         <label style="color: #7f8c8d">Sipariş
                             Tarihi: <?php echo tarih($detail['siparisTarih']) ?></label>
@@ -184,8 +185,8 @@ if ($_GET['siparisno']) {
                                     <select @change="onChangeSiparis($event)" v-model="siparis.siparisTur"
                                             name="siparisTur" class="form-control">
                                         <option selected disabled value="">Sipariş Türü Seçiniz</option>
-                                        <?php for ($i = 0; $i < count($termikDurum); $i++) { ?>
-                                            <option value="<?php echo $termikDurum[$i] ?>"><?php echo $termikDurum[$i] ?></option>
+                                        <?php for ($i = 0; $i < count($profilTur); $i++) { ?>
+                                            <option value="<?php echo $profilTur[$i] ?>"><?php echo $profilTur[$i] ?></option>
                                         <?php } ?>>
                                     </select>
                                 </div>
@@ -307,7 +308,7 @@ if ($_GET['siparisno']) {
                             <div class="col-sm-5">
                                 <div class="form-group">
                                     <label>İstenilen Termin</label>
-                                    <select v-model="siparis.istenilenTermin" name="istenilenTermin"
+                                    <select v-model="siparis.istenilenTermik" name="istenilenTermik"
                                             class="form-control">
                                         <option selected disabled value="">İstenilen Termin</option>
                                         <?php for ($i = 0; $i < count($termikDurum); $i++) { ?>

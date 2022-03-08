@@ -271,7 +271,7 @@ $alasimlar = $db->query($alasimsql);
                                 <div class="col-sm-5">
                                     <div class="form-group">
                                         <label>İstenilen Termin</label>
-                                        <select v-model="istenilenTermin" name="istenilenTermin"
+                                        <select v-model="istenilenTermik" name="istenilenTermik"
                                                 class="form-control">
                                             <option selected disabled value="">İstenilen Termin</option>
                                             <option value="Termiksiz">0</option>

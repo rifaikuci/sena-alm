@@ -4,7 +4,8 @@ include "../../include/sql.php";
 require_once "../../include/data.php";
 
 
-$kesimsql = "SELECT * FROM tblbaski where kesimId =  0 and bitisZamani !='' ";
+$kesimsql = "SELECT * FROM tblbaski where 0 >= kesimId and bitisZamani !='' AND 0 >= boyaId and  0 >= firinlamaId
+ and  0 >= kromatId  and  0 >= naylonId  and  0 >= paketId  and  0 >= boyaPaketId  and  0 >= termikId";
 $baskilar = $db->query($kesimsql);
 
 
@@ -98,12 +99,11 @@ $baskilar = $db->query($kesimsql);
                             <label></label>
                             <select id="kesim_baski_id" name="baskiId" required class="form-control select2"
                                     style="width: 100%;">
-                                <option selected disabled value="">Sipariş No - Sipariş Türü - Tarih</option>
+                                <option selected disabled value="">Sipariş No</option>
                                 <?php while ($baski = $baskilar->fetch_array()) {
-                                    $siparis = tablogetir('tblsiparis','id',$baski['siparisId'], $db)
                                     ?>
                                     <option
-                                            value="<?php echo $baski['id']; ?>"><?php echo $siparis['satirNo'] . " - " . $siparis['siparisTuru'] . " - " . $baski['kayitTarih']; ?></option>
+                                            value="<?php echo $baski['id']; ?>"><?php echo $baski['satirNo'] ; ?></option>
                                 <?php } ?>
                             </select>
                         </div>

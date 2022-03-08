@@ -95,7 +95,7 @@ var veri = new Vue({
             profiller: [],
             profiltoplamadet: [],
             profiltoplamkilo: [],
-            profilIstenilenTermin: [],
+            profilistenilenTermik: [],
             profil: {
                 firmaId: '',
                 firmaAd: '',
@@ -113,7 +113,7 @@ var veri = new Vue({
                 toplamkilo: '',
                 mGr: '',
                 tolerans: '',
-                istenilenTermin: ''
+                istenilenTermik: ''
             },
             isFullProfilData: false,
         },
@@ -494,7 +494,7 @@ var veri = new Vue({
                     this.profil.profilId &&
                     this.profil.adet &&
                     this.profil.boy &&
-                    this.profil.istenilenTermin &&
+                    this.profil.istenilenTermik &&
                     this.profil.paketAdet &&
                     this.profil.tur &&
                     this.profil.gelis) {
@@ -513,7 +513,7 @@ var veri = new Vue({
                     this.profilgelis.push(this.profil.gelis);
                     this.profiltoplamadet.push(this.profil.toplamadet);
                     this.profiltoplamkilo.push(this.profil.toplamkilo);
-                    this.profilIstenilenTermin.push(this.profil.istenilenTermin);
+                    this.profilistenilenTermik.push(this.profil.istenilenTermik);
                     this.profil.boy = (this.profil.boy / 1000).toFixed(3);
                     this.profil.mGr = (((this.profil.toplamkilo / this.profil.toplamadet) / this.profil.boy) * 1000).toFixed(3);
                     this.profil.tolerans = (((this.profil.mGr - data.agirlik) / this.profil.mGr) * 100).toFixed(2);
@@ -535,7 +535,7 @@ var veri = new Vue({
                         toplamkilo: '',
                         mGr: '',
                         tolerans: '',
-                        istenilenTermin: '',
+                        istenilenTermik: '',
                     }
                 }
 
@@ -551,7 +551,7 @@ var veri = new Vue({
                     this.profil.profilId &&
                     this.profil.adet &&
                     this.profil.boy &&
-                    this.profil.istenilenTermin &&
+                    this.profil.istenilenTermik &&
                     this.profil.paketAdet &&
                     this.profil.tur &&
                     this.profil.gelis) {
@@ -574,7 +574,7 @@ var veri = new Vue({
                     this.profil.profilId &&
                     this.profil.adet &&
                     this.profil.boy &&
-                    this.profil.istenilenTermin &&
+                    this.profil.istenilenTermik &&
                     this.profil.paketAdet &&
                     this.profil.tur &&
                     this.profil.gelis) {
@@ -597,7 +597,7 @@ var veri = new Vue({
                     this.profil.profilId &&
                     this.profil.adet &&
                     this.profil.boy &&
-                    this.profil.istenilenTermin &&
+                    this.profil.istenilenTermik &&
                     this.profil.paketAdet &&
                     this.profil.tur &&
                     this.profil.gelis) {
@@ -621,10 +621,10 @@ var veri = new Vue({
                 this.$delete(this.profiltoplamadet, index);
                 this.$delete(this.profiltoplamkilo, index);
                 this.$delete(this.profiltur, index);
-                this.$delete(this.profilIstenilenTermin, index);
+                this.$delete(this.profilistenilenTermik, index);
                 this.isFullProfilData = false;
             },
-            onChangeIstenilenTermin(event) {
+            onChangeistenilenTermik(event) {
                 this.profil.profilId = sevkiyatProfilId;
                 this.profil.firmaId = sevkiyatGeldigiFirma;
                 this.profil.musteriId = sevkiyatMusteriId;
@@ -638,7 +638,7 @@ var veri = new Vue({
                     this.profil.profilId &&
                     this.profil.adet &&
                     this.profil.boy &&
-                    this.profil.istenilenTermin &&
+                    this.profil.istenilenTermik &&
                     this.profil.paketAdet &&
                     this.profil.tur &&
                     this.profil.gelis) {

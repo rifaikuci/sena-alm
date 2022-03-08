@@ -93,6 +93,15 @@ date_default_timezone_set('Europe/Istanbul');
                                 <div class="row">
                                     <div class="col-sm-8">
                                         <h6>
+                                            <span style="color: darkcyan; font-weight: bold"> İstenilen Termik: </span>
+                                            {{istenilenTermik}}
+                                        </h6>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Boy: </span>
                                             {{boy}}
                                         </h6>
@@ -304,6 +313,7 @@ date_default_timezone_set('Europe/Istanbul');
                                    placeholder="0,1">
                             <input type="hidden" v-model="baskiFire" name="baskiFire" :value="baskiFire">
                             <input type="hidden" v-model="satirNo" name="satirNo" :value="satirNo">
+                            <input type="hidden" v-model="istenilenTermik" name="istenilenTermik" :value="istenilenTermik">
                             <input type="hidden" name="baskiguncelle" value="baski-guncelle">
                             <input type="hidden"
                                    value="<?php echo isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0; ?>"

@@ -87,7 +87,6 @@ $('#kesim_baski_id').on("change", async function () {
         kesimgiris.sepetler1 = response2;
         kesimgiris.sepetler2 = response2;
         kesimgiris.sepetler3 = response2;
-        debugger;
 
     } else {
        this.baskiId = 0

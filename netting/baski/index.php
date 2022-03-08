@@ -17,7 +17,7 @@ if (isset($_POST['baskiekle'])) {
     $baslaZamani = $_POST['baslaZamani'];
     $bitisZamani = date("d.m.Y H:i");
     $kayitTarih = date("d.m.Y");
-    $vardiya = tablogetir('tblayar','id','1', $db)['vardiya'];
+    $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $vardiyaKod = vardiyaBul($vardiya, date("H:i"));
     $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $biyetId = $_POST['biyetId'];
@@ -29,7 +29,7 @@ if (isset($_POST['baskiekle'])) {
     $biyetFire = $_POST['biyetFire'];
     $verilenBiyet = $_POST['verilenBiyet'];
     $guncelGr = $_POST['guncelGr'];
-    $satirNo = $_POST['satirNo'];
+    $istenilenTermik = $_POST['istenilenTermik'];
     $basilanBrutKg = $_POST['basilanBrutKg'];
     $basilanNetKg = $_POST['basilanNetKg'];
     $basilanNetAdet = $_POST['basilanNetAdet'];
@@ -44,6 +44,43 @@ if (isset($_POST['baskiekle'])) {
     $bitisSaati = strtotime($bitisZamani);
     $saatFark = ($bitisSaati - $baslangicSaati) / 3600;
     $performans = $saatFark > 0 ? number_format($basilanNetKg / $saatFark, 2) : 0;
+    $satirNo = $_POST['satirNo'];
+    $kesimId = 0;
+    $boyaId = 0;
+    $firinlamaId = 0;
+    $kromatId = 0;
+    $naylonId = 0;
+    $paketId = 0;
+    $boyaPaketId = 0;
+    $termikId = 0;
+
+    if ($istenilenTermik == "Termiksiz") {
+        $termikId = -1;
+        $naylonId = -1;
+    }
+
+    $type = $satirNo[3];
+
+    if ($type == "E") {
+        $boyaId = -1;
+        $firinlamaId = -1;
+        $kromatId = -1;
+        $naylonId = -1;
+        $boyaPaketId = -1;
+    }
+
+    if ($type == "H") {
+        $boyaId = -1;
+        $firinlamaId = -1;
+        $kromatId = -1;
+        $boyaPaketId = -1;
+    }
+
+    if ($type == "B") {
+        $paketId = -1;
+    }
+
+
     $sqlBaski = "UPDATE tblbaski set
                     siparisId= '$siparisId',
                     takimId = '$takimId',
@@ -72,13 +109,22 @@ if (isset($_POST['baskiekle'])) {
                     performans = '$performans',
                     takimSonDurum = '$takimSonDurum',
                     aciklama = '$aciklama',
-                    sonlanmaNeden = '$sonlanmaNeden'
+                    sonlanmaNeden = '$sonlanmaNeden',
+                    satirNo = '$satirNo',
+                    kesimId = '$kesimId',
+                    boyaId = '$boyaId',
+                    firinlamaId = '$firinlamaId',
+                    kromatId = '$kromatId',
+                    naylonId = '$naylonId',
+                    paketId = '$paketId',
+                    boyaPaketId = '$boyaPaketId',
+                    termikId = '$termikId'
                     where id = '$id'";
     mysqli_query($db, $sqlBaski);
 
 
     $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer) 
-                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id','baski')";
+                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id','Baskı')";
 
     mysqli_query($db, $sqlHurda);
 
@@ -145,7 +191,7 @@ if (isset($_POST['baskiekle'])) {
 
     mysqli_query($db, $sqlprofilguncelle);
 
-    $kalanBiyet =tablogetir('tblstokbiyet','id',$biyetId, $db)['kalanKg'];
+    $kalanBiyet = tablogetir('tblstokbiyet', 'id', $biyetId, $db)['kalanKg'];
     $kalanBiyet = $kalanBiyet - $basilanBrutKg;
 
 
@@ -155,7 +201,7 @@ if (isset($_POST['baskiekle'])) {
 
     mysqli_query($db, $sqlbiyet);
 
-    $siparis = tablogetir('tblsiparis','id',$siparisId, $db);
+    $siparis = tablogetir('tblsiparis', 'id', $siparisId, $db);
     $basilanNetAdetSiparis = $basilanNetAdet + $siparis['basilanNetAdet'];
     $basilanNetKgSiparis = $basilanNetKg + $siparis['basilanNetKilo'];
 
@@ -200,7 +246,7 @@ if (isset($_GET['baskisilinecek'])) {
     $basilanNetAdet = $baski['basilanNetAdet'];
     $siparisId = $baski['siparisId'];
     $biyetId = $baski['biyetId'];
-    $satirNo =tablogetir('tblsiparis','id',$siparisId, $db)['satirNo'];
+    $satirNo = tablogetir('tblsiparis', 'id', $siparisId, $db)['satirNo'];
 
 
     $sqlHurda = "DELETE FROM tblhurda where baskiId = '$id'";
@@ -233,7 +279,7 @@ if (isset($_GET['baskisilinecek'])) {
                     where id = '$takimId'";
     } else {
         $takimSonDurum = "RAF";
-        $teorikGramaj = tablogetir('tblprofil','id',$takim['profilId'], $db)['gramaj'];
+        $teorikGramaj = tablogetir('tblprofil', 'id', $takim['profilId'], $db)['gramaj'];
         $sqlTakimgGuncelle = "UPDATE tbltakim set
                     brutKilo = '$brutKilo',
                     netKilo = '$netKilo',
@@ -294,7 +340,7 @@ if (isset($_GET['baskisilinecek'])) {
     mysqli_query($db, $sqlprofilguncelle);
 
 
-    $kalanBiyet = tablogetir('tblstokbiyet','id',$biyetId, $db)['kalanKg'];
+    $kalanBiyet = tablogetir('tblstokbiyet', 'id', $biyetId, $db)['kalanKg'];
     $kalanBiyet = $kalanBiyet + $basilanBrutKg;
 
 
@@ -347,12 +393,13 @@ if (isset($_POST['baskiIdG'])) {
 
     $bitisZamani = date("d.m.Y H:i");
 
-    $vardiya = tablogetir('tblayar','id','1', $db)['vardiya'];
+    $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $vardiyaKod = vardiyaBul($vardiya, date("H:i"));
     $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $biyetId = $_POST['biyetId'];
     $biyetBoy = $_POST['biyetBoyG'];
     $araIsFire = $_POST['araIsFire'];
+    $istenilenTermik = $_POST['istenilenTermik'];
     $konveyorBoy = $_POST['konveyorBoyG'];
     $boylamFire = $_POST['boylamFireG'];
     $baskiFire = $_POST['baskiFireG'];
@@ -378,6 +425,42 @@ if (isset($_POST['baskiIdG'])) {
     $bitisSaati = strtotime($bitisZamani);
     $saatFark = ($bitisSaati - $baslangicSaati) / 3600;
     $performans = $saatFark > 0 ? number_format($basilanNetKg / $saatFark, 2) : 0;
+    $satirNo = $_POST['satirNo'];
+    $kesimId = 0;
+    $boyaId = 0;
+    $firinlamaId = 0;
+    $kromatId = 0;
+    $naylonId = 0;
+    $paketId = 0;
+    $boyaPaketId = 0;
+    $termikId = 0;
+
+    if ($istenilenTermik == "Termiksiz") {
+        $termikId = -1;
+        $naylonId = -1;
+    }
+
+    $type = $satirNo[3];
+
+    if ($type == "E") {
+        $boyaId = -1;
+        $firinlamaId = -1;
+        $kromatId = -1;
+        $naylonId = -1;
+        $boyaPaketId = -1;
+    }
+
+    if ($type == "H") {
+        $boyaId = -1;
+        $firinlamaId = -1;
+        $kromatId = -1;
+        $boyaPaketId = -1;
+    }
+
+    if ($type == "B") {
+        $paketId = -1;
+    }
+
 
     $sqlBaski = "UPDATE tblbaski set
                     siparisId= '$siparisId',
@@ -406,7 +489,16 @@ if (isset($_POST['baskiIdG'])) {
                     performans = '$performans',
                     takimSonDurum = '$takimSonDurum',
                     aciklama = '$aciklama',
-                    sonlanmaNeden = '$sonlanmaNeden'
+                    sonlanmaNeden = '$sonlanmaNeden',
+                     satirNo = '$satirNo',
+                    kesimId = '$kesimId',
+                    boyaId = '$boyaId',
+                    firinlamaId = '$firinlamaId',
+                    kromatId = '$kromatId',
+                    naylonId = '$naylonId',
+                    paketId = '$paketId',
+                    boyaPaketId = '$boyaPaketId',
+                    termikId = '$termikId'
                     where id = '$id'";
     mysqli_query($db, $sqlBaski);
 
@@ -479,7 +571,7 @@ if (isset($_POST['baskiIdG'])) {
 
     mysqli_query($db, $sqlprofilguncelle);
 
-    $kalanBiyet =tablogetir('tblstokbiyet','id',$biyetId, $db)['kalanKg'];
+    $kalanBiyet = tablogetir('tblstokbiyet', 'id', $biyetId, $db)['kalanKg'];
     $kalanBiyet = $kalanBiyet - $basilanBrutKg;
 
 
@@ -523,7 +615,7 @@ if (isset($_POST['baskiguncelle'])) {
     $siparisKonum = $baskiDurum == 1 ? "kesim" : "baski";
     $baslaZamani = $_POST['baslaTarih'] . " " . $_POST['baslaSaat'];
     $bitisZamani = $_POST['bitisTarih'] . " " . $_POST['bitisSaat'];
-    $vardiya = tablogetir('tblayar','id','1', $db)['vardiya'];
+    $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $vardiyaKod = vardiyaBul($vardiya, $_POST['bitisSaat']);
     $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $biyetBoy = $_POST['biyetBoy'];
@@ -541,6 +633,7 @@ if (isset($_POST['baskiguncelle'])) {
     $kovanSicaklik = $_POST['kovanSicaklik'];
     $kalipSicaklik = $_POST['kalipSicaklik'];
     $biyetSicaklik = $_POST['biyetSicaklik'];
+    $istenilenTermik = $_POST['istenilenTermik'];
     $hiz = $_POST['hiz'];
     $fire = $_POST['fire'];
     $takimSonDurum = $_POST['takimSonDurum'];
@@ -549,6 +642,41 @@ if (isset($_POST['baskiguncelle'])) {
     $bitisSaati = strtotime($bitisZamani);
     $saatFark = ($bitisSaati - $baslangicSaati) / 3600;
     $performans = $saatFark > 0 ? number_format($basilanNetKg / $saatFark, 2) : 0;
+    $satirNo = $_POST['satirNo'];
+    $kesimId = 0;
+    $boyaId = 0;
+    $firinlamaId = 0;
+    $kromatId = 0;
+    $naylonId = 0;
+    $paketId = 0;
+    $boyaPaketId = 0;
+    $termikId = 0;
+
+    if ($istenilenTermik == "Termiksiz") {
+        $termikId = -1;
+        $naylonId = -1;
+    }
+
+    $type = $satirNo[3];
+
+    if ($type == "E") {
+        $boyaId = -1;
+        $firinlamaId = -1;
+        $kromatId = -1;
+        $naylonId = -1;
+        $boyaPaketId = -1;
+    }
+
+    if ($type == "H") {
+        $boyaId = -1;
+        $firinlamaId = -1;
+        $kromatId = -1;
+        $boyaPaketId = -1;
+    }
+
+    if ($type == "B") {
+        $paketId = -1;
+    }
 
 
     $sqlBaski = "UPDATE tblbaski set
@@ -577,7 +705,16 @@ if (isset($_POST['baskiguncelle'])) {
                     performans = '$performans',
                     takimSonDurum = '$takimSonDurum',
                     aciklama = '$aciklama',
-                    sonlanmaNeden = '$sonlanmaNeden'
+                    sonlanmaNeden = '$sonlanmaNeden',
+                    satirNo = '$satirNo',
+                    kesimId = '$kesimId',
+                    boyaId = '$boyaId',
+                    firinlamaId = '$firinlamaId',
+                    kromatId = '$kromatId',
+                    naylonId = '$naylonId',
+                    paketId = '$paketId',
+                    boyaPaketId = '$boyaPaketId',
+                    termikId = '$termikId'
                     where id = '$baskiId'";
 
 
@@ -616,7 +753,7 @@ if (isset($_POST['baskiguncelle'])) {
                     where id = '$eskiTakimId'";
         } else {
             $takimEskiSonDurum = "RAF";
-            $teorikGramajEski = tablogetir('tblprofil','id',$takimEski['profilId'], $db)['gramaj'];
+            $teorikGramajEski = tablogetir('tblprofil', 'id', $takimEski['profilId'], $db)['gramaj'];
             $sqlTakimEskiGuncelle = "UPDATE tbltakim set
                     brutKilo = '$brutKiloEski',
                     netKilo = '$netKiloEski',
@@ -761,7 +898,7 @@ if (isset($_POST['baskiguncelle'])) {
 
     if ($eskiBiyetId != $yeniBiyetId) {
 
-        $kalanBiyetEski = tablogetir('tblstokbiyet','id',$eskiBiyetId, $db)['kalanKg'];
+        $kalanBiyetEski = tablogetir('tblstokbiyet', 'id', $eskiBiyetId, $db)['kalanKg'];
         $kalanBiyetEski = $kalanBiyetEski + $baski['basilanBrutKg'];
 
         $sqlbiyetEski = "UPDATE tblstokbiyet set
@@ -771,7 +908,7 @@ if (isset($_POST['baskiguncelle'])) {
         mysqli_query($db, $sqlbiyetEski);
 
 
-        $kalanBiyetYeni = tablogetir('tblstokbiyet','id',$yeniBiyetId, $db)['kalanKg'];
+        $kalanBiyetYeni = tablogetir('tblstokbiyet', 'id', $yeniBiyetId, $db)['kalanKg'];
         $kalanBiyetYeni = $kalanBiyetYeni - $basilanBrutKg;
 
         $sqlbiyetYeni = "UPDATE tblstokbiyet set
@@ -781,7 +918,7 @@ if (isset($_POST['baskiguncelle'])) {
         mysqli_query($db, $sqlbiyetYeni);
 
     } else {
-        $kalanBiyet = tablogetir('tblstokbiyet','id',$yeniBiyetId, $db)['kalanKg'];
+        $kalanBiyet = tablogetir('tblstokbiyet', 'id', $yeniBiyetId, $db)['kalanKg'];
         $kalanBiyet = $kalanBiyet - $basilanBrutKg + $baski['basilanBrutKg'];
 
         $sqlbiyet = "UPDATE tblstokbiyet set
@@ -792,7 +929,7 @@ if (isset($_POST['baskiguncelle'])) {
     }
 
 
-    $eskiSatirNo = tablogetir('tblsiparis','id',$yeniSiparisId, $db)['satirNo'];
+    $eskiSatirNo = tablogetir('tblsiparis', 'id', $yeniSiparisId, $db)['satirNo'];
     if ($eskiSatirNo != $satirNo) {
 
         $profilsqlEski = "select * from tblstokprofil where siparis= '$eskiSatirNo'";
@@ -847,9 +984,9 @@ if (isset($_POST['baskiguncelle'])) {
 
     if ($yeniSiparisId != $eskiSiparisId) {
 
-        $eskiSiparis = tablogetir('tblsiparis','id',$eskiSiparisId, $db);
+        $eskiSiparis = tablogetir('tblsiparis', 'id', $eskiSiparisId, $db);
         $basilanNetAdetSiparisEski = $eskiSiparis['basilanAdet'] - $baski['basilanNetAdet'];
-        $basilanNetKgSiparisEski =$eskiSiparis['basilanKilo'] - $baski['basilanNetKg'];
+        $basilanNetKgSiparisEski = $eskiSiparis['basilanKilo'] - $baski['basilanNetKg'];
 
         $sqlSiparisEski = "UPDATE tblsiparis set
                     basilanAdet = '$basilanNetAdetSiparisEski',
@@ -860,7 +997,7 @@ if (isset($_POST['baskiguncelle'])) {
 
         mysqli_query($db, $sqlSiparisEski);
 
-        $yeniSiparis = tablogetir('tblsiparis','id',$yeniSiparisId, $db);
+        $yeniSiparis = tablogetir('tblsiparis', 'id', $yeniSiparisId, $db);
 
         $basilanNetAdetSiparisYeni = $yeniSiparis['basilanAdet'] + $basilanNetAdet;
         $basilanNetKgSiparisYeni = $yeniSiparis['basilanKilo'] + $basilanNetKg;
@@ -875,7 +1012,7 @@ if (isset($_POST['baskiguncelle'])) {
         mysqli_query($db, $sqlSiparisYeni);
     } else {
 
-        $yeniSiparis = tablogetir('tblsiparis','id',$yeniSiparisId, $db);
+        $yeniSiparis = tablogetir('tblsiparis', 'id', $yeniSiparisId, $db);
 
         $basilanNetAdetSiparis = $basilanNetAdet + $yeniSiparis['basilanAdet'] - $baski['basilanNetAdet'];
         $basilanNetKgSiparis = $basilanNetKg + $yeniSiparis['basilanKilo'] - $baski['basilanNetKg'];

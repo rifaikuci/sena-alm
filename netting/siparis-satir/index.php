@@ -36,7 +36,7 @@ if (isset($_POST['siparissaitrguncelle'])) {
     $araKagit = strval($_POST['araKagit']) == "true" ? 1 : 0;;
     $krepeKagit = strval($_POST['krepeKagit']) == "true" ? 1 : 0;;
     $naylonDurum = $_POST['naylonDurum'];
-    $istenilenTermin = $_POST['istenilenTermin'];
+    $istenilenTermik = $_POST['istenilenTermik'];
     $kiloAdet = $_POST['kiloAdet'];
     $baskiAciklama = $_POST['baskiAciklama'];
     $paketAciklama = $_POST['paketAciklama'];
@@ -74,7 +74,7 @@ if (isset($_POST['siparissaitrguncelle'])) {
         araKagit = '$araKagit',
         krepeKagit = '$krepeKagit',
         naylonDurum = '$naylonDurum',
-        istenilenTermin = '$istenilenTermin',
+        istenilenTermik = '$istenilenTermik',
         siparisTuru = '$siparisTurKod',
         kiloAdet = '$kiloAdet',
         baskiAciklama = '$baskiAciklama',

@@ -18,6 +18,7 @@ var appyaribaskiguncelle = new Vue({
             kalipSicaklikG: '',
             biyetSicaklikG: '',
             hizG: '',
+            istenilenTermikG: '',
             fireG: '',
             baskiBitirG: false,
             baskiBasla: false,
@@ -44,7 +45,6 @@ var appyaribaskiguncelle = new Vue({
 
 
             handleBoylamFireG(event) {
-                debugger
                 if (event.target.value && event.target.value > 0 && this.konveyorBoyG && this.konveyorBoyG > 0) {
                     this.baskiFireG = (event.target.value * 2) / this.konveyorBoyG;
                 }

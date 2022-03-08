@@ -17,6 +17,7 @@ var baskigiris = new Vue({
             secilenTakim: "",
             siparisId: '',
             takimıd: '',
+            istenilenTermik: '',
             baskiId: '',
             biyetBoy: '',
             araIsFire: '',
@@ -210,6 +211,7 @@ $('#supplier_id').on("change", async function () {
         baskigiris.satirNo = selectedRow.satirNo;
         baskigiris.musteriAd = selectedRow.musteriAd;
         baskigiris.profil = selectedRow.profil;
+        baskigiris.istenilenTermik = selectedRow.istenilenTermik;
         baskigiris.alasim = selectedRow.alasim;
         baskigiris.tolerans = selectedRow.tolerans;
         baskigiris.boy = selectedRow.boy;

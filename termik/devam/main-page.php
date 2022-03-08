@@ -69,8 +69,8 @@ date_default_timezone_set('Europe/Istanbul');
                                         $baskilar = $baskilar . $baski['id'] . ",";
                                         $siparisler = $siparisler . $siparis['id'] . ",";
                                         $tur = $tur . $siparis['siparisTuru'] . ",";
-                                        $termik = $termik . $siparis['istenilenTermin'] . ",";
-                                        echo "Sipariş Numarası : " . $siparis['satirNo'].  " Baskı Numarası  : " . $baski['id'] . " Termik Değeri : " . $siparis['istenilenTermin'] ;
+                                        $termik = $termik . $siparis['istenilenTermik'] . ",";
+                                        echo "Sipariş Numarası : " . $siparis['satirNo'].  " Baskı Numarası  : " . $baski['id'] . " Termik Değeri : " . $siparis['istenilenTermik'] ;
                                         ?></label>
                                     <input name="<?php echo "baski" . $baski['id'] ?>" required class="form-control"
                                            type="number" placeholder="1">

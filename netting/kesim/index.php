@@ -34,25 +34,12 @@ if (isset($_POST['kesimekle'])) {
     $siparisId = $_POST['siparisId'];
     $hurdaAdet = $_POST['hurdaAdet'];
     $naylonDurum = tablogetir("tblsiparis",'id',$siparisId, $db)['naylonDurum'];
-    $konum = "termik";
-    if ($istenilenTermik == "Termikli" || $istenilenTermik == "Yarı Termikli") {
-        $konum = "termik";
-        $termikId = 0;
-    } else {
-        if ($siparisTur == "Boyalı") {
-            $konum = "kromat";
-            $termikId = -1;
 
-        } else {
-            $konum = "paketleme";
-            $termikId = -2;
-        }
-    }
 
     $sqlKesim = "INSERT INTO tblkesim (baskiId, kesilenBoy, operatorId, sepetId1, sepetId2, sepetId3, hurdaSebep, 
-                      hurdaAdet, netAdet, vardiyaKod, sepet1Adet, sepet2Adet, sepet3Adet, durum, termikId) 
+                      hurdaAdet, netAdet, vardiyaKod, sepet1Adet, sepet2Adet, sepet3Adet) 
                 VALUES ('$baskiId', '$kesilenBoy', '$operatorId', '$sepet1', '$sepet2', '$sepet3', '$hurdaSebep', 
-                        '$hurdaAdet', '$netAdet', '$vardiyaKod', '$sepet1Adet', '$sepet2Adet', '$sepet3Adet', '$konum', '$termikId')";
+                        '$hurdaAdet', '$netAdet', '$vardiyaKod', '$sepet1Adet', '$sepet2Adet', '$sepet3Adet')";
 
     mysqli_query($db, $sqlKesim);
 
@@ -65,23 +52,17 @@ if (isset($_POST['kesimekle'])) {
     mysqli_query($db, $sqlBaski);
 
 
-    $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer, kesimId) 
-                VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId','$baskiId', 'kesim', '$kesimId')";
+    $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer) 
+                VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId','$baskiId', 'kesim')";
     mysqli_query($db, $sqlHurda);
 
-    $guncelGr = tablogetir('tblbaski', 'id', $baskiId, $db)['guncelGr'];
-    $adet = -1 * ($hurdaAdet);
-    $kilo = $adet * $guncelGr * $kesilenBoy;
-    $sqlprofil = "INSERT INTO tblstokprofil (toplamKg, toplamAdet, gelisAmaci,siparis) 
-                VALUES ('$kilo', '$adet', 'kesim', '$satirNo')";
-    mysqli_query($db, $sqlprofil);
 
     if ($sepet1 > 0) {
 
         $sepet1getir = tablogetir('tblsepet', 'id', $sepet1, $db);
         $icindekiler1 = $sepet1getir['icindekiler'];
         $adetler1 = $sepet1getir['adetler'];
-        $sepet1Icındekiler = $icindekiler1 . $kesimId . ";";
+        $sepet1Icındekiler = $icindekiler1 . $baskiId . ";";
         $sepet1Adetler = $adetler1 . $sepet1Adet . ";";
 
 
@@ -98,7 +79,7 @@ if (isset($_POST['kesimekle'])) {
         $sepet2getir = tablogetir('tblsepet', 'id', $sepet2, $db);
         $icindekiler2 = $sepet2getir['icindekiler'];
         $adetler2 = $sepet2getir['adetler'];
-        $sepet2Icındekiler = $icindekiler2 . $kesimId . ";";
+        $sepet2Icındekiler = $icindekiler2 . $baskiId . ";";
         $sepet2Adetler = $adetler2 . $sepet2Adet . ";";
 
 
@@ -115,7 +96,7 @@ if (isset($_POST['kesimekle'])) {
         $sepet3getir = tablogetir('tblsepet', 'id', $sepet3, $db);
         $icindekiler3 = $sepet3getir['icindekiler'];
         $adetler3 = $sepet3getir['adetler'];
-        $sepet3Icındekiler = $icindekiler3 . $kesimId . ";";
+        $sepet3Icındekiler = $icindekiler3 . $baskiId . ";";
         $sepet3Adetler = $adetler3 . $sepet3Adet . ";";
 
 
@@ -128,12 +109,14 @@ if (isset($_POST['kesimekle'])) {
     }
 
 
-    $sqlsiparis = "UPDATE tblsiparis set
-                        konum = '$konum'
-                    where id = '$siparisId'";
+    $guncelGr = tablogetir('tblbaski', 'id', $baskiId, $db)['guncelGr'];
+    $adet = -1 * ($hurdaAdet);
+    $kilo = $adet * $guncelGr * $kesilenBoy;
+    $sqlprofil = "INSERT INTO tblstokprofil (toplamKg, toplamAdet, gelisAmaci,baskiId) 
+                VALUES ('$kilo', '$adet', 'kesim', '$baskiId')";
 
 
-    if (mysqli_query($db, $sqlsiparis)) {
+    if (mysqli_query($db, $sqlprofil)) {
         header("Location:../../kesim/?durumekle=ok");
         exit();
     } else {
@@ -155,20 +138,14 @@ if (isset($_GET['kesimsil'])) {
                     where id = '$baskiId'";
     mysqli_query($db, $sqlBaski);
 
-    $sqlHurda = "DELETE FROM tblhurda where kesimId = '$id'";
+    $sqlHurda = "DELETE FROM tblhurda where baskiId = '$id'";
     mysqli_query($db, $sqlHurda);
 
-    $siparisId = tablogetir('tblbaski', 'id', $baskiId, $db)['siparisId'];
-    $satirNo = tablogetir('tblsiparis', 'id', $siparisId, $db)['satirNo'];
     $hurdaAdet = -1 * ($kesim['hurdaAdet']);
 
-    $sqlstokprofil = "DELETE FROM tblstokprofil where toplamAdet = '$hurdaAdet' AND gelisAmaci = 'kesim' AND siparis = '$satirNo'";
+    $sqlstokprofil = "DELETE FROM tblstokprofil where toplamAdet = '$hurdaAdet' AND gelisAmaci = 'kesim' AND baskiId = '$baskiId'";
     mysqli_query($db, $sqlstokprofil);
 
-
-    $sqlsiparis = "UPDATE tblsiparis set
-                        konum = 'baski'
-                    where id = '$siparisId'";
 
     if ($kesim['sepetId1'] > 0) {
         $sepet1 = $kesim['sepetId1'];
@@ -279,7 +256,7 @@ if (isset($_POST['kesimguncelle'])) {
     adet = '$hurdaAdet',
     aciklama = '$hurdaSebep',
     operatorId = '$operatorId'
-    where kesimId = '$kesimId'";
+    where baskiId = '$baskiId'";
 
     mysqli_query($db, $sqlHurda);
 
@@ -292,7 +269,7 @@ if (isset($_POST['kesimguncelle'])) {
     $sqlprofilrow = "select * from tblstokprofil where profilId = '0'
                               and gelisAmaci = 'kesim' 
                               and toplamAdet = '$eskiHurdaAdet' 
-                              and siparis = '$satirNo' LIMIT 1";
+                              and baskiId = '$baskiId' LIMIT 1";
     $profil = mysqli_query($db, $sqlprofilrow)->fetch_assoc();
     $profilId = $profil['id'];
 

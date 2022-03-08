@@ -42,7 +42,7 @@ if ($received_data->action == 'siparisgetir') {
         $data['maxTolerans'] = $row['maxTolerans'];
         $data['boy'] = $row['boy'];
         $data['satirNo'] = $row['satirNo'];
-        $data['istenilenTermin'] = $row['istenilenTermin'];
+        $data['istenilenTermik'] = $row['istenilenTermik'];
         $data['paketAciklama'] = $row['paketAciklama'];
         $data['boyaAciklama'] = $row['boyaAciklama'];
         $data['baskiAciklama'] = $row['baskiAciklama'];
@@ -120,7 +120,7 @@ if ($received_data->action == 'siparislerlistesi') {
         $siparis['maxTolerans'] = $row['maxTolerans'];
         $siparis['boy'] = $row['boy'];
         $siparis['satirNo'] = $row['satirNo'];
-        $siparis['istenilenTermin'] = $row['istenilenTermin'];
+        $siparis['istenilenTermik'] = $row['istenilenTermik'];
         $siparis['paketAciklama'] = $row['paketAciklama'];
         $siparis['boyaAciklama'] = $row['boyaAciklama'];
         $siparis['baskiAciklama'] = $row['baskiAciklama'];

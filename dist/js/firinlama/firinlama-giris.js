@@ -31,7 +31,6 @@ var firinlamaGiris = new Vue({
                     }
                 })
                 this.ids = this.ids.slice(0, -1);
-                console.log(this.ids)
 
             }
         }

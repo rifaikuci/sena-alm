@@ -44,7 +44,7 @@ var siparissatirguncelle = new Vue({
         boyaAciklama: '',
         paketAciklama: '',
         kiloAdet: '',
-        istenilenTermin: '',
+        istenilenTermik: '',
         konum: ''
     },
 
@@ -80,7 +80,7 @@ var siparissatirguncelle = new Vue({
             this.alasimId = response.alasimId,
             this.id = response.id,
             this.kiloAdet = response.kiloAdet,
-            this.istenilenTermin = response.istenilenTermin
+            this.istenilenTermik = response.istenilenTermik
         this.konum = response.konum
         this.isFullSiparisData = true;
         this.isBoya = this.siparisTur == "Boyalı" ? true : false;
@@ -95,7 +95,7 @@ var siparissatirguncelle = new Vue({
                 this.alasimId &&
                 this.termimTarih &&
                 this.maxTolerans &&
-                this.istenilenTermin &&
+                this.istenilenTermik &&
                 this.korumaBandi &&
                 this.errorShow == false &&
                 this.naylonId) {
@@ -113,7 +113,7 @@ var siparissatirguncelle = new Vue({
                 this.alasimId &&
                 this.termimTarih &&
                 this.maxTolerans &&
-                this.istenilenTermin &&
+                this.istenilenTermik &&
                 this.korumaBandi &&
                 this.errorShow == false &&
                 this.naylonId) {
@@ -193,7 +193,7 @@ var siparissatirguncelle = new Vue({
                 this.termimTarih &&
                 this.korumaBandi &&
                 this.maxTolerans &&
-                this.istenilenTermin &&
+                this.istenilenTermik &&
                 this.errorShow == false &&
                 this.naylonId) {
                 this.isFullSiparisData = true
@@ -234,7 +234,7 @@ var siparissatirguncelle = new Vue({
                 this.termimTarih &&
                 this.maxTolerans &&
                 this.korumaBandi &&
-                this.istenilenTermin &&
+                this.istenilenTermik &&
                 this.errorShow == false &&
                 this.naylonId) {
                 this.isFullSiparisData = true
@@ -266,7 +266,7 @@ var siparissatirguncelle = new Vue({
                     this.termimTarih &&
                     this.maxTolerans &&
                     this.korumaBandi &&
-                    this.istenilenTermin &&
+                    this.istenilenTermik &&
                     this.errorShow == false &&
                     this.naylonId) {
                     this.isFullSiparisData = true
@@ -288,7 +288,7 @@ var siparissatirguncelle = new Vue({
                 this.termimTarih &&
                 this.maxTolerans &&
                 this.korumaBandi &&
-                this.istenilenTermin &&
+                this.istenilenTermik &&
                 this.errorShow == false &&
                 this.naylonId) {
                 this.isFullSiparisData = true

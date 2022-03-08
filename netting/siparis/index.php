@@ -29,7 +29,7 @@ if (isset($_POST['siparisekle'])) {
     $arrayBaskiAciklama = explode(",", $_POST['arrayBaskiAciklama']);
     $arrayPaketAciklama = explode(",", $_POST['arrayPaketAciklama']);
     $arrayBoyaAciklama = explode(",", $_POST['arrayBoyaAciklama']);
-    $arrayIstenilenTermin = explode(",", $_POST['arrayIstenilenTermin']);
+    $arrayistenilenTermik = explode(",", $_POST['arrayistenilenTermik']);
     $arrayKorumaBandi = explode(",", $_POST['arrayKorumaBandi']);
     $arrayKiloAdet = explode(",", $_POST['arrayKiloAdet']);
 
@@ -53,11 +53,11 @@ if (isset($_POST['siparisekle'])) {
 
 
     $sql = "INSERT INTO tblsiparis (profilId, adet, kilo, siparisTuru, alasimId, musteriId, naylonDurum,
-                        araKagit, krepeKagit, siparisTarih, termimTarih, istenilenTermin, siparisNo, boyaId,
+                        araKagit, krepeKagit, siparisTarih, termimTarih, istenilenTermik, siparisNo, boyaId,
                         eloksalId, maxTolerans, boy, satirNo, durum,siparisTarihYil,ay, gun, yil, hafta,
                         kiloAdet, kalanAdet, kalanKilo, baskiAciklama, paketAciklama, boyaAciklama, konum, operatorId, korumaBandi )  VALUES ";
 
-    $sqlprofil = "INSERT INTO tblstokprofil (profilId, firmaId,musteriId,tur,gelisAmaci, boy, toplamKg, icAdet,paketAdet,toplamAdet, siparisNo, sevkiyatId, istenilenTermin, siparis) VALUES ";
+    $sqlprofil = "INSERT INTO tblstokprofil (profilId, firmaId,musteriId,tur,gelisAmaci, boy, toplamKg, icAdet,paketAdet,toplamAdet, siparisNo, sevkiyatId, istenilenTermik, siparis) VALUES ";
 
     for ($i = 0; $i < count($arrayProfil); $i++) {
 
@@ -96,12 +96,12 @@ if (isset($_POST['siparisekle'])) {
 
         $sql = $sql . " ('$arrayProfil[$i]', '$arrayAdet[$i]', '$arrayKilo[$i]','$siparisTur' , 
         '$arrayAlasimId[$i]', '$musteriId', '$arrayNaylonId[$i]', $arrayAraKagit[$i], $arrayKrepeKagit[$i],
-        '$siparisTarih', '$arrayTermimTarih[$i]', '$arrayIstenilenTermin[$i]', '$siparisNo', '$boyaId',
+        '$siparisTarih', '$arrayTermimTarih[$i]', '$arrayistenilenTermik[$i]', '$siparisNo', '$boyaId',
         '$eloksalId', '$arrayMaxTolerans[$i]', '$arrayBoy[$i]','$satirNo', '0', '$siparisTarihYil', '$ay',
         '$gun', '$yil', '$hafta', '$kiloAdet', '$kalanAdet','$kalanKilo', '$arrayBaskiAciklama[$i]', 
          '$arrayPaketAciklama[$i]', '$arrayBoyaAciklama[$i]', 'baski', '$operatorId', '$arrayKorumaBandi[$i]'),";
 
-        $sqlprofil = $sqlprofil . "('$arrayProfil[$i]', '0', '$musteriId', '$profilTur', 'uretim', '$arrayBoy[$i]', '0','0','0','0','0','0','$arrayIstenilenTermin[$i]', '$satirNo' ),";
+        $sqlprofil = $sqlprofil . "('$arrayProfil[$i]', '0', '$musteriId', '$profilTur', 'uretim', '$arrayBoy[$i]', '0','0','0','0','0','0','$arrayistenilenTermik[$i]', '$satirNo' ),";
 
         $gunAritmetikSayi++;
 
@@ -162,7 +162,7 @@ if (isset($_POST['guncellesatir'])) {
     $krepeKagit = $_POST['krepeKagit'];
     $naylonDurum = $_POST['naylonDurum'];
     $korumaBandi= $_POST['korumaBandi'];
-    $istenilenTermin = $_POST['istenilenTermin'];
+    $istenilenTermik = $_POST['istenilenTermik'];
     $kiloAdet = $_POST['kiloAdet'];
     $baskiAciklama = $_POST['baskiAciklama'];
     $paketAciklama = $_POST['paketAciklama'];
@@ -209,7 +209,7 @@ if (isset($_POST['guncellesatir'])) {
         krepeKagit = '$krepeKagit',
         naylonDurum = '$naylonDurum',
         korumaBandi = '$korumaBandi',
-        istenilenTermin = '$istenilenTermin',
+        istenilenTermik = '$istenilenTermik',
         satirNo = '$satirNo',
         siparisTuru = '$siparisTurKod',
         kalanAdet = '$kalanAdet',

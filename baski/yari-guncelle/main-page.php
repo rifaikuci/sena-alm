@@ -115,6 +115,16 @@ date_default_timezone_set('Europe/Istanbul');
 
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h6>
+                                            <span style="color: darkcyan; font-weight: bold"> Tolerans: </span>
+                                            <?php echo $siparis['istenilenTermik'] ?>
+                                        </h6>
+
+                                    </div>
+                                </div>
                                 <div class="row">
                                     <div class="col-sm-8">
                                         <h6>
@@ -440,6 +450,7 @@ date_default_timezone_set('Europe/Istanbul');
                             <input type="hidden" name="takimId" value="<?php echo $takimId ?>">
                             <input type="hidden" name="satirNo" value="<?php echo $siparis['satirNo'] ?>">
                             <input type="hidden" name="baslaZamani" value="<?php echo $baski['baslaZamani'] ?>">
+                            <input type="hidden" name="istenilenTermik" value="<?php echo $siparis['istenilenTermik'] ?>">
 
                         </div>
                     </div>

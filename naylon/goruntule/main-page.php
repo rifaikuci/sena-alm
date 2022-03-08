@@ -45,8 +45,7 @@ if ($_GET['id']) {
                         </div>
                     </div>
 
-                    <div class="col-sm-4"
-                    ">
+                    <div class="col-sm-4">
                     <div class="form-group">
                         <label>Naylon Kullanılan Adet</label>
                         <input disabled value="<?php echo $naylon['kullanilan1']; ?>"
@@ -68,8 +67,7 @@ if ($_GET['id']) {
                 </div>
             </div>
 
-            <div class="col-sm-4"
-            ">
+            <div class="col-sm-4">
             <div class="form-group">
                 <label>Naylon Kullanılan Adet</label>
                 <input disabled value="<?php echo $naylon['kullanilan2']; ?>"

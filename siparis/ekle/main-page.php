@@ -48,7 +48,7 @@ $alasimlar = $db->query($alasimsql);
                         <input name="arrayBaskiAciklama" :value="arrayBaskiAciklama" type="hidden">
                         <input name="arrayBoyaAciklama" :value="arrayBoyaAciklama" type="hidden">
                         <input name="arrayPaketAciklama" :value="arrayPaketAciklama" type="hidden">
-                        <input name="arrayIstenilenTermin" :value="arrayIstenilenTermin" type="hidden">
+                        <input name="arrayistenilenTermik" :value="arrayistenilenTermik" type="hidden">
                         <input type="hidden" value="<?php echo isset($_SESSION['operatorId']) ?  $_SESSION['operatorId'] : 0; ?>" name="operatorId">
 
 
@@ -207,7 +207,7 @@ $alasimlar = $db->query($alasimsql);
                                     <div class="col-sm-5">
                                         <div class="form-group">
                                             <label>İstenilen Termin</label>
-                                            <select v-model="siparis.istenilenTermin" name="istenilenTermin" class="form-control">
+                                            <select v-model="siparis.istenilenTermik" name="istenilenTermik" class="form-control">
                                                 <option selected disabled value="">İstenilen Termin</option>
                                                 <?php for ($i = 0; $i < count($termikDurum); $i++) { ?>
                                                     <option value="<?php echo $termikDurum[$i] ?>"><?php echo $termikDurum[$i] ?></option>

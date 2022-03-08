@@ -39,7 +39,7 @@ var siparisGiris = new Vue({
         arrayPaketAciklama: [],
         arraySiparisler: [],
         arrayKiloAdet: [],
-        arrayIstenilenTermin: [],
+        arrayistenilenTermik: [],
         siparis: {
             profil: '',
             profilId: '',
@@ -66,7 +66,7 @@ var siparisGiris = new Vue({
             boyaAciklama: '',
             paketAciklama: '',
             kiloAdet: '',
-            istenilenTermin: '',
+            istenilenTermik: '',
         }
     },
 
@@ -79,7 +79,7 @@ var siparisGiris = new Vue({
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
                 this.siparis.maxTolerans &&
-                this.siparis.istenilenTermin &&
+                this.siparis.istenilenTermik &&
                 this.siparis.korumaBandi &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
@@ -97,7 +97,7 @@ var siparisGiris = new Vue({
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
                 this.siparis.maxTolerans &&
-                this.siparis.istenilenTermin &&
+                this.siparis.istenilenTermik &&
                 this.siparis.korumaBandi &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
@@ -136,6 +136,7 @@ var siparisGiris = new Vue({
             if (event.target.value && event.target.value > 0) {
                 this.adetDisabled = true;
                 if (this.siparis.profilId && this.siparis.boy) {
+
                     const kiloBul = await axios.post('/sena/netting/siparis/action.php', {
                         action: 'kilo',
                         profilId: this.siparis.profilId,
@@ -169,12 +170,12 @@ var siparisGiris = new Vue({
                         return response.data
                     });
 
-                    if (kiloBul.ortalama) {
+
                         this.siparis.kiloAdet = 'A';
                         this.siparis.kilo = Math.round((parseInt(event.target.value) *
-                            parseInt(kiloBul.ortalama) *
+                            parseInt(kiloBul.ortalama ? kiloBul.ortalama :  0) *
                             parseInt(this.siparis.boy)) / 1000000);
-                    }
+
                 }
             } else {
                 this.siparis.kilo = '';
@@ -204,7 +205,7 @@ var siparisGiris = new Vue({
                     this.siparis.alasimId &&
                     this.siparis.termimTarih &&
                     this.siparis.maxTolerans &&
-                    this.siparis.istenilenTermin &&
+                    this.siparis.istenilenTermik &&
                     this.siparis.korumaBandi &&
                     this.errorShow == false &&
                     this.siparis.naylonId) {
@@ -226,7 +227,7 @@ var siparisGiris = new Vue({
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
                 this.siparis.maxTolerans &&
-                this.siparis.istenilenTermin &&
+                this.siparis.istenilenTermik &&
                 this.siparis.korumaBandi &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
@@ -245,7 +246,7 @@ var siparisGiris = new Vue({
                 this.siparis.siparisTur &&
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
-                this.siparis.istenilenTermin &&
+                this.siparis.istenilenTermik &&
                 this.siparis.maxTolerans &&
                 this.siparis.korumaBandi &&
                 this.errorShow == false &&
@@ -276,7 +277,7 @@ var siparisGiris = new Vue({
                 this.arrayBaskiAciklama.push(this.siparis.baskiAciklama);
                 this.arrayPaketAciklama.push(this.siparis.paketAciklama);
                 this.arrayBoyaAciklama.push(this.siparis.boyaAciklama);
-                this.arrayIstenilenTermin.push(this.siparis.istenilenTermin);
+                this.arrayistenilenTermik.push(this.siparis.istenilenTermik);
 
 
                 this.siparis = {
@@ -303,7 +304,7 @@ var siparisGiris = new Vue({
                     paketAciklama: '',
                     boyaAciklama: '',
                     kiloAdet: '',
-                    istenilenTermin: '',
+                    istenilenTermik: '',
                 }
 
                 this.isFullSiparisData = false;
@@ -341,7 +342,7 @@ var siparisGiris = new Vue({
             this.$delete(this.arrayBoyaAciklama, index);
             this.$delete(this.arrayBaskiAciklama, index);
             this.$delete(this.arrayKiloAdet, index);
-            this.$delete(this.arrayIstenilenTermin, index);
+            this.$delete(this.arrayistenilenTermik, index);
             this.isFullSiparisData = false
 
         },

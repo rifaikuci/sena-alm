@@ -28,6 +28,7 @@ if ($received_data->action == 'baskigetir') {
         $data['biyetBirimGramaj'] =  $alasim['biyetBirimGramaj'];
         $data['tolerans'] = $row['maxTolerans'];
         $data['boy'] = $row['boy'];
+        $data['istenilenTermik'] = $row['istenilenTermik'];
         $data['kg'] = $row['kilo'];
         $data['adet'] = $row['adet'];
         $data['aciklama'] = $row['baskiAciklama'];
@@ -109,6 +110,7 @@ if ($received_data->action == 'baskiguncellegetir') {
         $data['boylamFire'] = $row['boylamFire'];
         $data['baskiFire'] = $row['baskiFire'];
         $data['biyetFire'] = $row['biyetFire'];
+        $data['istenilenTermik'] = $row['istenilenTermik'];
         $data['verilenBiyet'] = $row['verilenBiyet'];
         $data['guncelGr'] = $row['guncelGr'];
         $data['basilanBrutKg'] = $row['basilanBrutKg'];
@@ -123,7 +125,9 @@ if ($received_data->action == 'baskiguncellegetir') {
         $data['takimSonDurum'] = $row['takimSonDurum'];
         $data['aciklama'] = $row['aciklama'];
         $data['sonlanmaNeden'] = $row['sonlanmaNeden'];
-        $data['profilId'] = tablogetir('tblsiparis','id',$row['siparisId'], $db)['profilId'];
+        $siparis =  tablogetir('tblsiparis','id',$row['siparisId'], $db);
+        $data['profilId'] =$siparis['profilId'];
+        $data['istenilenTermik'] =$siparis['istenilenTermik'];
 
 
 

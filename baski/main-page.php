@@ -43,6 +43,7 @@ $result = $db->query($sql);
                             <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Satır No</th>
                                 <th>Takım</th>
                                 <th>Baslangıç Zamanı</th>
                                 <th>Bitirilme Durumu</th>
@@ -54,6 +55,7 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
+                                    <td><?php echo $row['satirNo']; ?></td>
                                     <td><?php echo tablogetir('tbltakim', 'id', $row['takimId'], $db)['takimNo']; ?></td>
                                     <td><?php echo tarihsaat($row['baslaZamani']); ?></td>
                                     <td><?php echo $row['bitisZamani'] == "" ? "Baskı Kesildi" : "Bitirildi"; ?></td>

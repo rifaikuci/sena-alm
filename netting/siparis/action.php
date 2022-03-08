@@ -16,7 +16,7 @@ if ($received_data->action == 'kilo') {
     $row = $result->fetch_assoc();
 
     foreach ($result as $row) {
-        $data['ortalama'] = $row['deger'] ?  $row['deger'] :  0;
+        $data['ortalama'] = $row['deger']  && $row['deger']  ?  $row['deger'] :  0;
     }
 
     echo json_encode($data);
@@ -88,7 +88,7 @@ if ($received_data->action == 'siparislerlistesi') {
         $siparis['maxTolerans'] =  $row['maxTolerans'];
         $siparis['boy'] =  $row['boy'];
         $siparis['satirNo'] =  $row['satirNo'];
-        $siparis['istenilenTermin'] =  $row['istenilenTermin'];
+        $siparis['istenilenTermik'] =  $row['istenilenTermik'];
         $siparis['paketAciklama'] =  $row['paketAciklama'];
         $siparis['boyaAciklama'] =  $row['boyaAciklama'];
         $siparis['baskiAciklama'] =  $row['baskiAciklama'];

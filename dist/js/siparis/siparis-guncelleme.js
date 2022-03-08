@@ -48,7 +48,7 @@ new Vue({
             paketAciklama: '',
             id: '',
             kiloAdet: '',
-            istenilenTermin: '',
+            istenilenTermik: '',
         },
 
     },
@@ -76,7 +76,7 @@ new Vue({
                 this.siparis.termimTarih &&
                 this.siparis.korumaBandi &&
                 this.siparis.maxTolerans &&
-                this.siparis.istenilenTermin &&
+                this.siparis.istenilenTermik &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
                 this.isFullSiparisData = true
@@ -94,7 +94,7 @@ new Vue({
                 this.siparis.termimTarih &&
                 this.siparis.korumaBandi &&
                 this.siparis.maxTolerans &&
-                this.siparis.istenilenTermin &&
+                this.siparis.istenilenTermik &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
                 this.isFullSiparisData = true
@@ -110,7 +110,7 @@ new Vue({
                 this.siparis.siparisTur &&
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
-                this.siparis.istenilenTermin &&
+                this.siparis.istenilenTermik &&
                 this.siparis.korumaBandi &&
                 this.siparis.maxTolerans &&
                 this.errorShow == false &&
@@ -232,7 +232,7 @@ new Vue({
                     this.siparis.termimTarih &&
                     this.siparis.maxTolerans &&
                     this.siparis.korumaBandi &&
-                    this.siparis.istenilenTermin &&
+                    this.siparis.istenilenTermik &&
                     this.errorShow == false &&
                     this.siparis.naylonId) {
                     this.isFullSiparisData = true
@@ -285,7 +285,7 @@ new Vue({
                     alasimId: allItems[id].alasimId,
                     id: allItems[id].id,
                     kiloAdet: allItems[id].kiloAdet,
-                    istenilenTermin: allItems[id].istenilenTermin,
+                    istenilenTermik: allItems[id].istenilenTermik,
 
                 },
                     this.arraySiparisler = allItems;
@@ -307,7 +307,7 @@ new Vue({
                 this.siparis.alasimId &&
                 this.siparis.termimTarih &&
                 this.siparis.maxTolerans &&
-                this.siparis.istenilenTermin &&
+                this.siparis.istenilenTermik &&
                 this.siparis.korumaBandi &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
@@ -328,7 +328,7 @@ new Vue({
                 this.siparis.termimTarih &&
                 this.siparis.maxTolerans &&
                 this.siparis.korumaBandi &&
-                this.siparis.istenilenTermin &&
+                this.siparis.istenilenTermik &&
                 this.errorShow == false &&
                 this.siparis.naylonId) {
 
@@ -359,7 +359,7 @@ new Vue({
                         id: this.siparis.id,
                         siparisTur: this.siparis.siparisTur,
                         kiloAdet: this.siparis.kiloAdet,
-                        istenilenTermin: this.siparis.istenilenTermin,
+                        istenilenTermik: this.siparis.istenilenTermik,
                     },
                     success: function (response) {
 
@@ -394,7 +394,7 @@ new Vue({
                     baskiAciklama: '',
                     id: '',
                     kiloAdet: '',
-                    istenilenTermin: '',
+                    istenilenTermik: '',
                 }
 
                 this.isFullSiparisData = false;
@@ -419,8 +419,6 @@ new Vue({
                 this.isFullSiparisData = false
 
             }
-
-
         },
 
     }

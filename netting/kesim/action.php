@@ -49,7 +49,7 @@ if ($received_data->action == 'baskigetir') {
         $data['id'] = $row['id'];
         $data['satirNo'] = $siparis['satirNo'];
         $data['istenilenBoy'] = $siparis['boy'];
-        $data['istenilenTermik'] = $siparis['istenilenTermin'];
+        $data['istenilenTermik'] = $siparis['istenilenTermik'];
         $data['basilanNetAdet'] = $row['basilanNetAdet'];
         $data['kayitTarih'] = $row['kayitTarih'];
         $data['hurdaAdet'] = $row['hurdaAdet'];
@@ -129,7 +129,7 @@ if ($received_data->action == 'kesimgetir') {
     $data['sepetler'] = $datam;
     $data['baskilar'] = $baskilar;
     $data['istenilenBoy'] =  $siparisgetir['boy'];
-    $data['istenilenTermik'] =  $siparisgetir['istenilenTermin'];
+    $data['istenilenTermik'] =  $siparisgetir['istenilenTermik'];
     $data['basilanNetAdet'] = tablogetir('tblbaski','id',$row['baskiId'], $db)['basilanNetAdet'];
     $data['profil'] = $profil['profilAdi'] . " - " . $profil['profilNo'] ;
     $data['siparisTur'] = $siparisTur == "B" ? "Boyalı" : ($siparisTur == "E" ? "Eloksal" : "Ham");
