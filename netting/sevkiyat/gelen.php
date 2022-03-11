@@ -113,7 +113,7 @@ if (isset($_POST['sevkiyatekle'])) {
         $profilpaketAdet = explode(",", $_POST['profilpaketAdet']);
         $profiltoplamadet = explode(",", $_POST['profiltoplamadet']);
         $profilistenilenTermik = explode(",", $_POST['profilistenilenTermik']);
-
+        /*
         $sqlProfil = "INSERT INTO tblstokprofil (profilId, firmaId, musteriId, tur, gelisAmaci, boy, toplamKg, icAdet, paketAdet, toplamAdet, siparisNo, sevkiyatId, istenilenTermik)  VALUES ";
         for ($i = 0; $i < count($profilprofilId); $i++) {
 
@@ -122,6 +122,8 @@ if (isset($_POST['sevkiyatekle'])) {
             '$profilicadet[$i]', '$profilpaketAdet[$i]', '$profiltoplamadet[$i]','$siparisno', '$sevkiyatId', '$profilistenilenTermik[$i]'),";
         }
         $sqlProfil[strlen($sqlProfil) - 1] = ";";
+        */
+
         try {
             if (count($biyetpartino) > 0) {
                 mysqli_query($db, $sqlBiyet);
@@ -132,9 +134,12 @@ if (isset($_POST['sevkiyatekle'])) {
             if (count($malzemepartino) > 0) {
                 mysqli_query($db, $sqlMalzeme);
             }
+            /*
             if (count($profilprofilId) > 0 && $_POST['profilprofilId']) {
                 mysqli_query($db, $sqlProfil);
             }
+
+            */
 
             header("Location:../../sevkiyat/gelen/?durumekle=ok");
             exit();
@@ -153,13 +158,13 @@ if (isset($_GET['gelensil'])) {
     $sqlstokbiyet = "DELETE FROM tblstokbiyet where sevkiyatId = '$id' ";
     $sqlstokboya = "DELETE FROM tblstokboya where sevkiyatId = '$id' ";
     $sqlstokmalzeme = "DELETE FROM tblstokmalzeme where sevkiyatId = '$id' ";
-    $sqlstokprofil = "DELETE FROM tblstokprofil where sevkiyatId = '$id' ";
+    //$sqlstokprofil = "DELETE FROM tblstokprofil where sevkiyatId = '$id' ";
 
     if (mysqli_query($db, $sql)) {
         mysqli_query($db, $sqlstokbiyet);
         mysqli_query($db, $sqlstokboya);
         mysqli_query($db, $sqlstokmalzeme);
-        mysqli_query($db, $sqlstokprofil);
+      //  mysqli_query($db, $sqlstokprofil);
         header("Location:../../sevkiyat/gelen/?durumsil=ok");
         exit();
     } else {

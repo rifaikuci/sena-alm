@@ -152,16 +152,15 @@ $boyaSepet = $db->query($boyaSql);
                                     data-dropdown-css-class="select2-blue"
                                     data-placeholder="Paketlenecek Ürünü Seçiniz "
                                     style="width: 100%;">
-                                <option selected value="0">Satır No - Toplam Adet - Kesim No</option>
+                                <option selected value="0">Satır No - Toplam Adet </option>
                                 <?php while ($boya = $boyaSepet->fetch_array()) {
-                                    $kesimId = $boya['kesimId'];
-                                    $baskiId = tablogetir('tblkesim', 'id', $kesimId, $db)['baskiId'];
+                                    $baskiId = $boya['baskiId'];
                                     $siparisId = tablogetir('tblbaski', 'id', $baskiId, $db)['siparisId'];
                                     $siparis = tablogetir('tblsiparis', 'id', $siparisId, $db);
                                     $satirNo = $siparis['satirNo'];
                                     $koruma = $siparis['korumaBandi'];
-                                    $value = $satirNo . " - " . $boya['topAdet'] . " - " . $kesimId;
-                                    $key = $kesimId . ";" . $baskiId . ";" . $siparisId . ";" . $boya['topAdet'] . ";" . $koruma . ";" . $boya['id'] ?>
+                                    $value = $satirNo . " - " . $boya['topAdet'] ;
+                                    $key = $baskiId . ";" . $siparisId . ";" . $boya['topAdet'] . ";" . $koruma . ";" . $boya['id'] ?>
                                     <option value="<?php echo $key ?>"> <?php echo $value ?></option>
                                 <?php } ?>
                             </select>
@@ -179,7 +178,6 @@ $boyaSepet = $db->query($boyaSql);
                             <input type="hidden" name="operatorId" value="<?php echo $_SESSION['operatorId'] ?>">
                             <input name="boyapaketbaslat" value="boyapaketbaslat" type="hidden">
                             <input type="hidden" name="netAdet" :value="netAdet">
-                            <input type="hidden" name="kesimId" :value="kesimId">
                             <input type="hidden" name="baskiId" :value="baskiId">
                             <input type="hidden" name="profilId" :value="profilId">
                             <input type="hidden" name="satirNo" :value="satirNo">

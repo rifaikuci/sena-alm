@@ -12,7 +12,6 @@ if (isset($_POST['boyapaketbaslat'])) {
     $hurdaAdet = $_POST['hurdaAdet'];
     $hurdaSebep = $_POST['hurdaSebep'];
     $netAdet = $_POST['netAdet'];
-    $kesimId = $_POST['kesimId'];
     $baskiId = $_POST['baskiId'];
     $profilId = $_POST['profilId'];
     $satirNo = $_POST['satirNo'];
@@ -27,18 +26,18 @@ if (isset($_POST['boyapaketbaslat'])) {
 
     if ($hurdaAdet > 0) {
         $geciciAdet = -1 * ($hurdaAdet);
-        $sqlprofil = "INSERT INTO tblstokprofil (toplamAdet, gelisAmaci,siparis) 
-                VALUES ( '$geciciAdet', 'boyapaket', '$satirNo')";
+        $sqlprofil = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId, operatorId) 
+                VALUES ( '$geciciAdet', 'boyapaket', '$baskiId', '$operatorId')";
         mysqli_query($db, $sqlprofil);
 
-        $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer, kesimId) 
-                VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId','$baskiId', 'boyapaket', '$kesimId')";
+        $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer) 
+                VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId','$baskiId', 'boyapaket')";
         mysqli_query($db, $sqlHurda);
     }
 
     if ($rutusAdet > 0) {
-        $sqlrutusprofil = "INSERT INTO tblrutusprofil (adet,kalan,sebep,profilId) 
-                VALUES ( '$rutusAdet', '$rutusAdet', '$rutusSebep', '$profilId')";
+        $sqlrutusprofil = "INSERT INTO tblrutusprofil (adet,kalan,sebep,profilId, operatorId) 
+                VALUES ( '$rutusAdet', '$rutusAdet', '$rutusSebep', '$profilId', '$operatorId')";
         mysqli_query($db, $sqlrutusprofil);
     }
 
@@ -47,13 +46,13 @@ if (isset($_POST['boyapaketbaslat'])) {
                      isPaket = '1'
                     where id = '$boyaId'";
     mysqli_query($db, $sqlboya);
+
     $sqlboyapaket = "INSERT INTO tblboyapaket  (
                         boyaId,
-                        kesimId,
+                        baskiId,
                         hurdaAdet,
                         hurdaSebep,
                         netAdet,
-                        satirNo,
                         rutusAdet,
                         rutusSebep,
                         zaman,
@@ -62,11 +61,10 @@ if (isset($_POST['boyapaketbaslat'])) {
                         operatorId)
                    VALUES  (
                         '$boyaId',
-                        '$kesimId',
+                        '$baskiId',
                         '$hurdaAdet',
                         '$hurdaSebep',
                         '$netAdet',
-                        '$satirNo',
                         '$rutusAdet',
                         '$rutusSebep',
                         '$zaman',
@@ -76,7 +74,29 @@ if (isset($_POST['boyapaketbaslat'])) {
     
                    )";
 
-    if (mysqli_query($db, $sqlboyapaket)) {
+    mysqli_query($db, $sqlboyapaket);
+    $id = mysqli_insert_id($db);
+
+    $boyaPaketIds = tablogetir("tblbaski", 'id', $baskiId, $db)['boyaPaketId'];
+
+    if ($boyaPaketIds != '0' && $boyaPaketIds != '-1') {
+        $boyaPaketIds = $boyaPaketIds . ";" . $id;
+
+        $sqlBaski = "UPDATE tblbaski set
+                        boyaPaketId = '$boyaPaketIds'
+                    where id = '$baskiId'";
+
+    } else {
+
+        $boyaPaketIds = $id;
+
+        $sqlBaski = "UPDATE tblbaski set
+                        boyaPaketId = '$boyaPaketIds'
+                    where id = '$baskiId'";
+    }
+
+
+    if (mysqli_query($db, $sqlBaski)) {
         header("Location:../../boyapaket/?durumekle=ok");
         exit();
     } else {
@@ -86,12 +106,12 @@ if (isset($_POST['boyapaketbaslat'])) {
 
 }
 
+#Kullanılmamasında fayda var
 if (isset($_GET['boyapaketsil'])) {
 
     $id = $_GET['boyapaketsil'];
 
     $boyapaket = tablogetir("tblboyapaket", 'id', $id, $db);
-    $satirNo = $boyapaket['satirNo'];
     $adet = $boyapaket['hurdaAdet'];
     $aciklama = $boyapaket['hurdaSebep'];
     $rutusAdet = $boyapaket['rutusAdet'];
@@ -100,17 +120,6 @@ if (isset($_GET['boyapaketsil'])) {
     $boyaId = $boyapaket['boyaId'];
     $geciciAdet = -1 * $adet;
 
-    $sqlprofil = "DELETE FROM tblstokprofil where toplamAdet = '$geciciAdet' AND gelisAmaci = 'boyapaket' AND siparis = '$satirNo'  ";
-    mysqli_query($db, $sqlprofil);
-
-    $sqlHurda = "DELETE FROM tblhurda where adet = '$adet' AND aciklama = '$aciklama'
-                       AND  geldigiYer = 'boyapaket' AND operatorId = '$operatorId'  ";
-    mysqli_query($db, $sqlHurda);
-
-
-
-    $sqlRutus = "DELETE FROM tblrutusprofil where adet = '$rutusAdet' AND sebep = '$rutusSebep' ";
-    mysqli_query($db, $sqlRutus);
 
     $sqlboya = "UPDATE tblboya set
                      isPaket = '0'

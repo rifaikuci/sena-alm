@@ -9,14 +9,20 @@ date_default_timezone_set('Europe/Istanbul');
 if (isset($_POST['firinlamaekle'])) {
 
     $boyalar = $_POST['ids'];
+    $baskilarTemp = $_POST['baskilar'];
     $baslaOperator = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $baslaVardiya = vardiyaBul($vardiya, date("H:i"));
     $baslaTarih = date("d.m.Y H:i");
 
-    $sqlFirinlama = "Insert Into tblfirinlama (baslaOperator,boyalar,baslaVardiya, baslaTarih) 
+    $baskilarTemp = rtrim($baskilarTemp, ';');
+
+
+
+
+    $sqlFirinlama = "Insert Into tblfirinlama (baslaOperator,boyalar,baslaVardiya, baslaTarih, baskilar) 
                         VALUES 
-                    ( '$baslaOperator', '$boyalar','$baslaVardiya', '$baslaTarih')";
+                    ( '$baslaOperator', '$boyalar','$baslaVardiya', '$baslaTarih', '$baskilarTemp')";
 
     $boyaArrayreplace = str_replace(";", ",", $boyalar);
 
@@ -38,6 +44,9 @@ if (isset($_POST['firinlamaekle'])) {
 }
 
 if ($_GET['firinlamabitir']) {
+
+
+
     $id = $_GET['firinlamabitir'];
     $bitisOperator = $_GET['operator'];
     $bitisTarih = date("d.m.Y H:i");
@@ -50,6 +59,44 @@ if ($_GET['firinlamabitir']) {
                      bitisOperator = '$bitisOperator',
                      bitisTarih = '$bitisTarih'
                     where id  = '$id'";
+
+
+    $baskilarTemp = tablogetir("tblfirinlama", 'id', $id, $db)['baskilar'];
+
+    $baskilarTemp = rtrim($baskilarTemp, ';');
+    $baskilarTemp = explode(";", $baskilarTemp);
+    $uzunluk = count($baskilarTemp);
+    $baskilarTemp = array_unique($baskilarTemp);
+
+    $baskilar = array();
+    for($i = 0 ; $i<$uzunluk; $i++) {
+        if($baskilarTemp[$i]) {
+            array_push($baskilar,$baskilarTemp[$i]);
+        }
+    }
+
+    for ($i = 0; $i < $uzunluk; $i++) {
+
+        $baskiId = $baskilar[$i];
+        $firinlamaIds = tablogetir("tblbaski", 'id', $baskiId, $db)['firinlamaId'];
+
+        if ($firinlamaIds != '0' && $firinlamaIds != '-1') {
+            $firinlamaIds = $firinlamaIds . ";" . $id;
+
+            $sqlBaski = "UPDATE tblbaski set
+                        firinlamaId = '$firinlamaIds'
+                    where id = '$baskiId'";
+
+        } else {
+
+            $firinlamaIds = $id;
+
+            $sqlBaski = "UPDATE tblbaski set
+                        firinlamaId = '$firinlamaIds'
+                    where id = '$baskiId'";
+        }
+        mysqli_query($db, $sqlBaski);
+    }
 
     if (mysqli_query($db, $sqlFirinlama)) {
         header("Location:../../firinlama/?durumguncelleme=ok");

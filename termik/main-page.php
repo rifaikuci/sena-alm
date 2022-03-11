@@ -42,7 +42,7 @@ $result = $db->query($sql);
                                 <th>#</th>
                                 <th>Baş. Tar.</th>
                                 <th>Sepetler</th>
-                                <th>Kesimler</th>
+                                <th>Baskılar</th>
                                 <th>Durum</th>
                                 <th style="text-align: center">İşlem /Bitirilme Zam.</th>
                             </tr>
@@ -53,8 +53,17 @@ $result = $db->query($sql);
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo tarihsaat($row['baslaTarih']); ?></td>
-                                    <td><?php echo $row['sepetler']; ?></td>
-                                    <td><?php echo $row['kesimler']; ?></td>
+                                    <td><?php
+                                        $tempsepet = explode(";", $row['sepetler']);
+                                        for ($i = 0; $i < count($tempsepet); $i++)
+                                            echo tablogetir('tblsepet', 'id', $tempsepet[$i], $db)['ad'] . "<br>"; ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        $tempBaskilar = explode(";", $row['baskilar']);
+                                        for ($i = 0; $i < count($tempBaskilar); $i++)
+                                            echo tablogetir('tblbaski', 'id', $tempBaskilar[$i], $db)['satirNo'] . "<br>"; ?>
+                                    </td>
                                     <td><?php echo $row['bitisTarih'] ? "Termik Bitti" : "Termik Devam Ediyor"; ?></td>
                                     <td>
                                         <?php

@@ -33,7 +33,7 @@ if (isset($_POST['kesimekle'])) {
     $hurdaSebep = $_POST['hurdaSebep'];
     $siparisId = $_POST['siparisId'];
     $hurdaAdet = $_POST['hurdaAdet'];
-    $naylonDurum = tablogetir("tblsiparis",'id',$siparisId, $db)['naylonDurum'];
+    $naylonDurum = tablogetir("tblsiparis", 'id', $siparisId, $db)['naylonDurum'];
 
 
     $sqlKesim = "INSERT INTO tblkesim (baskiId, kesilenBoy, operatorId, sepetId1, sepetId2, sepetId3, hurdaSebep, 
@@ -112,7 +112,7 @@ if (isset($_POST['kesimekle'])) {
     $guncelGr = tablogetir('tblbaski', 'id', $baskiId, $db)['guncelGr'];
     $adet = -1 * ($hurdaAdet);
     $kilo = $adet * $guncelGr * $kesilenBoy;
-    $sqlprofil = "INSERT INTO tblstokprofil (toplamKg, toplamAdet, gelisAmaci,baskiId) 
+    $sqlprofil = "INSERT INTO tblstokprofil (kilo, adet, geldigiYer,baskiId) 
                 VALUES ('$kilo', '$adet', 'kesim', '$baskiId')";
 
 
@@ -138,14 +138,17 @@ if (isset($_GET['kesimsil'])) {
                     where id = '$baskiId'";
     mysqli_query($db, $sqlBaski);
 
+
+    /* # HURDA VE STOK PROFİLE GİDENİN DÖNÜŞÜ OLMAMALI
     $sqlHurda = "DELETE FROM tblhurda where baskiId = '$id'";
     mysqli_query($db, $sqlHurda);
 
+
     $hurdaAdet = -1 * ($kesim['hurdaAdet']);
 
-    $sqlstokprofil = "DELETE FROM tblstokprofil where toplamAdet = '$hurdaAdet' AND gelisAmaci = 'kesim' AND baskiId = '$baskiId'";
+    $sqlstokprofil = "DELETE FROM tblstokprofil where adet = '$hurdaAdet' AND geldigiYer = 'kesim' AND baskiId = '$baskiId'";
     mysqli_query($db, $sqlstokprofil);
-
+    */
 
     if ($kesim['sepetId1'] > 0) {
         $sepet1 = $kesim['sepetId1'];
@@ -266,19 +269,10 @@ if (isset($_POST['kesimguncelle'])) {
     $kilo = $adet * $guncelGr * $kesilenBoy;
 
 
-    $sqlprofilrow = "select * from tblstokprofil where profilId = '0'
-                              and gelisAmaci = 'kesim' 
-                              and toplamAdet = '$eskiHurdaAdet' 
-                              and baskiId = '$baskiId' LIMIT 1";
-    $profil = mysqli_query($db, $sqlprofilrow)->fetch_assoc();
-    $profilId = $profil['id'];
+    $sqlprofil = "INSERT INTO tblstokprofil (kilo, adet, geldigiYer,baskiId) 
+                VALUES ('$kilo', '$adet', 'kesim', '$baskiId')";
 
-
-    $sqlstokprofil = "UPDATE tblstokprofil set
-    toplamKg = '$kilo',
-    toplamAdet = '$adet'                    
-    where id = '$profilId'";
-    mysqli_query($db, $sqlstokprofil);
+    mysqli_query($db, $sqlprofil);
 
     if ($sepetId1 > 0) {
 

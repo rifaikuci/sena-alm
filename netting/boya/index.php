@@ -9,10 +9,7 @@ if (isset($_POST['boyabaslat'])) {
 
     $maxAdet = $_POST['maxAdet'];
     $sepetId = $_POST['sepetId'];
-    $satirNo = $_POST['satirNo'];
-    $kesimId = $_POST['kesimId'];
     $baskiId = $_POST['baskiId'];
-    $profilId = $_POST['profilId'];
     $oran = $_POST['oran'];
     $ortAskiAdet = $_POST['ortAskiAdet'];
     $netBoya = $_POST['netBoya'];
@@ -29,9 +26,9 @@ if (isset($_POST['boyabaslat'])) {
     $topAdet = $_POST['topAdet'];
     $altSebep = $_POST['altSebep'];
     $rutusId = $_POST['rutusId'] ? $_POST['rutusId'] : 0;
-    $hurdaAdet = $_POST['hurdaAdet'];
+    $hurdaAdet = $_POST['hurdaAdet'] != "" ? $_POST['hurdaAdet'] : 0  ;
     $hurdaSebep = $_POST['hurdaSebep'];
-    $rutusAdet = $_POST['rutusAdet'];
+    $rutusAdet = $_POST['rutusAdet'] != "" ? $_POST['rutusAdet'] : 0  ;
     $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $baslaVardiya = vardiyaBul($vardiya, date("H:i"));
     $baslaZaman = date("d.m.Y H:i");
@@ -43,7 +40,7 @@ if (isset($_POST['boyabaslat'])) {
 
     $adetlerGetir = rtrim($sepetGetir['adetler'], ";");
     $arrayAdet = explode(";", $adetlerGetir);
-    $key = array_search($kesimId, $arrayIcinde);
+    $key = array_search($baskiId, $arrayIcinde);
 
     $adet = $arrayAdet[$key] - $topAdet - $hurdaAdet;
 
@@ -62,7 +59,6 @@ if (isset($_POST['boyabaslat'])) {
     $adetTablo = str_replace("bitti;", "", $adetTablo);
     $icindeTablo = str_replace("bitti;", "", $icindeTablo);
 
-
     if ($adetTablo == "") {
         $sqlSepet = "UPDATE tblsepet set
                         icindekiler = null ,
@@ -79,20 +75,20 @@ if (isset($_POST['boyabaslat'])) {
                         adetler = '$adetTablo',
                         isTermik = '0'
                     where id = '$sepetId'";
-     mysqli_query($db, $sqlSepet);
+    mysqli_query($db, $sqlSepet);
     }
 
 
     // stok profil ve hurda
     if ($hurdaAdet > 0) {
         $geciciAdet = -1 * ($hurdaAdet);
-        $sqlprofil = "INSERT INTO tblstokprofil (toplamAdet, gelisAmaci,siparis) 
-                VALUES ( '$geciciAdet', 'boya', '$satirNo')";
-       mysqli_query($db, $sqlprofil);
+        $sqlprofil = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId) 
+                VALUES ( '$geciciAdet', 'boya', '$baskiId')";
+      mysqli_query($db, $sqlprofil);
 
-        $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer, kesimId) 
-                VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId','$baskiId', 'boya', '$kesimId')";
-     mysqli_query($db, $sqlHurda);
+        $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer) 
+                VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId','$baskiId', 'boya')";
+       mysqli_query($db, $sqlHurda);
     }
 
 
@@ -157,7 +153,7 @@ if (isset($_POST['boyabaslat'])) {
                         baslaVardiya,
                         baslaZaman,
                         topAdet,
-                        kesimId,
+                        baskiId,
                         siklonKullanilanKg,
                         boyaId,
                         askiId,
@@ -182,7 +178,7 @@ if (isset($_POST['boyabaslat'])) {
                         '$baslaVardiya',
                         '$baslaZaman',
                         '$topAdet',
-                        '$kesimId',
+                        '$baskiId',
                         '$siklonKullanilanKg',
                         '$boyaId',
                         '$askiId',
@@ -190,7 +186,31 @@ if (isset($_POST['boyabaslat'])) {
                         '$kurlenmeDakikasi'
     
                    )";
-    if (mysqli_query($db, $sqlBoya)) {
+
+    mysqli_query($db, $sqlBoya);
+    $id = mysqli_insert_id($db);
+
+
+    $boyaIds = tablogetir("tblbaski", 'id', $baskiId, $db)['boyaId'];
+
+    if ($boyaIds != '0' && $boyaIds != '-1') {
+        $boyaIds = $boyaIds . ";" . $id;
+
+        $sqlBaski = "UPDATE tblbaski set
+                        boyaId = '$boyaIds'
+                    where id = '$baskiId'";
+
+    } else {
+
+        $boyaIds = $id;
+
+        $sqlBaski = "UPDATE tblbaski set
+                        boyaId = '$boyaIds'
+                    where id = '$baskiId'";
+    }
+
+
+    if (mysqli_query($db, $sqlBaski)) {
         header("Location:../../boya/?durumekle=ok");
         exit();
     } else {

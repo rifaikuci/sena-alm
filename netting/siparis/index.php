@@ -55,9 +55,8 @@ if (isset($_POST['siparisekle'])) {
     $sql = "INSERT INTO tblsiparis (profilId, adet, kilo, siparisTuru, alasimId, musteriId, naylonDurum,
                         araKagit, krepeKagit, siparisTarih, termimTarih, istenilenTermik, siparisNo, boyaId,
                         eloksalId, maxTolerans, boy, satirNo, durum,siparisTarihYil,ay, gun, yil, hafta,
-                        kiloAdet, kalanAdet, kalanKilo, baskiAciklama, paketAciklama, boyaAciklama, konum, operatorId, korumaBandi )  VALUES ";
+                        kiloAdet, kalanAdet, kalanKilo, baskiAciklama, paketAciklama, boyaAciklama, operatorId, korumaBandi )  VALUES ";
 
-    $sqlprofil = "INSERT INTO tblstokprofil (profilId, firmaId,musteriId,tur,gelisAmaci, boy, toplamKg, icAdet,paketAdet,toplamAdet, siparisNo, sevkiyatId, istenilenTermik, siparis) VALUES ";
 
     for ($i = 0; $i < count($arrayProfil); $i++) {
 
@@ -99,20 +98,15 @@ if (isset($_POST['siparisekle'])) {
         '$siparisTarih', '$arrayTermimTarih[$i]', '$arrayistenilenTermik[$i]', '$siparisNo', '$boyaId',
         '$eloksalId', '$arrayMaxTolerans[$i]', '$arrayBoy[$i]','$satirNo', '0', '$siparisTarihYil', '$ay',
         '$gun', '$yil', '$hafta', '$kiloAdet', '$kalanAdet','$kalanKilo', '$arrayBaskiAciklama[$i]', 
-         '$arrayPaketAciklama[$i]', '$arrayBoyaAciklama[$i]', 'baski', '$operatorId', '$arrayKorumaBandi[$i]'),";
-
-        $sqlprofil = $sqlprofil . "('$arrayProfil[$i]', '0', '$musteriId', '$profilTur', 'uretim', '$arrayBoy[$i]', '0','0','0','0','0','0','$arrayistenilenTermik[$i]', '$satirNo' ),";
-
+         '$arrayPaketAciklama[$i]', '$arrayBoyaAciklama[$i]', '$operatorId', '$arrayKorumaBandi[$i]'),";
         $gunAritmetikSayi++;
 
     }
     $sql[strlen($sql) - 1] = ";";
-    $sqlprofil[strlen($sqlprofil) - 1] = ";";
 
 
     if (mysqli_query($db, $sql)) {
 
-        mysqli_query($db, $sqlprofil);
         header("Location:../../siparis/?durumekle=ok");
         exit();
     } else {

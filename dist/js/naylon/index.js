@@ -10,10 +10,9 @@ var naylonGiris = new Vue({
             naylon2Max: 0,
             naylon1Adet: 0,
             naylon2Adet: 0,
-            kesimId : 0,
+            baskiId : 0,
             satirNo : 0,
             netAdet : 0,
-            id : 0,
         },
         methods: {
             check(event) {
@@ -34,11 +33,9 @@ $('#naylon-select').on("change", async function () {
     if ($(this).val() && $(this).val().length > 0) {
 
         let array = $(this).val().split(";");
-        naylonGiris.naylonDurum = array[3];
-        naylonGiris.kesimId = array[1];
-        naylonGiris.id = array[0];
-        naylonGiris.netAdet = array[2];
-        naylonGiris.satirNo = array[4];
+        naylonGiris.naylonDurum = array[2];
+        naylonGiris.baskiId = array[0];
+        naylonGiris.netAdet = array[1];
 
         const naylonlar = await axios.post('/sena/netting/naylon/action.php', {
             action: 'naylongetir',

@@ -51,7 +51,8 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td><?php echo $row['satirNo']; ?></td>
+                                    <td>
+                                        <?php $satirNo = tablogetir("tblbaski", 'id', $row['baskiId'],$db)['satirNo']; echo $satirNo; ?></td>
                                     <td><?php echo tarihsaat($row['zaman']); ?></td>
                                     <td style="text-align: center">
                                         <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"

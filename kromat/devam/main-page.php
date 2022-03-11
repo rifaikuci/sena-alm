@@ -24,6 +24,11 @@ if (isset($_GET['kromat'])) {
     $sebepler = rtrim($sebepler, ";");
     $sebepler = explode(";",$sebepler);
 
+    $kromatIcındekiler = tablogetir("tblsepet", 'id', $kromat['sepetId'], $db)['icindekiler'];
+    $icindekiler = rtrim($kromatIcındekiler, ";");
+    $icindekiler = explode(";",$icindekiler);
+
+
 
 }
 
@@ -47,6 +52,7 @@ date_default_timezone_set('Europe/Istanbul');
                             <label>Kromat Sepet</label>
                             <input type="text" value="<?php echo $sepetKromat['ad'] ?>" class="form-control form-control-lg" disabled>
                             <input type="hidden" name="kromatbitir" value="<?php echo $kromat['id']?>">
+                            <input type="hidden" name="sepetId" value="<?php echo $kromat['sepetId']?>">
                             <input type="hidden" name="operatorId"  value="<?php echo $_SESSION['operatorId']?>">
                         </div>
                     </div>
@@ -62,7 +68,20 @@ date_default_timezone_set('Europe/Istanbul');
 
                 <?php for($k = 0; $k < count($adetler); $k++ ) {?>
                 <div class="row">
-                    <div class="col-sm-4">
+
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <label>Satır No</label>
+                            <input value="<?php
+                            $satirNo = tablogetir('tblbaski', 'id', $icindekiler[$k],$db)['satirNo'];
+                            echo $satirNo ?>"
+                                   disabled
+                                   type="text" class="form-control form-control-lg"
+                                   placeholder="0.1">
+                        </div>
+                    </div>
+                    
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label>Kromat Adedi</label>
                             <input value="<?php echo $adetler[$k] ?>"
@@ -72,7 +91,7 @@ date_default_timezone_set('Europe/Istanbul');
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label>Hurda Adedi</label>
                             <input value="<?php echo $hurdalar[$k] ?>"
@@ -83,7 +102,7 @@ date_default_timezone_set('Europe/Istanbul');
                     </div>
 
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label>Sebepler</label>
                             <input value="<?php echo $sebepler[$k] ?>"

@@ -44,9 +44,6 @@ $result = $db->query($sql);
                         <a class="btn btn-info " target="_blank"
                            href="#"><i class="fa fa-print" aria-hidden="true"></i></a>  Malzemelerin yazdırılmasını temsil eder</h6>
                     <h6 style="color: #0b93d5">
-                        <a class="btn btn-dark " target="_blank"
-                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a>  Profillerin yazdırılmasını temsil eder</h6>
-                    <h6 style="color: #0b93d5">
                         <a class="btn btn-danger " target="_blank"
                            href="#"><i class="fa fa-print" aria-hidden="true"></i></a>  Hepsinin yazdırılmasını temsil eder</h6>
                 </div>
@@ -93,10 +90,6 @@ $result = $db->query($sql);
                                         <?php if(isTableSevkiyat($db,"tblstokmalzeme", $row['id']) > 0 ) { ?>
                                         <a class="btn btn-info" target="_blank"
                                            href="#"><i class="fa fa-print" aria-hidden="true"></i></a>  <?php  }?>
-
-                                        <?php if(isTableSevkiyat($db,"tblstokprofil", $row['id']) > 0 ) { ?>
-                                        <a class="btn btn-dark " target="_blank"
-                                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a> <?php  }?>
 
                                         <a class="btn btn-danger " target="_blank"
                                            href="#"><i class="fa fa-print" aria-hidden="true"></i></a>

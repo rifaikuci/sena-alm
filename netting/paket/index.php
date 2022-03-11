@@ -12,7 +12,6 @@ if (isset($_POST['paketbaslat'])) {
     $hurdaSebep = $_POST['hurdaSebep'];
     $netAdet = $_POST['netAdet'];
     $sepetId = $_POST['sepetId'];
-    $kesimId = $_POST['kesimId'];
     $baskiId = $_POST['baskiId'];
     $profilId = $_POST['profilId'];
     $satirNo = $_POST['satirNo'];
@@ -30,7 +29,7 @@ if (isset($_POST['paketbaslat'])) {
 
     $adetlerGetir = rtrim($sepetGetir['adetler'], ";");
     $arrayAdet = explode(";", $adetlerGetir);
-    $key = array_search($kesimId, $arrayIcinde);
+    $key = array_search($baskiId, $arrayIcinde);
 
     $adet = $arrayAdet[$key] - $sepetAlinanAdet ;
 
@@ -69,7 +68,7 @@ if (isset($_POST['paketbaslat'])) {
         mysqli_query($db, $sqlSepet);
     }
 
-    $sqlSepet = "UPDATE tbl set
+    $sqlSepet = "UPDATE tblsepet set
                         icindekiler = '$icindeTablo',
                         adetler = '$adetTablo',
                         isTermik = '0'
@@ -78,32 +77,30 @@ if (isset($_POST['paketbaslat'])) {
 
     if ($hurdaAdet > 0) {
         $geciciAdet = -1 * ($hurdaAdet);
-        $sqlprofil = "INSERT INTO tblstokprofil (toplamAdet, gelisAmaci,siparis) 
-                VALUES ( '$geciciAdet', 'paket', '$satirNo')";
+        $sqlprofil = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId, operatorId) 
+                VALUES ( '$geciciAdet', 'paket', '$baskiId', '$operatorId')";
         mysqli_query($db, $sqlprofil);
 
-        $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer, kesimId) 
-                VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId','$baskiId', 'paket', '$kesimId')";
+        $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId, geldigiYer, baskiId) 
+                VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId', 'paket', '$baskiId')";
         mysqli_query($db, $sqlHurda);
     }
 
     $sqlpaket = "INSERT INTO tblpaket  (
-                        kesimId,
+                        baskiId,
                         hurdaAdet,
                         hurdaSebep,
                         netAdet,
-                        satirNo,
                         zaman,
                         vardiya,
                         naylonDurum,
                         sepetAlinanAdet,
                         operatorId)
                    VALUES  (
-                        '$kesimId',
+                        '$baskiId',
                         '$hurdaAdet',
                         '$hurdaSebep',
                         '$netAdet',
-                        '$satirNo',
                         '$zaman',
                         '$vardiya',
                         '$naylonDurum',
@@ -112,14 +109,36 @@ if (isset($_POST['paketbaslat'])) {
     
                    )";
 
-    if (mysqli_query($db, $sqlpaket)) {
+    mysqli_query($db, $sqlpaket);
+    $id = mysqli_insert_id($db);
+
+
+    $paketIds = tablogetir("tblbaski", 'id', $baskiId, $db)['paketId'];
+
+    if ($paketIds != '0' && $paketIds != '-1') {
+        $paketIds = $paketIds . ";" . $id;
+
+        $sqlBaski = "UPDATE tblbaski set
+                        paketId = '$paketIds'
+                    where id = '$baskiId'";
+
+    } else {
+
+        $paketIds = $id;
+
+        $sqlBaski = "UPDATE tblbaski set
+                        paketId = '$paketIds'
+                    where id = '$baskiId'";
+    }
+
+
+    if (mysqli_query($db, $sqlBaski)) {
         header("Location:../../paket/?durumekle=ok");
         exit();
     } else {
         header("Location:../../paket/?durumekle=no");
         exit();
     }
-
 }
 
 if (isset($_GET['paketsil'])) {
@@ -136,6 +155,9 @@ if (isset($_GET['paketsil'])) {
     $boyaId = $paket['boyaId'];
     $geciciAdet = -1 * $adet;
 
+
+    #TODO kapatıldı olmaması daha iyi olur
+    /*
     $sqlprofil = "DELETE FROM tblstokprofil where toplamAdet = '$geciciAdet' AND gelisAmaci = 'paket' AND siparis = '$satirNo'  ";
     mysqli_query($db, $sqlprofil);
 
@@ -147,6 +169,7 @@ if (isset($_GET['paketsil'])) {
 
     $sqlRutus = "DELETE FROM tblrutusprofil where adet = '$rutusAdet' AND sebep = '$rutusSebep' ";
     mysqli_query($db, $sqlRutus);
+    */
 
     $sqlboya = "UPDATE tblboya set
                      isPaket = '0'

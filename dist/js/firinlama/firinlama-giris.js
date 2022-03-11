@@ -3,6 +3,7 @@ var firinlamaGiris = new Vue({
         data: {
             boyalar: [],
             ids: "",
+            baskilar: "",
         },
 
         mounted: async function () {
@@ -28,9 +29,12 @@ var firinlamaGiris = new Vue({
                 this.boyalar.forEach(x => {
                     if (x.selected === true) {
                         this.ids = this.ids + x.id + ";";
+                        this.baskilar = this.baskilar + x.baskiId + ";";
                     }
                 })
+                debugger;
                 this.ids = this.ids.slice(0, -1);
+                this.baskilar = this.baskilar.slice(0, -1);
 
             }
         }

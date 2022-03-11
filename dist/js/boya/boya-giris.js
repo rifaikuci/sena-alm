@@ -2,8 +2,8 @@ var boyaGiris = new Vue({
         el: "#boya-giris",
         data: {
             maxAdet: 0,
-            hurdaAdet: "",
-            rutusAdet: "",
+            hurdaAdet: 0,
+            rutusAdet: 0,
             topAdet: "",
             oran: "",
             ortAskiAdet: "",
@@ -13,7 +13,6 @@ var boyaGiris = new Vue({
             siklonAyrilanKg: 0,
             netBoya: 0,
             sepetId: 0,
-            kesimId: 0,
             siklonId: 0,
             boyalar: [],
             firinSicaklik : 0,
@@ -70,18 +69,15 @@ var boyaGiris = new Vue({
 
 $('#boyanma_sepet').on("change", async function () {
 
-
     if ($(this).val() && $(this).val().length > 0) {
 
         let array = $(this).val().split(";");
+
         boyaGiris.sepetId = array[0];
-        boyaGiris.kesimId = array[1];
-        boyaGiris.maxAdet = array[2];
-        boyaGiris.satirNo = array[3];
-        boyaGiris.baskiId = array[4];
-        boyaGiris.profilId = array[5];
-
-
+        boyaGiris.maxAdet = array[1];
+        boyaGiris.satirNo = array[2];
+        boyaGiris.baskiId = array[3];
+        boyaGiris.profilId = array[4];
         if (boyaGiris.topAdet && boyaGiris.topAdet > 0) {
             boyaGiris.oran = boyaGiris.maxAdet / boyaGiris.topAdet;
         }

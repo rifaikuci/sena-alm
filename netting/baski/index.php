@@ -53,6 +53,7 @@ if (isset($_POST['baskiekle'])) {
     $paketId = 0;
     $boyaPaketId = 0;
     $termikId = 0;
+    $naylonDurum  = tablogetir('tblsiparis', 'id', $siparisId, $db)['naylonDurum'];
 
     if ($istenilenTermik == "Termiksiz") {
         $termikId = -1;
@@ -65,7 +66,6 @@ if (isset($_POST['baskiekle'])) {
         $boyaId = -1;
         $firinlamaId = -1;
         $kromatId = -1;
-        $naylonId = -1;
         $boyaPaketId = -1;
     }
 
@@ -78,6 +78,10 @@ if (isset($_POST['baskiekle'])) {
 
     if ($type == "B") {
         $paketId = -1;
+    }
+
+    if($naylonDurum == 3) {
+        $naylonId = -1;
     }
 
 
@@ -124,7 +128,7 @@ if (isset($_POST['baskiekle'])) {
 
 
     $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer) 
-                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id','Baskı')";
+                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id','baski')";
 
     mysqli_query($db, $sqlHurda);
 
@@ -175,21 +179,11 @@ if (isset($_POST['baskiekle'])) {
         mysqli_query($db, $sqlParca2gGuncelle);
     }
 
-    $profilsql = "select * from tblstokprofil where siparis= '$satirNo'";
-    $resultProfil = mysqli_query($db, $profilsql);
-    $resultProfil = $resultProfil->fetch_assoc();
 
-    $profilNetKilo = $resultProfil['toplamKg'] + $basilanNetKg;
-    $profilNetAdet = $resultProfil['toplamAdet'] + $basilanNetAdet;
+    $sqlprofilstok = "INSERT INTO tblstokprofil (adet, kilo,operatorId,baskiId, geldigiYer) 
+                VALUES ('$basilanNetAdet', '$basilanNetKg', '$operatorId', '$id','baski')";
 
-
-    $sqlprofilguncelle = "UPDATE tblstokprofil set
-                    toplamKg = '$profilNetKilo',
-                    toplamAdet = '$profilNetAdet',
-                    gelisAmaci = 'baski'
-                    where siparis= '$satirNo'";
-
-    mysqli_query($db, $sqlprofilguncelle);
+    mysqli_query($db, $sqlprofilstok);
 
     $kalanBiyet = tablogetir('tblstokbiyet', 'id', $biyetId, $db)['kalanKg'];
     $kalanBiyet = $kalanBiyet - $basilanBrutKg;
@@ -208,8 +202,7 @@ if (isset($_POST['baskiekle'])) {
     $sqlSiparis = "UPDATE tblsiparis set
                     basilanAdet = '$basilanNetAdetSiparis',
                     basilanKilo = '$basilanNetKgSiparis',
-                    baskiDurum = '$baskiDurum',
-                    konum = '$siparisKonum'
+                    baskiDurum = '$baskiDurum'
                     where id = '$siparisId'";
 
     if (mysqli_query($db, $sqlSiparis)) {
@@ -238,6 +231,7 @@ if (isset($_GET['baskisil'])) {
 if (isset($_GET['baskisilinecek'])) {
     $id = $_GET['baskisilinecek'];
     $sqlbaski = "SELECT * FROM tblbaski where id = '$id'";
+    $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $baskiresult = mysqli_query($db, $sqlbaski);
     $baski = $baskiresult->fetch_assoc();
     $takimId = $baski['takimId'];
@@ -324,20 +318,13 @@ if (isset($_GET['baskisilinecek'])) {
         mysqli_query($db, $sqlParca2gGuncelle);
     }
 
+    /*
+        #TODO şimdilik kapalı kalsın stoğa girmiş olan çıkmaz
+    $sqlprofilstok = "INSERT INTO tblstokprofil (adet, kilo,operatorId,baskiId, geldigiYer) 
+                VALUES ('$basilanNetAdet', '$basilanNetKg', '$operatorId', '$id','baski')";
 
-    $profilsql = "select * from tblstokprofil where siparis= '$satirNo'";
-    $resultProfil = mysqli_query($db, $profilsql);
-    $resultProfil = $resultProfil->fetch_assoc();
-
-    $profilNetKilo = $resultProfil['toplamKg'] - $basilanNetKg;
-    $profilNetAdet = $resultProfil['toplamAdet'] - $basilanNetAdet;
-
-    $sqlprofilguncelle = "UPDATE tblstokprofil set
-                    toplamKg = '$profilNetKilo',
-                    toplamAdet = '$profilNetAdet',
-                    gelisAmaci = 'baski'
-                    where siparis= '$satirNo'";
-    mysqli_query($db, $sqlprofilguncelle);
+    mysqli_query($db, $sqlprofilstok);
+*/
 
 
     $kalanBiyet = tablogetir('tblstokbiyet', 'id', $biyetId, $db)['kalanKg'];
@@ -426,6 +413,7 @@ if (isset($_POST['baskiIdG'])) {
     $saatFark = ($bitisSaati - $baslangicSaati) / 3600;
     $performans = $saatFark > 0 ? number_format($basilanNetKg / $saatFark, 2) : 0;
     $satirNo = $_POST['satirNo'];
+    $naylonDurum  = tablogetir('tblsiparis', 'id', $siparisId, $db)['naylonDurum'];
     $kesimId = 0;
     $boyaId = 0;
     $firinlamaId = 0;
@@ -459,6 +447,10 @@ if (isset($_POST['baskiIdG'])) {
 
     if ($type == "B") {
         $paketId = -1;
+    }
+
+    if($naylonDurum == 3) {
+        $naylonId = -1;
     }
 
 
@@ -555,25 +547,14 @@ if (isset($_POST['baskiIdG'])) {
         mysqli_query($db, $sqlParca2gGuncelle);
     }
 
-    $profilsql = "select * from tblstokprofil where siparis= '$satirNo'";
-    $resultProfil = mysqli_query($db, $profilsql);
-    $resultProfil = $resultProfil->fetch_assoc();
+    $sqlprofilstok = "INSERT INTO tblstokprofil (adet, kilo,operatorId,baskiId, geldigiYer) 
+                VALUES ('$basilanNetAdet', '$basilanNetKg', '$operatorId', '$id','baski')";
 
-    $profilNetKilo = $resultProfil['toplamKg'] + $basilanNetKg;
-    $profilNetAdet = $resultProfil['toplamAdet'] + $basilanNetAdet;
+    mysqli_query($db, $sqlprofilstok);
 
-
-    $sqlprofilguncelle = "UPDATE tblstokprofil set
-                    toplamKg = '$profilNetKilo',
-                    toplamAdet = '$profilNetAdet',
-                    gelisAmaci = 'baski'
-                    where siparis= '$satirNo'";
-
-    mysqli_query($db, $sqlprofilguncelle);
 
     $kalanBiyet = tablogetir('tblstokbiyet', 'id', $biyetId, $db)['kalanKg'];
     $kalanBiyet = $kalanBiyet - $basilanBrutKg;
-
 
     $sqlbiyet = "UPDATE tblstokbiyet set
                     kalanKg = '$kalanBiyet'
@@ -599,6 +580,8 @@ if (isset($_POST['baskiIdG'])) {
 
 }
 
+#TODO şimdilik kapatılıd ilerleyen zamanlarda açılabilir
+/*
 if (isset($_POST['baskiguncelle'])) {
     $baskiId = $_POST['baskiId'];
     $sqlBaski = "Select * from tblbaski where id = '$baskiId'";
@@ -663,7 +646,6 @@ if (isset($_POST['baskiguncelle'])) {
         $boyaId = -1;
         $firinlamaId = -1;
         $kromatId = -1;
-        $naylonId = -1;
         $boyaPaketId = -1;
     }
 
@@ -932,7 +914,7 @@ if (isset($_POST['baskiguncelle'])) {
     $eskiSatirNo = tablogetir('tblsiparis', 'id', $yeniSiparisId, $db)['satirNo'];
     if ($eskiSatirNo != $satirNo) {
 
-        $profilsqlEski = "select * from tblstokprofil where siparis= '$eskiSatirNo'";
+        $profilsqlEski = "select * from tblstokprofil where baskiId = '$id'";
         $resultProfilEski = mysqli_query($db, $profilsqlEski);
         $resultProfilEski = $resultProfilEski->fetch_assoc();
 
@@ -948,7 +930,7 @@ if (isset($_POST['baskiguncelle'])) {
 
         mysqli_query($db, $sqlprofilguncelleEski);
 
-        $profilsqlYeni = "select * from tblstokprofil where siparis= '$satirNo'";
+        $profilsqlYeni = "select * from tblstokprofil where baskiId  = '$id'";
         $resultProfilYeni = mysqli_query($db, $profilsqlEski);
         $resultProfilYeni = $resultProfilYeni->fetch_assoc();
 
@@ -960,13 +942,13 @@ if (isset($_POST['baskiguncelle'])) {
                     toplamKg = '$profilNetKiloYeni',
                     toplamAdet = '$profilNetAdetYeni',
                     gelisAmaci = 'baski'
-                    where siparis= '$satirNo'";
+                    where baskiId  = '$id'";
 
         mysqli_query($db, $sqlprofilguncelleYeni);
 
     } else {
 
-        $profilsql = "select * from tblstokprofil where siparis= '$satirNo'";
+        $profilsql = "select * from tblstokprofil where baskiId  = '$id'";
         $resultProfil = mysqli_query($db, $profilsql);
         $resultProfil = $resultProfil->fetch_assoc();
 
@@ -977,7 +959,7 @@ if (isset($_POST['baskiguncelle'])) {
                     toplamKg = '$profilNetKilo',
                     toplamAdet = '$profilNetAdet',
                     gelisAmaci = 'baski'
-                    where siparis= '$satirNo'";
+                    where baskiId  = '$id'";
 
         mysqli_query($db, $sqlprofilguncelle);
     }
@@ -1037,3 +1019,5 @@ if (isset($_POST['baskiguncelle'])) {
     }
 
 }
+
+*/

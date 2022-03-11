@@ -3,7 +3,8 @@ include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
 
-
+error_reporting(1);
+ini_set('display_errors', 1);
 $termikId = 0;
 if (isset($_GET['termik'])) {
     $termikId = $_GET['termik'];
@@ -11,8 +12,16 @@ if (isset($_GET['termik'])) {
     $sql = "SELECT * FROM tbltermik WHERE id = '$termikId'";
     $termik = mysqli_query($db, $sql)->fetch_assoc();
 
-    $kesimler = explode(";", $termik['kesimler']);
-    $kesimler = array_unique($kesimler);
+    $baskilarTemp = explode(";", $termik['baskilar']);
+    $uzunluk = count($baskilarTemp);
+    $baskilarTemp = array_unique($baskilarTemp);
+
+    $baskilar = array();
+    for($i = 0 ; $i<$uzunluk; $i++) {
+        if($baskilarTemp[$i]) {
+            array_push($baskilar,$baskilarTemp[$i]);
+        }
+    }
 
 }
 
@@ -45,7 +54,7 @@ date_default_timezone_set('Europe/Istanbul');
                                 <div style="text-align: right">
 
                                     <div style="text-align: center">
-                                        <label style="color: darkgreen;font-size: 25px">Kesimler için Termik
+                                        <label style="color: darkgreen;font-size: 25px">Baskılar için Termik
                                             Değerleri</label>
                                     </div>
                                 </div>
@@ -54,23 +63,24 @@ date_default_timezone_set('Europe/Istanbul');
                     </div>
 
                     <?php
-                    $baskilar = "";
                     $termik = "";
                     $siparisler = "";
                     $tur = "";
-                    for ($i = 0; $i < count($kesimler); $i++) { ?>
+                    $baskiekle = "";
+                    for ($i = 0; $i < count($baskilar); $i++) { ?>
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
 
                                     <label><?php
-                                        $baski = tablogetir('tblbaski', 'kesimId', $kesimler[$i], $db);
+                                        $baski = tablogetir("tblbaski","id",$baskilar[$i],$db);
+
                                         $siparis = tablogetir('tblsiparis', 'id', $baski['siparisId'], $db);
-                                        $baskilar = $baskilar . $baski['id'] . ",";
                                         $siparisler = $siparisler . $siparis['id'] . ",";
                                         $tur = $tur . $siparis['siparisTuru'] . ",";
+                                        $baskiekle = $baskiekle . $baskilar[$i] . ",";
                                         $termik = $termik . $siparis['istenilenTermik'] . ",";
-                                        echo "Sipariş Numarası : " . $siparis['satirNo'].  " Baskı Numarası  : " . $baski['id'] . " Termik Değeri : " . $siparis['istenilenTermik'] ;
+                                        echo "Sipariş Numarası : " . $siparis['satirNo'].  " Baskı Numarası  : " . $baskilar[$i] . " Termik Değeri : " . $siparis['istenilenTermik'] ;
                                         ?></label>
                                     <input name="<?php echo "baski" . $baski['id'] ?>" required class="form-control"
                                            type="number" placeholder="1">
@@ -80,14 +90,12 @@ date_default_timezone_set('Europe/Istanbul');
                         <?php
 
                     }
-                    $baskilar = rtrim($baskilar, ',');
+                    $baskiekle = rtrim($baskiekle, ',');
                     $tur = rtrim($tur, ',');
                     $termik = rtrim($termik, ',');
                     $siparisler = rtrim($siparisler, ',');
-
                     ?>
-                    <input type="hidden" name="baskilar" value="<?php echo $baskilar ?>">
-                    <input type="hidden" name="tur" value="<?php echo $tur ?>">
+                    <input type="hidden" name="baskilar" value="<?php echo $baskiekle ?>">
                     <input type="hidden" name="id" value="<?php echo $termikId ?>">
                     <input type="hidden" name="siparisler" value="<?php echo $siparisler ?>">
 

@@ -11,8 +11,7 @@ $data = array();
 if ($received_data->action == 'siparisgetir') {
 
     $id = $received_data->id;
-    $id = intval($id);
-    $baskiId = tablogetir('tblkesim', 'id', $id, $db)['baskiId'];
+    $baskiId = intval($id);
     $siparisId = tablogetir('tblbaski', 'id', $baskiId, $db)['siparisId'];
     $siparis = tablogetir('tblsiparis', 'id', $siparisId, $db);
     $satirNo = $siparis['satirNo'];

@@ -10,7 +10,9 @@ if ($_GET['id']) {
     $sqlpaket = "SELECT * FROM tblpaket WHERE id = '$id'";
     $paket = mysqli_query($db, $sqlpaket)->fetch_assoc();
 
-    $siparis = tablogetir("tblsiparis", 'satirNo', $paket['satirNo'], $db);
+    $baskiId = $paket['baskiId'];
+    $satirNo = tablogetir('tblbaski', 'id', $baskiId, $db)['satirNo'];
+    $siparis = tablogetir("tblsiparis", 'satirNo', $satirNo, $db);
     $firma = tablogetir("tblfirma", 'id', $siparis['musteriId'], $db);
     $profil  = tablogetir("tblprofil", 'id', $siparis['profilId'], $db);
     $alasim   = tablogetir("tblalasim", 'id', $siparis['alasimId'], $db);

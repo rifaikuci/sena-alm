@@ -3,36 +3,50 @@ include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
 
-$sqlItems = "select id,
-       hurdaAdet,
-       hurdaSebep,
-       netAdet,
-       satirNo,
-       kesimId,
-       naylonDurum,
-       isNaylon,
-       operatorId,
-       zaman,
-       vardiya
-from tblboyapaket
-where naylonDurum in (1, 2)
-  and isNaylon = 0
-union ALL
-select id,
-       hurdaAdet,
-       hurdaSebep,
-       netAdet,
-       satirNo,
-       kesimId,
-       naylonDurum,
-       isNaylon,
-       operatorId,
-       zaman,
-       vardiya
-from tblpaket
-where naylonDurum in (1, 2)
-  and isNaylon = 0";
+$sqlItems = "select  * from tblbaski where  (paketId != '-1' AND paketId != '0' AND naylonId != '-1')
+                                   or  (boyaPaketId != '0' AND boyaPaketId != '-1' AND naylonId !='-1')";
+
 $items = $db->query($sqlItems);
+
+$paketDizi = "";
+$boyaPaketDizi = "";
+
+while ($item = $items->fetch_array()) {
+
+    $tempItem = $item['paketId'];
+    if ($tempItem != -1) {
+        $tempItem = str_replace(";", ",", $tempItem);
+        $paketDizi = $paketDizi . $tempItem . ",";
+
+    } else {
+        $tempItem = $item['boyaPaketId'];
+        $tempItem = str_replace(";", ",", $tempItem);
+        $arrayItem = explode(",", $tempItem);
+        $boyaPaketDizi = $boyaPaketDizi . $tempItem . ",";
+    }
+
+}
+
+// tur eklenemesinin nedeni aynı id numaraları olabilir.
+$paketDizi = rtrim($paketDizi, ',');
+$boyaPaketDizi = rtrim($boyaPaketDizi, ',');
+$sql = "";
+if ($paketDizi == "" && $boyaPaketDizi != "") {
+    $sql = "SELECT CONCAT ('B') as tur, id, netAdet,baskiId, isNaylon, naylonDurum, zaman  FROM tblboyapaket where id in($boyaPaketDizi) and isNaylon = 0";
+}
+
+if ($paketDizi != "" && $boyaPaketDizi == "") {
+    $sql = "SELECT  CONCAT ('P') as tur, id, netAdet,baskiId, isNaylon, naylonDurum, zaman FROM tblpaket where id in($paketDizi)  and isNaylon = 0";
+}
+
+if ($paketDizi != "" && $boyaPaketDizi != "") {
+    $sql = "SELECT  CONCAT ('B') as tur,id,  netAdet,baskiId, isNaylon, naylonDurum, zaman from tblboyapaket where id in($boyaPaketDizi) and isNaylon = 0
+ UNION ALL select   CONCAT ('P') as tur , id,  netAdet,baskiId, isNaylon, naylonDurum, zaman from tblpaket where id in($paketDizi) and isNaylon = 0";
+}
+$items = $db->query($sql);
+
+
+//$pakets = $db->query($sql);
 
 ?>
 
@@ -48,23 +62,23 @@ $items = $db->query($sqlItems);
                         <div class="form-group">
                             <label> Ürünü seçiniz</label>
                             <select required id="naylon-select" class="select2"
-                                    data-dropdown-css-class="select2-gray"
+                                    data-dropdown-css-class="select2-gray" name="item"
                                     data-placeholder="Satır No - Kesim Id - Adet "
                                     style="width: 100%;">
                                 <option selected disabled value="0">Ürün Seçiniz</option>
                                 <?php while ($item = $items->fetch_array()) {
                                     $tur = $item['naylonDurum'] == 1 ? "Baskılı" : ($item['naylonDurum'] == 2 ? "Baskısız" : "Yok")
                                     ?>
-                                    <option value="<?php echo $item['id'] . ";" . $item['kesimId'] . ";" . $item['netAdet'] . ";" . $item['naylonDurum'] . ";" . $item['satirNo'] ?>">
-                                        <?php echo $item['satirNo'] . " - " . $item['kesimId'] . " - " . $item['netAdet'] . " - " . $tur ?>
+                                    <option
+                                            value="<?php echo $item['baskiId'] . ";" . $item['netAdet'] . ";" . $item['naylonDurum'] . ";" . $item['tur'] . ";" . $item['id'] ?>">
+                                        <?php echo tablogetir("tblbaski", 'id', $item['baskiId'], $db)['satirNo'] . " - " . $item['baskiId'] . " - " . $item['netAdet'] . " - " . $tur ?>
                                     </option>
                                 <?php } ?>
                             </select>
                             <input type="hidden" name="naylonbaslat" value="naylonbaslat">
                             <input name="naylon1Adet" :value="naylon1Adet" type="hidden">
-                            <input name="id" :value="id" type="hidden">
                             <input name="naylon2Adet" :value="naylon2Adet" type="hidden">
-                            <input name="kesimId" :value="kesimId" type="hidden">
+                            <input name="baskiId" :value="baskiId" type="hidden">
                             <input name="satirNo" :value="satirNo" type="hidden">
                             <input name="netAdet" :value="netAdet" type="hidden">
                             <input type="hidden" name="operatorId" value="<?php echo $_SESSION['operatorId'] ?>">
@@ -136,7 +150,7 @@ $items = $db->query($sqlItems);
                 <div class="card-footer">
                     <div>
                         <button type="submit" :disabled=" id == 0  || naylon1Adet == 0"
-                                class="btn btn-info float-right">Ekle
+                                class="btn btn-info float-right">İşlemi Bitir
                         </button>
                         <a href="../"
                            class="btn btn-warning float-left">Vazgeç</a>

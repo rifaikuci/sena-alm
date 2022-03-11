@@ -20,7 +20,7 @@ if ($received_data->action == 'boyagetir') {
     $boya = null;
     while ($row = $result->fetch_array()) {
         $boya['sepetId'] = $row['sepetId'];
-        $boya['kesimId'] = $row['kesimId'];
+        $boya['baskiId'] = $row['baskiId'];
         $boya['id'] = $row['id'];
         $boya['topAdet'] = $row['topAdet'];
         $boya['baslaZaman'] = $row['baslaZaman'];

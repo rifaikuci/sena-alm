@@ -158,9 +158,9 @@ $sepetler = $db->query($sepetsql);
                             <label>Sepet</label>
                             <select required  id="paket-giris-select" class="select2"
                                     data-dropdown-css-class="select2-gray"
-                                    data-placeholder="Sepet - Kesim -  Adet "
+                                    data-placeholder="Sepet - Baskı -  Adet "
                                     style="width: 100%;">
-                                <option selected disabled value="0">Sepet - Kesim - Adet</option>
+                                <option selected  value="0">Sepet - Baskı - Adet</option>
                                 <?php while ($sepet = $sepetler->fetch_array()) {
                                     $icindekiler = rtrim($sepet['icindekiler'], ";");
                                     $icindekiler = explode(";", $icindekiler);
@@ -169,7 +169,8 @@ $sepetler = $db->query($sepetsql);
 
                                     for ($i = 0; $i < count($icindekiler); $i++) {
                                         ?>
-                                        <option value="<?php echo $sepet['id'] . ";" . $icindekiler[$i] . ";" . $adetler[$i] ?>"> <?php echo $sepet['ad'] . " - " . $icindekiler[$i] . " - " . $adetler[$i] ?></option>
+                                        <option value="<?php echo $sepet['id'] . ";" . $icindekiler[$i] . ";" . $adetler[$i] ?>">
+                                            <?php echo $sepet['ad'] . " - " . $icindekiler[$i] . " - " . $adetler[$i] ?></option>
                                     <?php }
                                 } ?>
                             </select>
@@ -199,7 +200,6 @@ $sepetler = $db->query($sepetsql);
                             <input type="hidden" name="operatorId" value="<?php echo $_SESSION['operatorId'] ?>">
                             <input name="paketbaslat" value="paketbaslat" type="hidden">
                             <input type="hidden" name="netAdet" :value="netAdet">
-                            <input type="hidden" name="kesimId" :value="kesimId">
                             <input type="hidden" name="sepetId" :value="sepetId">
                             <input type="hidden" name="baskiId" :value="baskiId">
                             <input type="hidden" name="profilId" :value="profilId">
@@ -236,7 +236,7 @@ $sepetler = $db->query($sepetsql);
                 <div class="card-footer">
                     <div>
                         <button v-on:click="bitir($event)" type="submit"
-                                class="btn btn-info float-right">Ekle
+                                class="btn btn-info float-right">Bitir
                         </button>
                         <a href="../"
                            class="btn btn-warning float-left">Vazgeç</a>

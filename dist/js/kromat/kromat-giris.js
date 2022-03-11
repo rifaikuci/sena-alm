@@ -1,18 +1,17 @@
 var kromatGiris  = new Vue({
         el: "#kromat-giris",
         data: {
-            kesimler : [],
-            deneme : "sdasdasd",
+            baskilar : [],
             sepetler: [],
-            kesimlerId: [],
+            baskilarId: [],
             adetler: [],
             hurdaAdetler: [],
             sebepler: [],
-            kesim : {
+            baski : {
                 sepetId: "",
-                kesimId :"",
+                baskiId :"",
                 adet: "",
-                hurdaAdet: "",
+                hurdaAdet: 0,
                 sebep: ""
             }
         },
@@ -21,12 +20,12 @@ var kromatGiris  = new Vue({
         methods: {
 
             kromatekle: async function () {
-                for( let i = 0; i <this.kesimler.length; i++  ) {
-                    this.sepetler.push(this.kesimler[i].sepetId);
-                    this.kesimlerId.push(this.kesimler[i].kesimId);
-                    this.adetler.push(this.kesimler[i].adet);
-                    this.hurdaAdetler.push(this.kesimler[i].hurdaAdet);
-                    this.sebepler.push(this.kesimler[i].sebep);
+                for( let i = 0; i <this.baskilar.length; i++  ) {
+                    this.sepetler.push(this.baskilar[i].sepetId);
+                    this.baskilarId.push(this.baskilar[i].baskiId);
+                    this.adetler.push(this.baskilar[i].adet);
+                    this.hurdaAdetler.push(this.baskilar[i].hurdaAdet);
+                    this.sebepler.push(this.baskilar[i].sebep);
                 }
 
 
@@ -39,21 +38,21 @@ var kromatGiris  = new Vue({
 
 $('#kromat_sepet').on("change", async function () {
 
-    kromatGiris.kesimler = []
+    kromatGiris.baskilar = []
      let  data = ($(this).val())
 
     for (let i = 0; i < data.length; i++) {
 
       let    array =  data[i].split(";");
-        kromatGiris.kesim = {
+        kromatGiris.baski = {
             sepetId: array[0],
-            kesimId: array[1],
+            baskiId: array[1],
             adet: array[2],
-            hurdaAdet: "",
+            hurdaAdet: 0,
             sebep: ""
         }
 
-        kromatGiris.kesimler.push(kromatGiris.kesim);
+        kromatGiris.baskilar.push(kromatGiris.baski);
 
     }
 

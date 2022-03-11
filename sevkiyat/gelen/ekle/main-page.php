@@ -124,6 +124,7 @@ $profiller = $db->query($profillerrsql);
                                            role="tab" aria-controls="custom-tabs-one-home"
                                            aria-selected="true">Biyetler</a>
                                     </li>
+
                                     <li class="nav-item">
                                         <a class="nav-link" id="boya" data-toggle="pill"
                                            href="#custom-tabs-one-profile"
@@ -137,12 +138,13 @@ $profiller = $db->query($profillerrsql);
                                            aria-selected="false">Malzemeler</a>
                                     </li>
 
+                                    <!--
                                     <li class="nav-item">
                                         <a class="nav-link" id="profil" data-toggle="pill"
                                            href="#custom-tabs-one-profil"
                                            role="tab" aria-controls="custom-tabs-one-profil"
                                            aria-selected="false">Profiller</a>
-                                    </li>
+                                    </li> -->
                                 </ul>
                             </div>
                             <div class="card-body">

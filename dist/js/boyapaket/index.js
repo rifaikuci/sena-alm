@@ -27,7 +27,6 @@ var boyaPaketGiris = new Vue({
             araKagitId : "",
             araKagitAd: "",
             confirmContent : "",
-            kesimId : 0,
             baskiId: 0,
             profilId: 0,
             boyaId: 0,
@@ -94,12 +93,11 @@ $('#boya-paket-giris').on("change", async function () {
 
 
     let array = $(this).val().split(";");
-    let siparisId = array[2];
-    boyaPaketGiris.topAdet = array[3];
-    boyaPaketGiris.kesimId = array[0];
-    boyaPaketGiris.baskiId = array[1];
-    boyaPaketGiris.korumaBandiId = array[4];
-    boyaPaketGiris.boyaId = array[5];
+    boyaPaketGiris.baskiId = array[0];
+    let siparisId = array[1];
+    boyaPaketGiris.topAdet = array[2];
+    boyaPaketGiris.korumaBandiId = array[3];
+    boyaPaketGiris.boyaId = array[4];
     boyaPaketGiris.korumaBandiAd = boyaPaketGiris.korumaBandiId == 1 ? "Baskılı" :
         boyaPaketGiris.korumaBandiId == 2 ? "Baskısız" : boyaPaketGiris.korumaBandiId == 3 ? "Yok" : "";
 

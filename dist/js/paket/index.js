@@ -27,7 +27,6 @@ var paketGiris = new Vue({
             araKagitId: "",
             araKagitAd: "",
             confirmContent: "",
-            kesimId: 0,
             baskiId: 0,
             profilId: 0,
             boyaId: 0,
@@ -97,13 +96,13 @@ $('#paket-giris-select').on("change", async function () {
 
     let array = $(this).val().split(";");
     paketGiris.sepetId = array[0];
-    paketGiris.kesimId = array[1];
+    paketGiris.baskiId = array[1];
     paketGiris.sepetAdet = array[2];
 
     console.log(paketGiris.sepetId);
     const selectedRow = await axios.post('/sena/netting/paket/action.php', {
         action: 'siparisgetir',
-        id: paketGiris.kesimId,
+        id: paketGiris.baskiId,
     }).then((response) => {
         return response.data
     });

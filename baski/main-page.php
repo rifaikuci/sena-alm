@@ -63,10 +63,7 @@ $result = $db->query($sql);
                                         <?php if (!$row['bitisZamani']) { ?>
                                             <a href=<?php echo "yari-guncelle/index.php?baski=" . $row['id']; ?> class="btn
                                                btn-warning">Güncelle</a>
-                                        <?php } else { ?>
-                                            <a href=<?php echo "guncelle/index.php?baski=" . $row['id']; ?> class="btn
-                                               btn-warning">Güncelle</a>
-                                        <?php } ?>
+                                        <?php }  ?>
 
                                         <?php if (!$row['bitisZamani']) { ?>
                                             <a href=<?php echo base_url() . "netting/baski/index.php?baskisil=" . $row['id']; ?> class="btn

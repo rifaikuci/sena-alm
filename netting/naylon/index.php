@@ -7,34 +7,34 @@ date_default_timezone_set('Europe/Istanbul');
 
 if (isset($_POST['naylonbaslat'])) {
 
-    $operatorId = isset($_POST['operatorId']) && $_POST['operatorId'] ? $_POST['operatorId'] : 0;
-    $kullanilan1 = $_POST['naylon1Adet'] ? $_POST['naylon1Adet'] : 0;
-    $kullanilan2 = $_POST['naylon2Adet'] ? $_POST['naylon2Adet'] : 0;
-    $netAdet = $_POST['netAdet'];
-    $id= $_POST['id'];
-    $naylonId1 = $_POST['naylonId1'] ? $_POST['naylonId1'] : 0;
-    $naylonId2 = $_POST['naylonId2'] ? $_POST['naylonId2'] : 0;
-    $kesimId = $_POST['kesimId'];
-    $satirNo = $_POST['satirNo'];
-    $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
-    $vardiya = vardiyaBul($vardiya, date("H:i"));
-    $zaman = date("d.m.Y H:i");
+   $operatorId = isset($_POST['operatorId']) && $_POST['operatorId'] ? $_POST['operatorId'] : 0;
+   $kullanilan1 = $_POST['naylon1Adet'] ? $_POST['naylon1Adet'] : 0;
+   $kullanilan2 = $_POST['naylon2Adet'] ? $_POST['naylon2Adet'] : 0;
+   $naylonId1 = $_POST['naylonId1'] ? $_POST['naylonId1'] : 0;
+   $naylonId2 = $_POST['naylonId2'] ? $_POST['naylonId2'] : 0;
+   $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
+   $vardiya = vardiyaBul($vardiya, date("H:i"));
+   $zaman = date("d.m.Y H:i");
+   $item= $_POST['item'];
+   $item = explode(";",$item);
+   $baskiId = $item[0];
+   $netAdet = $item[1];
+   $tur = $item[3];
+   $id = $item[4];
 
-    $tur = $satirNo[3];
-
-    $sqlpaket = "";
+    $sql = "";
     if($tur == "B") {
-        $sqlpaket = "UPDATE tblboyapaket set
+        $sql = "UPDATE tblboyapaket set
                         isNaylon = '1'
                     where id = '$id'";
 
     } else {
-        $sqlpaket = "UPDATE tblpaket set
+        $sql = "UPDATE tblpaket set
                         isNaylon = '1'
                     where id = '$id'";
     }
 
-    mysqli_query($db, $sqlpaket);
+    mysqli_query($db, $sql);
 
     if ($kullanilan1 > 0) {
         $naylonKalan1 = tablogetir('tblstokmalzeme', 'id', $naylonId1, $db)['kalan'];
@@ -58,8 +58,7 @@ if (isset($_POST['naylonbaslat'])) {
 
 
     $sqlnaylon = "INSERT INTO tblnaylon  (
-                    kesimId,
-                    satirNo,
+                    baskiId,
                     naylonId1,
                     naylonId2,
                     kullanilan1,
@@ -69,8 +68,7 @@ if (isset($_POST['naylonbaslat'])) {
                     zaman,
                     vardiya  )
                    VALUES  (
-                        '$kesimId',
-                        '$satirNo',
+                        '$baskiId',
                         '$naylonId1',
                         '$naylonId2',
                         '$kullanilan1',
@@ -80,7 +78,25 @@ if (isset($_POST['naylonbaslat'])) {
                         '$zaman',
                         '$vardiya' )";
 
-    if (mysqli_query($db, $sqlnaylon)) {
+    mysqli_query($db, $sqlnaylon);
+
+
+    $id = mysqli_insert_id($db);
+    $naylonIds = tablogetir("tblbaski", 'id', $baskiId, $db)['naylonId'];
+
+    if ($naylonIds != '0' && $naylonIds != '-1') {
+        $naylonIds = $naylonIds . ";" . $id;
+        $sqlBaski = "UPDATE tblbaski set
+                        naylonId = '$naylonIds'
+                    where id = '$baskiId'";
+    } else {
+        $naylonIds = $id;
+        $sqlBaski = "UPDATE tblbaski set
+                        naylonId = '$naylonIds'
+                    where id = '$baskiId'";
+    }
+
+    if (mysqli_query($db, $sqlBaski)) {
         header("Location:../../naylon/?durumekle=ok");
         exit();
     } else {
@@ -104,6 +120,7 @@ if (isset($_GET['naylonsil'])) {
     $boyaId = $naylon['boyaId'];
     $geciciAdet = -1 * $adet;
 
+    /*
     $sqlprofil = "DELETE FROM tblstokprofil where toplamAdet = '$geciciAdet' AND gelisAmaci = 'naylon' AND siparis = '$satirNo'  ";
     mysqli_query($db, $sqlprofil);
 
@@ -114,7 +131,7 @@ if (isset($_GET['naylonsil'])) {
 
     $sqlRutus = "DELETE FROM tblrutusprofil where adet = '$rutusAdet' AND sebep = '$rutusSebep' ";
     mysqli_query($db, $sqlRutus);
-
+*/
     $sqlboya = "UPDATE tblboya set
                      isPaket = '0'
                     where id = '$boyaId'";

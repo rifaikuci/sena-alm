@@ -36,4 +36,7 @@ $kullanildigiAlanlar = ["Kalıphane", "Boyahane", "Kromat"];
 
 // tbl stok proilf de sipariş-> üretimden gelen satırnoya denk gelmekte siparisNo ise sevkiyattan gelirken ki geldiği yer
 // sepetler artık kesimId ile değil baskiId ile dolacak
+// tblsepet tablosunda bulunan durum eğer 0 ise sepet müsait 1 ise termiği devam ediyor 2 ise termiği bitmiş
+
+// geldigi yer gelis amacı gibi yerler kucuk harflerle yazılacak türkçe karakter kullanılmnayacak
 ?>

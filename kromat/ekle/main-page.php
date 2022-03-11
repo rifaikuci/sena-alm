@@ -35,11 +35,11 @@ $kromatSepet = $db->query($kromatSql);
                             </select>
                             <input type="hidden" name="kromatbaslat" value="kromatbaslat">
                             <input type="hidden" name="arraysepet[]" v-model="sepetler">
-                            <input type="hidden" name="arraykesim[]" v-model="kesimlerId">
+                            <input type="hidden" name="arraybaski[]" v-model="baskilarId">
                             <input type="hidden" name="arrayadet[]" v-model="adetler">
                             <input type="hidden" name="arrayhurda[]" v-model="hurdaAdetler">
                             <input type="hidden" name="arraysebep[]" v-model="sebepler">
-                            <input type="hidden" name="operatorId" value="<?php echo $_SESSION['operatorId'] ?>">
+                            <input type="hidden" name="operatorId" value="<?php echo $_SESSION['operatorId'] ? $_SESSION['operatorId'] : 0  ?>">
                         </div>
                     </div>
 
@@ -49,9 +49,9 @@ $kromatSepet = $db->query($kromatSql);
                             <label></label>
                             <select required name="sepetler[]" id="kromat_sepet" class="select2" multiple="multiple"
                                     data-dropdown-css-class="select2-gray"
-                                    data-placeholder="Sepet - Kesim -  Adet "
+                                    data-placeholder="Sepet - Sipariş -  Adet "
                                     style="width: 100%;">
-                                <option disabled value="">Sepet - Kesim - Adet</option>
+                                <option disabled value="">Sepet - Baskılar - Adet</option>
                                 <?php while ($sepet = $sepetler->fetch_array()) {
                                     $icindekiler = rtrim($sepet['icindekiler'], ";");
                                     $icindekiler = explode(";", $icindekiler);
@@ -59,25 +59,32 @@ $kromatSepet = $db->query($kromatSql);
                                     $adetler = explode(";", $adetler);
 
                                     for ($i = 0; $i < count($icindekiler); $i++) {
-                                        ?>
-                                        <option value="<?php echo $sepet['id'] . ";" . $icindekiler[$i] . ";" . $adetler[$i] ?>"> <?php echo $sepet['ad'] . " - " . $icindekiler[$i] . " - " . $adetler[$i] ?></option>
-                                    <?php }
+                                        $satirNo = tablogetir("tblbaski", 'id', $icindekiler[$i], $db)['satirNo'];
+
+
+                                        if ($satirNo[3] == "B") { ?>
+
+                                            <option value="<?php echo $sepet['id'] . ";" . $icindekiler[$i] . ";" . $adetler[$i] ?>">
+                                                <?php echo $sepet['ad'] . " - " . $satirNo . " - " . $adetler[$i] ?>
+                                            </option>
+                                        <?php }
+                                    }
                                 } ?>
                             </select>
                         </div>
                     </div>
-                    <div v-if="kesimler" class="col-sm-12" style="margin: 30px">
+                    <div v-if="baskilar" class="col-sm-12" style="margin: 30px">
                         <div style="text-align: center">
                             <h3 style="color: #0c525d">Sepet Bilgileri</h3>
                         </div>
                     </div>
                 </div>
 
-                <div class="row" v-for="kesim in kesimler">
+                <div class="row" v-for="baski in baskilar">
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Kromata Gönderilecek Adet</label>
-                            <input required v-model="kesim.adet"
+                            <input required v-model="baski.adet"
                                    type="number" class="form-control form-control-lg"
                                    min="0.1" step="0.1"
                                    placeholder="0.1">
@@ -88,17 +95,17 @@ $kromatSepet = $db->query($kromatSql);
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Hurda Adet</label>
-                            <input required v-model="kesim.hurdaAdet"
+                            <input required v-model="baski.hurdaAdet"
                                    type="number" class="form-control form-control-lg"
                                    min="0" step="0.1"
                                    placeholder="0.1">
                         </div>
                     </div>
 
-                    <div class="col-sm-4" v-if="kesim.hurdaAdet > 0 ">
+                    <div class="col-sm-4" v-if="baski.hurdaAdet > 0 ">
                         <div class="form-group">
                             <label>Hurdaya Atılma Sebebi</label>
-                            <select :required="kesim.hurdaAdet > 0" v-model="kesim.sebep" class="form-control"
+                            <select :required="baski.hurdaAdet && baski.hurdaAdet > 0" v-model="baski.sebep" class="form-control"
                                     style="width: 100%;">
                                 <option selected value="0"> Sebep Seçiniz</option>
                                 <?php for ($i = 0; $i < count($hurdaSebep); $i++) { ?>
@@ -111,7 +118,7 @@ $kromatSepet = $db->query($kromatSql);
 
                 <div class="card-footer">
                     <div>
-                        <button v-on:click="kromatekle" type="submit" class="btn btn-info float-right">Ekle</button>
+                        <button v-on:click="kromatekle" type="submit" class="btn btn-info float-right">Başlat</button>
                         <a href="../"
                            class="btn btn-warning float-left">Vazgeç</a>
                     </div>

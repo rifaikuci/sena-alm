@@ -23,9 +23,9 @@ if ($_GET['id']) {
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <label> Satır No - Kesim - Adet</label>
+                            <label> Satır No  - Adet</label>
                             <input disabled
-                                   value="<?php echo $naylon['satirNo'] . " -  " . $naylon['kesimId'] . " -  " . $naylon['adet'] ?>"
+                                   value="<?php $satirNo = tablogetir("tblbaski", 'id', $naylon['baskiId'],$db)['satirNo']; echo $satirNo  . " -  " . $naylon['adet'] ?>"
                                    type="text" class="form-control form-control-lg"
                                    placeholder="">
 

@@ -11,30 +11,29 @@ if (isset($_POST['termikekle'])) {
     $sepetler = $_POST['sepetler'];
     $baslaOperator = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $sepetTermik = "";
-    $kesimler = "";
-    $vardiya = tablogetir('tblayar','id','1', $db)['vardiya'];
+    $baskilar = "";
+    $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $baslaVardiya = vardiyaBul($vardiya, date("H:i"));
     $baslaTarih = date("d.m.Y H:i");
 
     for ($i = 0; $i < count($sepetler); $i++) {
         $sepetId = $sepetler[$i];
         $sepetTermik = $sepetTermik . $sepetId . ",";
-        $kesimler = $kesimler . tablogetir('tblsepet','id',$sepetId, $db)['icindekiler'] . ";";
+        $baskilar = $baskilar . tablogetir('tblsepet', 'id', $sepetId, $db)['icindekiler'] . ";";
     }
 
 
-
-    $kesimler = str_replace(";;", ";", $kesimler);
-    $kesimler = rtrim($kesimler, ";");
+    $baskilar = str_replace(";;", ";", $baskilar);
+    $baskilar = rtrim($baskilar, ";");
     $sepetTermik = rtrim($sepetTermik, ",");
 
     $sqlSepetUpdate = "Update tblsepet set isTermik = 1 where id in($sepetTermik)";
 
-   // mysqli_query($db, $sqlSepetUpdate);
+    mysqli_query($db, $sqlSepetUpdate);
 
 
     $sepetTermik = str_replace(",", ";", $sepetTermik);
-    $sqlTermik = "Insert Into tbltermik (baslaOperator,sepetler,kesimler,baslaVardiya, baslaTarih) VALUES ('$baslaOperator', '$sepetTermik', '$kesimler','$baslaVardiya', '$baslaTarih')";
+    $sqlTermik = "Insert Into tbltermik (baslaOperator,sepetler,baskilar,baslaVardiya, baslaTarih) VALUES ('$baslaOperator', '$sepetTermik', '$baskilar','$baslaVardiya', '$baslaTarih')";
 
 
     if (mysqli_query($db, $sqlTermik)) {
@@ -50,7 +49,7 @@ if (isset($_POST['termikekle'])) {
 if (isset($_GET['termiksil'])) {
 
     $id = $_GET['termiksil'];
-    $sepetler = tablogetir('tbltermik','id',$id, $db)['sepetler'];
+    $sepetler = tablogetir('tbltermik', 'id', $id, $db)['sepetler'];
     $sepetler = str_replace(";", ",", $sepetler);
 
     $sqlSepetUpdate = "Update tblsepet set isTermik = 0 where id in($sepetler)";
@@ -71,47 +70,44 @@ if (isset($_POST['termikbitir'])) {
 
     $termikId = $_POST['id'];
     $bitisOperator = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
-    $vardiya = tablogetir('tblayar','id','1', $db)['vardiya'];
+    $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $bitisVardiya = vardiyaBul($vardiya, date("H:i"));
     $bitisTarih = date("d.m.Y H:i");
 
 
     $baskilar = explode(",", $_POST['baskilar']);
     $tur = explode(",", $_POST['tur']);
-    $siparisler = explode(",", $_POST['siparisler']);
-
 
     for ($i = 0; $i < count($baskilar); $i++) {
         $baskiId = $baskilar[$i];
         $termikSonuc = $_POST['baski' . $baskiId];
-        $sqlUpdate = "UPDATE tblbaski set termikSonuc = '$termikSonuc' where  id = '$baskiId'";
-        mysqli_query($db, $sqlUpdate);
+        $termikIds = tablogetir("tblbaski", 'id', $baskiId, $db)['termikId'];
 
-        if ($tur[$i] == "B") {
-            $konum = "kromatlma";
+        if ($termikIds != '0' && $termikIds != '-1') {
+            $termikIds = $termikIds . ";" . $termikId;
+
+            $sqlTermikUpdate = "UPDATE tblbaski set
+                        termikSonuc = '$termikSonuc', termikId = '$termikIds'
+                    where id = '$baskiId'";
+
         } else {
-            $konum = "paketleme";
+
+            $kromatIds = $termikId;
+
+            $sqlTermikUpdate = "UPDATE tblbaski set
+                        termikSonuc = '$termikSonuc', termikId = '$termikIds'
+                    where id = '$baskiId'";
         }
 
-
-        $sqlKesim = "UPDATE tblkesim set
-            termikId = '$termikId'
-            where baskiId = '$baskiId'";
-
-        mysqli_query($db, $sqlKesim);
-
-
-        $siparisId = $siparisler[$i];
-        $sqlsiparis = "UPDATE tblsiparis set
-                    konum = '$konum'
-                    where id = '$siparisId'";
-        mysqli_query($db, $sqlsiparis);
+        mysqli_query($db, $sqlTermikUpdate);
     }
 
 
-    $sepetler = tablogetir('tbltermik','id',$termikId, $db)['sepetler'];
+    $sepetler = tablogetir('tbltermik', 'id', $termikId, $db)['sepetler'];
     $sepetler = str_replace(";", ",", $sepetler);
-    // durum 2 olduğunda termik işlemi bitirildi anlamaına gelsin.
+
+
+    // durum 2 olduğunda termik işlemi bitirildi.
     $sqlSepetUpdate = "Update tblsepet set isTermik = 0, durum = 2 where id in($sepetler)";
     mysqli_query($db, $sqlSepetUpdate);
 

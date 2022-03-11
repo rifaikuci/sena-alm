@@ -9,17 +9,15 @@ ini_set('display_errors', 1);
 if (isset($_POST['kromatbaslat'])) {
 
     $sepetler = isset($_POST['arraysepet']) ? $_POST['arraysepet'] : []; // sepetler
-    $kesimler = isset($_POST['arraykesim']) ? $_POST['arraykesim'] : []; // sepetler
+    $baskilar = isset($_POST['arraybaski']) ? $_POST['arraybaski'] : []; // sepetler
     $adetler = isset($_POST['arrayadet']) ? $_POST['arrayadet'] : []; // sepetler
     $hurdalar = isset($_POST['arrayhurda']) ? $_POST['arrayhurda'] : []; // sepetler
     $sebepler = isset($_POST['arraysebep']) ? $_POST['arraysebep'] : []; // sepetler
     $kromatsepet = isset($_POST['kromatSepet']) ? $_POST['kromatSepet'] : 0;
 
 
-
-
     $sepetler = explode(",", $sepetler[0]);
-    $kesimler = explode(",", $kesimler[0]);
+    $baskilar = explode(",", $baskilar[0]);
     $adetler = explode(",", $adetler[0]);
     $hurdalar = explode(",", $hurdalar[0]);
     $sebepler = explode(",", $sebepler[0]);
@@ -31,11 +29,23 @@ if (isset($_POST['kromatbaslat'])) {
     $kromatSepetler = "";
     $kromatIcındekiler = "";
     for ($j = 0; $j < count($adetler); $j++) {
-        $kromatAdetler = $kromatAdetler . "" . $adetler[$j] . ";";
-        $kromatIcındekiler = $kromatIcındekiler . "" . $kesimler[$j] . ";";
-        $kromatSebepler = $kromatSebepler . "" . $sebepler[$j] . ";";
-        $kromatHurdalar = $kromatHurdalar . "" . $hurdalar[$j] . ";";
-        $kromatSepetler = $kromatSepetler . "" . $sepetler[$j] . ";";
+        if ($adetler[$j] != "" && $adetler[$j] > 0) {
+            $kromatAdetler = $kromatAdetler . "" . $adetler[$j] . ";";
+        }
+
+        if ($baskilar[$j] != "" || $baskilar[$j] > 0) {
+            $kromatIcındekiler = $kromatIcındekiler . "" . $baskilar[$j] . ";";
+        }
+
+        if ($hurdalar[$j] != "" || $hurdalar[$j] > 0) {
+            $kromatHurdalar = $kromatHurdalar . "" . $hurdalar[$j] . ";";
+            $kromatSebepler = $kromatSebepler . "" . $sebepler[$j] . ";";
+        }
+
+        if ($sepetler[$j] != "" && $sepetler[$j] > 0) {
+            $kromatSepetler = $kromatSepetler . "" . $sepetler[$j] . ";";
+        }
+
     }
 
 
@@ -47,7 +57,7 @@ if (isset($_POST['kromatbaslat'])) {
     mysqli_query($db, $sqlSepetKromat);
 
 
-    $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
+    $operatorId = isset($_POST['operatorId']) && $_POST['operatorId'] != "" ? $_POST['operatorId'] : 0;
 
     $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $baslaVardiya = vardiyaBul($vardiya, date("H:i"));
@@ -64,7 +74,7 @@ if (isset($_POST['kromatbaslat'])) {
         $adetlerGetir = rtrim($sepetGetir['adetler'], ";");
         $arrayAdet = explode(";", $adetlerGetir);
 
-        $key = array_search($kesimler[$i], $arrayIcinde);
+        $key = array_search($baskilar[$i], $arrayIcinde);
 
         $adet = $arrayAdet[$key] - $adetler[$i] - $hurdalar[$i];
 
@@ -86,24 +96,18 @@ if (isset($_POST['kromatbaslat'])) {
         $adetTablo = str_replace("bitti;", "", $adetTablo);
         $icindeTablo = str_replace("bitti;", "", $icindeTablo);
 
-        $kesimId = $kesimler[$i];
-        $baskiId = tablogetir("tblkesim", 'id', $kesimler[$i], $db)['baskiId'];
-        $siparisId = tablogetir('tblbaski', 'id', $baskiId, $db)['siparisId'];
-        $satirNo = tablogetir('tblsiparis', 'id', $siparisId, $db)['satirNo'];
+        $baskiId = $baskilar[$i];
 
-        if ($hurdalar[$i] != "" && 0 <= $hurdalar[$i]) {
+        if ($hurdalar[$i] != "" && 0 < $hurdalar[$i]) {
             $hurdaStok = -1 * ($hurdalar[$i]);
-            $sqlprofil = "INSERT INTO tblstokprofil ( toplamAdet, gelisAmaci,siparis) 
-                VALUES ('$hurdaStok', 'kromat', '$satirNo')";
+            $sqlprofil = "INSERT INTO tblstokprofil ( adet, geldigiYer, baskiId) 
+                VALUES ('$hurdaStok', 'kromat', '$baskiId')";
 
-           mysqli_query($db, $sqlprofil);
-
+            mysqli_query($db, $sqlprofil);
             $sebep = $sebepler[$i];
-            $sqlHurda = "INSERT INTO tblhurda ( aciklama,operatorId,baskiId, geldigiYer, kesimId) 
-                VALUES ( '$sebep', '$operatorId','$baskiId', 'kromat', '$kesimId')";
-
+            $sqlHurda = "INSERT INTO tblhurda ( aciklama,operatorId, geldigiYer, baskiId, adet ) 
+                VALUES ( '$sebep', '$operatorId', 'kromat', '$baskiId', '$hurdalar[$i]')";
             mysqli_query($db, $sqlHurda);
-
         }
 
 
@@ -128,7 +132,6 @@ if (isset($_POST['kromatbaslat'])) {
     }
 
 
-
     $zaman = date("Y-m-d H:i:s");
 
     $sqlKromat = "INSERT INTO tblkromat (baslaVardiya, baslaZaman, sepetId,havuzKromatId, havuzAsitId, adetler, hurdalar, sebepler, sepetler ) 
@@ -143,15 +146,49 @@ if (isset($_POST['kromatbaslat'])) {
 
 }
 
-if(isset($_POST['kromatbitir'])) {
+if (isset($_POST['kromatbitir'])) {
     $id = $_POST['kromatbitir'];
 
     $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $bitisVardiya = vardiyaBul($vardiya, date("H:i"));
     $zaman = date("Y-m-d H:i:s");
+    $sepetId = isset($_POST['sepetId']) ? $_POST['sepetId'] : "";
+    $baskilarTemp = tablogetir("tblsepet", 'id', $sepetId, $db)['icindekiler'];
+    $baskilarTemp = rtrim($baskilarTemp, ';');
+    $baskilarTemp = explode(";", $baskilarTemp);
+    $uzunluk = count($baskilarTemp);
+    $baskilarTemp = array_unique($baskilarTemp);
 
-    $sepetId = tablogetir('tblkromat', 'id', $id, $db)['sepetId'];
+    $baskilar = array();
+    for($i = 0 ; $i<$uzunluk; $i++) {
+        if($baskilarTemp[$i]) {
+            array_push($baskilar,$baskilarTemp[$i]);
+        }
+    }
+    // burada yapılan işlemde kromatId 'leri baskı tarfını gönderdik bu şekilkde baskının geçmişi buradan takip edilecek...
+    for ($i = 0; $i < $uzunluk; $i++) {
+
+        $baskiId = $baskilar[$i];
+        $kromatIds = tablogetir("tblbaski", 'id', $baskiId, $db)['kromatId'];
+
+        if ($kromatIds != '0' && $kromatIds != '-1') {
+            $kromatIds = $kromatIds . ";" . $id;
+
+            $sqlBaski = "UPDATE tblbaski set
+                        kromatId = '$kromatIds'
+                    where id = '$baskiId'";
+
+        } else {
+
+            $kromatIds = $id;
+
+            $sqlBaski = "UPDATE tblbaski set
+                        kromatId = '$kromatIds'
+                    where id = '$baskiId'";
+        }
+        mysqli_query($db, $sqlBaski);
+    }
 
     $sqlsepet = "UPDATE tblsepet set
                      finishedKromat = '1'

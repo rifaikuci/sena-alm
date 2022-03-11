@@ -12,7 +12,7 @@ if ($received_data->action == 'boyagetir') {
 
      $sicaklik  = $received_data->sicaklik;
 
-    $boyasql = "SELECT * FROM tblstokboya where sicaklik = '$sicaklik' AND  kalan > 0 order by kalan asc";
+    $boyasql = "SELECT * FROM tblstokboya where sicaklik = '$sicaklik' AND  kalan > 0 order by kalan + 0 asc";
 
 
     
