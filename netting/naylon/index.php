@@ -82,8 +82,8 @@ if (isset($_POST['naylonbaslat'])) {
 
 
     $id = mysqli_insert_id($db);
-    $naylonIds = tablogetir("tblbaski", 'id', $baskiId, $db)['naylonId'];
-    $naylonIds = tablogetir("tblbaski", 'id', $baskiId, $db)['naylonId'];
+    $baski = tablogetir("tblbaski", 'id', $baskiId, $db);
+    $naylonIds = $baski['naylonId'];
 
     if ($naylonIds != '0' && $naylonIds != '-1') {
         $naylonIds = $naylonIds . ";" . $id;
@@ -98,7 +98,9 @@ if (isset($_POST['naylonbaslat'])) {
     }
 
 
-        $anbar = tablogetir("tblanbar", 'baskiId', $baskiId, $db);
+    $satirNo = $baski['satirNo'];
+
+    $anbar = tablogetir("tblanbar", 'satirNo', $satirNo, $db);
         $anbar = $anbar ? $anbar : 0;
 
         if($anbar != 0) {
@@ -108,16 +110,18 @@ if (isset($_POST['naylonbaslat'])) {
             $sqlAnbar = "UPDATE tblanbar set
                         kalanAdet = '$kalanAdet',
                         adet = '$adet'
-                    where id = '$baskiId'";
+                    where satirNo = '$satirNo'";
         }
         else {
 
             $sqlAnbar = "INSERT INTO tblanbar  (
                         baskiId,
+                        satirNo,
                         adet,
                         kalanAdet)
                    VALUES  (
                         '$baskiId',
+                        '$satirNo',
                         '$netAdet',
                         '$netAdet'
     

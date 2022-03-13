@@ -2,7 +2,7 @@
 include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
-$sepetsql = "SELECT * FROM tblsepet where tur = 'araba' and icindekiler != ''";
+$sepetsql = "SELECT * FROM tblsepet where (tur = 'araba' and icindekiler != '') or (tur = 'termik' and icindekiler != '' and isTermik = 1)";
 $sepetler = $db->query($sepetsql);
 
 ?>

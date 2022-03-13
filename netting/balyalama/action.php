@@ -10,7 +10,7 @@ $data = array();
 if ($received_data->action == 'anbargetir') {
 
 
-    $balyalamasql = "SELECT * FROM tblanbar where   kalanAdet  > 0 order by tarih asc";
+    $balyalamasql = "SELECT * FROM tblanbar   where    kalanAdet  > 0 group by satirNo  order by tarih asc";
 
 
     $result = $db->query($balyalamasql);

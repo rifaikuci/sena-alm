@@ -142,7 +142,7 @@ $baskilar = $db->query($kesimsql);
                             <label>Hurda Adet</label>
                             <input @input="() => {netAdet = basilanNetAdet - hurdaAdet}" v-model="hurdaAdet" required
                                    type="number" class="form-control form-control-lg" name="hurdaAdet"
-                                   min="0.1" step="0.1"
+                                   min="0" step="0.1"
                                    placeholder="0.1">
                         </div>
                     </div>

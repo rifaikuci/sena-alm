@@ -140,8 +140,9 @@ if (isset($_POST['paketbaslat'])) {
 
     // eğer statü bittiyse anbara ekle
 
+    $satirNo = $baski['satirNo'];
     if($baski['naylonId'] == "-1") {
-        $anbar = tablogetir("tblanbar", 'baskiId', $baskiId, $db);
+        $anbar = tablogetir("tblanbar", 'satirNo', $satirNo, $db);
         $anbar = $anbar ? $anbar : 0;
 
         if($anbar != 0) {
@@ -150,6 +151,7 @@ if (isset($_POST['paketbaslat'])) {
 
             $sqlAnbar = "UPDATE tblanbar set
                         kalanAdet = '$kalanAdet',
+                        satirNo = '$satirNo',
                         adet = '$adet'
                     where id = '$baskiId'";
         }
@@ -157,10 +159,12 @@ if (isset($_POST['paketbaslat'])) {
 
             $sqlAnbar = "INSERT INTO tblanbar  (
                         baskiId,
+                        satirNo,
                         adet,
                         kalanAdet)
                    VALUES  (
                         '$baskiId',
+                        '$satirNo',
                         '$netAdet',
                         '$netAdet'
     
