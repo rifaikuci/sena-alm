@@ -83,6 +83,7 @@ if (isset($_POST['naylonbaslat'])) {
 
     $id = mysqli_insert_id($db);
     $naylonIds = tablogetir("tblbaski", 'id', $baskiId, $db)['naylonId'];
+    $naylonIds = tablogetir("tblbaski", 'id', $baskiId, $db)['naylonId'];
 
     if ($naylonIds != '0' && $naylonIds != '-1') {
         $naylonIds = $naylonIds . ";" . $id;
@@ -95,6 +96,58 @@ if (isset($_POST['naylonbaslat'])) {
                         naylonId = '$naylonIds'
                     where id = '$baskiId'";
     }
+
+
+        $anbar = tablogetir("tblanbar", 'baskiId', $baskiId, $db);
+        $anbar = $anbar ? $anbar : 0;
+
+        if($anbar != 0) {
+            $adet = $netAdet + $anbar['adet'];
+            $kalanAdet = $netAdet + $anbar['kalanAdet'];
+
+            $sqlAnbar = "UPDATE tblanbar set
+                        kalanAdet = '$kalanAdet',
+                        adet = '$adet'
+                    where id = '$baskiId'";
+        }
+        else {
+
+            $sqlAnbar = "INSERT INTO tblanbar  (
+                        baskiId,
+                        adet,
+                        kalanAdet)
+                   VALUES  (
+                        '$baskiId',
+                        '$netAdet',
+                        '$netAdet'
+    
+                   )";
+        }
+
+    mysqli_query($db, $sqlAnbar);
+    $id = mysqli_insert_id($db);
+
+    $baski = tablogetir("tblbaski", 'id', $baskiId, $db);
+    $anbarIds = $baski['anbarId'];
+
+    if ($anbarIds != '0' && $anbarIds != '-1') {
+        $anbarIds = $anbarIds . ";" . $id;
+
+        $sqlBaski2 = "UPDATE tblbaski set
+                        anbarId = '$anbarIds'
+                    where id = '$baskiId'";
+
+    } else {
+
+        $anbarIds = $id;
+
+        $sqlBaski2 = "UPDATE tblbaski set
+                        anbarId = '$anbarIds'
+                    where id = '$baskiId'";
+    }
+
+    mysqli_query($db, $sqlBaski2);
+
 
     if (mysqli_query($db, $sqlBaski)) {
         header("Location:../../naylon/?durumekle=ok");

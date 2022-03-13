@@ -77,12 +77,18 @@ if (isset($_POST['paketbaslat'])) {
 
     if ($hurdaAdet > 0) {
         $geciciAdet = -1 * ($hurdaAdet);
-        $sqlprofil = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId, operatorId) 
-                VALUES ( '$geciciAdet', 'paket', '$baskiId', '$operatorId')";
+
+        $kilo = kiloBul($baskiId, $hurdaAdet,$db);
+
+        $kiloStok = -1 * $kilo;
+        $kiloHurda = $kilo;
+
+        $sqlprofil = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId, operatorId, kilo) 
+                VALUES ( '$geciciAdet', 'paket', '$baskiId', '$operatorId', '$kiloStok')";
         mysqli_query($db, $sqlprofil);
 
-        $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId, geldigiYer, baskiId) 
-                VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId', 'paket', '$baskiId')";
+        $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId, geldigiYer, baskiId, kilo) 
+                VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId', 'paket', '$baskiId', '$kiloHurda')";
         mysqli_query($db, $sqlHurda);
     }
 
@@ -113,7 +119,8 @@ if (isset($_POST['paketbaslat'])) {
     $id = mysqli_insert_id($db);
 
 
-    $paketIds = tablogetir("tblbaski", 'id', $baskiId, $db)['paketId'];
+    $baski = tablogetir("tblbaski", 'id', $baskiId, $db);
+    $paketIds = $baski['paketId'];
 
     if ($paketIds != '0' && $paketIds != '-1') {
         $paketIds = $paketIds . ";" . $id;
@@ -131,6 +138,59 @@ if (isset($_POST['paketbaslat'])) {
                     where id = '$baskiId'";
     }
 
+    // eğer statü bittiyse anbara ekle
+
+    if($baski['naylonId'] == "-1") {
+        $anbar = tablogetir("tblanbar", 'baskiId', $baskiId, $db);
+        $anbar = $anbar ? $anbar : 0;
+
+        if($anbar != 0) {
+            $adet = $netAdet + $anbar['adet'];
+            $kalanAdet = $netAdet + $anbar['kalanAdet'];
+
+            $sqlAnbar = "UPDATE tblanbar set
+                        kalanAdet = '$kalanAdet',
+                        adet = '$adet'
+                    where id = '$baskiId'";
+        }
+        else {
+
+            $sqlAnbar = "INSERT INTO tblanbar  (
+                        baskiId,
+                        adet,
+                        kalanAdet)
+                   VALUES  (
+                        '$baskiId',
+                        '$netAdet',
+                        '$netAdet'
+    
+                   )";
+        }
+        mysqli_query($db, $sqlAnbar);
+
+        $id = mysqli_insert_id($db);
+
+        $baski = tablogetir("tblbaski", 'id', $baskiId, $db);
+        $anbarIds = $baski['anbarId'];
+
+        if ($anbarIds != '0' && $anbarIds != '-1') {
+            $anbarIds = $anbarIds . ";" . $id;
+
+            $sqlBaski2 = "UPDATE tblbaski set
+                        anbarId = '$anbarIds'
+                    where id = '$baskiId'";
+
+        } else {
+
+            $anbarIds = $id;
+
+            $sqlBaski2 = "UPDATE tblbaski set
+                        anbarId = '$anbarIds'
+                    where id = '$baskiId'";
+        }
+
+        mysqli_query($db, $sqlBaski2);
+    }
 
     if (mysqli_query($db, $sqlBaski)) {
         header("Location:../../paket/?durumekle=ok");

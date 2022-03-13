@@ -204,6 +204,14 @@
             </li>
 
             <li class="nav-item">
+                <a href="<?php echo base_url() . "balyalama/" ?> " class="nav-link">
+                    <i class="nav-icon fas fa-poo-storm"></i>
+                    Balyalama
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a href="<?php echo base_url() . "naylon/" ?> " class="nav-link">
                     <i class="nav-icon fas fa-poo-storm"></i>
                     Naylon

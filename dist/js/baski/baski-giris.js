@@ -81,6 +81,7 @@ var baskigiris = new Vue({
 
             handleBoylamFire(event) {
                 if (event.target.value && event.target.value > 0 && this.konveyorBoy && this.konveyorBoy > 0) {
+                    //#TODO baskiFire'nin formulü = ((basilanBrutKg / konveyorBoy + boylamFire) * figurSayi (seçilenTakimin) *  2 )  + araIsFire + fireBiyet
                     this.baskiFire = (event.target.value * 2) / this.konveyorBoy;
                 }
 
@@ -129,7 +130,7 @@ var baskigiris = new Vue({
             },
             fireHesapla() {
                 if (this.basilanNetKg > 0 && this.basilanBrutKg > 0) {
-                    this.fire = this.basilanNetKg - this.basilanBrutKg;
+                    this.fire = this.basilanBrutKg - this.basilanNetKg;
                 }
                 this.dataKontrol();
                 this.checkBitir();

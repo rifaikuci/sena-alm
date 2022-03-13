@@ -284,6 +284,7 @@ date_default_timezone_set('Europe/Istanbul');
                             <input type="hidden" v-model="baskiFire" name="baskiFire" :value="baskiFire">
                             <input type="hidden" v-model="istenilenTermik" name="istenilenTermik" :value="istenilenTermik">
                             <input type="hidden" v-model="satirNo" name="satirNo" :value="satirNo">
+                            <input type="hidden" v-model="boy" name="boy" :value="boy">
                             <input type="hidden" value="baski-ekle" name="baskiekle">
                             <input type="hidden" value="<?php echo isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0; ?>" name="operatorId">
 

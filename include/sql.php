@@ -3,7 +3,6 @@ include_once '../netting/baglan.php';
 include_once '../include/sql.php';
 
 
-
 function maxIdBul($db, $table)
 {
     $sql = "SELECT MAX(id) as id FROM  $table";
@@ -100,6 +99,16 @@ function konumBul($id)
     $arrayKonum = array("Baskı" => "baski", "Kesim" => "kesim");
 
     return array_search($id, $arrayKonum);
+}
+
+function kiloBul($baskiId, $adet, $db)
+{
+    $baski = tablogetir("tblbaski", 'id', $baskiId, $db);
+    $gr = $baski['guncelGr'];
+    $kesimId = $baski['kesimId'];
+    $boy = tablogetir("tblkesim", 'id', $kesimId, $db)['kesilenBoy'];
+    $kilo = $adet * $boy * $gr;
+    return $kilo;
 }
 
 

@@ -26,12 +26,17 @@ if (isset($_POST['boyapaketbaslat'])) {
 
     if ($hurdaAdet > 0) {
         $geciciAdet = -1 * ($hurdaAdet);
-        $sqlprofil = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId, operatorId) 
-                VALUES ( '$geciciAdet', 'boyapaket', '$baskiId', '$operatorId')";
+        $kilo = kiloBul($baskiId, $hurdaAdet,$db);
+
+        $kiloStok = -1 * $kilo;
+        $kiloHurda = $kilo;
+
+        $sqlprofil = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId, operatorId, kilo) 
+                VALUES ( '$geciciAdet', 'boyapaket', '$baskiId', '$operatorId', '$kiloStok')";
         mysqli_query($db, $sqlprofil);
 
-        $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer) 
-                VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId','$baskiId', 'boyapaket')";
+        $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer, kilo) 
+                VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId','$baskiId', 'boyapaket', '$kiloHurda' )";
         mysqli_query($db, $sqlHurda);
     }
 
@@ -77,7 +82,8 @@ if (isset($_POST['boyapaketbaslat'])) {
     mysqli_query($db, $sqlboyapaket);
     $id = mysqli_insert_id($db);
 
-    $boyaPaketIds = tablogetir("tblbaski", 'id', $baskiId, $db)['boyaPaketId'];
+    $baski = tablogetir("tblbaski", 'id', $baskiId, $db);
+    $boyaPaketIds = $baski['boyaPaketId'];
 
     if ($boyaPaketIds != '0' && $boyaPaketIds != '-1') {
         $boyaPaketIds = $boyaPaketIds . ";" . $id;
@@ -93,6 +99,60 @@ if (isset($_POST['boyapaketbaslat'])) {
         $sqlBaski = "UPDATE tblbaski set
                         boyaPaketId = '$boyaPaketIds'
                     where id = '$baskiId'";
+    }
+
+    if($baski['naylonId'] == "-1") {
+        $anbar = tablogetir("tblanbar", 'baskiId', $baskiId, $db);
+        $anbar = $anbar ? $anbar : 0;
+
+        if($anbar != 0) {
+            $adet = $netAdet + $anbar['adet'];
+            $kalanAdet = $netAdet + $anbar['kalanAdet'];
+
+            $sqlAnbar = "UPDATE tblanbar set
+                        kalanAdet = '$kalanAdet',
+                        adet = '$adet'
+                    where id = '$baskiId'";
+        }
+        else {
+
+            $sqlAnbar = "INSERT INTO tblanbar  (
+                        baskiId,
+                        adet,
+                        kalanAdet)
+                   VALUES  (
+                        '$baskiId',
+                        '$netAdet',
+                        '$netAdet'
+    
+                   )";
+        }
+
+        mysqli_query($db, $sqlAnbar);
+        $id = mysqli_insert_id($db);
+
+        $baski = tablogetir("tblbaski", 'id', $baskiId, $db);
+        $anbarIds = $baski['anbarId'];
+
+        if ($anbarIds != '0' && $anbarIds != '-1') {
+            $anbarIds = $anbarIds . ";" . $id;
+
+            $sqlBaski2 = "UPDATE tblbaski set
+                        anbarId = '$anbarIds'
+                    where id = '$baskiId'";
+
+        } else {
+
+            $anbarIds = $id;
+
+            $sqlBaski2 = "UPDATE tblbaski set
+                        anbarId = '$anbarIds'
+                    where id = '$baskiId'";
+        }
+
+        mysqli_query($db, $sqlBaski2);
+
+
     }
 
 

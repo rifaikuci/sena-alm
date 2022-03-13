@@ -3,8 +3,6 @@
 include '../baglan.php';
 include '../../include/helper.php';
 include '../../include/sql.php';
-ini_set('display_errors', 1);
-
 
 if (isset($_POST['kromatbaslat'])) {
 
@@ -100,13 +98,18 @@ if (isset($_POST['kromatbaslat'])) {
 
         if ($hurdalar[$i] != "" && 0 < $hurdalar[$i]) {
             $hurdaStok = -1 * ($hurdalar[$i]);
-            $sqlprofil = "INSERT INTO tblstokprofil ( adet, geldigiYer, baskiId) 
-                VALUES ('$hurdaStok', 'kromat', '$baskiId')";
+            $kilo = kiloBul($baskiId, $hurdalar[$i],$db);
+
+            $kiloStok = -1 * $kilo;
+            $kiloHurda = $kilo;
+
+            $sqlprofil = "INSERT INTO tblstokprofil ( adet, geldigiYer, baskiId, kilo) 
+                VALUES ('$hurdaStok', 'kromat', '$baskiId', '$kiloStok')";
 
             mysqli_query($db, $sqlprofil);
             $sebep = $sebepler[$i];
-            $sqlHurda = "INSERT INTO tblhurda ( aciklama,operatorId, geldigiYer, baskiId, adet ) 
-                VALUES ( '$sebep', '$operatorId', 'kromat', '$baskiId', '$hurdalar[$i]')";
+            $sqlHurda = "INSERT INTO tblhurda ( aciklama,operatorId, geldigiYer, baskiId, adet, kilo ) 
+                VALUES ( '$sebep', '$operatorId', 'kromat', '$baskiId', '$hurdalar[$i]', '$kiloHurda')";
             mysqli_query($db, $sqlHurda);
         }
 

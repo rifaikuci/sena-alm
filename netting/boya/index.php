@@ -82,12 +82,17 @@ if (isset($_POST['boyabaslat'])) {
     // stok profil ve hurda
     if ($hurdaAdet > 0) {
         $geciciAdet = -1 * ($hurdaAdet);
-        $sqlprofil = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId) 
-                VALUES ( '$geciciAdet', 'boya', '$baskiId')";
+        $kilo = kiloBul($baskiId, $hurdaAdet,$db);
+
+        $kiloStok = -1 * $kilo;
+        $kiloHurda = $kilo;
+
+        $sqlprofil = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId, kilo) 
+                VALUES ( '$geciciAdet', 'boya', '$baskiId', '$kiloStok')";
       mysqli_query($db, $sqlprofil);
 
-        $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer) 
-                VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId','$baskiId', 'boya')";
+        $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer, kilo) 
+                VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId','$baskiId', 'boya', '$kiloHurda')";
        mysqli_query($db, $sqlHurda);
     }
 

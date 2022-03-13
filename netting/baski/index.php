@@ -21,6 +21,7 @@ if (isset($_POST['baskiekle'])) {
     $vardiyaKod = vardiyaBul($vardiya, date("H:i"));
     $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $biyetId = $_POST['biyetId'];
+    $boy = $_POST['boy'];
     $biyetBoy = $_POST['biyetBoy'];
     $araIsFire = $_POST['araIsFire'];
     $konveyorBoy = $_POST['konveyorBoy'];
@@ -57,7 +58,6 @@ if (isset($_POST['baskiekle'])) {
 
     if ($istenilenTermik == "Termiksiz") {
         $termikId = -1;
-        $naylonId = -1;
     }
 
     $type = $satirNo[3];
@@ -126,12 +126,6 @@ if (isset($_POST['baskiekle'])) {
                     where id = '$id'";
     mysqli_query($db, $sqlBaski);
 
-
-    $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer) 
-                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id','baski')";
-
-    mysqli_query($db, $sqlHurda);
-
     $sqlTakim = "Select * from tbltakim where id = '$takimId'";
     $result = mysqli_query($db, $sqlTakim);
     $takim = $result->fetch_assoc();
@@ -180,10 +174,17 @@ if (isset($_POST['baskiekle'])) {
     }
 
 
+
     $sqlprofilstok = "INSERT INTO tblstokprofil (adet, kilo,operatorId,baskiId, geldigiYer) 
                 VALUES ('$basilanNetAdet', '$basilanNetKg', '$operatorId', '$id','baski')";
 
     mysqli_query($db, $sqlprofilstok);
+
+    $hurdaKilo =  $fire * $guncelGr * $boy;
+    $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer, kilo) 
+                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id','baski', '$hurdaKilo' )";
+
+    mysqli_query($db, $sqlHurda);
 
     $kalanBiyet = tablogetir('tblstokbiyet', 'id', $biyetId, $db)['kalanKg'];
     $kalanBiyet = $kalanBiyet - $basilanBrutKg;
@@ -235,6 +236,7 @@ if (isset($_GET['baskisilinecek'])) {
     $baskiresult = mysqli_query($db, $sqlbaski);
     $baski = $baskiresult->fetch_assoc();
     $takimId = $baski['takimId'];
+    $boy = $baski['boy'];
     $basilanNetKg = $baski['basilanNetKg'];
     $basilanBrutKg = $baski['basilanBrutKg'];
     $basilanNetAdet = $baski['basilanNetAdet'];
@@ -388,6 +390,7 @@ if (isset($_POST['baskiIdG'])) {
     $araIsFire = $_POST['araIsFire'];
     $istenilenTermik = $_POST['istenilenTermik'];
     $konveyorBoy = $_POST['konveyorBoyG'];
+    $boy = $_POST['boy'];
     $boylamFire = $_POST['boylamFireG'];
     $baskiFire = $_POST['baskiFireG'];
     $biyetFire = $_POST['biyetFire'];
@@ -495,8 +498,10 @@ if (isset($_POST['baskiIdG'])) {
     mysqli_query($db, $sqlBaski);
 
 
-    $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId,geldigiYer) 
-                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id', 'baski')";
+    $hurdaKilo = $fire * $guncelGr * $boy;
+
+    $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId,geldigiYer, kilo) 
+                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id', 'baski', '$hurdaKilo')";
 
     mysqli_query($db, $sqlHurda);
 

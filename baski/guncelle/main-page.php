@@ -313,6 +313,7 @@ date_default_timezone_set('Europe/Istanbul');
                                    placeholder="0,1">
                             <input type="hidden" v-model="baskiFire" name="baskiFire" :value="baskiFire">
                             <input type="hidden" v-model="satirNo" name="satirNo" :value="satirNo">
+                            <input type="hidden" v-model="boy" name="boy" :value="boy">
                             <input type="hidden" v-model="istenilenTermik" name="istenilenTermik" :value="istenilenTermik">
                             <input type="hidden" name="baskiguncelle" value="baski-guncelle">
                             <input type="hidden"

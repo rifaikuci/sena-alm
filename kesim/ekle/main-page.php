@@ -103,7 +103,7 @@ $baskilar = $db->query($kesimsql);
                                 <?php while ($baski = $baskilar->fetch_array()) {
                                     ?>
                                     <option
-                                            value="<?php echo $baski['id']; ?>"><?php echo $baski['satirNo'] ; ?></option>
+                                            value="<?php echo $baski['id']; ?>"><?php echo $baski['satirNo']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
