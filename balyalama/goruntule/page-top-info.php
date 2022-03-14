@@ -6,7 +6,7 @@
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="<?php echo base_url() ?>">Anasayfa</a></li>
                     <li class="breadcrumb-item"><a href="../"> Balyalama</a></li>
-                    <li class="breadcrumb-item active">Ekle</li>
+                    <li class="breadcrumb-item active">Görüntüleme</li>
                 </ol>
             </div>
         </div>

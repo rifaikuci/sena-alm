@@ -17,8 +17,14 @@ if ($received_data->action == 'anbargetir') {
     $datam = array();
     $balyalama = null;
     while ($row = $result->fetch_array()) {
+
         $baski = tablogetir("tblbaski", 'id', $row['baskiId'], $db);
         $siparis = tablogetir("tblsiparis", 'satirNo', $baski['satirNo'], $db);
+
+        $satirno = $baski['satirNo'];
+        $sqlOrtGramaj = "SELECT  AVG(guncelGr) as deger FROM tblbaski where satirNo = '$satirno' group by satirNo";
+        $deger = mysqli_query($db, $sqlOrtGramaj)->fetch_assoc();
+
         $balyalama['id'] = $row['id'];
         $balyalama['baskiId'] = $row['baskiId'];
         $balyalama['satirNo'] = $baski['satirNo'];
@@ -32,6 +38,8 @@ if ($received_data->action == 'anbargetir') {
         $balyalama['profilId'] = $siparis['profilId'];
         $profil =  tablogetir("tblprofil", 'id',$siparis['profilId'], $db);
         $balyalama['gramaj'] = $profil['gramaj'];
+        $balyalama['ortGramaj'] = $deger['deger'];
+
         $balyalama['pIA'] = $profil['paketAdet'];
         $balyalama['araKagit'] = $siparis['araKagit'] == 1 ? "Var" : "Yok";
         $balyalama['krepeKagit'] = $siparis['krepeKagit'] == 1 ? "Var" : "Yok";
@@ -44,6 +52,38 @@ if ($received_data->action == 'anbargetir') {
         array_push($datam, $balyalama);
     }
     echo json_encode($datam);
+}
+
+if ($received_data->action == 'balyalamagetir') {
+
+    $id = $received_data->id;
+
+    $balyalamasql = "SELECT * FROM tblbalyalama   where    id ='$id'";
+
+
+    $result = $db->query($balyalamasql);
+    $datam = array();
+    $balyalama = null;
+    while ($row = $result->fetch_array()) {
+
+        $balyalama['id'] = $row['id'];
+        $balyalama['operatorId'] = $row['operatorId'];
+        $balyalama['tarih'] = $row['tarih'];
+        $balyalama['baskiId'] = $row['baskiId'];
+        $balyalama['netAdet'] = $row['netAdet'];
+        $balyalama['netKilo'] = $row['netKilo'];
+        $balyalama['mtGr'] = $row['mtGr'];
+        $balyalama['paketDetay'] = $row['paketDetay'];
+        $balyalama['realTolerans'] = $row['realTolerans'];
+        $balyalama['teorikTolerans'] = $row['teorikTolerans'];
+        $balyalama['satirNo'] = $row['satirNo'];
+        $balyalama['siparisNo'] = $row['siparisNo'];
+        $balyalama['balyaNo'] = $row['balyaNo'];
+        $balyalama['balyaBoy'] = $row['balyaBoy'];
+        $balyalama['balyaKilo'] = $row['balyaKilo'];
+
+    }
+    echo json_encode($balyalama);
 }
 
 

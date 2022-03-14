@@ -3,131 +3,85 @@
 include '../baglan.php';
 include '../../include/helper.php';
 include '../../include/sql.php';
-ini_set('display_errors', 1);
-date_default_timezone_set('Europe/Istanbul');
 
-if (isset($_POST['firinlamaekle'])) {
+if (isset($_POST['balyalamaekle'])) {
 
-    $boyalar = $_POST['ids'];
-    $baskilarTemp = $_POST['baskilar'];
-    $baslaOperator = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $baslaVardiya = vardiyaBul($vardiya, date("H:i"));
     $baslaTarih = date("d.m.Y H:i");
+    $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
 
-    $baskilarTemp = rtrim($baskilarTemp, ';');
+    $baskiId = isset($_POST['baskiIds']) ? $_POST['baskiIds'] : 0;
+    $netAdet = isset($_POST['netAdets']) ? $_POST['netAdets'] : 0;
+    $netKilo = isset($_POST['netKilos']) ? $_POST['netKilos'] : 0;
+    $mtGr = isset($_POST['mtGrs']) ? $_POST['mtGrs'] : 0;
+    $paketDetay = isset($_POST['paketDetays']) ? $_POST['paketDetays'] : 0;
+    $realTolerans = isset($_POST['realToleranss']) ? $_POST['realToleranss'] : 0;
+    $teorikTolerans = isset($_POST['teorikToleranss']) ? $_POST['teorikToleranss'] : 0;
+    $satirNo = isset($_POST['satirNos']) ? $_POST['satirNos'] : 0;
+    $anbarId = isset($_POST['balyalamaIds']) ? $_POST['balyalamaIds'] : 0;
+    $siparisNo = isset($_POST['siparisNos']) ? $_POST['siparisNos'] : 0;
+    $balyaKilo = isset($_POST['toplamKilo']) ? $_POST['toplamKilo'] : 0;
+    $balyaBoy = isset($_POST['balyaBoy']) ? $_POST['balyaBoy'] : 0;
+    $rand = rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9);
+    $balyaNo = "SS-" . $rand;
 
 
-
-
-    $sqlFirinlama = "Insert Into tblfirinlama (baslaOperator,boyalar,baslaVardiya, baslaTarih, baskilar) 
+    $sqlbalyalama = "INSERT INTO tblbalyalama (operatorId,baskiId, netAdet, netKilo, mtGr, paketDetay, realTolerans,
+                          teorikTolerans, satirNo, siparisNo, balyaNo, balyaBoy, balyaKilo) 
                         VALUES 
-                    ( '$baslaOperator', '$boyalar','$baslaVardiya', '$baslaTarih', '$baskilarTemp')";
+                    ( '$operatorId', '$baskiId','$netAdet', '$netKilo', '$mtGr', '$paketDetay', '$realTolerans',
+                        '$teorikTolerans', '$satirNo', '$siparisNo', '$balyaNo', '$balyaBoy', '$balyaKilo')";
 
-    $boyaArrayreplace = str_replace(";", ",", $boyalar);
+    mysqli_query($db, $sqlbalyalama);
+    $id = mysqli_insert_id($db);
 
-    $sqlboya = "UPDATE tblboya set
-                     isFirin = '1'
-                    where id in ($boyaArrayreplace)";
+    $netAdets = explode(";", $netAdet);
+    $satirNos = explode(";", $satirNo);
+    $baskiIds = explode(";", $baskiId);
 
-    mysqli_query($db, $sqlboya);
+    for ($i = 0; $i < count($netAdets); $i++) {
+        $satir = $satirNos[$i];
+        $temp = tablogetir("tblanbar", 'satirNo', $satir, $db);
+        $tempKalanAdet = $temp['kalanAdet'] - $netAdets[$i];
 
-    if (mysqli_query($db, $sqlFirinlama)) {
-        header("Location:../../firinlama/?durumekle=ok");
-        exit();
-    } else {
-        header("Location:../../firinlama/?durumekle=no");
-        exit();
-    }
+        $sqlAnbar = "UPDATE tblanbar set
+                    kalanAdet = '$tempKalanAdet'
+                    where satirNo = '$satir'";
 
+        mysqli_query($db, $sqlAnbar);
 
-}
+        $baski = tablogetir("tblbaski", 'id', $baskiIds[$i], $db);
+        $balyalamaIds = $baski['balyalamaId'];
+        $baskiId = $baski['id'];
 
-if ($_GET['firinlamabitir']) {
+        if ($balyalamaIds != '0' && $balyalamaIds != '-1') {
+            $balyalamaIds = $balyalamaIds . ";" . $id;
 
-
-
-    $id = $_GET['firinlamabitir'];
-    $bitisOperator = $_GET['operator'];
-    $bitisTarih = date("d.m.Y H:i");
-
-    $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
-    $bitisVardiya = vardiyaBul($vardiya, date("H:i"));
-
-    $sqlFirinlama = "UPDATE tblfirinlama set
-                     bitisVardiya = '$bitisVardiya',
-                     bitisOperator = '$bitisOperator',
-                     bitisTarih = '$bitisTarih'
-                    where id  = '$id'";
-
-
-    $baskilarTemp = tablogetir("tblfirinlama", 'id', $id, $db)['baskilar'];
-
-    $baskilarTemp = rtrim($baskilarTemp, ';');
-    $baskilarTemp = explode(";", $baskilarTemp);
-    $uzunluk = count($baskilarTemp);
-    $baskilarTemp = array_unique($baskilarTemp);
-
-    $baskilar = array();
-    for($i = 0 ; $i<$uzunluk; $i++) {
-        if($baskilarTemp[$i]) {
-            array_push($baskilar,$baskilarTemp[$i]);
-        }
-    }
-
-    for ($i = 0; $i < $uzunluk; $i++) {
-
-        $baskiId = $baskilar[$i];
-        $firinlamaIds = tablogetir("tblbaski", 'id', $baskiId, $db)['firinlamaId'];
-
-        if ($firinlamaIds != '0' && $firinlamaIds != '-1') {
-            $firinlamaIds = $firinlamaIds . ";" . $id;
-
-            $sqlBaski = "UPDATE tblbaski set
-                        firinlamaId = '$firinlamaIds'
+            $sqlBaski2 = "UPDATE tblbaski set
+                        balyalamaId = '$balyalamaIds'
                     where id = '$baskiId'";
 
         } else {
 
-            $firinlamaIds = $id;
-
-            $sqlBaski = "UPDATE tblbaski set
-                        firinlamaId = '$firinlamaIds'
+            $balyalamaIds = $id;
+            $sqlBaski2 = "UPDATE tblbaski set
+                        balyalamaId = '$balyalamaIds'
                     where id = '$baskiId'";
         }
-        mysqli_query($db, $sqlBaski);
+
+        mysqli_query($db, $sqlBaski2);
     }
 
-    if (mysqli_query($db, $sqlFirinlama)) {
-        header("Location:../../firinlama/?durumguncelleme=ok");
+    if ($id > 0) {
+        header("Location:../../balyalama/?durumekle=ok");
         exit();
     } else {
-        header("Location:../../firinlama/?durumguncelleme=no");
+        header("Location:../../balyalama/?durumekle=no");
         exit();
     }
-}
-
-if (isset($_GET['firinlamasil'])) {
-    $id = $_GET['firinlamasil'];
-    $boyalar = tablogetir("tblfirinlama", 'id',$id,$db)['boyalar'];
 
 
-    $boyaArrayreplace = str_replace(";", ",", $boyalar);
-
-    $sqlboya = "UPDATE tblboya set
-                     isFirin = '0'
-                    where id in ($boyaArrayreplace)";
-    mysqli_query($db, $sqlboya);
-
-    $sql = "DELETE FROM tblfirinlama where id = '$id' ";
-
-    if (mysqli_query($db, $sql)) {
-        header("Location:../../firinlama/?durumsil=ok");
-        exit();
-    } else {
-        header("Location:../../firinlama/?durumsil=no");
-        exit();
-    }
 }
 
 ?>

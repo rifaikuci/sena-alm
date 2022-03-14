@@ -40,6 +40,7 @@ $result = $db->query($sql);
                             <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Balya No</th>
                                 <th>Baş. Tar.</th>
                                 <th style="text-align: center">Durum</th>
 
@@ -49,6 +50,7 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
+                                    <td><?php echo $row['balyaNo']; ?></td>
                                     <td><?php echo tarihsaat($row['baslaTarih']); ?></td>
                                     <td>
                                         <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
