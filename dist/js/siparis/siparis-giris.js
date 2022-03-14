@@ -147,9 +147,9 @@ var siparisGiris = new Vue({
                     if (kiloBul.ortalama) {
                         this.siparis.kiloAdet = 'K';
                         this.siparis.adet =
-                            Math.round(event.target.value / (
+                            Math.round(      event.target.value / (
                                 parseInt(kiloBul.ortalama) *
-                                parseInt(this.siparis.boy)) * 1000000);
+                                this.siparis.boy)* 1000000)
                     }
                 }
             } else {
@@ -171,10 +171,10 @@ var siparisGiris = new Vue({
                     });
 
 
-                        this.siparis.kiloAdet = 'A';
-                        this.siparis.kilo = Math.round((parseInt(event.target.value) *
-                            parseInt(kiloBul.ortalama ? kiloBul.ortalama :  0) *
-                            parseInt(this.siparis.boy)) / 1000000);
+                    this.siparis.kiloAdet = 'A';
+                    this.siparis.kilo = ((event.target.value) *
+                        parseInt(kiloBul.ortalama ? kiloBul.ortalama : 0) *
+                        (this.siparis.boy / 1000) / 1000).toFixed(2)
 
                 }
             } else {

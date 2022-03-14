@@ -57,15 +57,15 @@ $sektorler = $db->query($sqlsektor);
 
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Profil Gramaj</label>
-                            <input required type="number" class="form-control form-control-lg" step="0.1"
-                                   name="gramaj" placeholder="0.1">
+                            <label>Profil Gramaj (Gr)</label>
+                            <input required type="number" class="form-control form-control-lg" step="1"
+                                   name="gramaj" placeholder="0">
                         </div>
                     </div>
 
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Profil Alanı</label>
+                            <label>Profil Alanı (mm2)</label>
                             <input required type="number" class="form-control form-control-lg" step="0.1"
                                    name="alan" placeholder="0.1">
                         </div>
@@ -73,7 +73,7 @@ $sektorler = $db->query($sqlsektor);
 
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Profil Çevresi</label>
+                            <label>Profil Çevresi (mm)</label>
                             <input required type="number" class="form-control form-control-lg" step="0.1"
                                    name="cevre" placeholder="0.1">
                         </div>
@@ -82,14 +82,14 @@ $sektorler = $db->query($sqlsektor);
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Paket Adet</label>
-                            <input required type="number" class="form-control form-control-lg"
+                            <input required type="number" class="form-control form-control-lg" step="1"
                                    name="paketAdet" placeholder="0">
                         </div>
                     </div>
 
                     <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Paket En</label>
+                            <label>Paket En (cm)</label>
                             <input required type="number" class="form-control form-control-lg" step="0.1"
                                    name="paketEn" placeholder="0.1">
                         </div>
@@ -97,7 +97,7 @@ $sektorler = $db->query($sqlsektor);
 
                     <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Paket Boy</label>
+                            <label>Paket Boy (cm)</label>
                             <input required type="number" class="form-control form-control-lg" step="0.1"
                                    name="paketBoy" placeholder="0.1">
                         </div>
@@ -106,8 +106,8 @@ $sektorler = $db->query($sqlsektor);
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Boya Max Adet</label>
-                            <input required type="number" class="form-control form-control-lg" step="0.1"
-                                   name="boyaMaxAdet" placeholder="0.1">
+                            <input required type="number" class="form-control form-control-lg" step="1"
+                                   name="boyaMaxAdet" placeholder="0">
                         </div>
                     </div>
 
@@ -121,8 +121,8 @@ $sektorler = $db->query($sqlsektor);
 
                     <div class="col-sm-5">
                         <div class="form-group">
-                            <label>Max Gramaj</label>
-                            <input required type="number" class="form-control form-control-lg" step="0.1"
+                            <label>Max Gramaj (Gr)</label>
+                            <input required type="number" class="form-control form-control-lg" step="1"
                                    name="maxGramaj" placeholder="0">
                         </div>
                     </div>
@@ -130,7 +130,7 @@ $sektorler = $db->query($sqlsektor);
                     <div class="col-sm-5">
                         <div class="form-group">
                             <label>Ezilme Katsayısı</label>
-                            <input required type="number" class="form-control form-control-lg"
+                            <input required type="number" class="form-control form-control-lg" step="1"
                                    name="ezilmeKatsayisi" placeholder="0">
                         </div>
                     </div>

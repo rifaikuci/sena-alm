@@ -174,10 +174,12 @@ var siparissatirguncelle = new Vue({
                     });
 
                     this.kiloAdet = 'K';
+
+                    debugger;
                     this.adet =
-                        Math.round(event.target.value / (
+                        Math.round(      event.target.value / (
                             parseInt(kiloBul.ortalama) *
-                            parseInt(this.boy)) * 1000000);
+                            this.boy)* 1000000)
                 }
             } else {
                 this.adet = '';
@@ -215,10 +217,12 @@ var siparissatirguncelle = new Vue({
                         return response.data
                     });
 
+                    debugger;
                     this.kiloAdet = 'A';
-                    this.kilo = Math.round((parseInt(event.target.value) *
-                        parseInt(kiloBul.ortalama) *
-                        parseInt(this.boy)) / 1000000);
+                    this.kilo = ((event.target.value) *
+                        parseInt(kiloBul.ortalama ? kiloBul.ortalama : 0) *
+                        (this.boy / 1000) / 1000).toFixed(2)
+
                 }
             } else {
                 this.kilo = '';

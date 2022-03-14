@@ -73,7 +73,16 @@
                 <a href="<?php echo base_url() . "sevkiyat/gelen" ?> " class="nav-link">
                     <i class="nav-icon fa fa-adjust"></i>
                     <p>
-                        Sevkiyat
+                        Sevkiyat - Gelen
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="<?php echo base_url() . "sevkiyat/giden" ?> " class="nav-link">
+                    <i class="nav-icon fa fa-adjust"></i>
+                    <p>
+                        Sevkiyat - Çıkış
                     </p>
                 </a>
             </li>

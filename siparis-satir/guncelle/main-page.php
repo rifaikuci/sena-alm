@@ -102,9 +102,9 @@ $alasimlar = $db->query($alasimsql);
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <label>Boy</label>
+                                        <label>Boy (mm)</label>
                                         <input v-model="boy" type="number" placeholder="1 mm"
-                                               @input="checkBoy($event)"
+                                               @input="checkBoy($event)" step="1"
                                                class="form-control form-control-lg" name="boy">
                                     </div>
                                 </div>
@@ -123,7 +123,7 @@ $alasimlar = $db->query($alasimsql);
                                     <div class="form-group">
                                         <label>Kilo</label>
                                         <input :disabled="kiloDisabled" v-model="kilo" step="0.1"
-                                               placeholder="0.1 kg" type="number"
+                                               placeholder="0.1" type="number"
                                                @input="checkKilo($event)"
                                                class="form-control form-control-lg" name="kilo">
                                     </div>

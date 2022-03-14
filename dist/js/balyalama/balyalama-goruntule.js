@@ -61,7 +61,6 @@ var balyalamaGoruntule = new Vue({
             this.balya.netKilo  = netKilo[i];
             this.balya.mtGr  = mtGr[i];
             this.balya.id = i
-            debugger;
             this.balya.paketDetay  = paketDetay[i];
             this.balya.realTolerans  = realTolerans[i];
             this.balya.teorikTolerans  = teorikTolerans[i];
@@ -70,7 +69,6 @@ var balyalamaGoruntule = new Vue({
             this.balyalama.push(this.balya)
 
         }
-        console.log(this.balyalama)
         this.balyaNo = balyalama.balyaNo;
         this.balyaBoy = balyalama.balyaBoy;
         this.balyaKilo = balyalama.balyaKilo;
@@ -81,7 +79,6 @@ var balyalamaGoruntule = new Vue({
 
     methods: {
         clickAnbar(event) {
-            debugger;
             if(!this.selectedItem || this.selectedItem.id != event) {
                 this.selectedItem = this.balyalama.find(x => x.id === event);
             } else {

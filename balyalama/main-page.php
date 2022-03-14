@@ -51,7 +51,7 @@ $result = $db->query($sql);
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['balyaNo']; ?></td>
-                                    <td><?php echo tarihsaat($row['baslaTarih']); ?></td>
+                                    <td><?php echo tarihsaat($row['tarih']); ?></td>
                                     <td>
                                         <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
                                            class="btn btn-outline-primary">Görüntüle</a>

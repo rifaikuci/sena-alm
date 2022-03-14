@@ -158,7 +158,7 @@ date_default_timezone_set('Europe/Istanbul');
 
                                 <?php while ($siparis = $siparisler->fetch_array()) { ?>
                                     <option value="<?php echo $siparis['id']; ?>">
-                                        <?php echo  $siparis['satirNo']; ?>
+                                        <?php echo $siparis['satirNo']; ?>
                                     </option>
                                 <?php } ?>
                             </select>
@@ -227,198 +227,207 @@ date_default_timezone_set('Europe/Istanbul');
 
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Biyet Boy</label>
+                            <label>Biyet Boy (cm)</label>
                             <input v-model="biyetBoy"
                                    @change="handleBiyetBoy($event)"
                                    required name="biyetBoy"
-                                   class="form-control" type="number" name="biyetBoy" step="0.001"
-                                   placeholder="0,1">
-
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Ara iş Fire</label>
-
-                            <input v-model="araIsFire" class="form-control" name="araIsFire"
-                                   required type="number" name="araIsFire" step="0.001"
-                                   placeholder="0,1">
-
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Konveyör Boy</label>
-
-                            <input v-model="konveyorBoy"
-                                   @change="handleChangeKonveyor($event)"
-                                   required
-                                   class="form-control" type="number" name="konveyorBoy"
-                                   step="0.001" placeholder="0,1">
-
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Boylam Fire</label>
-
-                            <input v-model="boylamFire"
-                                   @change="handleBoylamFire($event)"
-                                   required name="boylamFire"
-                                   class="form-control" type="number" name="boylamFire" step="0.001"
+                                   class="form-control" type="number" name="biyetBoy" step="0.1"
                                    placeholder="0,1">
 
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Baskı Fire</label>
-                            <input v-model="baskiFire" disabled
-                                   required
-                                   class="form-control" type="number"
-                                   step="0.001"
-                                   placeholder="0,1">
-                            <input type="hidden" v-model="baskiFire" name="baskiFire" :value="baskiFire">
-                            <input type="hidden" v-model="istenilenTermik" name="istenilenTermik" :value="istenilenTermik">
-                            <input type="hidden" v-model="satirNo" name="satirNo" :value="satirNo">
-                            <input type="hidden" v-model="boy" name="boy" :value="boy">
-                            <input type="hidden" value="baski-ekle" name="baskiekle">
-                            <input type="hidden" value="<?php echo isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0; ?>" name="operatorId">
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Fire Biyet</label>
-                            <input v-model="biyetFire"
-                                   required
-                                   class="form-control" type="number" name="biyetFire"
-                                   step="0.001"
-                                   placeholder="0,1">
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Verilen Biyet</label>
                             <input v-model="verilenBiyet"
                                    required
                                    @change="handleVerilenBiyet($event)"
                                    class="form-control" type="number" name="verilenBiyet"
-                                   step="0.001"
-                                   placeholder="0,1">
+                                   step="1"
+                                   placeholder="0">
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Ara iş Fire (gr)</label>
+
+                            <input v-model="araIsFire" class="form-control" name="araIsFire"
+                                   required type="number" name="araIsFire" step="1"
+                                   placeholder="0,1">
+
+                        </div>
+                    </div>
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Konveyör Boy (m)</label>
+
+                            <input v-model="konveyorBoy"
+                                   @change="handleChangeKonveyor($event)"
+                                   required
+                                   class="form-control" type="number" name="konveyorBoy"
+                                   step="0.1" placeholder="0,1">
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Boylam Fire (m)</label>
+
+                            <input v-model="boylamFire"
+                                   @change="handleBoylamFire($event)"
+                                   required name="boylamFire"
+                                   class="form-control" type="number" name="boylamFire" step="0.1"
+                                   placeholder="0,1">
+
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Güncel Gr</label>
                             <input v-model="guncelGr"
                                    required
                                    @change="handleGuncelGr($event)"
                                    class="form-control" type="number" name="guncelGr"
-                                   step="0.001"
+                                   step="1"
                                    placeholder="0,1">
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Basılan Brüt Kg</label>
-                            <input v-model="basilanBrutKg" disabled
-                                   class="form-control" type="number" name="basilanBrutKg"
-                                   step="0.001"
+                            <label>Fire Biyet</label>
+                            <input v-model="biyetFire"
+                                   required
+                                   class="form-control" type="number" name="biyetFire"
+                                   step="0.1"
                                    placeholder="0,1">
-                            <input type="hidden" v-model="basilanBrutKg" name="basilanBrutKg" :value="basilanBrutKg">
+
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Basılan Net Adet</label>
                             <input v-model="basilanNetAdet"
                                    required
                                    @change="handleBasilanNetAdet($event)"
                                    class="form-control" type="number" name="basilanNetAdet"
-                                   step="0.001"
-                                   placeholder="0,1">
+                                   step="1"
+                                   placeholder="0">
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Basılan Net Kg</label>
                             <input v-model="basilanNetKg" disabled
                                    class="form-control" type="number" name="basilanNetKg"
-                                   step="0.001"
-                                   placeholder="0,1">
+                                   step="0.01"
+                                   placeholder="0,01">
                             <input type="hidden" v-model="basilanNetKg" name="basilanNetKg" :value="basilanNetKg">
                             <input type="hidden" v-model="baslazamani" name="baslaZamani" :value="baslazamani">
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Kovan Sıcaklığı</label>
-                            <input v-model="kovanSicaklik"
+                            <label>Basılan Brüt Kg</label>
+                            <input v-model="basilanBrutKg" disabled
+                                   class="form-control" type="number" name="basilanBrutKg"
+                                   step="0.01"
+                                   placeholder="0,01">
+                            <input type="hidden" v-model="basilanBrutKg" name="basilanBrutKg" :value="basilanBrutKg">
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Baskı Fire</label>
+                            <input v-model="baskiFire" disabled
                                    required
-                                   @change="handleKovanSicaklik($event)"
-                                   class="form-control" type="number" name="kovanSicaklik"
-                                   step="0.001"
+                                   class="form-control" type="text"
                                    placeholder="0,1">
+                            <input type="hidden" v-model="baskiFire" name="baskiFire" :value="baskiFire">
+                            <input type="hidden" v-model="istenilenTermik" name="istenilenTermik"
+                                   :value="istenilenTermik">
+                            <input type="hidden" v-model="satirNo" name="satirNo" :value="satirNo">
+                            <input type="hidden" v-model="boy" name="boy" :value="boy">
+                            <input type="hidden" value="baski-ekle" name="baskiekle">
+                            <input type="hidden"
+                                   value="<?php echo isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0; ?>"
+                                   name="operatorId">
+
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Kalıp Sıcaklığı</label>
-                            <input v-model="kalipSicaklik"
-                                   @change="handleKalipSicaklik($event)"
-                                   class="form-control" type="number" name="kalipSicaklik"
-                                   step="0.001" required
-                                   placeholder="0,1">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Biyet Sıcaklığı</label>
-                            <input v-model="biyetSicaklik"
-                                   @change="handleBiyetSicaklik($event)"
-                                   class="form-control" type="number" name="biyetSicaklik"
-                                   step="0.001" required
-                                   placeholder="0,1">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Hız</label>
-                            <input v-model="hiz"
-                                   @change="handleHiz($event)"
-                                   class="form-control" type="number" name="hiz"
-                                   step="0.001" required
-                                   placeholder="0,1">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Fire</label>
+                            <label>Fire (Kg)</label>
                             <input v-model="fire" disabled
-                                   class="form-control" type="number" name="fire"
-                                   step="0.001"
-                                   placeholder="0,1">
+                                   class="form-control" type="text" name="fire"
+                                   placeholder="0">
                             <input type="hidden" v-model="fire" name="fire" :value="fire">
                             <input type="hidden" v-model="baskiId" name="baskiId" :value="baskiId">
 
                         </div>
                     </div>
+
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Kovan Sıcaklığı (°C)</label>
+                            <input v-model="kovanSicaklik"
+                                   required
+                                   @change="handleKovanSicaklik($event)"
+                                   class="form-control" type="number" name="kovanSicaklik"
+                                   step="1"
+                                   placeholder="0">
+                        </div>
+                    </div>
+
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Kalıp Sıcaklığı (°C)</label>
+                            <input v-model="kalipSicaklik"
+                                   @change="handleKalipSicaklik($event)"
+                                   class="form-control" type="number" name="kalipSicaklik"
+                                   step="1" required
+                                   placeholder="1">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Biyet Sıcaklığı (°C)</label>
+                            <input v-model="biyetSicaklik"
+                                   @change="handleBiyetSicaklik($event)"
+                                   class="form-control" type="number" name="biyetSicaklik"
+                                   step="1" required
+                                   placeholder="0">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Hız (A)</label>
+                            <input v-model="hiz"
+                                   @change="handleHiz($event)"
+                                   class="form-control" type="number" name="hiz"
+                                   step="0.1" required
+                                   placeholder="0,1">
+                        </div>
+                    </div>
+
 
                     <div class="col-sm-4">
                         <div class="form-group">

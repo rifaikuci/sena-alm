@@ -152,7 +152,7 @@ if ($_GET['siparisno']) {
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label>Boy</label>
+                                    <label>Boy (mm)</label>
                                     <input v-model="siparis.boy" type="number" placeholder="1 mm"
                                            @input="checkBoy($event)"
                                            class="form-control form-control-lg" name="boy">
@@ -171,7 +171,7 @@ if ($_GET['siparisno']) {
 
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <label>Kilo</label>
+                                    <label>Kilo (Kg)</label>
                                     <input :disabled="kiloDisabled" v-model="siparis.kilo" step="0.1"
                                            placeholder="0.1 kg" type="number"
                                            @input="checkKilo($event)"
