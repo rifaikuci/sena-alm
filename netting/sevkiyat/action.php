@@ -33,6 +33,8 @@ if ($received_data->action == 'balyalamagetir') {
         $balyalama['balyaNo'] = $row['balyaNo'];
         $balyalama['balyaBoy'] = $row['balyaBoy'];
         $balyalama['balyaKilo'] = $row['balyaKilo'];
+        $balyalama['musteriId'] = $row['musteriId'];
+        $balyalama['musteri'] = tablogetir("tblfirma",'id',$row['musteriId'], $db)['firmaAd'];
 
     array_push($datam,$balyalama);
     }

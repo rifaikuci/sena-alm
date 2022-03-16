@@ -12,7 +12,8 @@ var balyalamaGiris = new Vue({
         teorikToleranss: "",
         satirNos: "",
         anbarIds: "",
-        siparisNos: ""
+        siparisNos: "",
+        musteriId : ""
 
     },
 
@@ -44,6 +45,7 @@ var balyalamaGiris = new Vue({
             this.anbarFilter = this.anbarlar.filter(x => x.selected === true)
 
             this.anbarFilter.forEach(x => {
+                this.musteriId = "";
                 this.baskiIds = this.baskiIds + x.baskiId + ";";
                 this.netAdets = this.netAdets + x.netAdet + ";";
                 this.netKilos = this.netKilos + x.netKilo + ";";
@@ -54,7 +56,9 @@ var balyalamaGiris = new Vue({
                 this.satirNos = this.satirNos + x.satirNo + ";";
                 this.anbarIds = this.anbarIds + x.id + ";";
                 this.siparisNos = this.siparisNos + x.siparisNo + ";";
+                this.musteriId = x.musteriId;
             })
+
 
             this.baskiIds = this.baskiIds.slice(0, -1);
             this.netAdets = this.netAdets.slice(0, -1);
@@ -66,7 +70,6 @@ var balyalamaGiris = new Vue({
             this.satirNos = this.satirNos.slice(0, -1);
             this.anbarIds = this.anbarIds.slice(0, -1);
             this.siparisNos = this.siparisNos.slice(0, -1);
-            debugger;
 
         }, clickAnbar(event) {
 

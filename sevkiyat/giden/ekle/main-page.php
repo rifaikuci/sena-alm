@@ -7,33 +7,6 @@ $personeller = $db->query($personelsql);
 
 $personelsql2 = "SELECT * FROM tblpersonel";
 $personeller2 = $db->query($personelsql2);
-
-$firmasql = "SELECT * FROM tblfirma";
-$firmalar = $db->query($firmasql);
-
-$firmaboyasql = "SELECT * FROM tblfirma ";
-$firmalarboya = $db->query($firmaboyasql);
-
-$alasimsql = "SELECT * FROM tblalasim";
-$alasimlar = $db->query($alasimsql);
-
-$boyasql = "SELECT * FROM tblprboya";
-$boyalar = $db->query($boyasql);
-
-$malzemelersql = "SELECT * FROM tblmalzemeler";
-$malzemeler = $db->query($malzemelersql);
-
-$malzemelerfirmasql = "SELECT * FROM tblfirma";
-$malzemelerfirma = $db->query($malzemelerfirmasql);
-
-$profilfirmasql = "SELECT * FROM tblfirma";
-$profilfirmalar = $db->query($profilfirmasql);
-
-$profilmusterisql = "SELECT * FROM tblfirma";
-$profilfirmamusteri = $db->query($profilmusterisql);
-
-$profillerrsql = "SELECT * FROM tblprofil";
-$profiller = $db->query($profillerrsql);
 ?>
 
 <section class="content">
@@ -48,7 +21,7 @@ $profiller = $db->query($profillerrsql);
                         <div class="form-group">
                             <label>1. Şoför</label>
                             <select required name="personelId1" class="form-control select2" style="width: 100%;">
-                                <option selected value="">{{denemee}}</option>
+                                <option selected value="">Personel 1</option>
                                 <?php while ($personel = $personeller->fetch_array()) { ?>
                                     <option value="<?php echo $personel['id']; ?>"><?php echo $personel['adsoyad']; ?></option>
                                 <?php } ?>
@@ -73,8 +46,12 @@ $profiller = $db->query($profillerrsql);
                             <label>Plaka</label>
                             <input required type="text" class="form-control form-control-lg" name="plaka"
                                    placeholder="Plaka Bilgisi ">
-                            <input type="hidden" value="<?php echo isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0; ?>" name="operatorId">
-                            <input type="hidden" value="sevkiyatCikisBaslatma" name="sevkiyatCikisBaslatma">
+                            <input type="hidden"
+                                   value="<?php echo isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0; ?>"
+                                   name="operatorId">
+                            <input type="hidden" value="sevkiyatcikisekle" name="sevkiyatcikisekle">
+                            <input type="hidden" name="balyalaArray" v-model="balyalaArray">
+                            <input type="hidden" name="balyaNoArray" v-model="balyaNoArray">
 
                         </div>
                     </div>
@@ -108,43 +85,112 @@ $profiller = $db->query($profillerrsql);
                 <br>
 
 
-                <div class="col-12" style="text-align: center">
-                    <h4>Stoktakiler</h4>
-                </div>
-
-
                 <div class="card">
+                    <div class="card-header" style="text-align: center">
+                        <div style="text-align: center">
+                            <h3 style="color: #0c525d" class="card-title">Balyalar</h3>
+
+                        </div>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
+                                    title="Collapse">
+                                <i class="fas fa-minus"></i></button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip"
+                                    title="Remove">
+                                <i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>#</th>
-                                <th>Sevkiyat Kodu</th>
-                                <th>Şoför Bilgisi</th>
-                                <th>Plaka</th>
                                 <th>Tarih</th>
-                                <th>Açıklama</th>
-                                <th style="text-align: center">Yazdırma İşlemi</th>
+                                <th>Balya No</th>
+                                <th>Kilo</th>
+                                <th>Boy</th>
+                                <th>Müşteri</th>
                                 <th style="text-align: center">İşlem</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tr v-for="item in balyalar" v-if="item.selected == false">
+                                <td>{{item.tarih}}</td>
+                                <td>{{item.balyaNo}}</td>
+                                <td>{{item.balyaKilo}}</td>
+                                <td>{{item.balyaBoy}}</td>
+                                <td>{{item.musteri}}</td>
+                                <td style="text-align: center">
+                                    <button type="submit" v-on:click="ekle($event,item.id)"
+                                            class="btn btn-outline-primary"><i class="fa fa-plus"
+                                                                               aria-hidden="true"></i></button>
+                                </td>
 
+                            </tr>
                             </tbody>
+
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Sevkiyata Alınankar</h3>
+
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
+                                    title="Collapse">
+                                <i class="fas fa-minus"></i></button>
+                            <button type="button" class="btn btn-tool" data-card-widget="remove" data-toggle="tooltip"
+                                    title="Remove">
+                                <i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="example1" class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>Tarih</th>
+                                <th>Balya No</th>
+                                <th>Kilo</th>
+                                <th>Boy</th>
+                                <th>Müşteri</th>
+                                <th style="text-align: center">İşlem</th>
+                            </tr>
+                            </thead>
+                            <tr v-for="item in balyalar" v-if="item.selected == true">
+                                <td>{{item.tarih}}</td>
+                                <td>{{item.balyaNo}}</td>
+                                <td>{{item.balyaKilo}}</td>
+                                <td>{{item.balyaBoy}}</td>
+                                <td>{{item.musteri}}</td>
+                                <td style="text-align: center">
+                                    <button type="submit" v-on:click="cikar($event,item.id)"
+                                            class="btn btn-outline-danger"><i class="fa fa-minus"
+                                                                              aria-hidden="true"></i></button>
+                                </td>
+
+                            </tr>
+                            </tbody>
+
                         </table>
                     </div>
                 </div>
 
 
-                <div class="card-footer">
+                <div class="card-footer" v-if="balyalar.find(x=>x.selected)">
                     <div>
-                        <button type="submit" class="btn btn-info float-right">Ekle</button>
+                        <button @click="bitir()" type="submit"
+                                onclick="return confirm('Sevkiyat Kaydediliyor...?')"
+                                class="btn btn-info float-right">Tamamla
+                        </button>
                         <a href="../"
                            class="btn btn-warning float-left">Vazgeç</a>
                     </div>
                 </div>
-
-            </form>
         </div>
+
+
+        </form>
+    </div>
 
 </section>

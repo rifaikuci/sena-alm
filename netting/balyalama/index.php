@@ -20,6 +20,7 @@ if (isset($_POST['balyalamaekle'])) {
     $teorikTolerans = isset($_POST['teorikToleranss']) ? $_POST['teorikToleranss'] : 0;
     $satirNo = isset($_POST['satirNos']) ? $_POST['satirNos'] : 0;
     $anbarId = isset($_POST['balyalamaIds']) ? $_POST['balyalamaIds'] : 0;
+    $musteriId = isset($_POST['musteriId']) ? $_POST['musteriId'] : 0;
     $siparisNo = isset($_POST['siparisNos']) ? $_POST['siparisNos'] : 0;
     $balyaKilo = isset($_POST['toplamKilo']) ? $_POST['toplamKilo'] : 0;
     $balyaBoy = isset($_POST['balyaBoy']) ? $_POST['balyaBoy'] : 0;
@@ -28,10 +29,10 @@ if (isset($_POST['balyalamaekle'])) {
 
 
     $sqlbalyalama = "INSERT INTO tblbalyalama (operatorId,baskiId, netAdet, netKilo, mtGr, paketDetay, realTolerans,
-                          teorikTolerans, satirNo, siparisNo, balyaNo, balyaBoy, balyaKilo) 
+                          teorikTolerans, satirNo, siparisNo, balyaNo, balyaBoy, balyaKilo, musteriId) 
                         VALUES 
                     ( '$operatorId', '$baskiId','$netAdet', '$netKilo', '$mtGr', '$paketDetay', '$realTolerans',
-                        '$teorikTolerans', '$satirNo', '$siparisNo', '$balyaNo', '$balyaBoy', '$balyaKilo')";
+                        '$teorikTolerans', '$satirNo', '$siparisNo', '$balyaNo', '$balyaBoy', '$balyaKilo', '$musteriId')";
 
     mysqli_query($db, $sqlbalyalama);
     $id = mysqli_insert_id($db);

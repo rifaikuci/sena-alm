@@ -2,7 +2,7 @@
 include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
-$sql = "SELECT * FROM tblsevkiyat order by id desc ";
+$sql = "SELECT * FROM tblsevkiyatcikis order by id desc ";
 $result = $db->query($sql);
 
 ?>
@@ -24,7 +24,7 @@ $result = $db->query($sql);
         durumDanger("Sevkiyat Stoktan Güncellenirken Bir Hata Oluştu.");
     } ?>
     <div style="text-align: center">
-        <h4 style="color: #0b93d5">Giriş Sevkiyatları</h4>
+        <h4 style="color: #0b93d5">Çıkış Sevkiyatları</h4>
     </div>
     <div class="card-body">
         <div class="row">
@@ -33,21 +33,6 @@ $result = $db->query($sql);
                     <a href="ekle/" class="btn btn-primary"><i class="fa fa-plus"><?php echo "\t\t\t\t" ?>
                             Ekle</i></a>
                 </div>
-                <div>
-                    <h6 style="color: #0b93d5">
-                   <a class="btn btn-default " target="_blank"
-                       href="#"><i class="fa fa-print" aria-hidden="true"></i></a>  Biyetlerin yazdırılmasını temsil eder</h6>
-                    <h6 style="color: #0b93d5">
-                        <a class="btn btn-warning " target="_blank"
-                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a>  Boyaların yazdırılmasını temsil eder</h6>
-                    <h6 style="color: #0b93d5">
-                        <a class="btn btn-info " target="_blank"
-                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a>  Malzemelerin yazdırılmasını temsil eder</h6>
-                    <h6 style="color: #0b93d5">
-                        <a class="btn btn-danger " target="_blank"
-                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a>  Hepsinin yazdırılmasını temsil eder</h6>
-                </div>
-                <br>
                 <div class="card">
                     <div class="card-body">
                         <table id="example1" class="table table-bordered table-striped">
@@ -59,7 +44,6 @@ $result = $db->query($sql);
                                 <th>Plaka</th>
                                 <th>Tarih</th>
                                 <th>Açıklama</th>
-                                <th style="text-align: center">Yazdırma İşlemi</th>
                                 <th style="text-align: center">İşlem</th>
                             </tr>
                             </thead>
@@ -79,28 +63,8 @@ $result = $db->query($sql);
                                     <td><?php echo kelimeAyirma($row['aciklama'], 30); ?></td>
 
                                     <td style="text-align: center">
-                                        <?php if(isTableSevkiyat($db,"tblstokbiyet", $row['id']) > 0) { ?>
-                                        <a class="btn btn-default"
-                                           href="<?php echo '../../netting/sevkiyat/pdf.php?biyet='.$row['id'];?>"><i class="fa fa-print" aria-hidden="true"></i></a> <?php  }?>
-
-                                        <?php if(isTableSevkiyat($db,"tblstokboya", $row['id']) > 0) { ?>
-                                        <a class="btn btn-warning " target="_blank"
-                                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a> <?php  }?>
-
-                                        <?php if(isTableSevkiyat($db,"tblstokmalzeme", $row['id']) > 0 ) { ?>
-                                        <a class="btn btn-info" target="_blank"
-                                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a>  <?php  }?>
-
-                                        <a class="btn btn-danger " target="_blank"
-                                           href="#"><i class="fa fa-print" aria-hidden="true"></i></a>
-                                    </td>
-
-                                    <td style="text-align: center">
                                         <a href=<?php echo "goruntule/?id=" . $row['id']; ?> class="btn
                                            btn-warning">Görüntüle</a>
-                                        <a onclick="return confirm('Silmek istediğinizden emin misiniz?')"
-                                           href=<?php echo base_url() . "netting/sevkiyat/gelen.php?gelensil=" . $row['id']; ?> class="btn
-                                           btn-danger">Sil</a>
                                     </td>
 
                                 </tr>
