@@ -83,7 +83,6 @@ var cikis = new Vue({
             async ekle(event, id) {
                 event.preventDefault();
                 this.balyaFilter = this.balyalar.filter(x => x.selected === true)
-                debugger;
                 if (this.balyaFilter.filter(x => x.id === id).length === 0) {
                     musteriId = this.balyalar.find(x => x.id === id).musteriId;
 
@@ -126,6 +125,23 @@ var cikis = new Vue({
                 this.balyalaArray = this.balyalaArray.slice(0, -1);
                 this.balyaNoArray = this.balyaNoArray.slice(0, -1);
 
+            },
+
+            detayGoster(event,item) {
+                if (item.balyaNo) {
+                    $.ajax({
+                        url: '/sena/netting/balyalama/balyalama.php',
+                        type: 'post',
+                        data: {
+                            balyano: item.balyaNo,
+                        },
+                        success: function (response) {
+                            $('.modal-body').html(response);
+                            $('#balyalar').modal('show');
+
+                        }
+                    });
+                }
             }
         }
 

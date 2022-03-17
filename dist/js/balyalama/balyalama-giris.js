@@ -145,7 +145,8 @@ var balyalamaGiris = new Vue({
                 });
                 this.toplamKilo = kilo.toFixed(2);
             }
-        }
+        },
+
     }
 });
 

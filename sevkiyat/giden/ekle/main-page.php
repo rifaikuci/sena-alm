@@ -123,6 +123,11 @@ $personeller2 = $db->query($personelsql2);
                                     <button type="submit" v-on:click="ekle($event,item.id)"
                                             class="btn btn-outline-primary"><i class="fa fa-plus"
                                                                                aria-hidden="true"></i></button>
+                                    <button type="button" v-on:click="detayGoster($event,item)"
+                                            class="btn btn-outline-dark"
+                                            data-toggle="modal">
+                                        <i class="fa fa-expand"></i>
+                                    </button>
                                 </td>
 
                             </tr>
@@ -167,6 +172,11 @@ $personeller2 = $db->query($personelsql2);
                                     <button type="submit" v-on:click="cikar($event,item.id)"
                                             class="btn btn-outline-danger"><i class="fa fa-minus"
                                                                               aria-hidden="true"></i></button>
+                                    <button type="button" v-on:click="detayGoster($event,item)"
+                                            class="btn btn-outline-dark"
+                                            data-toggle="modal">
+                                        <i class="fa fa-expand"></i>
+                                    </button>
                                 </td>
 
                             </tr>
@@ -175,6 +185,23 @@ $personeller2 = $db->query($personelsql2);
                         </table>
                     </div>
                 </div>
+
+
+                <div id="balyalar" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-xl">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div style="margin: 10px">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+
+                            <div class="modal-body"></div>
+                        </div>
+
+                    </div>
+                </div
 
 
                 <div class="card-footer" v-if="balyalar.find(x=>x.selected)">

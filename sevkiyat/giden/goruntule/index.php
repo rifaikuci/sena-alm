@@ -33,7 +33,7 @@
 </div>
 
 <?php include('../../../include/script.php') ?>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/sevkiyat/goruntule.js" ?>></script>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/balyalama/balya-detay-goster.js" ?>></script>
 
 </body>
 </html>

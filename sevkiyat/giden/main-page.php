@@ -63,8 +63,7 @@ $result = $db->query($sql);
                                     <td><?php echo kelimeAyirma($row['aciklama'], 30); ?></td>
 
                                     <td style="text-align: center">
-                                        <a href=<?php echo "goruntule/?id=" . $row['id']; ?> class="btn
-                                           btn-warning">Görüntüle</a>
+                                        <a href="<?php echo "goruntule/?id=" . $row['id']; ?>" class="btn btn-outline-primary">Görüntüle</a>
                                     </td>
 
                                 </tr>
