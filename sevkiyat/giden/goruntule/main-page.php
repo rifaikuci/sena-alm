@@ -138,7 +138,6 @@ if ($_GET['id']) {
                 <div id="balyalar" class="modal fade" role="dialog">
                     <div class="modal-dialog modal-xl">
 
-                        <!-- Modal content-->
                         <div class="modal-content">
                             <div style="margin: 10px">
                                 <button type="button" class="close" data-dismiss="modal">&times;</button>

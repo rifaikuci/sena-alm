@@ -1,5 +1,18 @@
+
+
 <div class="sidebar">
+
     <nav class="mt-2">
+
+        <div class="form-inline">
+            <div class="input-group" data-widget="sidebar-search">
+                <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-sidebar">
+                        <i class="fas fa-search fa-fw"></i>
+                    </button>
+                </div>
+            </div>
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
             <li class="nav-item has-treeview">
                 <a href="#" class="nav-link">
@@ -224,6 +237,15 @@
                 <a href="<?php echo base_url() . "naylon/" ?> " class="nav-link">
                     <i class="nav-icon fas fa-poo-storm"></i>
                     Naylon
+                    </p>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="<?php echo base_url() . "sepet/" ?> " class="nav-link">
+                    <i class="nav-icon fas fa-shopping-cart"></i>
+                    <p>
+                        Sepetler
                     </p>
                 </a>
             </li>
