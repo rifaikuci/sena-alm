@@ -257,7 +257,7 @@ date_default_timezone_set('Europe/Istanbul');
 
                             <input v-model="araIsFire" class="form-control" name="araIsFire"
                                    required type="number" name="araIsFire" step="1"
-                                   placeholder="0,1">
+                                   placeholder="0">
 
                         </div>
                     </div>
@@ -296,7 +296,7 @@ date_default_timezone_set('Europe/Istanbul');
                                    @change="handleGuncelGr($event)"
                                    class="form-control" type="number" name="guncelGr"
                                    step="1"
-                                   placeholder="0,1">
+                                   placeholder="0">
                         </div>
                     </div>
 
@@ -351,7 +351,7 @@ date_default_timezone_set('Europe/Istanbul');
 
                     <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Baskı Fire</label>
+                            <label>Baskı Fire (%)</label>
                             <input v-model="baskiFire" disabled
                                    required
                                    class="form-control" type="text"

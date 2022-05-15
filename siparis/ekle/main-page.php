@@ -138,7 +138,6 @@ $alasimlar = $db->query($alasimsql);
                                             <select @change="onChangeSiparis($event)" v-model="siparis.siparisTur"
                                                     name="siparisTur" class="form-control">
                                                 <option selected disabled value="">Sipariş Türü Seçiniz</option>
-                                                <option selected value="">Profil Tür Seçiniz</option>
                                                 <?php for ($i = 0; $i < count($profilTur); $i++) { ?>
                                                     <option value="<?php echo $profilTur[$i] ?>"><?php echo $profilTur[$i] ?></option>
                                                 <?php } ?>

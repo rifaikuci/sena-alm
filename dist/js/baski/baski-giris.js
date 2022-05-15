@@ -83,6 +83,8 @@ var baskigiris = new Vue({
                 if (event.target.value && event.target.value > 0 && this.konveyorBoy && this.konveyorBoy > 0) {
                     //#TODO baskiFire'nin formulü = ((basilanBrutKg / konveyorBoy + boylamFire) * figurSayi (seçilenTakimin) *  2 )  + araIsFire + fireBiyet
                     this.baskiFire = (event.target.value * 2) / this.konveyorBoy;
+                    this.baskiFire = (this.baskiFire * 100).toFixed(2);
+
                 }
 
                 this.fireHesapla();
@@ -91,6 +93,7 @@ var baskigiris = new Vue({
             handleChangeKonveyor(event) {
                 if (event.target.value && event.target.value > 0 && this.boylamFire && this.boylamFire > 0) {
                     this.baskiFire = (this.boylamFire * 2) / event.target.value;
+                    this.baskiFire = (this.baskiFire * 100).toFixed(2);
                 }
                 this.fireHesapla();
             },
@@ -101,6 +104,7 @@ var baskigiris = new Vue({
                     this.verilenBiyet && this.verilenBiyet > 0 &&
                     this.biyetBirimGramaj && this.biyetBirimGramaj > 0) {
                     this.basilanBrutKg = event.target.value * this.verilenBiyet * this.biyetBirimGramaj
+                    this.basilanBrutKg = (this.basilanBrutKg / 1000).toFixed(3);
                 }
                 this.fireHesapla();
             },
@@ -109,6 +113,7 @@ var baskigiris = new Vue({
                     this.biyetBoy && this.biyetBoy > 0 &&
                     this.biyetBirimGramaj && this.biyetBirimGramaj > 0) {
                     this.basilanBrutKg = event.target.value * this.biyetBoy * this.biyetBirimGramaj
+                    this.basilanBrutKg = (this.basilanBrutKg / 1000).toFixed(3);
                 }
                 this.fireHesapla();
             },
@@ -117,6 +122,7 @@ var baskigiris = new Vue({
                     this.guncelGr && this.guncelGr > 0 &&
                     this.boy && this.boy > 0) {
                     this.basilanNetKg = event.target.value * this.boy * this.guncelGr
+                    this.basilanNetKg = (this.basilanNetKg / 1000000).toFixed(3);
                 }
                 this.fireHesapla();
             },
@@ -125,12 +131,14 @@ var baskigiris = new Vue({
                     this.basilanNetAdet && this.basilanNetAdet > 0 &&
                     this.boy && this.boy > 0) {
                     this.basilanNetKg = event.target.value * this.boy * this.basilanNetAdet
+                    this.basilanNetKg = (this.basilanNetKg / 1000000).toFixed(3);
                 }
                 this.fireHesapla();
             },
             fireHesapla() {
                 if (this.basilanNetKg > 0 && this.basilanBrutKg > 0) {
                     this.fire = this.basilanBrutKg - this.basilanNetKg;
+                    this.fire = (this.fire ).toFixed(3);
                 }
                 this.dataKontrol();
                 this.checkBitir();
