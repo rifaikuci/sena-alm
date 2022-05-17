@@ -2,7 +2,7 @@
 
 include "../netting/baglan.php";
 include "../include/sql.php";
-$sql = "SELECT * FROM tblhavuz where tur in ('kromat','asit') ";
+$sql = "SELECT * FROM tblhavuz where tur not  in ('kromat','asit') ";
 $result = $db->query($sql);
 
 ?>
@@ -11,16 +11,16 @@ $result = $db->query($sql);
 
     <?php
     if ($_GET['doldur'] == "ok") {
-        durumSuccess("Havuz Başarılı Bir Şekilde Dolduruldu. ");
+        durumSuccess("Kalıphane Havuzu Başarılı Bir Şekilde Dolduruldu. ");
     } else if ($_GET['doldur'] == "no") {
-        durumDanger("Havuz Doldurulurken Bir Hata Oluştu !");
+        durumDanger("Kalıphane Havuzu Doldurulurken Bir Hata Oluştu !");
     } else if ($_GET['durumbosalt'] == "ok") {
-        durumSuccess("Havuz Boşaltıldı . ");
+        durumSuccess("Kalıphane Havuzu Boşaltıldı . ");
     } else if ($_GET['durumsil'] == "no") {
-        durumDanger("Havuz Boşaltılırken Bir Hata Oluştu.");
+        durumDanger("Kalıphane Havuzu Boşaltılırken Bir Hata Oluştu.");
     } ?>
     <div style="text-align: center">
-        <h4 style="color: #0b93d5">Havuzlar</h4>
+        <h4 style="color: #0b93d5">Kalıphane Havuzu</h4>
     </div>
     <div class="card-body">
         <div class="row">
@@ -41,7 +41,7 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td><?php echo $row['tur'] == "kromat" ? "Kromat Havuzu " : "Asit Havuzu"; ?></td>
+                                    <td><?php echo $row['tur'] == "kum" ? "Kum Havuzu " : ($row['tur'] == "kostik" ? "Kostik Havuzu"  : "Tenefer Havuzu" ); ?></td>
                                     <td><?php echo $row['islemTarih'] ? tarihsaat($row['islemTarih']) : "Daha kullanılmadı"; ?></td>
                                     <td>
                                         <?php
