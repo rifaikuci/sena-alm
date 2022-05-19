@@ -131,6 +131,13 @@ if (isset($_POST['baskiekle'])) {
     $takim = $result->fetch_assoc();
     $brutKilo = $takim['brutKilo'] + $basilanBrutKg;
     $netKilo = $takim['netKilo'] + $basilanNetKg;
+    $oldProcess = $takim['konum'];
+
+    $sqlKalipIslem = "INSERT INTO tblKalipIslem (takimId,basilanNetKilo, basilanBrutKilo, oldProcess, newProcess, operatorId ) 
+                VALUES ('$takimId', '$basilanNetKg', '$basilanBrutKg', '$oldProcess', '$takimSonDurum','$operatorId')";
+
+    mysqli_query($db, $sqlKalipIslem);
+
 
     $sqlTakimgGuncelle = "UPDATE tbltakim set
                     brutKilo = '$brutKilo',
@@ -265,21 +272,19 @@ if (isset($_GET['baskisilinecek'])) {
         $sonSatir = "SELECT * FRom tblbaski where takimId = '$takimId' and id !='$id' order by id desc";
         $sonSatir = mysqli_query($db, $sonSatir);
         $satir = $sonSatir->fetch_assoc();
-        $takimSonDurum = $satir['takimSonDurum'];
+      // $takimSonDurum = $satir['takimSonDurum'];
         $teorikGramaj = $satir['guncelGr'];
         $sqlTakimgGuncelle = "UPDATE tbltakim set
                     brutKilo = '$brutKilo',
                     netKilo = '$netKilo',
-                    konum = '$takimSonDurum',
                     sonGramaj = '$teorikGramaj'
                     where id = '$takimId'";
     } else {
-        $takimSonDurum = "RAF";
+    //    $takimSonDurum = "Raf";
         $teorikGramaj = tablogetir('tblprofil', 'id', $takim['profilId'], $db)['gramaj'];
         $sqlTakimgGuncelle = "UPDATE tbltakim set
                     brutKilo = '$brutKilo',
                     netKilo = '$netKilo',
-                    konum = '$takimSonDurum',
                     sonGramaj = '$teorikGramaj'
                     where id = '$takimId'";
     }
@@ -321,8 +326,7 @@ if (isset($_GET['baskisilinecek'])) {
     }
 
     /*
-        #TODO şimdilik kapalı kalsın stoğa girmiş olan çıkmaz
-    $sqlprofilstok = "INSERT INTO tblstokprofil (adet, kilo,operatorId,baskiId, geldigiYer) 
+    $sqlprofilstok = "INSERT INTO tblstokprofil (adet, kilo,operatorId,baskiId, geldigiYer)
                 VALUES ('$basilanNetAdet', '$basilanNetKg', '$operatorId', '$id','baski')";
 
     mysqli_query($db, $sqlprofilstok);
@@ -510,6 +514,12 @@ if (isset($_POST['baskiIdG'])) {
     $takim = $result->fetch_assoc();
     $brutKilo = $takim['brutKilo'] + $basilanBrutKg;
     $netKilo = $takim['netKilo'] + $basilanNetKg;
+    $oldProcess = $takim['konum'];
+
+    $sqlKalipIslem = "INSERT INTO tblKalipIslem (takimId,basilanNetKilo, basilanBrutKilo, oldProcess, newProcess, operatorId ) 
+                VALUES ('$takimId', '$basilanNetKg', '$basilanBrutKg', '$oldProcess', '$takimSonDurum','$operatorId')";
+
+    mysqli_query($db, $sqlKalipIslem);
 
     $sqlTakimgGuncelle = "UPDATE tbltakim set
                     brutKilo = '$brutKilo',
@@ -585,7 +595,6 @@ if (isset($_POST['baskiIdG'])) {
 
 }
 
-#TODO şimdilik kapatılıd ilerleyen zamanlarda açılabilir
 /*
 if (isset($_POST['baskiguncelle'])) {
     $baskiId = $_POST['baskiId'];

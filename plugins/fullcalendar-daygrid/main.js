@@ -194,7 +194,7 @@ Docs & License: https://fullcalendar.io/
         };
         // Triggers a callback. Calls a function in the option hash of the same name.
         // Arguments beyond the first `name` are forwarded on.
-        // TODO: better code reuse for this. Repeat code
+        // : better code reuse for this. Repeat code
         // can kill this???
         Popover.prototype.trigger = function (name) {
             if (this.options[name]) {
@@ -271,7 +271,7 @@ Docs & License: https://fullcalendar.io/
             };
         };
         SimpleDayGridEventRenderer.prototype.computeDisplayEventEnd = function () {
-            return false; // TODO: somehow consider the originating DayGrid's column count
+            return false; // : somehow consider the originating DayGrid's column count
         };
         return SimpleDayGridEventRenderer;
     }(core.FgEventRenderer));
@@ -622,7 +622,7 @@ Docs & License: https://fullcalendar.io/
         };
         DayTile.prototype._renderFrame = function (date) {
             var _a = this.context, theme = _a.theme, dateEnv = _a.dateEnv, options = _a.options;
-            var title = dateEnv.format(date, core.createFormatter(options.dayPopoverFormat) // TODO: cache
+            var title = dateEnv.format(date, core.createFormatter(options.dayPopoverFormat) // : cache
             );
             this.el.innerHTML =
                 '<div class="fc-header ' + theme.getClass('popoverHeader') + '">' +
@@ -705,7 +705,7 @@ Docs & License: https://fullcalendar.io/
     }());
     function renderCellHtml(date, dateProfile, context, otherAttrs) {
         var dateEnv = context.dateEnv, theme = context.theme;
-        var isDateValid = core.rangeContainsMarker(dateProfile.activeRange, date); // TODO: called too frequently. cache somehow.
+        var isDateValid = core.rangeContainsMarker(dateProfile.activeRange, date); // : called too frequently. cache somehow.
         var classes = core.getDayClasses(date, dateProfile, context);
         classes.unshift('fc-day', theme.getClass('widgetContent'));
         return '<td class="' + classes.join(' ') + '"' +
@@ -883,7 +883,7 @@ Docs & License: https://fullcalendar.io/
         DayGrid.prototype.renderNumberCellHtml = function (date) {
             var _a = this.context, dateEnv = _a.dateEnv, options = _a.options;
             var html = '';
-            var isDateValid = core.rangeContainsMarker(this.props.dateProfile.activeRange, date); // TODO: called too frequently. cache somehow.
+            var isDateValid = core.rangeContainsMarker(this.props.dateProfile.activeRange, date); // : called too frequently. cache somehow.
             var isDayNumberVisible = this.getIsDayNumbersVisible() && isDateValid;
             var classes;
             var weekCalcFirstDow;
@@ -1440,7 +1440,7 @@ Docs & License: https://fullcalendar.io/
             var scrollerHeight;
             var scrollbarWidths;
             // hack to give the view some height prior to dayGrid's columns being rendered
-            // TODO: separate setting height from scroller VS dayGrid.
+            // : separate setting height from scroller VS dayGrid.
             if (!dayGrid.rowEls) {
                 if (!isAuto) {
                     scrollerHeight = this.computeScrollerHeight(viewHeight);

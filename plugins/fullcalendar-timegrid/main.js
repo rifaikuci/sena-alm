@@ -63,7 +63,7 @@ Docs & License: https://fullcalendar.io/
         }
         TimeGridEventRenderer.prototype.renderSegs = function (context, segs, mirrorInfo) {
             _super.prototype.renderSegs.call(this, context, segs, mirrorInfo);
-            // TODO: dont do every time. memoize
+            // : dont do every time. memoize
             this.fullTimeFormat = core.createFormatter({
                 hour: 'numeric',
                 minute: '2-digit',
@@ -75,7 +75,7 @@ Docs & License: https://fullcalendar.io/
         TimeGridEventRenderer.prototype.attachSegs = function (segs, mirrorInfo) {
             var segsByCol = this.timeGrid.groupSegsByCol(segs);
             // order the segs within each column
-            // TODO: have groupSegsByCol do this?
+            // : have groupSegsByCol do this?
             for (var col = 0; col < segsByCol.length; col++) {
                 segsByCol[col] = this.sortEventSegs(segsByCol[col]);
             }
@@ -143,7 +143,7 @@ Docs & License: https://fullcalendar.io/
                 if (seg.isStart || seg.isEnd) {
                     var unzonedStart = seg.start;
                     var unzonedEnd = seg.end;
-                    timeText = this._getTimeText(unzonedStart, unzonedEnd, allDay); // TODO: give the timezones
+                    timeText = this._getTimeText(unzonedStart, unzonedEnd, allDay); // : give the timezones
                     fullTimeText = this._getTimeText(unzonedStart, unzonedEnd, allDay, this.fullTimeFormat);
                     startTimeText = this._getTimeText(unzonedStart, unzonedEnd, allDay, null, false); // displayEnd=false
                 }
@@ -177,7 +177,7 @@ Docs & License: https://fullcalendar.io/
                         '</div>' :
                     '') +
                 '</div>' +
-                /* TODO: write CSS for this
+                /* : write CSS for this
                 (isResizableFromStart ?
                   '<div class="fc-resizer fc-start-resizer"></div>' :
                   ''
@@ -268,7 +268,7 @@ Docs & License: https://fullcalendar.io/
                 // if the event is short that the title will be cut off,
                 // attach a className that condenses the title into the time area.
                 if (seg.eventRange.def.title && seg.bottom - seg.top < 30) {
-                    seg.el.classList.add('fc-short'); // TODO: "condensed" is a better name
+                    seg.el.classList.add('fc-short'); // : "condensed" is a better name
                 }
             }
         };
@@ -420,7 +420,7 @@ Docs & License: https://fullcalendar.io/
         TimeGridFillRenderer.prototype.attachSegs = function (type, segs) {
             var timeGrid = this.timeGrid;
             var containerEls;
-            // TODO: more efficient lookup
+            // : more efficient lookup
             if (type === 'bgEvent') {
                 containerEls = timeGrid.bgContainerEls;
             }
@@ -493,7 +493,7 @@ Docs & License: https://fullcalendar.io/
             if (snapsPerSlot === null) {
                 snapDuration = slotDuration;
                 snapsPerSlot = 1;
-                // TODO: say warning?
+                // : say warning?
             }
             this.slotDuration = slotDuration;
             this.snapDuration = snapDuration;
@@ -1138,7 +1138,7 @@ Docs & License: https://fullcalendar.io/
             // make all axis cells line up
             this.axisWidth = core.matchCellWidths(core.findElements(this.el, '.fc-axis'));
             // hack to give the view some height prior to timeGrid's columns being rendered
-            // TODO: separate setting height from scroller VS timeGrid.
+            // : separate setting height from scroller VS timeGrid.
             if (!this.timeGrid.colEls) {
                 if (!isAuto) {
                     scrollerHeight = this.computeScrollerHeight(viewHeight);

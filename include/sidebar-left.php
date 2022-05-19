@@ -259,6 +259,15 @@
                 </a>
             </li>
 
+            <li class="nav-item">
+                <a href="<?php echo base_url() . "kaliphane/" ?> " class="nav-link">
+                    <i class="nav-icon fas fa-shopping-cart"></i>
+                    <p>
+                        Kalıphane
+                    </p>
+                </a>
+            </li>
+
 
             <li class="nav-item">
                 <a href="https://rifaikuci.com/" class="nav-link">

@@ -440,8 +440,8 @@ date_default_timezone_set('Europe/Istanbul');
                                 <option selected value="">
                                     Takım Son Durumu Seçiniz
                                 </option>
-                                <?php for ($i = 0; $i < count($takimSonDurum); $i++) { ?>
-                                    <option value="<?php echo $takimSonDurum[$i] ?>"><?php echo $takimSonDurum[$i] ?></option>
+                                <?php foreach($takimSonDurum as $key=> $value) { ?>
+                                    <option value="<?php echo $key ?>"><?php echo $value?></option>
                                 <?php } ?>
                             </select>
 

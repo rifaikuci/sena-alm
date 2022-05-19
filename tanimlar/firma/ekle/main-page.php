@@ -31,9 +31,9 @@ $result = $db->query($sql);
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Firma Türü</label>
-                            <select name="firmaTurId" class="form-control select2"
+                            <select name="firmaTurId" class="form-control select2" required
                                     style="width: 100%;">
-                                <option selected value="">Firma Türü Seçiniz</option>
+                                <option  disabled selected value="">Firma Türü Seçiniz</option>
                                 <?php while ($row = $result->fetch_array()) { ?>
                                     <option value="<?php echo $row['id']; ?>"><?php echo $row['ad']; ?></option>
                                 <?php } ?>
@@ -50,7 +50,7 @@ $result = $db->query($sql);
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Vergi Numarası</label>
-                            <input required type="text" class="form-control form-control-lg" name="vergiNumara"
+                            <input required type="number" class="form-control form-control-lg" name="vergiNumara"
                                    placeholder="Vergi Numara Giriniz...">
                         </div>
                     </div>
@@ -63,6 +63,7 @@ $result = $db->query($sql);
                     </div>
                     <div class="col-sm-3">
                         <div class="form-group">
+                            <!-- #TODO numara maskelenecek -->
                             <label>Telefon</label>
                             <input required type="text" class="form-control form-control-lg" name="telefon"
                                    placeholder="Tel Giriniz...">

@@ -220,7 +220,6 @@ if (isset($_GET['paketsil'])) {
     $geciciAdet = -1 * $adet;
 
 
-    #TODO kapatıldı olmaması daha iyi olur
     /*
     $sqlprofil = "DELETE FROM tblstokprofil where toplamAdet = '$geciciAdet' AND gelisAmaci = 'paket' AND siparis = '$satirNo'  ";
     mysqli_query($db, $sqlprofil);

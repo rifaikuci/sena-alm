@@ -81,7 +81,6 @@ var baskigiris = new Vue({
 
             handleBoylamFire(event) {
                 if (event.target.value && event.target.value > 0 && this.konveyorBoy && this.konveyorBoy > 0) {
-                    //#TODO baskiFire'nin formulü = ((basilanBrutKg / konveyorBoy + boylamFire) * figurSayi (seçilenTakimin) *  2 )  + araIsFire + fireBiyet
                     this.baskiFire = (event.target.value * 2) / this.konveyorBoy;
                     this.baskiFire = (this.baskiFire * 100).toFixed(2);
 

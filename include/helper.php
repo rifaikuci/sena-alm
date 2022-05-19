@@ -65,7 +65,7 @@ function tarih($tarih)
 function tarihsaat($tarih)
 {
     $tarih = date_create($tarih);
-    $tarih = date_format($tarih,"d.m.Y H:i");
+    $tarih = date_format($tarih, "d.m.Y H:i");
 
     return $tarih;
 }
@@ -142,7 +142,7 @@ function mGrBul($kilo, $adet, $boy)
 
 function toleransBul($mgr, $profilId, $db)
 {
-    $agirlik = tablogetir('tblprofil','id',$profilId, $db)['gramaj'];
+    $agirlik = tablogetir('tblprofil', 'id', $profilId, $db)['gramaj'];
     return sayiFormatla((($mgr - $agirlik) / $mgr) * 100, 2);
 
 }
@@ -152,8 +152,9 @@ function sayiFormatla($sayi, $digit)
     return number_format((float)$sayi, $digit, '.', ',');
 }
 
-function vardiyaBul($vardiya, $saat){
-    $now = $saat ? $saat :  date('H:i');
+function vardiyaBul($vardiya, $saat)
+{
+    $now = $saat ? $saat : date('H:i');
     if ($vardiya == 3) {
         if ($now >= date("H:i", strtotime("00:00")) && $now < date("H:i", strtotime("07:59")))
             return "3A";
@@ -171,6 +172,33 @@ function vardiyaBul($vardiya, $saat){
 
     } else if ($vardiya == 1) {
         return "1A";
+    }
+}
+
+function takimDurumBul($konum)
+{
+    if ($konum == "P") {
+        return "Pres";
+    } else if ($konum == "R1") {
+        return "Raf Dolu";
+    } else if ($konum == "K1") {
+        return "Kostik";
+    } else if ($konum == "K2") {
+        return "Kumlama";
+    } else if ($konum == "K3") {
+        return "Raf Boş";
+    } else if ($konum == "T1") {
+        return "Kostik";
+    } else if ($konum == "T2") {
+        return "Kumlama";
+    } else if ($konum == "T3") {
+        return "Tashihat - Sevk";
+    } else if ($konum == "T4") {
+        return "Sevkiyat Çıkış";
+    } else if ($konum == "T5") {
+        return "Sevkiyat Giriş";
+    } else if ($konum == "T6") {
+        return "Tashihat";
     }
 }
 

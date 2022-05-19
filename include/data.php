@@ -2,7 +2,18 @@
 
 $vardiyalar = [1,2,3];
 
-$takimSonDurum = ["Pres", "Kostik", "Tenefer", "Ref"];
+$takimSonDurum = ["R1"=> "Raf", "P" => "Pres", "K1" => "Kostik", "T1"=>"Tashihat"];
+/*
+R1-> Raf Dolu,
+P-> Pres'te sadece bunlar getirilecek
+K1-> Kostik, Akabinde K2-> Kumlama, K3-> Raf Boş,
+T1-> Kostik, T2-> Kumlama, T3-> Tashihat, T4 -> Sevk Çıkış, T5-> Sevk Giriş
+T3-> Tashihat veya Sevkiyat Çıkış ve Sevkiyat Giriş -> Sevkiyat Çıkışı seçerse son olarak sadece Sadece sevkiyat
+ girişi seçeneği zorlanacak bu da tamamlandıktan sonra prese aktarılacak
+
+"Raf Seçilirse R1";
+"Pres te olanlar kullanılabilir";
+*/
 
 $baskiBitirilmeNeden = ["Kalıp Kırıldı", "Kalıp Dinlenme", "Kalıp Boy Farkı"];
 

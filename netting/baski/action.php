@@ -46,7 +46,7 @@ if ($received_data->action == 'baskigetir') {
 if ($received_data->action == 'takimgetir') {
 
     $profilId = $received_data->profil;
-    $sql = "SELECT * FROM tbltakim WHERE durum = '1' AND profilId = '$profilId' order by sonGramaj asc";
+    $sql = "SELECT * FROM tbltakim WHERE durum = '1' AND konum = 'P' AND profilId = '$profilId' order by sonGramaj asc";
 
     $result = $db->query($sql);
     $datas = array();

@@ -460,11 +460,11 @@ date_default_timezone_set('Europe/Istanbul');
                                     required
                                     id="takimSonDurum"
                                     style="width: 100%;">
-                                <?php ?>
-                                <?php for ($i = 0; $i < count($takimSonDurum); $i++) { ?>
-                                    <option <?php echo $baski['takimSonDurum'] == $takimSonDurum[$i] ? "selected" : "" ?>
-                                            value="<?php echo $takimSonDurum[$i] ?>"><?php echo $takimSonDurum[$i] ?>
-                                    </option>
+
+                                <?php foreach($takimSonDurum as $key=> $value) { ?>
+                                    <option
+                                        <?php echo $baski['takimSonDurum'] == $key ? "selected" : "" ?>
+                                            value="<?php echo $key ?>"><?php echo $value?></option>
                                 <?php } ?>
                             </select>
 
