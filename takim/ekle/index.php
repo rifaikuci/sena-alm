@@ -2,6 +2,7 @@
 <head>
     <?php require_once "../../include/helper.php"; ?>
     <?php include "../../include/head.php" ?>
+    <title>SENA | Takım Ekle</title>
     <?php include "../../include/style.php" ?>
 </head>
 <body class="hold-transition sidebar-mini">
