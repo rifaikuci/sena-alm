@@ -100,7 +100,7 @@ if ($received_data->action == 'siparislerlistesi') {
         $siparis['profilId'] = $row['profilId'];
         $siparis['profilAdi'] = $profilNo . "-" . $profilAdi;
         $siparis['adet'] = $row['adet'];
-        $siparis['kilo'] = $row['kilo'];
+        $siparis['kilo'] = sayiFormatla($row['kilo']);
         $siparis['siparisTur'] = $row['siparisTuru'] == 'H' ? "Ham" : ($row['siparisTuru'] == 'B' ? "Boyalı" : "Eloksal");
         $siparis['alasim'] =  $row['alasimId'].";".$alasim['ad'];
         $siparis['alasimAd'] = $alasim['ad'];

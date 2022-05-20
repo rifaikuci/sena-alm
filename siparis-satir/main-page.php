@@ -24,7 +24,7 @@ $result = $db->query($sql);
         durumDanger("Sipariş Güncellenirken Bir Hata Oluştu.");
     } ?>
     <div style="text-align: center">
-        <h4 style="color: #0b93d5">Siparişler Tarih Bazlı</h4>
+        <h4 style="color: #0b93d5">Siparişler Satır Bazlı</h4>
     </div>
     <div class="card-body">
         <div class="row">
@@ -38,7 +38,10 @@ $result = $db->query($sql);
                                 <th>#</th>
                                 <th>Sipariş No</th>
                                 <th>Satır No</th>
-                                <th>Konum</th>
+                                <th>Profil No</th>
+                                <th>Boy</th>
+                                <th>Adet</th>
+                                <th>Kilo</th>
                                 <th>Müşteri</th>
                                 <th>Tarih</th>
                                 <th>Termin Tarihi</th>
@@ -52,7 +55,10 @@ $result = $db->query($sql);
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['siparisNo']; ?></td>
                                     <td><?php echo $row['satirNo']; ?></td>
-                                    <td><?php echo konumBul($row['konum']); ?></td>
+                                    <td><?php echo tablogetir('tblprofil', 'id', $row['profilId'], $db)['profilNo']; ?></td>
+                                    <td><?php echo $row['boy']?></td>
+                                    <td><?php echo $row['adet']?></td>
+                                    <td><?php echo sayiFormatla($row['kilo']);?></td>
                                     <td><?php echo tablogetir('tblfirma','id',$row['musteriId'], $db)['firmaAd']; ?></td>
                                     <td><?php echo tarih($row['siparisTarih']); ?></td>
                                     <td><?php echo tarih($row['termimTarih']); ?></td>

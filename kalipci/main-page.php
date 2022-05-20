@@ -43,7 +43,7 @@ $result = $db->query($sql);
                                 <th>Sena No</th>
                                 <th>Profil</th>
                                 <th>Firma</th>
-                                <th>Parça</th>
+                                <th>Tür</th>
                                 <th>Parça</th>
                                 <th>Çap</th>
                                 <th>Kalıpçı No</th>

@@ -90,7 +90,7 @@ $sektorler = $db->query($sqlsektor);
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Paket En (cm)</label>
-                            <input required type="number" class="form-control form-control-lg" step="0.1"
+                            <input type="number" class="form-control form-control-lg" step="0.1"
                                    name="paketEn" placeholder="0.1">
                         </div>
                     </div>
@@ -98,7 +98,7 @@ $sektorler = $db->query($sqlsektor);
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Paket Boy (cm)</label>
-                            <input required type="number" class="form-control form-control-lg" step="0.1"
+                            <input type="number" class="form-control form-control-lg" step="0.1"
                                    name="paketBoy" placeholder="0.1">
                         </div>
                     </div>
@@ -106,7 +106,7 @@ $sektorler = $db->query($sqlsektor);
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Boya Max Adet</label>
-                            <input required type="number" class="form-control form-control-lg" step="1"
+                            <input type="number" class="form-control form-control-lg" step="1"
                                    name="boyaMaxAdet" placeholder="0">
                         </div>
                     </div>
@@ -114,7 +114,7 @@ $sektorler = $db->query($sqlsektor);
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Balya Adet</label>
-                            <input required type="number" class="form-control form-control-lg"
+                            <input type="number" class="form-control form-control-lg"
                                    name="balyaAdet" placeholder="0">
                         </div>
                     </div>
@@ -130,7 +130,7 @@ $sektorler = $db->query($sqlsektor);
                     <div class="col-sm-5">
                         <div class="form-group">
                             <label>Ezilme Katsayısı</label>
-                            <input required type="number" class="form-control form-control-lg" step="1"
+                            <input type="number" class="form-control form-control-lg" step="1"
                                    name="ezilmeKatsayisi" placeholder="0">
                         </div>
                     </div>

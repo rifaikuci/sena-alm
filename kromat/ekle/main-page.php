@@ -95,10 +95,9 @@ $kromatSepet = $db->query($kromatSql);
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Hurda Adet</label>
-                            <input required v-model="baski.hurdaAdet"
-                                   type="number" class="form-control form-control-lg"
-                                   min="0" step="0.1"
-                                   placeholder="0.1">
+                            <input v-model="baski.hurdaAdet"
+                                   type="number" class="form-control form-control-lg" min="0"
+                                   placeholder="0">
                         </div>
                     </div>
 

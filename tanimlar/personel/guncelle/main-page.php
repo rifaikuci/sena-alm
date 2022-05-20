@@ -78,7 +78,7 @@ if ($_GET['id']) {
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Mail</label>
-                            <input required type="text" class="form-control form-control-lg" name="mail"
+                            <input type="text" class="form-control form-control-lg" name="mail"
                                    value="<?php echo $row['mail'] ?>">
                         </div>
                     </div>

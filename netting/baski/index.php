@@ -44,7 +44,7 @@ if (isset($_POST['baskiekle'])) {
     $baslangicSaati = strtotime($baslaZamani);
     $bitisSaati = strtotime($bitisZamani);
     $saatFark = ($bitisSaati - $baslangicSaati) / 3600;
-    $performans = $saatFark > 0 ? number_format($basilanNetKg / $saatFark, 2) : 0;
+    $performans = $saatFark > 0 ? sayiFormatla($basilanNetKg / $saatFark, 2) : 0;
     $satirNo = $_POST['satirNo'];
     $kesimId = 0;
     $boyaId = 0;
@@ -418,7 +418,7 @@ if (isset($_POST['baskiIdG'])) {
     $baslangicSaati = strtotime($baslaZamani);
     $bitisSaati = strtotime($bitisZamani);
     $saatFark = ($bitisSaati - $baslangicSaati) / 3600;
-    $performans = $saatFark > 0 ? number_format($basilanNetKg / $saatFark, 2) : 0;
+    $performans = $saatFark > 0 ? sayiFormatla($basilanNetKg / $saatFark, 2) : 0;
     $satirNo = $_POST['satirNo'];
     $naylonDurum  = tablogetir('tblsiparis', 'id', $siparisId, $db)['naylonDurum'];
     $kesimId = 0;
@@ -638,7 +638,7 @@ if (isset($_POST['baskiguncelle'])) {
     $baslangicSaati = strtotime($baslaZamani);
     $bitisSaati = strtotime($bitisZamani);
     $saatFark = ($bitisSaati - $baslangicSaati) / 3600;
-    $performans = $saatFark > 0 ? number_format($basilanNetKg / $saatFark, 2) : 0;
+    $performans = $saatFark > 0 ? sayiFormatla($basilanNetKg / $saatFark, 2) : 0;
     $satirNo = $_POST['satirNo'];
     $kesimId = 0;
     $boyaId = 0;

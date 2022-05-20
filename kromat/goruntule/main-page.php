@@ -105,14 +105,16 @@ if ($_GET['id']) {
                         </div>
                     </div>
 
+                    <?php if($hurdalar[$i] != 0){ ?>
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label>Hurdaya Atılma Sebebi</label>
                             <input type="text" required class="form-control form-control-lg"
                                    value="<?php echo $sebepler[$i]?>" disabled
-                                   placeholder="0.1">
+                                   placeholder="">
                         </div>
                     </div>
+                    <?php } ?>
                 </div>
                 <?php } ?>
 

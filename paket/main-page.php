@@ -7,6 +7,11 @@ $sql = "SELECT * FROM tblpaket order by id desc ";
 $result = $db->query($sql);
 ?>
 
+
+<!--  TODO
+profil, boy, müşteri alanları tabloya eklencek, .
+-->
+
 <section class="content">
 
     <?php

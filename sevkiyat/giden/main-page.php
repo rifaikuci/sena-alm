@@ -55,7 +55,7 @@ $result = $db->query($sql);
                                     <td><?php echo $row['kod']; ?></td>
                                     <td><?php
                                         $personel1 = tablogetir('tblpersonel', 'id', $row['personelId1'], $db)['adsoyad'];
-                                        echo $row['personelId2'] ? $personel1 . "- " . tablogetir('tblpersonel', 'id', $detail['personelId2'], $db)['adsoyad'] :
+                                        echo $row['personelId2'] ? $personel1 . "- " . tablogetir('tblpersonel', 'id', $row['personelId2'], $db)['adsoyad'] :
                                             $personel1; ?>
                                     </td>
                                     <td><?php echo $row['plaka']; ?></td>

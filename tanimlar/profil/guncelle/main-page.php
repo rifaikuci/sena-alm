@@ -107,7 +107,7 @@ if ($_GET['id']) {
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Paket En</label>
-                            <input required type="number" class="form-control form-control-lg" step="0.1"
+                            <input type="number" class="form-control form-control-lg" step="0.1"
                                    name="paketEn" value="<?php echo $row['paketEn'] ?>">
                         </div>
                     </div>
@@ -115,7 +115,7 @@ if ($_GET['id']) {
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Paket Boy</label>
-                            <input required type="number" class="form-control form-control-lg" step="0.1"
+                            <input type="number" class="form-control form-control-lg" step="0.1"
                                    name="paketBoy"value="<?php echo $row['paketBoy'] ?>">
                         </div>
                     </div>
@@ -123,7 +123,7 @@ if ($_GET['id']) {
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Boya Max Adet</label>
-                            <input required type="number" class="form-control form-control-lg" step="0.1"
+                            <input type="number" class="form-control form-control-lg" step="0.1"
                                    name="boyaMaxAdet" value="<?php echo $row['boyaMaxAdet'] ?>">
                         </div>
                     </div>
@@ -131,7 +131,7 @@ if ($_GET['id']) {
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Balya Adet</label>
-                            <input required type="number" class="form-control form-control-lg"
+                            <input type="number" class="form-control form-control-lg"
                                    name="balyaAdet" value="<?php echo $row['balyaAdet'] ?>">
                         </div>
                     </div>
@@ -147,7 +147,7 @@ if ($_GET['id']) {
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Ezilme Katsayısı</label>
-                            <input required type="number" class="form-control form-control-lg"
+                            <input type="number" class="form-control form-control-lg"
                                    name="ezilmeKatsayisi" value="<?php echo $row['ezilmeKatsayisi'] ?>">
                         </div>
                     </div>

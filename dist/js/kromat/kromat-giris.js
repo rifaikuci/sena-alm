@@ -11,7 +11,7 @@ var kromatGiris  = new Vue({
                 sepetId: "",
                 baskiId :"",
                 adet: "",
-                hurdaAdet: 0,
+                hurdaAdet: "",
                 sebep: ""
             }
         },
@@ -24,7 +24,7 @@ var kromatGiris  = new Vue({
                     this.sepetler.push(this.baskilar[i].sepetId);
                     this.baskilarId.push(this.baskilar[i].baskiId);
                     this.adetler.push(this.baskilar[i].adet);
-                    this.hurdaAdetler.push(this.baskilar[i].hurdaAdet);
+                    this.hurdaAdetler.push(this.baskilar[i].hurdaAdet ? this.baskilar[i].hurdaAde : 0 );
                     this.sebepler.push(this.baskilar[i].sebep);
                 }
 
@@ -48,7 +48,7 @@ $('#kromat_sepet').on("change", async function () {
             sepetId: array[0],
             baskiId: array[1],
             adet: array[2],
-            hurdaAdet: 0,
+            hurdaAdet: "",
             sebep: ""
         }
 

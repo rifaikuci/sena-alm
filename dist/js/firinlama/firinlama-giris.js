@@ -32,7 +32,6 @@ var firinlamaGiris = new Vue({
                         this.baskilar = this.baskilar + x.baskiId + ";";
                     }
                 })
-                debugger;
                 this.ids = this.ids.slice(0, -1);
                 this.baskilar = this.baskilar.slice(0, -1);
 

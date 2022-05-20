@@ -67,7 +67,7 @@ if ($received_data->action == 'siparislerlistesi') {
         $siparis['profilId'] = $row['profilId'];
         $siparis['profilAdi'] =$profilNo."-".$profilAdi;
         $siparis['adet'] =  $row['adet'];
-        $siparis['kilo'] =  $row['kilo'];
+        $siparis['kilo'] =  sayiFormatla($row['kilo']);
         $siparis['siparisTur'] =  $row['siparisTuru'] == 'H'  ? "Ham" : ($row['siparisTuru'] == 'B' ? "Boyalı": "Eloksal") ;
         $siparis['alasim'] =  $row['alasimId'].";".$alasim['ad'];
         $siparis['alasimAd'] = $alasim['ad'];
@@ -94,7 +94,7 @@ if ($received_data->action == 'siparislerlistesi') {
         $siparis['baskiAciklama'] =  $row['baskiAciklama'];
         $siparis['kiloAdet'] =  $row['kiloAdet'];
         $siparis['kalanAdet'] =  $row['kalanAdet'];
-        $siparis['kalanKilo'] =  $row['kalanKilo'];
+        $siparis['kalanKilo'] =  sayiFormatla($row['kalanKilo']);
         $siparis['silmeLinki'] =  base_url()."netting/siparis/index.php/?satirsil=". $row['satirNo']."&siparisno=".$row['siparisNo'];
         array_push($datam,$siparis);
     }

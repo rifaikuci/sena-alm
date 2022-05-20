@@ -10,7 +10,9 @@ if ($_GET['id']) {
     $sqlpaket = "SELECT * FROM tblboyapaket WHERE id = '$id'";
     $paket = mysqli_query($db, $sqlpaket)->fetch_assoc();
 
-    $siparis = tablogetir("tblsiparis", 'satirNo', $paket['satirNo'], $db);
+    $baski = tablogetir("tblbaski", 'id', $paket['baskiId'], $db);
+    $siparis = tablogetir("tblsiparis", 'satirNo', $baski['satirNo'], $db);
+
     $firma = tablogetir("tblfirma", 'id', $siparis['musteriId'], $db);
     $profil  = tablogetir("tblprofil", 'id', $siparis['profilId'], $db);
     $alasim   = tablogetir("tblalasim", 'id', $siparis['alasimId'], $db);
@@ -26,6 +28,7 @@ if ($_GET['id']) {
     $yarimAdet = 0;
     $kalanAdet = 0;
     $toplamPaket = 0;
+
 
     if($netAdet % $paketIcAdet == 0 ) {
         $tamPaket = $netAdet / $paketIcAdet;

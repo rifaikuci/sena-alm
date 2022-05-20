@@ -80,7 +80,7 @@ if ($received_data->action == 'balyalamagetir') {
         $balyalama['siparisNo'] = $row['siparisNo'];
         $balyalama['balyaNo'] = $row['balyaNo'];
         $balyalama['balyaBoy'] = $row['balyaBoy'];
-        $balyalama['balyaKilo'] = $row['balyaKilo'];
+        $balyalama['balyaKilo'] = sayiFormatla($row['balyaKilo']);
 
     }
     echo json_encode($balyalama);

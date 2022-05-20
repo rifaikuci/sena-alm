@@ -97,9 +97,9 @@ $profiller = $db->query($profillerrsql);
 
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Boy</label>
-                            <input required type="number" class="form-control form-control-lg" name="boy" min="0.1" step="0.1"
-                                   placeholder="0.1">
+                            <label>Boy (mm)</label>
+                            <input required type="number" class="form-control form-control-lg" name="boy" min="1"
+                                   placeholder="0">
                         </div>
                     </div>
 

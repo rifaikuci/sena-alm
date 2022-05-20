@@ -6,7 +6,7 @@ $sql = "SELECT * FROM tblbalyalama order by id desc ";
 $result = $db->query($sql);
 
 ?>
-
+<!-- TODO , kilo ve boy kısmı eklencek. -->
 <section class="content">
 
     <?php

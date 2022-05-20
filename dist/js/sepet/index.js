@@ -48,7 +48,6 @@ var sepetGiris = new Vue({
         },
 
         detayGoster(event,id) {
-            debugger;
             console.log(id);
             if (id) {
                 $.ajax({

@@ -48,7 +48,7 @@ if ($_GET['id']) {
 
                     <div class="col-sm-4">
                         <div class="form-group">
-                            <label>Sevkiyat Tarih: </label> <?php echo $detail['sevkiyatTarih'] ?>
+                            <label>Sevkiyat Tarih: </label> <?php echo tarih( $detail['sevkiyatTarih']) ?>
 
                         </div>
                     </div>

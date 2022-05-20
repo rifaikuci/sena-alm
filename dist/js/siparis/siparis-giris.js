@@ -44,7 +44,7 @@ var siparisGiris = new Vue({
             profil: '',
             profilId: '',
             profilAd: '',
-            boy: '',
+            boy: 6000,
             adet: '',
             kilo: '',
             siparisTur: '',

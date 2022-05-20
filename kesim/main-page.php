@@ -41,6 +41,7 @@ $result = $db->query($sql);
                             <tr>
                                 <th>#</th>
                                 <th>Satır No</th>
+                                <th>Baskı ID</th>
                                 <th>Tarih</th>
                                 <th>Kesilen Boy</th>
                                 <th>Hurda Adet</th>
@@ -54,6 +55,7 @@ $result = $db->query($sql);
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo tablogetir("tblbaski", 'kesimId', $row['id'], $db)['satirNo']; ?></td>
+                                    <td><?php echo $row['baskiId']; ?></td>
                                     <td><?php echo tarih($row['tarih']); ?></td>
                                     <td><?php echo $row['kesilenBoy']; ?></td>
                                     <td><?php echo $row['hurdaAdet']; ?></td>

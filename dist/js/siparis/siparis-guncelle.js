@@ -175,7 +175,6 @@ var siparissatirguncelle = new Vue({
 
                     this.kiloAdet = 'K';
 
-                    debugger;
                     this.adet =
                         Math.round(      event.target.value / (
                             parseInt(kiloBul.ortalama) *
@@ -217,7 +216,6 @@ var siparissatirguncelle = new Vue({
                         return response.data
                     });
 
-                    debugger;
                     this.kiloAdet = 'A';
                     this.kilo = ((event.target.value) *
                         parseInt(kiloBul.ortalama ? kiloBul.ortalama : 0) *

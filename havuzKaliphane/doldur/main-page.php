@@ -48,7 +48,7 @@ if ($_GET['id']) {
                                name="operatorId">
                         <input type="hidden" value="havuzdoldur" name="havuzdoldur"/>
                         <input type="hidden" value="<?php echo $id; ?>" name="id"/>
-                        <input type="hidden" value="<?php echo $id == 1 ? "kromat" : "asit"; ?>" name="tur"/>
+                        <input type="hidden" value="<?php echo $id == 3 ? "kum" : ($id  == 4 ? "tenefer" : "kostik"); ?>" name="tur"/>
 
                     </div>
 
@@ -60,7 +60,7 @@ if ($_GET['id']) {
                             <div class="form-group">
                                 <label>Malzemeler 2 Seçiniz</label>
                                 <div class="select2-blue">
-                                    <select required name="malzemeler2[]" class="select2" multiple="multiple"
+                                    <select name="malzemeler2[]" class="select2" multiple="multiple"
                                             data-dropdown-css-class="select2-blue"
                                             data-placeholder="Barkod - Malzeme -  Firma "
                                             style="width: 100%;">

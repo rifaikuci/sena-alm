@@ -5,28 +5,36 @@ include '../../include/sql.php';
 ini_set('display_errors', 1);
 date_default_timezone_set('Europe/Istanbul');
 
-if (isset($_GET['takimId']) &&  isset($_GET['oldProcess']) && isset($_GET['newProcess'])) {
-    $oldProcess = $_GET['oldProcess'];
-    $takimId = $_GET['takimId'];
-    $newProcess = $_GET['newProcess'];
-    $description = isset($_GET['description']) ? $_GET['description'] : '';
-    $operatorId= isset($_GET['operatorId']) ? $_GET['operatorId'] : '';
+$received_data = json_decode(file_get_contents("php://input"));
+$data = array();
 
-    echo $description;
-    exit();
+
+if (isset($_POST['takimId']) && isset($_POST['oldProcess']) && isset($_POST['newProcess'])) {
+    $oldProcess = $_POST['oldProcess'];
+    $takimId = $_POST['takimId'];
+    $newProcess = $_POST['newProcess'];
+    $description = isset($_POST['description']) ? $_POST['description'] : '';
+    $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : '';
+    $kostikHavuzId = 0;
+    $kumlamaHavuzId = 0;
+    $teneferHavuzId = 0;
+
+    if ($oldProcess == "K1" || $oldProcess == "T1") {
+        $kostikHavuzId = tablogetir("tblhavuz", "tur", "kostik", $db)['logHavuzId'];
+    } else if ($oldProcess == "T1" || $oldProcess == "T2") {
+        $kumlamaHavuzId = tablogetir("tblhavuz", "tur", "kum", $db)['logHavuzId'];
+
+    }
+
 
     $sqlTakim = "UPDATE tbltakim SET konum = '$newProcess' WHERE id = $takimId";
     mysqli_query($db, $sqlTakim);
 
-    $sql = "INSERT INTO tblkaliphane (takimId, oldProcess, newProcess, description, operatorId) VALUES ('$takimId', '$oldProcess', '$newProcess', '$description', '$operatorId')";
+    $sql = "INSERT INTO tblkaliphane (takimId, oldProcess, newProcess, description, operatorId, kumlamaHavuzId, kostikHavuzId, teneferHavuzId) 
+VALUES ('$takimId', '$oldProcess', '$newProcess', '$description', '$operatorId', '$kumlamaHavuzId', '$kostikHavuzId', '$teneferHavuzId')";
 
-    if (mysqli_query($db, $sql)) {
-        header("Location:".base_url()."kaliphane/?durum=ok");
-        exit();
-    } else {
-        header("Location:".base_url()."kaliphane/?durum=no");
-        exit();
-    }
+
+    echo json_encode(mysqli_query($db, $sql));
 
 }
 

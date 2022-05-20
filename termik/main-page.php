@@ -42,7 +42,7 @@ $result = $db->query($sql);
                                 <th>#</th>
                                 <th>Baş. Tar.</th>
                                 <th>Sepetler</th>
-                                <th>Baskılar</th>
+                                <th>Sip No - Baskı ID - T. Sonuç</th>
                                 <th>Durum</th>
                                 <th style="text-align: center">İşlem /Bitirilme Zam.</th>
                             </tr>
@@ -61,8 +61,11 @@ $result = $db->query($sql);
                                     <td>
                                         <?php
                                         $tempBaskilar = explode(";", $row['baskilar']);
-                                        for ($i = 0; $i < count($tempBaskilar); $i++)
-                                            echo tablogetir('tblbaski', 'id', $tempBaskilar[$i], $db)['satirNo'] . "<br>"; ?>
+                                        for ($i = 0; $i < count($tempBaskilar); $i++) {
+                                            $baski = tablogetir('tblbaski', 'id', $tempBaskilar[$i], $db);
+                                            echo $baski['satirNo'] . " - " . $tempBaskilar[$i] . " - " . $baski['termikSonuc'] . "<br>";
+
+                                        } ?>
                                     </td>
                                     <td><?php echo $row['bitisTarih'] ? "Termik Bitti" : "Termik Devam Ediyor"; ?></td>
                                     <td>

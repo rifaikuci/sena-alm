@@ -52,8 +52,7 @@ $result = $db->query($sql);
                             <tr>
                                 <th style="width: 25px">#</th>
                                 <th style="width: 100px;height: 50px;">Çizim</th>
-                                <th>Profil No</th>
-                                <th>Profil Adı</th>
+                                <th>Profil</th>
                                 <th>Alan</th>
                                 <th>Çevre</th>
                                 <th>Ağırlık</th>
@@ -67,16 +66,15 @@ $result = $db->query($sql);
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><img class="img-fluid"  src="<?php echo base_url().$row['cizim']?>"</td>
-                                    <td><?php echo $row['profilNo']; ?></td>
-                                    <td><?php echo $row['profilAdi']; ?></td>
-                                    <td><?php echo $row['alan']; ?></td>
-                                    <td><?php echo $row['cevre']; ?></td>
-                                    <td><?php echo $row['gramaj']; ?></td>
+                                    <td><?php echo $row['profilNo']. " - " .$row['profilAdi']; ?></td>
+                                    <td><?php echo sayiFormatla($row['alan']); ?></td>
+                                    <td><?php echo sayiFormatla($row['cevre']); ?></td>
+                                    <td><?php echo sayiFormatla($row['gramaj']); ?></td>
                                     <td><a target="_blank" href="<?php echo base_url() . $row['resim']; ?>"> Çizim </a></td>
                                     <td>
                                         <a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
                                            btn-warning">Düzenle</a>
-                                        <a href=<?php echo base_url() . "netting/tanimlar/profil.php?profilsil=" . $row['id']; ?> class="btn
+                                        <a onclick="confirm('Profil Silinecek')" href=<?php echo base_url() . "netting/tanimlar/profil.php?profilsil=" . $row['id']; ?> class="btn
                                            btn-danger">Sil</a>
                                     </td>
                                 </tr>

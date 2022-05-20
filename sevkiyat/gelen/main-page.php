@@ -57,7 +57,6 @@ $result = $db->query($sql);
                                 <th>Sevkiyat Kodu</th>
                                 <th>Şoför Bilgisi</th>
                                 <th>Plaka</th>
-                                <th>Tarih</th>
                                 <th>Açıklama</th>
                                 <th style="text-align: center">Yazdırma İşlemi</th>
                                 <th style="text-align: center">İşlem</th>
@@ -71,11 +70,10 @@ $result = $db->query($sql);
                                     <td><?php echo $row['kod']; ?></td>
                                     <td><?php
                                         $personel1 = tablogetir('tblpersonel', 'id', $row['personelId1'], $db)['adsoyad'];
-                                        echo $row['personelId2'] ? $personel1 . "- " . tablogetir('tblpersonel', 'id', $detail['personelId2'], $db)['adsoyad'] :
+                                        echo $row['personelId2'] ? $personel1 . "- " . tablogetir('tblpersonel', 'id', $row['personelId2'], $db)['adsoyad'] :
                                             $personel1; ?>
                                     </td>
                                     <td><?php echo $row['plaka']; ?></td>
-                                    <td><?php echo tarih($row['sevkiyatTarih']); ?></td>
                                     <td><?php echo kelimeAyirma($row['aciklama'], 30); ?></td>
 
                                     <td style="text-align: center">

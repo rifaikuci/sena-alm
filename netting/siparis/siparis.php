@@ -53,7 +53,7 @@ $firstrow = mysqli_fetch_assoc($resultfirst);
             <th>Adet</th>
             <th>Kilo</th>
             <th>Alaşım</th>
-            <th>Termim T.</th>
+            <th>Termin T.</th>
             <th>Tolerans</th>
             <th>Ara K.</th>
             <th>Krepe K.</th>
@@ -67,7 +67,7 @@ $firstrow = mysqli_fetch_assoc($resultfirst);
             <td><?php  echo $row['profilId'];?></td>
             <td><?php  echo $row['boy'];?></td>
             <td><?php  echo $row['adet'];?></td>
-            <td><?php  echo $row['kilo'];?></td>
+            <td><?php  echo sayiFormatla($row['kilo']);?></td>
             <td><?php  echo tablogetir('tblalasim','id',$row['alasimId'], $db )['ad'];?></td>
             <td><?php  echo tarih($row['termimTarih']);?></td>
             <td><?php  echo "%".$row['maxTolerans'];?></td>

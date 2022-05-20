@@ -65,7 +65,9 @@ $result = $db->query($sql);
                         <div class="form-group">
                             <!-- #TODO numara maskelenecek -->
                             <label>Telefon</label>
-                            <input required type="text" class="form-control form-control-lg" name="telefon"
+                            <input required
+                                   type="number" class="form-control form-control-lg" name="telefon"
+                                   minlength="10" maxlength="10"
                                    placeholder="Tel Giriniz...">
                         </div>
                     </div>

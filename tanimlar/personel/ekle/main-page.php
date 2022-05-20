@@ -24,8 +24,8 @@ $result = $db->query($sql);
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Personel Türü</label>
-                            <select name="rolId" class="form-group select2" style="width: 100%;">
-                                <option selected value="">Personel Türü Seçiniz</option>
+                            <select required name="rolId" class="form-group select2" style="width: 100%;">
+                                <option selected disabled value="">Personel Türü Seçiniz</option>
                                 <?php while ($row = $result->fetch_array()) { ?>
                                     <option value="<?php echo $row['level']; ?>"><?php echo $row['rol']; ?></option>
                                 <?php } ?>
@@ -67,7 +67,7 @@ $result = $db->query($sql);
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Mail</label>
-                            <input required type="text" class="form-control form-control-lg" name="mail"
+                            <input type="text" class="form-control form-control-lg" name="mail"
                                    placeholder="Mail">
                         </div>
                     </div>
@@ -82,7 +82,7 @@ $result = $db->query($sql);
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Tshirt Beden</label>
-                            <input required type="text" class="form-control form-control-lg" name="bedentshirt"
+                            <input type="text" class="form-control form-control-lg" name="bedentshirt"
                                    placeholder="Tshirt ">
                         </div>
                     </div>
@@ -90,7 +90,7 @@ $result = $db->query($sql);
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Pantalon</label>
-                            <input required type="text" class="form-control form-control-lg" name="bedenpantalon"
+                            <input type="text" class="form-control form-control-lg" name="bedenpantalon"
                                    placeholder="Pantalon ">
                         </div>
                     </div>
@@ -98,7 +98,7 @@ $result = $db->query($sql);
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Ayakkabı</label>
-                            <input required type="text" class="form-control form-control-lg" name="bedenayakkabi"
+                            <input type="text" class="form-control form-control-lg" name="bedenayakkabi"
                                    placeholder="Ayakkabı">
                         </div>
                     </div>

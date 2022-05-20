@@ -44,7 +44,6 @@ $result = $db->query($sql);
                                 <th>Ad Soyad</th>
                                 <th>Personel Türü</th>
                                 <th>Telefon</th>
-                                <th>Mail</th>
                                 <th>Durum</th>
                                 <th>İşlem</th>
                             </tr>
@@ -57,7 +56,6 @@ $result = $db->query($sql);
                                     <td><?php echo $row['adsoyad']; ?></td>
                                     <td><?php echo tablogetir('tblrol','id',$row['rolId'], $db)['rol']; ?></td>
                                     <td><?php echo $row['telefon']; ?></td>
-                                    <td><?php echo $row['mail']; ?></td>
                                     <td><?php echo $row['isecikistarih'] != "0000-00-00 00:00:00.000000" ?
                                             "<b style='color: green'>Aktif</b>" : "<b style='color: red'>Pasif</b>"; ?></td>
                                     <td>

@@ -184,7 +184,7 @@ $alasimlar = $db->query($alasimsql);
 
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <label>Termim Tarihi</label>
+                                        <label>Termin Tarihi</label>
                                         <input v-model="termimTarih" type="date"
                                                class="form-control form-control-lg" name="termimTarih">
                                     </div>
@@ -199,18 +199,6 @@ $alasimlar = $db->query($alasimsql);
                                         <span v-if="errorShow" style="color: red" class="help-block"> Mevcut Kalıplar ile istenilen tolerans yakalanamaz. </span>
                                     </div>
                                 </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <label>Sipariş Durumu</label>
-                                        <select v-model="konum" name="konum" class="form-control">
-                                            <option selected disabled value="">Konum Seçiniz</option>
-                                            <?php for ($i = 0; $i < count($konumlar); $i++) { ?>
-                                                <option value="<?php echo $konumlar[$i] ?>"><?php echo $konumlar[$i] ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-
 
                                 <div class="col-sm-2">
                                     <div class="form-group">
@@ -270,10 +258,10 @@ $alasimlar = $db->query($alasimsql);
 
                                 <div class="col-sm-5">
                                     <div class="form-group">
-                                        <label>İstenilen Termin</label>
+                                        <label>İstenilen Termik</label>
                                         <select v-model="istenilenTermik" name="istenilenTermik"
                                                 class="form-control">
-                                            <option selected disabled value="">İstenilen Termin</option>
+                                            <option selected disabled value="">İstenilen Termik</option>
                                             <option value="Termiksiz">0</option>
                                             <option value="Yarı Termikli">4 - 7</option>
                                             <option value="Termikli">10 - 14</option>

@@ -94,13 +94,6 @@ function tablogetir($table, $kriter, $deger, $db)
     return $row;
 }
 
-function konumBul($id)
-{
-    $arrayKonum = array("Baskı" => "baski", "Kesim" => "kesim");
-
-    return array_search($id, $arrayKonum);
-}
-
 function kiloBul($baskiId, $adet, $db)
 {
     $baski = tablogetir("tblbaski", 'id', $baskiId, $db);

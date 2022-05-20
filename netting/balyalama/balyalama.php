@@ -29,14 +29,6 @@ $siparisNo = explode(";", $row['siparisNo']);
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group">
-            <label style="color: #0b2e13">Sevkiyat: <?php echo $siparisNo ?></label>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-sm-6">
-        <div class="form-group">
             <label style="color: #0b2e13">Balya No: <?php echo $row['balyaNo'] ?></label>
         </div>
     </div>

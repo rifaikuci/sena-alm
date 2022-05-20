@@ -7,6 +7,10 @@ $sql = "SELECT * FROM tblboyapaket order by id desc ";
 $result = $db->query($sql);
 ?>
 
+<!--  TODO
+profil, boy, müşteri, Renk alanları tabloya eklencek, .
+-->
+
 <section class="content">
 
     <?php
@@ -41,7 +45,7 @@ $result = $db->query($sql);
 
                             <tr>
                                 <th>#</th>
-                                <th>Satır No</th>
+                                <th>Sipariş No</th>
                                 <th>Tarih</th>
                                 <th>Net Adet</th>
                                 <th style="text-align: center">İşlem</th>

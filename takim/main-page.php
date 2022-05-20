@@ -30,6 +30,8 @@ $result = $db->query($sql);
     } else if ($_GET['durumdegis'] == "no") {
         durumDanger("Takıma parçası değiştirilirken bir hata oluştu");
     } ?>
+
+    <!-- TODO : Sena No ya çift tık yapıldığında kalıbın geçmişi açılsın, kalıphaneden getirilecek. -->
     <div style="text-align: center">
         <h4 style="color: #0b93d5">Takımlar</h4>
     </div>
@@ -48,12 +50,10 @@ $result = $db->query($sql);
                             <tr>
                                 <th>Sena No</th>
                                 <th>Profil</th>
-                                <th>Firma</th>
-                                <th>Kalıp Cinsi</th>
                                 <th>Çap</th>
-                                <th>Parça 1</th>
-                                <th>Parça 2</th>
                                 <th>Gramaj</th>
+                                <th>Basılan Kg</th>
+                                <th>Brüt Kg</th>
                                 <th>Destekler</th>
                                 <th>Bolsterler</th>
                                 <th></th>
@@ -66,12 +66,10 @@ $result = $db->query($sql);
                                     <td><?php echo $row['takimNo']; ?></td>
                                     <td><?php echo $row['profilId'] ?
                                             tablogetir('tblprofil', 'id', $row['profilId'], $db)['profilNo'] : "-"; ?></td>
-                                    <td><?php echo tablogetir('tblfirma', 'id', $row['firmaId'], $db)['firmaAd']; ?></td>
-                                    <td><?php echo trim(kalipBul($row['kalipCins'])); ?></td>
                                     <td><?php echo $row['cap']; ?></td>
-                                    <td><?php echo $row['parca1'] ?></td>
-                                    <td><?php echo $row['parca2'] ?></td>
                                     <td><?php echo $row['sonGramaj'] ?></td>
+                                    <td><?php echo sayiFormatla($row['netKilo']);?></td>
+                                    <td><?php echo sayiFormatla($row['brutKilo']);?></td>
                                     <td>
                                         <button type="button" v-on:click="destekgoster($event)" class="btn btn-success"
                                                 data-toggle="modal" data-parca="<?php echo $row['destek'] ?>">Destekler

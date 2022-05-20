@@ -42,11 +42,11 @@ $result = $db->query($sql);
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>#</th>
+                                <th>ID</th>
+                                <th>Baslangıç - Bitiş Zamanı</th>
                                 <th>Satır No</th>
                                 <th>Takım</th>
-                                <th>Baslangıç Zamanı</th>
-                                <th>Bitirilme Durumu</th>
+                                <th>Basılan Net Kg/Adet</th>
                                 <th style="text-align: center">İşlem</th>
                             </tr>
                             </thead>
@@ -54,11 +54,11 @@ $result = $db->query($sql);
                             <?php $sira = 1;
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
-                                    <td style="font-weight: bold"><?php echo $sira; ?></td>
+                                    <td style="font-weight: bold"><?php echo $row['id']; ?></td>
+                                    <td><?php echo $row['bitisZamani'] ?  tarihsaat($row['baslaZamani']) ." - " .  tarihsaat($row['bitisZamani']) : tarihsaat($row['baslaZamani']) ; ?></td>
                                     <td><?php echo $row['satirNo']; ?></td>
                                     <td><?php echo tablogetir('tbltakim', 'id', $row['takimId'], $db)['takimNo']; ?></td>
-                                    <td><?php echo tarihsaat($row['baslaZamani']); ?></td>
-                                    <td><?php echo $row['bitisZamani'] == "" ? "Baskı Kesildi" : "Bitirildi"; ?></td>
+                                    <td><?php echo sayiFormatla($row['basilanNetKg']). " Kg / ".$row['basilanNetAdet'] ." Adet"; ?></td>
                                     <td>
                                         <?php if (!$row['bitisZamani']) { ?>
                                             <a href=<?php echo "yari-guncelle/index.php?baski=" . $row['id']; ?> class="btn

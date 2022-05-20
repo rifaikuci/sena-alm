@@ -147,9 +147,9 @@ function toleransBul($mgr, $profilId, $db)
 
 }
 
-function sayiFormatla($sayi, $digit)
+function sayiFormatla($sayi, $digit= 2)
 {
-    return number_format((float)$sayi, $digit, '.', ',');
+    return number_format($sayi, $digit, ',', '.');
 }
 
 function vardiyaBul($vardiya, $saat)
@@ -192,13 +192,13 @@ function takimDurumBul($konum)
     } else if ($konum == "T2") {
         return "Kumlama";
     } else if ($konum == "T3") {
-        return "Tashihat - Sevk";
+        return "Kumlama Tamamlandı -> Tashihat - Sevk";
     } else if ($konum == "T4") {
-        return "Sevkiyat Çıkış";
+        return "Sevkiyat Çıkış Yapıldı";
     } else if ($konum == "T5") {
-        return "Sevkiyat Giriş";
+        return "Sevkiyat Giriş Yapıldı";
     } else if ($konum == "T6") {
-        return "Tashihat";
+        return "Tashihat Yapıldı";
     }
 }
 

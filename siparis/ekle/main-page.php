@@ -187,7 +187,7 @@ $alasimlar = $db->query($alasimsql);
 
                                     <div class="col-sm-3">
                                         <div class="form-group">
-                                            <label>Termim Tarihi</label>
+                                            <label>Termin Tarihi</label>
                                             <input v-model="siparis.termimTarih" type="date"
                                                    class="form-control form-control-lg" name="termimTarih">
                                         </div>
@@ -205,9 +205,9 @@ $alasimlar = $db->query($alasimsql);
 
                                     <div class="col-sm-5">
                                         <div class="form-group">
-                                            <label>İstenilen Termin</label>
+                                            <label>İstenilen Termik</label>
                                             <select v-model="siparis.istenilenTermik" name="istenilenTermik" class="form-control">
-                                                <option selected disabled value="">İstenilen Termin</option>
+                                                <option selected disabled value="">İstenilen Termik</option>
                                                 <?php for ($i = 0; $i < count($termikDurum); $i++) { ?>
                                                     <option value="<?php echo $termikDurum[$i] ?>"><?php echo $termikDurum[$i] ?></option>
                                                 <?php } ?>>
@@ -325,7 +325,7 @@ $alasimlar = $db->query($alasimsql);
                                                 <th>Kilo</th>
                                                 <th>Tür</th>
                                                 <th>Alaşım</th>
-                                                <th>Termim T.</th>
+                                                <th>Termin T.</th>
                                                 <th>Tolerans</th>
                                                 <th>Ara K.</th>
                                                 <th>Krepe K.</th>

@@ -652,11 +652,11 @@ $profiller = $db->query($profillerrsql);
                                             </div>
                                             <div class="col-sm-4">
                                                 <div class="form-group">
-                                                    <label>İstenilen Termin</label>
+                                                    <label>İstenilen Termik</label>
                                                     <select v-model="profil.istenilenTermik" name="istenilenTermik"
                                                             @change="onChangeistenilenTermik($event)"
                                                             class="form-control">
-                                                        <option selected disabled value="">İstenilen Termin</option>
+                                                        <option selected disabled value="">İstenilen Termik</option>
                                                         <?php for ($i = 0; $i < count($termikDurum); $i++) { ?>
                                                             <option value="<?php echo $termikDurum[$i] ?>"><?php echo $termikDurum[$i] ?></option>
                                                         <?php } ?>

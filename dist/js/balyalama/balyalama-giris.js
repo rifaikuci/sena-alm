@@ -1,3 +1,10 @@
+
+const formatter = new
+    Intl.NumberFormat('de-DE', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+});
+
 var balyalamaGiris = new Vue({
     el: "#balyalama-giris", data: {
         anbarlar: [],
@@ -18,7 +25,6 @@ var balyalamaGiris = new Vue({
     },
 
     mounted: async function () {
-
         anbarlar = await axios.post('/sena/netting/balyalama/action.php', {
             action: 'anbargetir',
         }).then((response) => {
@@ -143,7 +149,8 @@ var balyalamaGiris = new Vue({
                 filterAnbar.forEach(x => {
                     kilo = parseFloat(kilo) + parseFloat(x.netKilo)
                 });
-                this.toplamKilo = kilo.toFixed(2);
+                this.toplamKilo = formatter.format(kilo);
+                console.log(this.toplamKilo)
             }
         },
 

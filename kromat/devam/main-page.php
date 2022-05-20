@@ -101,6 +101,7 @@ date_default_timezone_set('Europe/Istanbul');
                         </div>
                     </div>
 
+                    <?php if($hurdalar[$k] && $hurdalar[$k] > 0) { ?>
 
                     <div class="col-sm-3">
                         <div class="form-group">
@@ -108,9 +109,10 @@ date_default_timezone_set('Europe/Istanbul');
                             <input value="<?php echo $sebepler[$k] ?>"
                                    disabled
                                    type="text" class="form-control form-control-lg"
-                                   placeholder="0.1">
+                                   placeholder="0">
                         </div>
                     </div>
+                    <?php } ?>
 
                 </div>
 
