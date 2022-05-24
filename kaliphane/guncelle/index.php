@@ -3,7 +3,7 @@
 <head>
     <?php require_once "../../include/helper.php"; ?>
     <?php include "../../include/head.php" ?>
-    <title>SENA | Baskı Tamamla</title>
+    <title>SENA | Kalıp Güncelleme</title>
     <?php include "../../include/style.php" ?>
 </head>
 <body class="hold-transition sidebar-mini">
@@ -26,15 +26,13 @@
         </div>
     </aside>
     <div class="content-wrapper">
-        <?php require_once "page-top-info.php"; ?>
-        <?php require_once "main-page.php"; ?>
+        <?php include "page-top-info.php"; ?>
+        <?php include "main-page.php"; ?>
     </div>
-    <?php require_once '../../include/footer.php' ?>
+    <?php include '../../include/footer.php' ?>
     <aside class="control-sidebar control-sidebar-dark"></aside>
 </div>
-
-<?php require_once('../../include/script.php') ?>
-<script type="text/javascript" src=<?php echo base_url() . "dist/js/baski/baski-yari-guncelle.js" ?>></script>
+<?php include('../../include/script.php') ?>
 
 </body>
 </html>

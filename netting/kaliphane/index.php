@@ -38,5 +38,34 @@ VALUES ('$takimId', '$oldProcess', '$newProcess', '$description', '$operatorId',
 
 }
 
+if (isset($_POST['kalipguncelle'])) {
+    $takimdurum = isset($_POST['takimdurum']) ? $_POST['takimdurum'] : "";
+    $takimId = isset($_POST['takimId']) ? $_POST['takimId'] : "";
+    $description = 'işlem manuel olarak yapildi';
+    $oldprocess = isset($_POST['oldprocess']) ? $_POST['oldprocess'] : 'P';
+    $operatorId = isset($_POST['e']) ? $_POST['operatorId'] : 0;
+
+    if ($oldprocess == "$takimdurum") {
+        header("Location:../../kaliphane/?durum=konumayni");
+        exit();
+    }
+
+    $sqlTakim = "UPDATE tbltakim SET konum = '$takimdurum' WHERE id = $takimId";
+    mysqli_query($db, $sqlTakim);
+
+    $sql = "INSERT INTO tblkaliphane (takimId, oldProcess, newProcess, description, operatorId) 
+VALUES ('$takimId', '$oldprocess', '$takimdurum', '$description', '$operatorId')";
+
+    if (mysqli_query($db, $sql)) {
+        header("Location:../../kaliphane/?durum=ok");
+        exit();
+    } else {
+        header("Location:../../kaliphane/?durum=no");
+        exit();
+    }
+
+
+}
+
 
 ?>

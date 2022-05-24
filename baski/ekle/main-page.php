@@ -1,3 +1,4 @@
+
 <?php
 include "../../netting/baglan.php";
 require_once "../../include/sql.php";
@@ -10,7 +11,7 @@ $biyetler = $db->query($biyetSql);
 
 
 date_default_timezone_set('Europe/Istanbul');
-
+#todo her satır için basilan brut kg diye bir alan eklencek. oradan değerler bulunacak
 ?>
 
 <section class="content">
@@ -18,6 +19,8 @@ date_default_timezone_set('Europe/Istanbul');
         <div class="card-header">
             Baskı Oluşturma Alanı
         </div>
+
+
         <div class="card-body" id="baski-giris">
             <form method="post" action="<?php echo base_url() . 'netting/baski/index.php' ?>"
                   enctype="multipart/form-data">
@@ -156,11 +159,11 @@ date_default_timezone_set('Europe/Istanbul');
                                     Satır No
                                 </option>
 
-                                <?php while ($siparis = $siparisler->fetch_array()) { ?>
-                                    <option value="<?php echo $siparis['id']; ?>">
-                                        <?php echo $siparis['satirNo']; ?>
-                                    </option>
-                                <?php } ?>
+                            <?php while ($siparis = $siparisler->fetch_array()) { ?>
+                                <option value="<?php echo $siparis['id']; ?>">
+                                    <?php echo $siparis['satirNo']; ?>
+                                </option>
+                            <?php } ?>
                             </select>
 
                         </div>
@@ -200,93 +203,204 @@ date_default_timezone_set('Europe/Istanbul');
                             Baskı Başlama Zamanı: {{baslazamani}}
                         </label>
                     </div>
+                    <input type="hidden" name="istenilenTermik"
+                           :value="istenilenTermik">
+                    <input type="hidden"  name="satirNo" :value="satirNo">
+                    <input type="hidden" name="boy" :value="boy">
+                    <input type="hidden" value="baski-ekle" name="baskiekle">
+                    <input type="hidden"
+                           value="<?php echo isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0; ?>"
+                           name="operatorId">
+                    <input type="hidden" name="basilanNetKg" :value="basilanNetKg">
+                    <input type="hidden" name="baslaZamani" :value="baslazamani">
+                    <input name="arrayBiyetBoy" :value="arrayBiyetBoy" type="hidden">
+                    <input name="arrayBiyetId" :value="arrayBiyetId" type="hidden">
+                    <input name="arrayBiyetAd" :value="arrayBiyetAd" type="hidden">
+                    <input name="arrayBiyetVerilenBiyet" :value="arrayBiyetVerilenBiyet" type="hidden">
+                    <input name="arrayBiyetAraisFire" :value="arrayBiyetAraisFire" type="hidden">
+                    <input name="arrayBiyetKonveyorBoy" :value="arrayBiyetKonveyorBoy" type="hidden">
+                    <input name="arrayBiyetBoylamFire" :value="arrayBiyetBoylamFire" type="hidden">
+                    <input name="arrayBiyetFireBiyet" :value="arrayBiyetFireBiyet" type="hidden">
+                    <input name="arrayBiyetBaskiFire" :value="arrayBiyetBaskiFire" type="hidden">
+                    <input name="arrayBiyetler" :value="arrayBiyetler" type="hidden">
+                    <input name="arrayBiyetBrut" :value="arrayBiyetBrut" type="hidden">
+
                 </div>
                 <br>
                 <br>
                 <hr style="color: #1F2D3D">
+
+
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">Detay Bilgileri</h3>
+                        <div class="card-tools">
+                            <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="card-body">
+
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label>Biyetler</label>
+
+                                    <select class="form-control select2" id="biyet_id"
+                                            style="width: 100%;">
+                                        <option selected value="">
+                                            Parti No - Alaşım - Firma
+                                        </option>
+                                        <?php while ($biyet = $biyetler->fetch_array()) {
+                                            $alasim = tablogetir('tblalasim', 'id', $biyet['alasimId'], $db)['ad'];
+                                            $firma = tablogetir('tblfirma', 'id', $biyet['firmaId'], $db)['firmaAd'];
+                                            $id = $biyet['id'];
+                                            $value = $id.";".$biyet['partino'].";".$alasim.";".$firma;
+                                            ?>
+                                            <option value="<?php echo $value ; ?>">
+                                                <?php echo $biyet['partino'] . " - " . $alasim . " - " . $firma; ?>
+                                            </option>
+                                        <?php } ?>
+
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Biyet Boy (cm)</label>
+                                    <input v-model="biyet.biyetBoy"
+                                           @change="handleBiyetBoy($event)"
+                                           class="form-control" type="number" step="0.1" placeholder="0,1">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Verilen Biyet</label>
+                                    <input v-model="biyet.biyetVerilenBiyet"
+                                           @change="handleVerilenBiyet($event)"
+                                           class="form-control" type="number"
+                                           step="1" placeholder="0">
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Ara iş Fire (gr)</label>
+
+                                    <input v-model="biyet.biyetAraisFire" class="form-control"
+                                           type="number" step="1" placeholder="0">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Konveyör Boy (m)</label>
+
+                                    <input v-model="biyet.biyetKonveyorBoy"
+                                           @change="calculateBrut($event)"
+                                           class="form-control" type="number" step="0.1" placeholder="0,1">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Boylam Fire (m)</label>
+
+                                    <input v-model="biyet.biyetBoylamFire"
+                                           @change="calculateBrut($event)"
+                                           class="form-control" type="number" step="0.1" placeholder="0,1">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Fire Biyet</label>
+                                    <input v-model="biyet.biyetFireBiyet"
+                                           @change="handleBiyetFire($event)"
+                                           class="form-control" type="number" step="0.1" placeholder="0,1">
+
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Baskı Fire (%)</label>
+                                    <input v-model="biyet.biyetBaskiFire" disabled
+                                           class="form-control" type="text"
+                                           placeholder="0,1">
+                                </div>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <div class="form-group">
+                                    <label>Biyet Brüt</label>
+                                    <input v-model="biyet.biyetBrut" disabled
+                                           class="form-control" type="text">
+                                </div>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <button :disabled="!biyetData" v-on:click="biyetbaskisiekle" class="btn btn-success float-right">
+                                        Biyet Ekle
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <br>
+                        <br>
+                        <div v-if="arrayBiyetler.length > 0" style="text-align: center" class="col-sm-12">
+                            <h4 style="color: deepskyblue">Kullanılan Biyetler</h4>
+                        </div>
+                        <div v-if="arrayBiyetler.length > 0"   class="card-body table-responsive p-0">
+
+
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>Biyet</th>
+                                    <th>Boy</th>
+                                    <th>Verilen Biyet</th>
+                                    <th>Araiş Fire</th>
+                                    <th>Konveyör Boy</th>
+                                    <th>Boylam Fire</th>
+                                    <th>Fire Biyet</th>
+                                    <th>Baskı Fire</th>
+                                    <th>Brüt Kg</th>
+                                    <th>İşlem</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <tr v-for="(row,index) in arrayBiyetler">
+                                    <td>{{row.biyetAd}}</td>
+                                    <td>{{row.biyetBoy}}</td>
+                                    <td>{{row.biyetVerilenBiyet}}</td>
+                                    <td>{{row.biyetAraisFire}}</td>
+                                    <td>{{row.biyetKonveyorBoy}}</td>
+                                    <td>{{row.biyetBoylamFire}}</td>
+                                    <td>{{row.biyetFireBiyet}}</td>
+                                    <td>{{row.biyetBaskiFire}}</td>
+                                    <td>{{row.biyetBrut}}</td>
+
+                                    <td><a style="color: white" v-on:click="biyetSil(index)"
+                                           class="btn btn-danger">Sil</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <br>
+                <br>
                 <div class="row">
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Biyetler</label>
-
-                            <select class="form-control select2" id="biyet_id"
-                                    required name="biyetId"
-                                    style="width: 100%;">
-                                <option selected disabled value="">
-                                    Parti No - Alaşım - Firma
-                                </option>
-                                <?php while ($biyet = $biyetler->fetch_array()) { ?>
-                                    <option value="<?php echo $biyet['id']; ?>">
-                                        <?php echo $biyet['partino'] . " - " .
-                                            tablogetir('tblalasim', 'id', $biyet['alasimId'], $db)['ad'] . " - " .
-                                            tablogetir('tblfirma', 'id', $biyet['firmaId'], $db)['firmaAd']; ?>
-                                    </option>
-                                <?php } ?>
-
-                            </select>
-
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label>Biyet Boy (cm)</label>
-                            <input v-model="biyetBoy"
-                                   @change="handleBiyetBoy($event)"
-                                   required name="biyetBoy"
-                                   class="form-control" type="number" name="biyetBoy" step="0.1"
-                                   placeholder="0,1">
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label>Verilen Biyet</label>
-                            <input v-model="verilenBiyet"
-                                   required
-                                   @change="handleVerilenBiyet($event)"
-                                   class="form-control" type="number" name="verilenBiyet"
-                                   step="1"
-                                   placeholder="0">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label>Ara iş Fire (gr)</label>
-
-                            <input v-model="araIsFire" class="form-control" name="araIsFire"
-                                   required type="number" name="araIsFire" step="1"
-                                   placeholder="0">
-
-                        </div>
-                    </div>
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label>Konveyör Boy (m)</label>
-
-                            <input v-model="konveyorBoy"
-                                   @change="handleChangeKonveyor($event)"
-                                   required
-                                   class="form-control" type="number" name="konveyorBoy"
-                                   step="0.1" placeholder="0,1">
-
-                        </div>
-                    </div>
-
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label>Boylam Fire (m)</label>
-
-                            <input v-model="boylamFire"
-                                   @change="handleBoylamFire($event)"
-                                   required name="boylamFire"
-                                   class="form-control" type="number" name="boylamFire" step="0.1"
-                                   placeholder="0,1">
-
-                        </div>
-                    </div>
-
 
                     <div class="col-sm-2">
                         <div class="form-group">
@@ -297,18 +411,6 @@ date_default_timezone_set('Europe/Istanbul');
                                    class="form-control" type="number" name="guncelGr"
                                    step="1"
                                    placeholder="0">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label>Fire Biyet</label>
-                            <input v-model="biyetFire"
-                                   required
-                                   class="form-control" type="number" name="biyetFire"
-                                   step="0.1"
-                                   placeholder="0,1">
-
                         </div>
                     </div>
 
@@ -331,8 +433,6 @@ date_default_timezone_set('Europe/Istanbul');
                                    class="form-control" type="number" name="basilanNetKg"
                                    step="0.01"
                                    placeholder="0,01">
-                            <input type="hidden" v-model="basilanNetKg" name="basilanNetKg" :value="basilanNetKg">
-                            <input type="hidden" v-model="baslazamani" name="baslaZamani" :value="baslazamani">
                         </div>
                     </div>
 
@@ -340,32 +440,10 @@ date_default_timezone_set('Europe/Istanbul');
                         <div class="form-group">
                             <label>Basılan Brüt Kg</label>
                             <input v-model="basilanBrutKg" disabled
-                                   class="form-control" type="number" name="basilanBrutKg"
+                                   class="form-control" type="number"
                                    step="0.01"
                                    placeholder="0,01">
-                            <input type="hidden" v-model="basilanBrutKg" name="basilanBrutKg" :value="basilanBrutKg">
-                        </div>
-                    </div>
-
-
-
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label>Baskı Fire (%)</label>
-                            <input v-model="baskiFire" disabled
-                                   required
-                                   class="form-control" type="text"
-                                   placeholder="0,1">
-                            <input type="hidden" v-model="baskiFire" name="baskiFire" :value="baskiFire">
-                            <input type="hidden" v-model="istenilenTermik" name="istenilenTermik"
-                                   :value="istenilenTermik">
-                            <input type="hidden" v-model="satirNo" name="satirNo" :value="satirNo">
-                            <input type="hidden" v-model="boy" name="boy" :value="boy">
-                            <input type="hidden" value="baski-ekle" name="baskiekle">
-                            <input type="hidden"
-                                   value="<?php echo isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0; ?>"
-                                   name="operatorId">
-
+                            <input type="hidden" name="basilanBrutKg" :value="basilanBrutKg">
                         </div>
                     </div>
 
@@ -373,10 +451,10 @@ date_default_timezone_set('Europe/Istanbul');
                         <div class="form-group">
                             <label>Fire (Kg)</label>
                             <input v-model="fire" disabled
-                                   class="form-control" type="text" name="fire"
+                                   class="form-control" type="text"
                                    placeholder="0">
-                            <input type="hidden" v-model="fire" name="fire" :value="fire">
-                            <input type="hidden" v-model="baskiId" name="baskiId" :value="baskiId">
+                            <input type="hidden" name="fire" :value="fire">
+                            <input type="hidden" name="baskiId" :value="baskiId">
 
                         </div>
                     </div>
@@ -429,7 +507,7 @@ date_default_timezone_set('Europe/Istanbul');
                     </div>
 
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Takım Son Durum</label>
 
@@ -437,24 +515,24 @@ date_default_timezone_set('Europe/Istanbul');
                                     required
                                     id="takimSonDurum"
                                     style="width: 100%;">
-                                <option selected value="">
-                                    Takım Son Durumu Seçiniz
+                                <option disabled selected value="">
+                                    Takım Son Durumu
                                 </option>
-                                <?php foreach($takimSonDurum as $key=> $value) { ?>
-                                    <option value="<?php echo $key ?>"><?php echo $value?></option>
+                                <?php foreach ($takimSonDurum as $key => $value) { ?>
+                                    <option value="<?php echo $key ?>"><?php echo $value ?></option>
                                 <?php } ?>
                             </select>
 
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Açıklama</label>
                             <input required
                                    class="form-control" type="text" name="aciklama"
                                    placeholder="Açıklama Giriniz...">
-                            <input type="hidden" v-model="baskiDurum" :value="baskiDurum" name="baskiDurum">
+                            <input type="hidden" :value="baskiDurum" name="baskiDurum">
 
                         </div>
                     </div>
@@ -472,7 +550,7 @@ date_default_timezone_set('Europe/Istanbul');
                             </div>
                         </div>
                     </div>
-                    <div v-if="!baskiDurum" class="col-sm-4">
+                    <div v-if="!baskiDurum" class="col-sm-2">
                         <div class="form-group">
                             <label>Baskı Sonlanma Nedeni</label>
 

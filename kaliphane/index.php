@@ -35,6 +35,8 @@
 
 
 <?php include('../include/script.php') ?>
+<script type="text/javascript" src=<?php echo base_url() . "dist/js/kaliphane/takim-history.js" ?>></script>
+
 
 </body>
 </html>

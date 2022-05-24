@@ -3,6 +3,10 @@
 include "../netting/baglan.php";
 include "../include/sql.php";
 require_once "../include/data.php";
+
+$sqlsilinecek = "DELETE FROM tblbaski where bitisZamani = ''";
+mysqli_query($db, $sqlsilinecek);
+
 $sql = "SELECT * FROM tblbaski order by id desc ";
 $result = $db->query($sql);
 
@@ -55,23 +59,12 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $row['id']; ?></td>
-                                    <td><?php echo $row['bitisZamani'] ?  tarihsaat($row['baslaZamani']) ." - " .  tarihsaat($row['bitisZamani']) : tarihsaat($row['baslaZamani']) ; ?></td>
+                                    <td><?php echo $row['bitisZamani'] ? tarihsaat($row['baslaZamani']) . " - " . tarihsaat($row['bitisZamani']) : tarihsaat($row['baslaZamani']); ?></td>
                                     <td><?php echo $row['satirNo']; ?></td>
                                     <td><?php echo tablogetir('tbltakim', 'id', $row['takimId'], $db)['takimNo']; ?></td>
-                                    <td><?php echo sayiFormatla($row['basilanNetKg']). " Kg / ".$row['basilanNetAdet'] ." Adet"; ?></td>
+                                    <td><?php echo sayiFormatla($row['basilanNetKg']) . " Kg / " . $row['basilanNetAdet'] . " Adet"; ?></td>
                                     <td>
-                                        <?php if (!$row['bitisZamani']) { ?>
-                                            <a href=<?php echo "yari-guncelle/index.php?baski=" . $row['id']; ?> class="btn
-                                               btn-warning">Güncelle</a>
-                                        <?php }  ?>
-
-                                        <?php if (!$row['bitisZamani']) { ?>
-                                            <a href=<?php echo base_url() . "netting/baski/index.php?baskisil=" . $row['id']; ?> class="btn
-                                               btn-danger">Sil</a>
-                                        <?php } else { ?>
-                                            <a href=<?php echo base_url() . "netting/baski/index.php?baskisilinecek=" . $row['id']; ?> class="btn
-                                               btn-danger">Sil</a>
-                                        <?php } ?>
+                                        Görüntüle eklenecek
                                     </td>
                                 </tr>
                                 <?php $sira++;

@@ -3,6 +3,8 @@
 $vardiyalar = [1,2,3];
 
 $takimSonDurum = ["R1"=> "Raf", "P" => "Pres", "K1" => "Kostik", "T1"=>"Tashihat"];
+$takimDurumlar = ["R1"=> "Raf Dolu", "P" => "Pres", "K1" => "Kostik", "T1"=>"Tashihat", 'K2'=>"Kumlamaa", "K3"=> "Raf Boş",
+                  "T2" =>"Kumlama", "T3" => "Kumlama Tamamlandı -> Tashihat-Sevk", "T4" =>"Sevk Çıkış Yapıldı", "T5" => "Sevk Giriş Yapıldı", "T6"=>"Tashihat Yapıldı"];
 /*
 R1-> Raf Dolu,
 P-> Pres'te sadece bunlar getirilecek
@@ -44,6 +46,7 @@ $konumlar = ["Baskı", "Kesim", "Termik"];
 $birimler = ["Kg", "Lt", "Adet"];
 
 $kullanildigiAlanlar = ["Kalıphane", "Boyahane", "Kromat"];
+
 
 // tbl stok proilf de sipariş-> üretimden gelen satırnoya denk gelmekte siparisNo ise sevkiyattan gelirken ki geldiği yer
 // sepetler artık kesimId ile değil baskiId ile dolacak

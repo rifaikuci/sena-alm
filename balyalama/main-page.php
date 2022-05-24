@@ -6,7 +6,6 @@ $sql = "SELECT * FROM tblbalyalama order by id desc ";
 $result = $db->query($sql);
 
 ?>
-<!-- TODO , kilo ve boy kısmı eklencek. -->
 <section class="content">
 
     <?php
@@ -40,8 +39,10 @@ $result = $db->query($sql);
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Balya No</th>
                                 <th>Baş. Tar.</th>
+                                <th>Balya No</th>
+                                <th>Kilo</th>
+                                <th>Boy</th>
                                 <th style="text-align: center">Durum</th>
 
                             </tr>
@@ -50,8 +51,10 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td><?php echo $row['balyaNo']; ?></td>
                                     <td><?php echo tarihsaat($row['tarih']); ?></td>
+                                    <td><?php echo $row['balyaNo']; ?></td>
+                                    <td><?php echo sayiFormatla($row['netKilo']); ?></td>
+                                    <td><?php echo $row['balyaBoy']; ?></td>
                                     <td>
                                         <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
                                            class="btn btn-outline-primary">Görüntüle</a>

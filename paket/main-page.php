@@ -7,11 +7,6 @@ $sql = "SELECT * FROM tblpaket order by id desc ";
 $result = $db->query($sql);
 ?>
 
-
-<!--  TODO
-profil, boy, müşteri alanları tabloya eklencek, .
--->
-
 <section class="content">
 
     <?php
@@ -49,12 +44,20 @@ profil, boy, müşteri alanları tabloya eklencek, .
                                 <th>Satır No</th>
                                 <th>Tarih</th>
                                 <th>Net Adet</th>
+                                <th>Profil</th>
+                                <th>Boy</th>
+                                <th>Müşteri</th>
                                 <th style="text-align: center">İşlem</th>
                             </tr>
                             </thead>
 
                             <?php $sira = 1;
-                            while ($row = $result->fetch_array()) { ?>
+                            while ($row = $result->fetch_array()) {
+                                $baski = tablogetir("tblbaski", 'id', $row['baskiId'],$db);
+                                $satirNo = $baski['satirNo'];
+                                $siparis = tablogetir("tblsiparis", 'satirNo', $satirNo,$db);
+                                $profil = tablogetir("tblprofil", 'id', $siparis['profilId'],$db);
+                                $firma = tablogetir('tblfirma', 'id', $siparis['musteriId'],$db); ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php
@@ -62,6 +65,9 @@ profil, boy, müşteri alanları tabloya eklencek, .
                                         echo $satirNo; ?></td>
                                     <td><?php echo tarihsaat($row['zaman']); ?></td>
                                     <td><?php echo $row['netAdet']; ?></td>
+                                    <td><?php echo $profil['profilNo']; ?></td>
+                                    <td><?php echo $siparis['boy']; ?></td>
+                                    <td><?php echo $firma['firmaAd']; ?></td>
                                     <td style="text-align: center">
                                         <a onclick="return confirm('İşleminiz Silmek istediğinizden emin misiniz?')" href="<?php echo base_url() . "netting/boyapaket/index.php?boyapaketsil=" . $row['id']; ?>"
                                            class="btn btn-danger">Sil</a>

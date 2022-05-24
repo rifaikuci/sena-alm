@@ -19,8 +19,8 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
         durumDanger("Kalıp İşlemi Yapılırken Bir Hata Oluştu !");
     } else if ($_GET['durum'] == "cancel") {
         durumDanger("Kalıp İşlemi iptal edildi. ");
-    } else if ($_GET['durumsil'] == "no") {
-        durumDanger("Kalıp İşlemi Silinirken Bir Hata Oluştu.");
+    } else if ($_GET['durum'] == "konumayni") {
+        durumDanger("Kalıp Konumu aynı bırakıldı.");
     } else if ($_GET['durumguncelleme'] == "ok") {
         durumSuccess("Kalıp İşlemi Başarılı Bir Şekilde Güncellendi. ");
     } else if ($_GET['durumguncelleme'] == "no") {
@@ -29,7 +29,7 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
     <div style="text-align: center">
         <h4 style="color: #0b93d5">Kalıp İşlemleri</h4>
     </div>
-    <div class="card-body">
+    <div class="card-body" id="takim-history">
         <div class="row">
             <div class="col-2">
                 <h6 style="color: #0b93d5">
@@ -84,6 +84,7 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
                             <th>Son İşlem Zamanı</th>
                             <th>Konumu</th>
                             <th>İşlem</th>
+                            <th></th>
                         </tr>
                         </thead>
 
@@ -262,6 +263,17 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
                                     <?php } ?>
 
                                 </td>
+                                <td>
+
+                                    <button type="button"v-on:click="historygoster($event)"
+                                            class="btn btn-outline-primary"
+                                            data-takimno="<?php echo $row['takimNo'] ?>"
+                                            data-toggle="modal"><i class="fa fa-list"></i>
+                                    </button>
+
+                                    <a href="<?php echo "guncelle/?takimno=" . $row['takimNo']; ?>" class="btn btn-outline-warning">
+                                        <i class="fa fa-edit"></i></a>
+                                </td>
                             </tr>
                             <?php $sira++;
                         } ?>
@@ -272,7 +284,23 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
             </div>
         </div>
     </div>
+    <div id="modalHistory" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-xl">
+
+            <div class="modal-content">
+                <div style="margin: 10px">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                </div>
+            </div>
+
+        </div>
     </div>
+    </div>
+
+
 
     <script>
         function myFunction(takimId, operatorId, oldProcess, newProcess) {

@@ -19,13 +19,6 @@ var baskigiris = new Vue({
             takimıd: '',
             istenilenTermik: '',
             baskiId: '',
-            biyetBoy: '',
-            araIsFire: '',
-            konveyorBoy: '',
-            boylamFire: '',
-            baskiFire: '',
-            biyetFire: '',
-            verilenBiyet: '',
             guncelGr: '',
             basilanBrutKg: 0,
             basilanNetAdet: 0,
@@ -43,8 +36,35 @@ var baskigiris = new Vue({
             kiloAdet: '',
             isCheck: false,
             baskiDurum: false,
-            kalanKg: 0
+            kalanKg: 0,
 
+            arrayBiyetBoy: [],
+            arrayBiyetId: [],
+            arrayBiyetAd: [],
+            arrayBiyetFirma: [],
+            arrayBiyetVerilenBiyet: [],
+            arrayBiyetAraisFire: [],
+            arrayBiyetKonveyorBoy: [],
+            arrayBiyetBoylamFire: [],
+            arrayBiyetFireBiyet: [],
+            arrayBiyetBaskiFire: [],
+            arrayBiyetler: [],
+            arrayBiyetBrut: [],
+
+            biyet: {
+                biyetId: "",
+                biyetAd: "",
+                biyetFirma: "",
+                biyetBoy: "",
+                biyetVerilenBiyet: "",
+                biyetAraisFire: "",
+                biyetKonveyorBoy: "",
+                biyetBoylamFire: "",
+                biyetFireBiyet: "",
+                biyetBaskiFire: "",
+                biyetBrut: 0
+            },
+            biyetData: false
         },
 
 
@@ -79,22 +99,81 @@ var baskigiris = new Vue({
                 this.baslazamani = baslazamani;
             },
 
-            handleBoylamFire(event) {
-                if (event.target.value && event.target.value > 0 && this.konveyorBoy && this.konveyorBoy > 0) {
-                    this.baskiFire = (event.target.value * 2) / this.konveyorBoy;
-                    this.baskiFire = (this.baskiFire * 100).toFixed(2);
+            biyetbaskisiekle(event) {
+                event.preventDefault();
+                if (this.biyet.biyetBoy &&
+                    this.biyet.biyetVerilenBiyet &&
+                    this.biyet.biyetAraisFire &&
+                    this.biyet.biyetKonveyorBoy &&
+                    this.biyet.biyetBoylamFire &&
+                    this.biyet.biyetFireBiyet &&
+                    this.biyet.biyetBaskiFire) {
 
+                    this.arrayBiyetler.push(this.biyet);
+                    this.arrayBiyetBoy.push(this.biyet.biyetBoy);
+                    this.arrayBiyetVerilenBiyet.push(this.biyet.biyetVerilenBiyet);
+                    this.arrayBiyetAraisFire.push(this.biyet.biyetAraisFire);
+                    this.arrayBiyetKonveyorBoy.push(this.biyet.biyetKonveyorBoy);
+                    this.arrayBiyetBoylamFire.push(this.biyet.biyetBoylamFire);
+                    this.arrayBiyetFireBiyet.push(this.biyet.biyetFireBiyet);
+                    this.arrayBiyetBaskiFire.push(this.biyet.biyetBaskiFire);
+                    this.arrayBiyetId.push(this.biyet.biyetId);
+                    this.arrayBiyetAd.push(this.biyet.biyetAd);
+                    this.arrayBiyetFirma.push(this.biyet.biyetFirma);
+                    this.arrayBiyetBrut.push(this.biyet.biyetBrut);
+
+                    this.biyetData = false;
+                    this.biyet = {
+                        biyetBoy: "",
+                        biyetVerilenBiyet: "",
+                        biyetAraisFire: "",
+                        biyetKonveyorBoy: "",
+                        biyetBoylamFire: "",
+                        biyetFireBiyet: "",
+                        biyetBaskiFire: "",
+                        biyetId: "",
+                        biyetAd: "",
+                        biyetFirma: "",
+                        biyetBrut: 0
+                    }
                 }
-
-                this.fireHesapla();
+                this.brutHesapla();
             },
 
-            handleChangeKonveyor(event) {
-                if (event.target.value && event.target.value > 0 && this.boylamFire && this.boylamFire > 0) {
-                    this.baskiFire = (this.boylamFire * 2) / event.target.value;
-                    this.baskiFire = (this.baskiFire * 100).toFixed(2);
+            brutHesapla: function () {
+                this.basilanBrutKg = 0;
+                debugger;
+              this.arrayBiyetBrut.forEach((item) => {
+                this.basilanBrutKg = Number(this.basilanBrutKg) + Number(item);
+              });
+            },
+
+            biyetSil: function (index) {
+                this.$delete(this.arrayBiyetler, index);
+                this.$delete(this.arrayBiyetBoy, index);
+                this.$delete(this.arrayBiyetVerilenBiyet, index);
+                this.$delete(this.arrayBiyetAraisFire, index);
+                this.$delete(this.arrayBiyetKonveyorBoy, index);
+                this.$delete(this.arrayBiyetBoylamFire, index);
+                this.$delete(this.arrayBiyetFireBiyet, index);
+                this.$delete(this.arrayBiyetBaskiFire, index);
+                this.$delete(this.arrayBiyetId, index);
+                this.$delete(this.arrayBiyetAd, index);
+                this.$delete(this.arrayBiyetFirma, index);
+                this.$delete(this.arrayBiyetBrut, index);
+                this.brutHesapla();
+
+            },
+
+            calculateBrut: function (index) {
+                if (this.biyet.biyetBoylamFire && this.biyet.biyetKonveyorBoy && this.biyet.biyetBoylamFire > 0 && this.biyet.biyetKonveyorBoy > 0) {
+                    this.biyet.biyetBaskiFire = (this.biyet.biyetBoylamFire * 2) / this.biyet.biyetKonveyorBoy;
+                    this.biyet.biyetBrut = (this.biyet.biyetBaskiFire * 100).toFixed(2);
                 }
-                this.fireHesapla();
+            },
+
+            handleBiyetFire(event) {
+                this.fireHesapla()
             },
 
             handleBiyetBoy(event) {
@@ -102,8 +181,8 @@ var baskigiris = new Vue({
                 if (event.target.value && event.target.value > 0 &&
                     this.verilenBiyet && this.verilenBiyet > 0 &&
                     this.biyetBirimGramaj && this.biyetBirimGramaj > 0) {
-                    this.basilanBrutKg = event.target.value * this.verilenBiyet * this.biyetBirimGramaj
-                    this.basilanBrutKg = (this.basilanBrutKg / 1000).toFixed(3);
+                    this.biyet.biyetBrut = event.target.value * this.verilenBiyet * this.biyetBirimGramaj
+                    this.biyet.biyetBrut = (this.biyet.biyetBrut / 1000).toFixed(3);
                 }
                 this.fireHesapla();
             },
@@ -111,8 +190,8 @@ var baskigiris = new Vue({
                 if (event.target.value && event.target.value > 0 &&
                     this.biyetBoy && this.biyetBoy > 0 &&
                     this.biyetBirimGramaj && this.biyetBirimGramaj > 0) {
-                    this.basilanBrutKg = event.target.value * this.biyetBoy * this.biyetBirimGramaj
-                    this.basilanBrutKg = (this.basilanBrutKg / 1000).toFixed(3);
+                    this.biyet.biyetBrut = event.target.value * this.biyetBoy * this.biyetBirimGramaj
+                    this.biyet.biyetBrut = ( this.biyet.biyetBrut / 1000).toFixed(3);
                 }
                 this.fireHesapla();
             },
@@ -134,11 +213,13 @@ var baskigiris = new Vue({
                 }
                 this.fireHesapla();
             },
+
             fireHesapla() {
                 if (this.basilanNetKg > 0 && this.basilanBrutKg > 0) {
                     this.fire = this.basilanBrutKg - this.basilanNetKg;
-                    this.fire = (this.fire ).toFixed(3);
+                    this.fire = (this.fire).toFixed(3);
                 }
+                this.biyetDataKontrol()
                 this.dataKontrol();
                 this.checkBitir();
 
@@ -176,6 +257,7 @@ var baskigiris = new Vue({
                 this.fireHesapla();
             },
             dataKontrol() {
+                debugger;
                 if (
                     this.basilanNetKg &&
                     this.satirNo &&
@@ -185,19 +267,34 @@ var baskigiris = new Vue({
                     this.kg &&
                     this.adet &&
                     this.takimId &&
-                    this.verilenBiyet &&
-                    this.konveyorBoy &&
                     this.biyetSicaklik &&
                     this.kalipSicaklik &&
                     this.guncelGr &&
                     this.basilanBrutKg &&
                     this.basilanNetAdet &&
                     this.basilanNetKg &&
+                    this.arrayBiyetler.length > 0 &&
                     this.fire) {
                     this.baskiBitir = true;
                 } else {
                     this.baskiBitir = false;
                 }
+            },
+
+            biyetDataKontrol() {
+                if (
+                    this.biyet.biyetId &&
+                    this.biyet.biyetAd &&
+                    this.biyet.biyetFirma &&
+                    this.biyet.biyetVerilenBiyet &&
+                    this.biyet.biyetAraisFire &&
+                    this.biyet.biyetKonveyorBoy &&
+                    this.biyet.biyetBoylamFire &&
+                    this.biyet.biyetFireBiyet &&
+                    this.biyet.biyetBaskiFire
+                ) {
+                    this.biyetData = true
+                } else  this.biyetData = false;
             }
         }
     }
@@ -249,6 +346,16 @@ $('#supplier_id').on("change", async function () {
 
 });
 
+$('#biyet_id').on("change", async function () {
+
+    var array = $(this).val().split(";");
+    baskigiris.biyet.biyetId = array[0];
+    baskigiris.biyet.biyetAd = array[2];
+    baskigiris.biyet.biyetFirma = array[3];
+    console.log(array)
+
+});
+
 $('#takim_id').on("change", async function () {
 
     baskigiris.takimId = $(this).val();
@@ -256,3 +363,4 @@ $('#takim_id').on("change", async function () {
 
 $('#supplier_id').select2({});
 $('#takim_id').select2({});
+$('#biyet_id').select2({});
