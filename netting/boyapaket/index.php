@@ -41,8 +41,8 @@ if (isset($_POST['boyapaketbaslat'])) {
     }
 
     if ($rutusAdet > 0) {
-        $sqlrutusprofil = "INSERT INTO tblrutusprofil (adet,kalan,sebep,profilId, operatorId) 
-                VALUES ( '$rutusAdet', '$rutusAdet', '$rutusSebep', '$profilId', '$operatorId')";
+        $sqlrutusprofil = "INSERT INTO tblrutusprofil (adet,kalan,sebep,profilId, operatorId, baskiId) 
+                VALUES ( '$rutusAdet', '$rutusAdet', '$rutusSebep', '$profilId', '$operatorId', '$baskiId')";
         mysqli_query($db, $sqlrutusprofil);
     }
 

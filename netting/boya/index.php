@@ -7,16 +7,10 @@ date_default_timezone_set('Europe/Istanbul');
 
 if (isset($_POST['boyabaslat'])) {
 
-    $maxAdet = $_POST['maxAdet'];
-    $sepetId = $_POST['sepetId'];
-    $baskiId = $_POST['baskiId'];
-    $oran = $_POST['oran'];
     $ortAskiAdet = $_POST['ortAskiAdet'];
     $netBoya = $_POST['netBoya'];
     $operatorId = isset($_POST['operatorId']) && $_POST['operatorId'] ? $_POST['operatorId'] : 0;
     $askiId = $_POST['askiId'];
-    $firinSicaklik = $_POST['firinSicaklik'];
-    $kurlenmeDakikasi = $_POST['kurlenmeDakikasi'];
     $boyaId = $_POST['boyaId'];
     $kullanilanBoya = $_POST['kullanilanBoya'];
     $siklonId = $_POST['siklonId'] ? $_POST['siklonId'] : 0;
@@ -24,43 +18,80 @@ if (isset($_POST['boyabaslat'])) {
     $siklonAyrilanKg = $_POST['siklonAyrilanKg'];
     $topAski = $_POST['topAski'];
     $topAdet = $_POST['topAdet'];
-    $altSebep = $_POST['altSebep'];
     $rutusId = $_POST['rutusId'] ? $_POST['rutusId'] : 0;
-    $hurdaAdet = $_POST['hurdaAdet'] != "" ? $_POST['hurdaAdet'] : 0  ;
-    $hurdaSebep = $_POST['hurdaSebep'];
     $rutusAdet = $_POST['rutusAdet'] != "" ? $_POST['rutusAdet'] : 0  ;
     $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $baslaVardiya = vardiyaBul($vardiya, date("H:i"));
     $baslaZaman = date("d.m.Y H:i");
 
+    $array = explode(',',$_POST['array']);
+    $arraySepetId = explode(',',$_POST['arraySepetId']);
+    $arraySatirNo = explode(',',$_POST['arraySatirNo']);
+    $arrayBaskiId = explode(',',$_POST['arrayBaskiId']);
+    $arrayProfilId = explode(',',$_POST['arrayProfilId']);
+    $arrayAdet = explode(',',$_POST['arrayAdet']);
+    $arrayHurdaAdet = explode(',',$_POST['arrayHurdaAdet']);
+    $arrayHurdaSebep = explode(',',$_POST['arrayHurdaSebep']);
 
-    $sepetGetir = tablogetir('tblsepet', 'id', $sepetId, $db);
-    $icindekiler = rtrim($sepetGetir['icindekiler'], ";");
-    $arrayIcinde = explode(";", $icindekiler);
+    $arrays = '';
+    $sepetIds = '';
+    $satirNos = '';
+    $baskiIds = '';
+    $profilIds = '';
+    $adets = '';
+    $hurdaAdets = '';
+    $hurdaSebeps = '';
 
-    $adetlerGetir = rtrim($sepetGetir['adetler'], ";");
-    $arrayAdet = explode(";", $adetlerGetir);
-    $key = array_search($baskiId, $arrayIcinde);
+    for($i = 0; $i <count($arraySepetId); $i++ ) {
 
-    $adet = $arrayAdet[$key] - $topAdet - $hurdaAdet;
+        $arrays = $arrays . $array[$i] . ";";
+        $sepetIds = $sepetIds . $arraySepetId[$i] . ";";
+        $satirNos = $satirNos . $arraySatirNo[$i] . ";";
+        $baskiIds = $baskiIds . $arrayBaskiId[$i] . ";";
+        $profilIds = $profilIds . $arrayProfilId[$i] . ";";
+        $adets = $adets . $arrayAdet[$i] . ";";
+        $hurdaAdets = $hurdaAdets . $arrayHurdaAdet[$i] . ";";
+        $hurdaSebeps = $hurdaSebeps . $arrayHurdaSebep[$i] . ";";
 
-    if ($adet <= 0) {
-        $arrayAdet[$key] = "bitti";
-        $arrayIcinde[$key] = "bitti";
-    } else {
-        $arrayAdet[$key] = $adet;
-    }
 
-    for ($j = 0; $j < count($arrayAdet); $j++) {
-        $adetTablo = $adetTablo . "" . $arrayAdet[$j] . ";";
-        $icindeTablo = $icindeTablo . "" . $arrayIcinde[$j] . ";";
-    }
+        $sepetId = $arraySepetId[$i];
+        $satirNo = $arraySatirNo[$i];
+        $baskiId = $arrayBaskiId[$i];
+        $profilId = $arrayProfilId[$i];
+        $adet = $arrayAdet[$i];
+        $hurdaAdet = $arrayHurdaAdet[$i];
+        $hurdaSebep = $arrayHurdaSebep[$i];
 
-    $adetTablo = str_replace("bitti;", "", $adetTablo);
-    $icindeTablo = str_replace("bitti;", "", $icindeTablo);
+        $sepetGetir = tablogetir('tblsepet', 'id', $sepetId, $db);
+        $icindekiler = rtrim($sepetGetir['icindekiler'], ";");
+        $arrayIcinde = explode(";", $icindekiler);
 
-    if ($adetTablo == "") {
-        $sqlSepet = "UPDATE tblsepet set
+        $adetlerGetir = rtrim($sepetGetir['adetler'], ";");
+        $arrayAdetSepet = explode(";", $adetlerGetir);
+        $key = array_search($baskiId, $arrayIcinde);
+
+        $adetKalan = $arrayAdetSepet[$key] - $adet - $hurdaAdet;
+
+        $adetTablo = "";
+        $icindeTablo = "";
+
+        if ($adetKalan <= 0) {
+            $arrayAdetSepet[$key] = "bitti";
+            $arrayIcinde[$key] = "bitti";
+        } else {
+            $arrayAdetSepet[$key] = $adetKalan;
+        }
+
+        for ($j = 0; $j < count($arrayAdetSepet); $j++) {
+            $adetTablo = $adetTablo . "" . $arrayAdetSepet[$j] . ";";
+            $icindeTablo = $icindeTablo . "" . $arrayIcinde[$j] . ";";
+        }
+
+        $adetTablo = str_replace("bitti;", "", $adetTablo);
+        $icindeTablo = str_replace("bitti;", "", $icindeTablo);
+
+        if ($adetTablo == "") {
+            $sqlSepet = "UPDATE tblsepet set
                         icindekiler = null ,
                         adetler = null ,
                         durum = '0',
@@ -68,33 +99,36 @@ if (isset($_POST['boyabaslat'])) {
                     where id = '$sepetId'";
 
 
-     mysqli_query($db, $sqlSepet);
-    } else {
-        $sqlSepet = "UPDATE tblsepet set
+            mysqli_query($db, $sqlSepet);
+        } else {
+            $sqlSepet = "UPDATE tblsepet set
                         icindekiler = '$icindeTablo',
                         adetler = '$adetTablo',
                         isTermik = '0'
                     where id = '$sepetId'";
-    mysqli_query($db, $sqlSepet);
-    }
+            mysqli_query($db, $sqlSepet);
+        }
 
 
-    // stok profil ve hurda
-    if ($hurdaAdet > 0) {
-        $geciciAdet = -1 * ($hurdaAdet);
-        $kilo = kiloBul($baskiId, $hurdaAdet,$db);
+        // stok profil ve hurda
+        if ($hurdaAdet > 0) {
+            $geciciAdet = -1 * ($hurdaAdet);
+            $kilo = kiloBul($baskiId, $hurdaAdet, $db);
 
-        $kiloStok = -1 * $kilo;
-        $kiloHurda = $kilo;
+            $kiloStok = -1 * $kilo;
+            $kiloHurda = $kilo;
 
-        $sqlprofil = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId, kilo) 
+            $sqlprofil = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId, kilo) 
                 VALUES ( '$geciciAdet', 'boya', '$baskiId', '$kiloStok')";
-      mysqli_query($db, $sqlprofil);
+            mysqli_query($db, $sqlprofil);
 
-        $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer, kilo) 
+            $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer, kilo) 
                 VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId','$baskiId', 'boya', '$kiloHurda')";
-       mysqli_query($db, $sqlHurda);
+            mysqli_query($db, $sqlHurda);
+        }
+
     }
+
 
 
     // siklon tablosuna kayıt eklenmesi
@@ -138,9 +172,18 @@ if (isset($_POST['boyabaslat'])) {
         mysqli_query($db, $sqlisiklon);
     }
 
+    $sepetIds = rtrim($sepetIds, ";");
+    $baskiIds = rtrim($baskiIds, ";");
+    $adets = rtrim($adets, ";");
+    $hurdaAdets = rtrim($hurdaAdets, ";");
+    $hurdaSebeps = rtrim($hurdaSebeps, ";");
 
     $sqlBoya = "INSERT INTO tblboya  (
-                        sepetId,
+                        sepetler,
+                        baskilar,
+                        adetler,
+                        hurdaAdetler,
+                        hurdaSebepler,
                         rutusAdet,
                         netBoya,
                         ortAskiAdet,
@@ -148,24 +191,20 @@ if (isset($_POST['boyabaslat'])) {
                         rutusId,
                         siklonId,
                         kullanilanBoya,
-                        oran,
                         siklonAyrilanKg,
-                        hurdaAdet,
-                        maxAdet,
-                        hurdaSebep,
-                        altSebep,
                         baslaOperator,
                         baslaVardiya,
                         baslaZaman,
                         topAdet,
-                        baskiId,
                         siklonKullanilanKg,
                         boyaId,
-                        askiId,
-                        firinSicaklik,
-                        kurlenmeDakikasi)
+                        askiId)
                    VALUES  (
-                        '$sepetId',
+                        '$sepetIds',
+                        '$baskiIds',
+                        '$adets',
+                        '$hurdaAdets',
+                        '$hurdaSebeps',
                         '$rutusAdet',
                         '$netBoya',
                         '$ortAskiAdet',
@@ -173,23 +212,14 @@ if (isset($_POST['boyabaslat'])) {
                         '$rutusId',
                         '$siklonId',
                         '$kullanilanBoya',
-                        '$oran',
                         '$siklonAyrilanKg',
-                        '$hurdaAdet',
-                        '$maxAdet',
-                        '$hurdaSebep',
-                        '$altSebep',
                         '$operatorId',
                         '$baslaVardiya',
                         '$baslaZaman',
                         '$topAdet',
-                        '$baskiId',
                         '$siklonKullanilanKg',
                         '$boyaId',
-                        '$askiId',
-                        '$firinSicaklik',
-                        '$kurlenmeDakikasi'
-    
+                        '$askiId'
                    )";
 
     mysqli_query($db, $sqlBoya);

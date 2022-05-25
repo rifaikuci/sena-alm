@@ -142,7 +142,6 @@ var baskigiris = new Vue({
 
             brutHesapla: function () {
                 this.basilanBrutKg = 0;
-                debugger;
               this.arrayBiyetBrut.forEach((item) => {
                 this.basilanBrutKg = Number(this.basilanBrutKg) + Number(item);
               });
@@ -257,7 +256,6 @@ var baskigiris = new Vue({
                 this.fireHesapla();
             },
             dataKontrol() {
-                debugger;
                 if (
                     this.basilanNetKg &&
                     this.satirNo &&

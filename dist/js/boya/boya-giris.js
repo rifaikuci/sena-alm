@@ -1,55 +1,51 @@
 var boyaGiris = new Vue({
         el: "#boya-giris",
         data: {
-            maxAdet: 0,
-            hurdaAdet: 0,
-            rutusAdet: 0,
+            rutusAdet: "",
             topAdet: "",
-            oran: "",
             ortAskiAdet: "",
             topAski: "",
-            kullanilanBoya: 0,
-            siklonKullanilanKg: 0,
-            siklonAyrilanKg: 0,
-            netBoya: 0,
-            sepetId: 0,
-            siklonId: 0,
+            kullanilanBoya: "",
+            siklonKullanilanKg: "",
+            siklonAyrilanKg: "",
+            netBoya: "",
+            sepetId: "",
+            siklonId: "",
             boyalar: [],
-            firinSicaklik : 0,
-            rutusId : 0,
-            satirNo: 0,
-            baskiId: 0,
-            profilId: 0
+            firinSicaklik: "",
+            rutusId: "",
+            boyanmaData: false,
+
+            array: [],
+            arraySepetId: [],
+            arraySatirNo: [],
+            arrayBaskiId: [],
+            arrayProfilId: [],
+            arrayAdet: [],
+            arrayHurdaAdet: [],
+            arrayHurdaSebep: [],
+
+            boyanma: {
+                sepetId: "",
+                satirNo: "",
+                baskiId: "",
+                profilId: "",
+                adet: "",
+                hurdaAdet: "",
+                hurdaSebep: ""
+            }
+
         },
 
 
         methods: {
-            changeTopAdet(event) {
-                if (event.target.value && event.target.value > 0) {
-                    this.topAdet = event.target.value;
-                    if (this.maxAdet && this.maxAdet) {
-                        this.oran =   this.topAdet / this.maxAdet;
-                        this.oran =this.oran * 100
-                        this.oran =  this.oran
-                    } else {
-                        this.oran = 0;
-                    }
 
-                    if (this.topAski && this.topAski > 0 && this.topAdet && this.topAdet > 0)
+            changeTopAski() {
+                if (this.topAski && this.topAski > 0 && this.topAdet && this.topAdet > 0) {
+                    if (this.topAski && this.topAski > 0 && this.topAdet && this.topAdet > 0) {
                         this.ortAskiAdet = this.topAski / this.topAdet
-                    else
-                        this.ortAskiAdet = 0
-                } else {
-                    this.oran = 0;
-                }
-            },
-
-            changeTopAski(event) {
-                if (event.target.value && event.target.value > 0) {
-                    this.topAski = event.target.value;
-                    if (this.topAski && this.topAski > 0 && this.topAdet && this.topAdet > 0)
-                        this.ortAskiAdet = this.topAski / this.topAdet
-                    else
+                        this.ortAskiAdet = this.ortAskiAdet.toFixed(2);
+                    } else
                         this.ortAskiAdet = 0;
                 }
             },
@@ -60,6 +56,74 @@ var boyaGiris = new Vue({
                     parseInt(this.siklonAyrilanKg ? this.siklonAyrilanKg : 0)
 
             },
+
+            ekle(event) {
+
+                event.preventDefault();
+                if (this.boyanma.sepetId &&
+                    this.boyanma.satirNo &&
+                    this.boyanma.baskiId &&
+                    this.boyanma.profilId &&
+                    this.boyanma.adet) {
+
+                    this.array.push(this.boyanma);
+                    this.arraySepetId.push(this.boyanma.sepetId);
+                    this.arraySatirNo.push(this.boyanma.satirNo);
+                    this.arrayBaskiId.push(this.boyanma.baskiId);
+                    this.arrayProfilId.push(this.boyanma.profilId);
+                    this.arrayAdet.push(this.boyanma.adet);
+                    this.arrayHurdaAdet.push(this.boyanma.hurdaAdet);
+                    this.arrayHurdaSebep.push(this.boyanma.hurdaSebep);
+
+
+                    this.boyanmaData = false;
+                    this.boyanma = {
+                        sepetId: "",
+                        satirNo: "",
+                        baskiId: "",
+                        profilId: "",
+                        adet: "",
+                        hurdaAdet: "",
+                        hurdaSebep: ""
+                    }
+                }
+                this.tophesapla();
+            },
+
+            tophesapla: function () {
+                this.topAdet = 0;
+                this.arrayAdet.forEach((item) => {
+                    this.topAdet = Number(this.topAdet) + Number(item);
+                });
+                this.topAdet = Number(this.topAdet) + Number(this.rutusAdet ? this.rutusAdet : 0);
+
+                this.changeTopAski()
+            },
+
+            sil: function (index) {
+                this.$delete(this.array, index);
+                this.$delete(this.arraySepetId, index);
+                this.$delete(this.arraySatirNo, index);
+                this.$delete(this.arrayBaskiId, index);
+                this.$delete(this.arrayProfilId, index);
+                this.$delete(this.arrayAdet, index);
+                this.$delete(this.arrayHurdaAdet, index);
+                this.$delete(this.arrayHurdaSebep, index);
+                this.tophesapla();
+
+            },
+
+            dataKontrol() {
+                if (
+                    this.boyanma.sepetId &&
+                    this.boyanma.satirNo &&
+                    this.boyanma.baskiId &&
+                    this.boyanma.profilId &&
+                    this.boyanma.adet
+                ) {
+                    this.boyanmaData = true
+                } else this.boyanmaData = false;
+            }
 
         }
 
@@ -73,19 +137,11 @@ $('#boyanma_sepet').on("change", async function () {
 
         let array = $(this).val().split(";");
 
-        boyaGiris.sepetId = array[0];
-        boyaGiris.maxAdet = array[1];
-        boyaGiris.satirNo = array[2];
-        boyaGiris.baskiId = array[3];
-        boyaGiris.profilId = array[4];
-        if (boyaGiris.topAdet && boyaGiris.topAdet > 0) {
-            boyaGiris.oran = boyaGiris.maxAdet / boyaGiris.topAdet;
-        }
-
-    } else {
-
-        boyaGiris.maxAdet = 0
-        boyaGiris.oran = 0;
+        boyaGiris.boyanma.sepetId = array[0];
+        boyaGiris.boyanma.satirNo = array[1];
+        boyaGiris.boyanma.baskiId = array[2];
+        boyaGiris.boyanma.profilId = array[3];
+        boyaGiris.dataKontrol();
     }
 
 });
@@ -94,7 +150,7 @@ $('#boya_siklon_giris').on("change", async function () {
 
 
     if ($(this).val() && $(this).val().length > 0) {
-      boyaGiris.siklonId = $(this).val();
+        boyaGiris.siklonId = $(this).val();
     } else {
 
         boyaGiris.siklonId = 0;
@@ -115,33 +171,7 @@ $('#boya_rutus_id').on("change", async function () {
 
 });
 
-$('#boyanma_firin_sicaklik').on("change", async function () {
-
-    boyaGiris.boyalar = []
-
-    if ($(this).val() && $(this).val().length > 0) {
-        boyaGiris.firinSicaklik = $(this).val();
-        const response = await axios.post('/sena/netting/boya/action.php', {
-            action: 'boyagetir',
-            sicaklik : boyaGiris.firinSicaklik
-
-        }).then((response2) => {
-            return response2.data
-        });
-
-        boyaGiris.boyalar  = response;
-
-    } else {
-
-        boyaGiris.firinSicaklik = 0;
-        boyaGiris.boyalar  = []
-
-    }
-
-});
-
 
 $('#boyanma_sepet').select2({});
 $('#boya_siklon_giris').select2({});
-$('#boyanma_firin_sicaklik').select2({});
 $('#boya_rutus_id').select2({});
