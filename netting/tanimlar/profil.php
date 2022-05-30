@@ -23,6 +23,7 @@ if (isset($_POST['profilekleme'])) {
         $ezilmeKatsayisi = $_POST['ezilmeKatsayisi'];
         $aciklama = $_POST['aciklama'];
         $cizim = $_POST['cizim'];
+        $etKalinlik = $_POST['etKalinlik'];
         $seo = seo($profilNo);
         $resim = "";
         $paketlemeSekli = "";
@@ -90,10 +91,10 @@ if (isset($_POST['profilekleme'])) {
 
         $sql = "INSERT INTO tblprofil (profilNo, sektorId, gramaj, alan, cevre, paketAdet,
                                       paketEn, paketBoy, balyaAdet, maxGramaj, ezilmeKatsayisi, aciklama,
-                                      seo, resim, paketlemeSekli, sepetDizilmeSekli, cizim, profilAdi, boyaMaxAdet )
+                                      seo, resim, paketlemeSekli, sepetDizilmeSekli, cizim, profilAdi, boyaMaxAdet, etKalinlik )
                 VALUES ('$profilNo', '$sektorId','$gramaj', '$alan','$cevre', '$paketAdet',
                         '$paketEn', '$paketBoy', '$balyaAdet','$maxGramaj', '$ezilmeKatsayisi','$aciklama',
-                        '$seo', '$resim', '$paketlemeSekli', '$sepetDizilmeSekli', '$cizim', '$profilAdi', '$boyaMaxAdet')";
+                        '$seo', '$resim', '$paketlemeSekli', '$sepetDizilmeSekli', '$cizim', '$profilAdi', '$boyaMaxAdet','$etKalinlik')";;
 
         if (mysqli_query($db, $sql)) {
             header("Location:../../tanimlar/profil/?durumekle=ok");
@@ -163,6 +164,7 @@ if (isset($_POST['profilguncelleme'])) {
     $sepetyol = $_POST['sepetyol'];
     $paketyol = $_POST['paketyol'];
     $cizimyol = $_POST['cizimyol'];
+    $etKalinlik = $_POST['etKalinlik'];
 
     if ($_FILES['resim']['name'] != "") {
         $resim = pdfUpload('resim', "asset/img/profilresim/");
@@ -256,7 +258,7 @@ if (isset($_POST['profilguncelleme'])) {
         cevre = '$cevre', paketAdet = '$paketAdet', paketEn = '$paketEn', paketBoy = '$paketBoy', balyaAdet = '$balyaAdet', 
                        maxGramaj = '$maxGramaj', ezilmeKatsayisi ='$ezilmeKatsayisi', aciklama = '$aciklama',
                     seo = '$seo', resim = '$resimyol', paketlemeSekli = '$paketyol' , sepetDizilmeSekli  = '$sepetyol', cizim = '$cizim',
-                     profilAdi = '$profilAdi', boyaMaxAdet = '$boyaMaxAdet'
+                     profilAdi = '$profilAdi', boyaMaxAdet = '$boyaMaxAdet', etKalinlik = '$etKalinlik'
             WHERE id='$id'";
 
     if (mysqli_query($db, $sql)) {

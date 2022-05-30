@@ -17,9 +17,9 @@ if (isset($_POST['termikekle'])) {
     $baslaTarih = date("d.m.Y H:i");
 
     for ($i = 0; $i < count($sepetler); $i++) {
-        $sepetId = $sepetler[$i];
+        $sepetId = trim($sepetler[$i]);
         $sepetTermik = $sepetTermik . $sepetId . ",";
-        $baskilar = $baskilar . tablogetir('tblsepet', 'id', $sepetId, $db)['icindekiler'] . ";";
+        $baskilar = $baskilar . trim(tablogetir('tblsepet', 'id', $sepetId, $db)['icindekiler']) . ";";
     }
 
 
@@ -79,11 +79,12 @@ if (isset($_POST['termikbitir'])) {
     $tur = explode(",", $_POST['tur']);
 
     for ($i = 0; $i < count($baskilar); $i++) {
-        $baskiId = $baskilar[$i];
+        $baskiId = trim($baskilar[$i]);
         $termikSonuc = $_POST['baski' . $baskiId];
         $termikIds = tablogetir("tblbaski", 'id', $baskiId, $db)['termikId'];
 
         if ($termikIds != '0' && $termikIds != '-1') {
+            $termikId = trim($termikId);
             $termikIds = $termikIds . ";" . $termikId;
 
             $sqlTermikUpdate = "UPDATE tblbaski set

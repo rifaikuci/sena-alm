@@ -19,13 +19,14 @@ if ($received_data->action == 'boyagetir') {
     $datam = array();
     $boya = null;
     while ($row = $result->fetch_array()) {
+        $stokboya = tablogetir("tblstokboya",'id',$row['boyaId'],$db);
         $boya['sepetId'] = $row['sepetId'];
         $boya['baskiId'] = $row['baskiId'];
         $boya['id'] = $row['id'];
         $boya['topAdet'] = $row['topAdet'];
         $boya['baslaZaman'] = $row['baslaZaman'];
-        $boya['firinSicaklik'] = $row['firinSicaklik'];
-        $boya['kurlenmeDakikasi'] = $row['kurlenmeDakikasi'];
+        $boya['firinSicaklik'] = $stokboya['sicaklik'];
+        $boya['boyaTuru'] = $stokboya['boyaTuru'];
         array_push($datam, $boya);
     }
     echo json_encode($datam);

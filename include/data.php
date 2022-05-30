@@ -3,19 +3,26 @@
 $vardiyalar = [1,2,3];
 
 $takimSonDurum = ["R1"=> "Raf", "P" => "Pres", "K1" => "Kostik", "T1"=>"Tashihat"];
-$takimDurumlar = ["R1"=> "Raf Dolu", "P" => "Pres", "K1" => "Kostik", "T1"=>"Tashihat", 'K2'=>"Kumlamaa", "K3"=> "Raf Boş",
-                  "T2" =>"Kumlama", "T3" => "Kumlama Tamamlandı -> Tashihat-Sevk", "T4" =>"Sevk Çıkış Yapıldı", "T5" => "Sevk Giriş Yapıldı", "T6"=>"Tashihat Yapıldı"];
-/*
-R1-> Raf Dolu,
-P-> Pres'te sadece bunlar getirilecek
-K1-> Kostik, Akabinde K2-> Kumlama, K3-> Raf Boş,
-T1-> Kostik, T2-> Kumlama, T3-> Tashihat, T4 -> Sevk Çıkış, T5-> Sevk Giriş
-T3-> Tashihat veya Sevkiyat Çıkış ve Sevkiyat Giriş -> Sevkiyat Çıkışı seçerse son olarak sadece Sadece sevkiyat
- girişi seçeneği zorlanacak bu da tamamlandıktan sonra prese aktarılacak
+$takimDurumlar = ["R1"=> "Raf Dolu",
+    "P" => "Pres",
+    "R1" => "Raf Dolu",
+    "K1" => "Kostik",
+    'K2'=>"Kumlama",
+    "K3"=> "Raf Boş",
+    "T1"=>"Kostik",
+   "T2" =>"Kumlama",
+    "T3" => " Tashihat Çıkış-Sevk",
+    "T4" =>"Çıkış -> Giriş",
+    "T5" => "Yapıldı",
+    "T6"=>"Tashihat Yapıldı",
+    "N"=>"Tenefer"];
 
-"Raf Seçilirse R1";
-"Pres te olanlar kullanılabilir";
-*/
+#  todo  bir çalışmanın tenefer olabilmesi için
+# todo kalıbın son durumu raf boş ise sonraki adımı tenefer uyarı yapılacak yapılana kadar sonra kumlama ondan sonra raf boş
+# todo raf doludan gelirse önce kostiğe atacak sonra kumalma sonra tenefer sonra kumlama sonra raf boş
+#  son durumu raf boş ise -> tenefer -> kumlama -> RAF boş
+#  son durumu raf dolu ise -> kostik -> kumlama -> TENEFER -> KUMLAMA -> RAF BOŞ
+
 
 $baskiBitirilmeNeden = ["Kalıp Kırıldı", "Kalıp Dinlenme", "Kalıp Boy Farkı"];
 

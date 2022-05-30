@@ -10,6 +10,8 @@ if (isset($_POST['firinlamaekle'])) {
 
     $boyalar = $_POST['ids'];
     $baskilarTemp = $_POST['baskilar'];
+    $firinSicaklik = $_POST['firinSicaklik'];
+    $kurlenmeDakikasi = $_POST['kurlenmeDakikasi'];
     $baslaOperator = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $baslaVardiya = vardiyaBul($vardiya, date("H:i"));
@@ -20,9 +22,9 @@ if (isset($_POST['firinlamaekle'])) {
 
 
 
-    $sqlFirinlama = "Insert Into tblfirinlama (baslaOperator,boyalar,baslaVardiya, baslaTarih, baskilar) 
+    $sqlFirinlama = "Insert Into tblfirinlama (baslaOperator,boyalar,baslaVardiya, baslaTarih, baskilar, firinSicaklik, kurlenmeDakikasi) 
                         VALUES 
-                    ( '$baslaOperator', '$boyalar','$baslaVardiya', '$baslaTarih', '$baskilarTemp')";
+                    ( '$baslaOperator', '$boyalar','$baslaVardiya', '$baslaTarih', '$baskilarTemp', '$firinSicaklik', '$kurlenmeDakikasi')";
 
     $boyaArrayreplace = str_replace(";", ",", $boyalar);
 

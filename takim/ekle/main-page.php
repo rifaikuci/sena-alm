@@ -140,10 +140,10 @@ $bolsterler = $db->query($bolstersql);
                             <div class="select2-blue">
                                 <select :disabled="!ekle" required name="destekler[]" class="select2" multiple="multiple"
                                         data-dropdown-css-class="select2-blue"
-                                        data-placeholder="Sena No - Firma Adı - Profil - Çap - Kalıpçı No - Kalite - Figür Sayı"
+                                        data-placeholder="Sena No - Firma Adı - Çap - Kalıpçı No - Kalite - Figür Sayı"
                                         style="width: 100%;">
                                         <option v-for="(destek,index) in destekler" :value="destek.id">
-                                            {{destek.senaNo}} - {{destek.firmaAdi}} - {{destek.profilNo}} - {{destek.cap}} - {{destek.kalipciNo}} -  {{destek.kalite}} - {{destek.figurSayi}}
+                                            {{destek.senaNo}} - {{destek.firmaAdi}} - {{destek.cap}} - {{destek.kalipciNo}} -  {{destek.kalite}} - {{destek.figurSayi}}
                                         </option>
                                 </select>
                             </div>

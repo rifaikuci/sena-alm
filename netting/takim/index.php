@@ -16,6 +16,7 @@ if (isset($_POST['profilId']) && isset($_POST['kalipCins']) ) {
     $parca1 = $_POST['parca1SenaNo'];
     $parca2 = $_POST['parca2SenaNo'];
     $profil = $_POST['profil'];
+    $operatorId = $_POST['operatorId'] ? $_POST['operatorId'] : 0;
     $kisaKod = tablogetir('tblfirma','id',$firmaId, $db)['kisaKod'];
     $sonEk = firmaTakimNoBul($db, "tbltakim", $firmaId, $profilId);
     $takimNo = "SN-" . $kisaKod . $profil . "-";
@@ -46,6 +47,12 @@ if (isset($_POST['profilId']) && isset($_POST['kalipCins']) ) {
                             VALUES ('$parca1', '$parca2','$takimNo', '$firmaId','$profilId', '$cap', '$kalipCins', '$bolster', '$destek', '$sonGramaj')";
 
     if (mysqli_query($db, $sql)) {
+        $takimId = mysqli_insert_id($db);
+        $sqlKaliphane = "INSERT INTO tblkaliphane (takimId, description, newProcess, oldProcess, operatorId) 
+                VALUES ('$takimId', 'Kalıphaneye eklendi', 'K3', 'K3', '$operatorId')";
+        mysqli_query($db, $sqlKaliphane);
+
+
         $updateParca = "UPDATE tblkalipparcalar set 
                     takimNo = '$takimNo' WHERE senaNo='$parca1' OR senaNo='$parca2' ";
         mysqli_query($db, $updateParca);

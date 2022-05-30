@@ -65,6 +65,8 @@ $result = $db->query($sql);
                                            btn-warning">Düzenle</a>
                                         <a href=<?php echo base_url() . "netting/kesim/index.php?kesimsil=" . $row['id']; ?> class="btn
                                            btn-danger">Sil</a>
+                                    <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
+                                           class="btn btn-outline-primary">Görüntüle</a>
 
                                     </td>
                                 </tr>

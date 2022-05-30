@@ -4,10 +4,10 @@ include "../netting/baglan.php";
 include "../include/sql.php";
 require_once "../include/data.php";
 
-$sqlsilinecek = "DELETE FROM tblbaski where bitisZamani = ''";
+$sqlsilinecek = "DELETE FROM tblbaski where bitisZamani  is null";
 mysqli_query($db, $sqlsilinecek);
 
-$sql = "SELECT * FROM tblbaski order by id desc ";
+$sql = "SELECT * FROM tblbaski order by id ";
 $result = $db->query($sql);
 
 ?>
@@ -63,9 +63,8 @@ $result = $db->query($sql);
                                     <td><?php echo $row['satirNo']; ?></td>
                                     <td><?php echo tablogetir('tbltakim', 'id', $row['takimId'], $db)['takimNo']; ?></td>
                                     <td><?php echo sayiFormatla($row['basilanNetKg']) . " Kg / " . $row['basilanNetAdet'] . " Adet"; ?></td>
-                                    <td>
-                                        Görüntüle eklenecek
-                                    </td>
+                                    <td><a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
+                                           class="btn btn-outline-primary">Görüntüle</a></td>
                                 </tr>
                                 <?php $sira++;
                             } ?>

@@ -12,6 +12,8 @@ new Vue({
                     type: 'post',
                     data: {
                         takimno : event.target.dataset.takimno,
+                        brutkilo : event.target.dataset.brutkilo,
+                        netkilo : event.target.dataset.netkilo,
                     },
                     success: function (response) {
                         $('.modal-body').html(response);

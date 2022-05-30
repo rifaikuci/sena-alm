@@ -6,13 +6,12 @@ include '../../include/sql.php';
 
 if (isset($_POST['kromatbaslat'])) {
 
-    $sepetler = isset($_POST['arraysepet']) ? $_POST['arraysepet'] : []; // sepetler
-    $baskilar = isset($_POST['arraybaski']) ? $_POST['arraybaski'] : []; // sepetler
-    $adetler = isset($_POST['arrayadet']) ? $_POST['arrayadet'] : []; // sepetler
-    $hurdalar = isset($_POST['arrayhurda']) ? $_POST['arrayhurda'] : []; // sepetler
-    $sebepler = isset($_POST['arraysebep']) ? $_POST['arraysebep'] : []; // sepetler
+    $sepetler = isset($_POST['arraysepet']) ? $_POST['arraysepet'] : [];
+    $baskilar = isset($_POST['arraybaski']) ? $_POST['arraybaski'] : [];
+    $adetler = isset($_POST['arrayadet']) ? $_POST['arrayadet'] : [];
+    $hurdalar = isset($_POST['arrayhurda']) ? $_POST['arrayhurda'] : [];
+    $sebepler = isset($_POST['arraysebep']) ? $_POST['arraysebep'] : [];
     $kromatsepet = isset($_POST['kromatSepet']) ? $_POST['kromatSepet'] : 0;
-
 
     $sepetler = explode(",", $sepetler[0]);
     $baskilar = explode(",", $baskilar[0]);
@@ -45,6 +44,7 @@ if (isset($_POST['kromatbaslat'])) {
         }
 
     }
+
 
 
     $sqlSepetKromat = "UPDATE tblsepet set

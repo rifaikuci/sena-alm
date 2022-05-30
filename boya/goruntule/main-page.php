@@ -10,6 +10,13 @@ if ($_GET['id']) {
     $sqlboya = "SELECT * FROM tblboya WHERE id = '$id'";
     $boya = mysqli_query($db, $sqlboya)->fetch_assoc();
 
+
+    $sepetler = explode(";", $boya['sepetler']);
+    $baskilar = explode(";", $boya['baskilar']);
+    $adetler = explode(";", $boya['adetler']);
+    $hurdaAdetler = explode(";", $boya['hurdaAdetler']);
+    $hurdaSebepler = explode(";", $boya['hurdaSebepler']);
+
 } ?>
 
 <section class="content">
@@ -17,210 +24,187 @@ if ($_GET['id']) {
         <div class="card-header">
             Boyanma (Fırınlama) Alanı
         </div>
-        <div class="card-body" >
+        <div class="card-body">
             <form enctype="multipart/form-data">
 
                 <div class="row">
+                    <div style="text-align: center" class="col-sm-12">
+                        <h4 style="color: deepskyblue">Alınan Malzemeler</h4>
+                    </div>
+                    <div class="card-body table-responsive p-0">
 
-                    <div class="col-sm-8">
-                        <div class="form-group">
-                            <label>Sepet - Kesim </label>
-                            <input disabled value="<?php
-                            $sepet = tablogetir('tblsepet', 'id', $boya['sepetId'], $db);
-                          echo  $sepet['ad'] . " - " .  $boya['kesimId'] ?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
+
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                            <tr>
+                                <th>Sepet No</th>
+                                <th>Baskı Id</th>
+                                <th>Satır No</th>
+                                <th>Profil No</th>
+                                <th>Alınan Adet</th>
+                                <th>Hurda Adet</th>
+                                <th>Hurda Sebep</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+
+                            <?php for ($i = 0; $i < count($adetler); $i++) {
+                                $baski = tablogetir("tblbaski", "id", $baskilar[$i], $db);
+                                $siparis = tablogetir("tblsiparis", "satirNo", $baski['satirNo'], $db);
+                                $profil = tablogetir("tblprofil", "id", $siparis['profilId'], $db);
+                                ?>
+                                <tr>
+                                    <td><?php echo $sepetler[$i] ?></td>
+                                    <td><?php echo $baskilar[$i] ?></td>
+                                    <td><?php echo $baski['satirNo'] ?></td>
+                                    <td><?php echo $profil['profilNo'] ?></td>
+                                    <td><?php echo $adetler[$i] ?></td>
+                                    <td><?php echo $hurdaAdetler[$i] ?></td>
+                                    <td><?php echo $hurdaSebepler[$i] ?></td>
+                                </tr>
+                            <?php } ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                    <div class="col-sm-12">
+                        <div style="text-align: center">
+
+                            <h3 style="color: #0c525d">
+                                Bilgiler
+                            </h3>
                         </div>
                     </div>
-                    <div class="col-sm-4">
+
+                    <?php $stokboya = tablogetir("tblstokboya", "id", $boya['boyaId'], $db); ?>
+
+                    <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Askı Tipi</label>
-                            <input disabled value="<?php echo $boya['askiId']?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
+                            <label>Boya Barkod</label>
+                            <input class="form-control" disabled
+                                   value="<?php echo $stokboya['barkodNo'] ?>">
                         </div>
                     </div>
 
                     <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Fırın Sıcaklığı</label>
-                            <input disabled value="<?php echo $boya['firinSicaklik']?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
+                            <label>Parti No</label>
+                            <input class="form-control" disabled
+                                   value="<?php echo $stokboya['partino'] ?>">
                         </div>
                     </div>
 
                     <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Kürlenme Dakikası</label>
-                            <input disabled value="<?php echo $boya['kurlenmeDakikasi']?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
+                            <label>Kullanılan Boya (Kg)</label>
+                            <input class="form-control" disabled
+                                   value="<?php echo $boya['kullanilanBoya'] ?>">
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <?php
+                    $siklon = tablogetir("tblsiklon", 'id', $boya['siklonId'], $db);
+                    $siklonBoya = tablogetir("tblstokboya", "id", $siklon['boyaId'], $db);
+                    ?>
+
+                    <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Boyalar</label>
-                            <input disabled value="<?php echo tablogetir("tblstokboya", 'id', $boya['boyaId'], $db)['barkodNo']  ?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
+                            <label>Siklon Boya Barkod</label>
+                            <input class="form-control" disabled
+                                   value="<?php echo $siklonBoya['barkodNo'] ?>">
                         </div>
                     </div>
 
                     <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Kullanılan Boya</label>
-                            <input disabled value="<?php echo $boya['kullanilanBoya']?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
+                            <label>Parti No</label>
+                            <input class="form-control" disabled
+                                   value="<?php echo $siklonBoya['partino'] ?>">
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Siklon Boya</label>
-                            <input disabled value="<?php
-                            $tempboya = tablogetir("tblstokboya", "id", $boya['boyaId'], $db);
-
-                            echo $tempboya['barkodNo'] ?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-2" v-if="siklonId > 0">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>S. Altı Kullanılan Boya (KG)</label>
-                            <input disabled value="<?php echo $boya['siklonKullanilanKg']?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
+                            <input class="form-control" disabled
+                                   value="<?php echo $boya['siklonKullanilanKg'] ?>">
                         </div>
                     </div>
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Askı Tipi</label>
+                            <input class="form-control" disabled
+                                   value="<?php echo $boya['askiId'] ?>">
+                        </div>
+                    </div>
+
+                    <?php
+                    if ($boya['rutusId'] > 0) {
+
+                        $rutusProfil = tablogetir("tblrutusprofil", 'id', $boya['rutusId'], $db);
+                        $rutus = tablogetir("tblprofil", 'id', $rutusProfil['id'], $db);
+                        ?>
+
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>Rutuş Profil</label>
+                                <input class="form-control" disabled
+                                       value="<?php echo $rutus['profilNo'] ?>">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <div class="form-group">
+                                <label>Rutuş Adet</label>
+                                <input class="form-control" disabled
+                                       value="<?php echo $boya['rutusAdet'] ?>">
+                            </div>
+                        </div>
+
+                    <?php } ?>
 
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>S. Altına Ayrılan Boya (KG)</label>
-                            <input disabled value="<?php echo $boya['siklonAyrilanKg']?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
+                            <input class="form-control" disabled
+                                   value="<?php echo $boya['siklonAyrilanKg'] ?>">
                         </div>
                     </div>
 
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Net Boya (KG)</label>
-                            <input disabled value="<?php echo $boya['netBoya']?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
+                            <input class="form-control" disabled
+                                   value="<?php echo $boya['netBoya'] ?>">
                         </div>
                     </div>
-                </div>
 
-                <br><br><br>
-
-                <div class="row">
-
-                    <div class="col-sm-12">
-                        <div style="text-align: center">
-
-                            <h3 style="color: #0c525d">
-                                Kesim Bilgileri
-                            </h3>
-                        </div>
-
-                    </div>
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label>Atılabilecek Max</label>
-                            <input disabled value="<?php echo $boya['maxAdet']?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
-                        </div>
-                    </div>
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Top. Askı</label>
-                            <input disabled value="<?php echo $boya['topAski']?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
+                            <input class="form-control" disabled
+                                   value="<?php echo $boya['topAski'] ?>">
                         </div>
                     </div>
 
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Top. Adet</label>
-                            <input disabled value="<?php echo $boya['topAdet']?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label>Oran</label>
-                            <input disabled value="<?php echo $boya['oran']?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label>Alt Sebep</label>
-                            <input disabled value="<?php echo $boya['altSebep']?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
+                            <input class="form-control" disabled
+                                   value="<?php echo $boya['topAski'] ?>">
                         </div>
                     </div>
 
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Ort. Askı Adet</label>
-                            <input disabled value="<?php echo $boya['ortAskiAdet']?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
+                            <input class="form-control" disabled
+                                   value="<?php echo $boya['ortAskiAdet'] ?>">
                         </div>
                     </div>
 
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label>Rutuş Profil</label>
-                            <input disabled value="<?php  $rutus =  $boya['rutusId']  != "0" ? tablogetir('tblrutusprofil', 'id', $boya['rutusId']) : "0";
-                                    $profil =  $rutus != "0" ? tablogetir("tblprofil", 'id',$rutus['profilId'], $db) : "Yok";
-                                    echo $profil != "Yok" ? $profil['profilAdi'] : "Kullanılmadı";
-                            ?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label>Rutuş Adet</label>
-                            <input disabled value="<?php echo $boya['rutusAdet']?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label>Hurda Adet</label>
-                            <input disabled value="<?php echo $boya['hurdaAdet']?>"
-                                   class="form-control" type="text"
-                                   placeholder="0">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-2>
-                        <div class="form-group">
-                            <label>Hurda Sebebi</label>
-                    <input disabled value="<?php echo $boya['hurdaAdet'] > 0 ? $boya['hurdaSebep'] : "-" ?>"
-                           class="form-control" type="text"
-                           placeholder="0">
-                        </div>
-                    </div>
                 </div>
 
 

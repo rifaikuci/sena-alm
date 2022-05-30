@@ -5,6 +5,9 @@ require_once "../../include/helper.php";
 
 
 $takimId = $_POST['takimno'];
+$takimno = $_POST['takimno'];
+$brutkilo = $_POST['brutkilo'];
+$netkilo = $_POST['netkilo'];
 
 
 
@@ -18,21 +21,39 @@ $result = $db->query($sql);
 
 ?>
 
-<!-- TODO durum kısmı yanlış veri geliyor, takım no yukarı alıyor.  -->
 <div style="text-align: center">
     <h4 style="color: #0e84b5">
-        Takım Geçmişi
+        Takım Geçmişi - (<?php echo $takimno; ?>)
     </h4>
 </div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label style="color: #0b2e13">Brüt Kilo: <?php echo sayiFormatla($brutkilo)?></label>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label style="color: #0b2e13">Net Kilo: <?php echo sayiFormatla($netkilo)?></label>
+        </div>
+    </div>
+</div>
+
 <div class="card-body table-responsive p-0">
 
     <table class="table table-dark table-hover text-nowrap">
         <thead>
         <tr>
-            <th scope="col">Takım No</th>
             <th scope="col">İşlem Zamanı</th>
             <th scope="col">Description</th>
-            <th scope="col">Durum</th>
+            <th scope="col">Eski Konum</th>
+            <th scope="col">Yeni Konum</th>
+            <th scope="col">Basılan Brüt</th>
+            <th scope="col">Basılan Net</th>
 
         </tr>
         </thead>
@@ -40,11 +61,12 @@ $result = $db->query($sql);
         <?php
         while ($row = $result->fetch_array()) {?>
             <tr>
-                <td><?php echo $takim['takimNo'] ?></td>
                 <td><?php echo tarihsaat($row['datetime']); ?></td>
                 <td><?php echo $row['description'] ?></td>
-                <td><?php echo takimDurumBul($takim['konum']); ?></td>
-
+                <td><?php echo takimDurumBul($row['oldProcess']) ?></td>
+                <td><?php echo takimDurumBul($row['newProcess']) ?></td>
+                <td><?php echo $row['basilanBrutKilo'] ?></td>
+                <td><?php echo $row['basilanNetKilo'] ?></td>
             </tr>
         <?php } ?>
         </tbody>

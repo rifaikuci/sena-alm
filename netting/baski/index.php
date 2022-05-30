@@ -165,6 +165,7 @@ if (isset($_POST['baskiekle'])) {
                     where id = '$id'";
     mysqli_query($db, $sqlBaski);
 
+
     $sqlTakim = "Select * from tbltakim where id = '$takimId'";
     $result = mysqli_query($db, $sqlTakim);
     $takim = $result->fetch_assoc();
@@ -172,7 +173,7 @@ if (isset($_POST['baskiekle'])) {
     $netKilo = $takim['netKilo'] + $basilanNetKg;
     $oldProcess = $takim['konum'];
 
-    $sqlKalipIslem = "INSERT INTO tblKalipIslem (takimId,basilanNetKilo, basilanBrutKilo, oldProcess, newProcess, operatorId ) 
+    $sqlKalipIslem = "INSERT INTO tblkaliphane (takimId,basilanNetKilo, basilanBrutKilo, oldProcess, newProcess, operatorId ) 
                 VALUES ('$takimId', '$basilanNetKg', '$basilanBrutKg', '$oldProcess', '$takimSonDurum','$operatorId')";
 
     mysqli_query($db, $sqlKalipIslem);

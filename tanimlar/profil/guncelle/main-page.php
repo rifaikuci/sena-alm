@@ -128,6 +128,14 @@ if ($_GET['id']) {
                         </div>
                     </div>
 
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Et Kalınlığı</label>
+                            <input type="number" class="form-control form-control-lg" step="0.1" placeholder="0.1"
+                                   name="etKalinlik" value="<?php echo $row['etKalinlik'] ?>">
+                        </div>
+                    </div>
+
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Balya Adet</label>

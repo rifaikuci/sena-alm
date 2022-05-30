@@ -82,7 +82,7 @@ date_default_timezone_set('Europe/Istanbul');
                                 <div class="row">
                                     <div class="col-sm-8">
                                         <h6>
-                                            <span style="color: darkcyan; font-weight: bold"> Boy: </span>
+                                            <span style="color: darkcyan; font-weight: bold"> İstenilen Termik: </span>
                                             {{istenilenTermik}}
                                         </h6>
 

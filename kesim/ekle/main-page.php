@@ -8,7 +8,7 @@ $kesimsql = "SELECT * FROM tblbaski where 0 >= kesimId and bitisZamani !='' AND 
  and  0 >= kromatId  and  0 >= naylonId  and  0 >= paketId  and  0 >= boyaPaketId  and  0 >= termikId";
 $baskilar = $db->query($kesimsql);
 
-
+#todo net adet ve kesim alınan adetin toplamı kontrolü yapılacak uayrı verilecek işlem yaptırmayacak
 ?>
 
 <section class="content">

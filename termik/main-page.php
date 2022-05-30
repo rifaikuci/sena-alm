@@ -45,6 +45,7 @@ $result = $db->query($sql);
                                 <th>Sip No - Baskı ID - T. Sonuç</th>
                                 <th>Durum</th>
                                 <th style="text-align: center">İşlem /Bitirilme Zam.</th>
+                                <th></th>
                             </tr>
                             </thead>
 
@@ -76,11 +77,14 @@ $result = $db->query($sql);
                                         <?php } else {
                                             echo $row['bitisTarih'];
                                         } ?>
-                                        <?php if (!$row['bitisTarih']) { ?>
-                                            <a href=<?php echo base_url() . "netting/termik/index.php?termiksil=" . $row['id']; ?> class="btn
-                                               btn-danger">Sil</a>
-                                        <?php } ?>
 
+                                    </td>
+                                    <td>
+                                        <?php
+                                        if ($row['bitisTarih']) { ?>
+                                        <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
+                                           class="btn btn-outline-primary">Görüntüle</a>
+                                        <?php } ?>
                                     </td>
                                 </tr>
                                 <?php $sira++;

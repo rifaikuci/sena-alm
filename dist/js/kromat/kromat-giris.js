@@ -24,7 +24,7 @@ var kromatGiris  = new Vue({
                     this.sepetler.push(this.baskilar[i].sepetId);
                     this.baskilarId.push(this.baskilar[i].baskiId);
                     this.adetler.push(this.baskilar[i].adet);
-                    this.hurdaAdetler.push(this.baskilar[i].hurdaAdet ? this.baskilar[i].hurdaAde : 0 );
+                    this.hurdaAdetler.push(this.baskilar[i].hurdaAdet ? this.baskilar[i].hurdaAdet : 0 );
                     this.sebepler.push(this.baskilar[i].sebep);
                 }
 

@@ -11,7 +11,6 @@ $biyetler = $db->query($biyetSql);
 
 
 date_default_timezone_set('Europe/Istanbul');
-#todo her satır için basilan brut kg diye bir alan eklencek. oradan değerler bulunacak
 ?>
 
 <section class="content">

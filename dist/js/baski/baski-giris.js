@@ -167,6 +167,7 @@ var baskigiris = new Vue({
             calculateBrut: function (index) {
                 if (this.biyet.biyetBoylamFire && this.biyet.biyetKonveyorBoy && this.biyet.biyetBoylamFire > 0 && this.biyet.biyetKonveyorBoy > 0) {
                     this.biyet.biyetBaskiFire = (this.biyet.biyetBoylamFire * 2) / this.biyet.biyetKonveyorBoy;
+                    this.biyet.biyetBaskiFire = (this.biyet.biyetBaskiFire).toFixed(2);
                     this.biyet.biyetBrut = (this.biyet.biyetBaskiFire * 100).toFixed(2);
                 }
             },
