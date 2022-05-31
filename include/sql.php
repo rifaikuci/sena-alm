@@ -105,7 +105,7 @@ function kiloBul($baskiId, $adet, $db)
 }
 
 function teneferSayisiGetir($db,$takimId) {
-    $sql = "select COUNT(*) AS teneferSayisi FROM  tblkaliphane where newProcess = 'N' AND takimId = '$takimId'";
+    $sql = "select COUNT(*) AS teneferSayisi FROM  tblkaliphane where (newProcess = 'N1' OR newProcess = 'N4')  AND takimId = '$takimId'";
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_assoc();
     return $row['teneferSayisi'];

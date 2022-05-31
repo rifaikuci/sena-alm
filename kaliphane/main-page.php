@@ -7,8 +7,6 @@ $result = $db->query($sql);
 
 $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
 
-
-
 ?>
 
 
@@ -110,11 +108,6 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
                                     $teneferSayisi = teneferSayisiGetir($db, $takimId);
 
                                     if($teneferSayisi > 0){
-                                        ?>
-                                        <a href="?tenefer=<?php echo $takimId; ?>" class="btn btn-primary">
-                                            <i class="fa fa-plus"></i>
-                                        </a>
-                                        <?php
                                     if ($row['konum'] == "P") {
                                         "";
                                     } else if ($row['konum'] == "R1") {
@@ -267,7 +260,87 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
                                             <i class="fa fa-print" aria-hidden="true"></i>
                                         </button>
 
-                                    <?php } } else  {
+                                    <?php } else if($row['konum'] == "N4") {
+                                        $olProcess = "N4";
+                                        $newProcess = "N5";
+                                        ?>
+
+                                        <button class="btn btn-default" onclick="<?php
+                                        $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess'" . ')';
+                                        echo $function ?>">
+                                            <i class="fa fa-print" aria-hidden="true"></i>
+                                        </button>
+
+                                    <?php } else if($row['konum'] == "N5") {
+                                        $olProcess = "N5";
+                                        $newProcess = "P";
+                                        ?>
+
+                                        <button class="btn btn-primary" onclick="<?php
+                                        $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess'" . ')';
+                                        echo $function ?>">
+                                            <i class="fa fa-print" aria-hidden="true"></i>
+                                        </button>
+                                    <?php  } else if($row['konum'] == "N6") {
+                                        $olProcess = "N6";
+                                        $newProcess = "P";
+                                        ?>
+
+                                        <button class="btn btn-primary" onclick="<?php
+                                        $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess'" . ')';
+                                        echo $function ?>">
+                                            <i class="fa fa-print" aria-hidden="true"></i>
+                                        </button>
+                                    <?php }  else if ($row['konum'] == "N1") {
+                                        $olProcess = "N1";
+                                        $newProcess = "N2";
+                                        $newProcess2 = "P";
+                                        ?>
+
+                                        <button class="btn btn-dark" onclick="<?php
+                                        $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess'" . ')';
+                                        echo $function ?>">
+                                            <i class="fa fa-print" aria-hidden="true"></i>
+                                        </button>
+
+                                        <button class="btn btn-primary" onclick="<?php
+                                        $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess2'" . ')';
+                                        echo $function ?>">
+                                            <i class="fa fa-print" aria-hidden="true"></i>
+                                        </button>
+
+                                    <?php } else if($row['konum'] == "N2") {
+                                        $olProcess = "N2";
+                                        $newProcess = "N3";
+                                        ?>
+
+                                        <button class="btn btn-default" onclick="<?php
+                                        $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess'" . ')';
+                                        echo $function ?>">
+                                            <i class="fa fa-print" aria-hidden="true"></i>
+                                        </button>
+
+
+                                    <?php } else if($row['konum'] == "N3") {
+                                        $olProcess = "N3";
+                                        $newProcess = "N4";
+                                        $newProcess2 = "P";
+                                        ?>
+
+                                        <button class="btn btn-primary" onclick="<?php
+                                        $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess2'" . ')';
+                                        echo $function ?>">
+                                            <i class="fa fa-print" aria-hidden="true"></i>
+                                        </button>
+
+                                        <button class="btn btn-outline-secondary" onclick="<?php
+                                        $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess'" . ')';
+                                        echo $function ?>">Tenefer Yap
+                                        </button>
+                                    <?php }
+
+
+                                    } else  {
                                         echo "<span style='color: red;font-weight: bold'>Önce Tenefer Yapınız</span>";
                                     }?>
                                 </td>
@@ -285,24 +358,12 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
                                     <a href="<?php echo "guncelle/?takimno=" . $row['takimNo']; ?>" class="btn btn-outline-warning">
                                         <i class="fa fa-edit"></i></a>
 
-                                    <?php } ?>
-
-
-                                    <?php if($row['konum'] == "R1") {
-                                        $olProcess = "R1";
-                                        $newProcess = "TENEFER";
-                                        ?>
-
-                                    <button class="btn btn-outline-secondary" onclick="<?php
-                                    $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess'" . ')';
-                                    echo $function ?>">Tenefer Yap
-                                    </button>
-
-
-                                    <?php } else if ($row['konum'] == "K3") {
+                                    <?php }
+                                    if ($row['konum'] == "K3") {
                                         $olProcess = "K3";
-                                        $newProcess = "TENEFER";
+                                        $newProcess = "N4";
                                         ?>
+
                                         <button class="btn btn-outline-secondary" onclick="<?php
                                         $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess'" . ')';
                                         echo $function ?>">Tenefer Yap

@@ -20,14 +20,47 @@ if (isset($_POST['takimId']) && isset($_POST['oldProcess']) && isset($_POST['new
     $kostikHavuzId = 0;
     $kumlamaHavuzId = 0;
     $teneferHavuzId = 0;
+    $etKalinlik = 0;
+    $tur = 0;
+
+    $takim = tablogetir("tbltakim", "id", $takimId, $db);
+    $profil = tablogetir("tblprofil", "id", $takim['profilId'], $db);
+    $etKalinlik  = $profil['etKalinlik'];
+    $teneferSayisi = $takim['teneferSayisi'];
+
+    $parca = $takim['parca1'];
+    $prefix = $parca[3].$parca[4];
+
+    if(in_array($prefix,["KZ","KK","KD", "BZ", "BK", "BD"]) ) {
+       $beklenenBaski  = teneferBaskiSiraBul(1, $etKalinlik,$teneferSayisi);
+    } else {
+        $beklenenBaski  = teneferBaskiSiraBul(2, $etKalinlik,$teneferSayisi);
+    }
+
 
     if ($oldProcess == "K1" || $oldProcess == "T1") {
-        $kostikHavuzId = tablogetir("tblhavuz", "tur", "kostik", $db)['logHavuzId'];
-    } else if ($oldProcess == "T1" || $oldProcess == "T2") {
+        $kostikHavuzId = tablogetir("tblhavuz", "tur",  "kostik", $db)['logHavuzId'];
+
+    } else if ($oldProcess == "T2" || $oldProcess == "K2") {
         $kumlamaHavuzId = tablogetir("tblhavuz", "tur", "kum", $db)['logHavuzId'];
 
     }
 
+    else if ( ($oldProcess == "K3" && $newProcess == "N4" ) ) {
+        $tempNewProcess  = "N3";
+
+        $teneferHavuzId = tablogetir("tblhavuz", "tur", "tenefer", $db)['logHavuzId'];
+            $sqlTemp = "INSERT INTO tblkaliphane (takimId, oldProcess, newProcess, description, operatorId, kumlamaHavuzId, kostikHavuzId, teneferHavuzId) 
+            VALUES ('$takimId', '$oldProcess', '$tempNewProcess', '$description', '$operatorId', '$kumlamaHavuzId', '$kostikHavuzId', '$teneferHavuzId')";
+
+
+            mysqli_query($db, $sqlTemp);
+        $teneferHavuzId = 0;
+        $oldProcess = "N3";
+        $newProcess = "N4";
+        $kumlamaHavuzId = tablogetir("tblhavuz", "tur", "kum", $db)['logHavuzId'];
+
+    }
 
     $sqlTakim = "UPDATE tbltakim SET konum = '$newProcess' WHERE id = $takimId";
     mysqli_query($db, $sqlTakim);

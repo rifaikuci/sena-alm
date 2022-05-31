@@ -15,14 +15,13 @@ $takimDurumlar = ["R1"=> "Raf Dolu",
     "T4" =>"Çıkış -> Giriş",
     "T5" => "Yapıldı",
     "T6"=>"Tashihat Yapıldı",
-    "N"=>"Tenefer"];
-
-#  todo  bir çalışmanın tenefer olabilmesi için
-# todo kalıbın son durumu raf boş ise sonraki adımı tenefer uyarı yapılacak yapılana kadar sonra kumlama ondan sonra raf boş
-# todo raf doludan gelirse önce kostiğe atacak sonra kumalma sonra tenefer sonra kumlama sonra raf boş
-#  son durumu raf boş ise -> tenefer -> kumlama -> RAF boş
-#  son durumu raf dolu ise -> kostik -> kumlama -> TENEFER -> KUMLAMA -> RAF BOŞ
-
+    "N1"=>"Kostik",
+    "N2"=>"Kumlama",
+    "N3"=>"Tenefer",
+    "N4"=>"Kumlama",
+    "N5"=>"Raf Boş",
+    "N6"=>"Raf Boş",
+    ];
 
 $baskiBitirilmeNeden = ["Kalıp Kırıldı", "Kalıp Dinlenme", "Kalıp Boy Farkı"];
 
