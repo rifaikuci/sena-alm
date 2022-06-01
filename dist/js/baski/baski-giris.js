@@ -168,8 +168,20 @@ var baskigiris = new Vue({
                 if (this.biyet.biyetBoylamFire && this.biyet.biyetKonveyorBoy && this.biyet.biyetBoylamFire > 0 && this.biyet.biyetKonveyorBoy > 0) {
                     this.biyet.biyetBaskiFire = (this.biyet.biyetBoylamFire * 2) / this.biyet.biyetKonveyorBoy;
                     this.biyet.biyetBaskiFire = (this.biyet.biyetBaskiFire).toFixed(2);
-                    this.biyet.biyetBrut = (this.biyet.biyetBaskiFire * 100).toFixed(2);
+                    this.biyet.biyetBaskiFire = (this.biyet.biyetBaskiFire) * 100;
                 }
+            },
+
+            handleBiyetBrut: function () {
+                if(this.biyet.biyetBoy && this.biyet.biyetBoy > 0  &&
+                    this.biyetBirimGramaj && this.biyetBirimGramaj > 0 &&
+                    this.biyet.biyetVerilenBiyet && this.biyet.biyetVerilenBiyet > 0) {
+
+                    this.biyet.biyetBrut = this.biyet.biyetVerilenBiyet * this.biyet.biyetBoy * this.biyetBirimGramaj
+                    this.biyet.biyetBrut = ( this.biyet.biyetBrut / 1000).toFixed(3);
+                }
+
+                this.fireHesapla();
             },
 
             handleBiyetFire(event) {
@@ -184,14 +196,14 @@ var baskigiris = new Vue({
                     this.biyet.biyetBrut = event.target.value * this.verilenBiyet * this.biyetBirimGramaj
                     this.biyet.biyetBrut = (this.biyet.biyetBrut / 1000).toFixed(3);
                 }
-                this.fireHesapla();
+
             },
+
             handleVerilenBiyet(event) {
                 if (event.target.value && event.target.value > 0 &&
                     this.biyetBoy && this.biyetBoy > 0 &&
                     this.biyetBirimGramaj && this.biyetBirimGramaj > 0) {
-                    this.biyet.biyetBrut = event.target.value * this.biyetBoy * this.biyetBirimGramaj
-                    this.biyet.biyetBrut = ( this.biyet.biyetBrut / 1000).toFixed(3);
+
                 }
                 this.fireHesapla();
             },
@@ -351,6 +363,7 @@ $('#biyet_id').on("change", async function () {
     baskigiris.biyet.biyetId = array[0];
     baskigiris.biyet.biyetAd = array[2];
     baskigiris.biyet.biyetFirma = array[3];
+    baskigiris.biyetBirimGramaj = array[4];
     console.log(array)
 
 });

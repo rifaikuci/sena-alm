@@ -254,13 +254,13 @@ date_default_timezone_set('Europe/Istanbul');
                                             Parti No - Alaşım - Firma
                                         </option>
                                         <?php while ($biyet = $biyetler->fetch_array()) {
-                                            $alasim = tablogetir('tblalasim', 'id', $biyet['alasimId'], $db)['ad'];
+                                            $alasim = tablogetir('tblalasim', 'id', $biyet['alasimId'], $db);
                                             $firma = tablogetir('tblfirma', 'id', $biyet['firmaId'], $db)['firmaAd'];
                                             $id = $biyet['id'];
-                                            $value = $id.";".$biyet['partino'].";".$alasim.";".$firma;
+                                            $value = $id.";".$biyet['partino'].";".$alasim['ad'].";".$firma.";".$alasim['biyetBirimGramaj'];
                                             ?>
                                             <option value="<?php echo $value ; ?>">
-                                                <?php echo $biyet['partino'] . " - " . $alasim . " - " . $firma; ?>
+                                                <?php echo $biyet['partino'] . " - " . $alasim['ad'] . " - " . $firma; ?>
                                             </option>
                                         <?php } ?>
 
@@ -272,7 +272,7 @@ date_default_timezone_set('Europe/Istanbul');
                                 <div class="form-group">
                                     <label>Biyet Boy (cm)</label>
                                     <input v-model="biyet.biyetBoy"
-                                           @change="handleBiyetBoy($event)"
+                                           @change="handleBiyetBrut($event)"
                                            class="form-control" type="number" step="0.1" placeholder="0,1">
 
                                 </div>
@@ -281,7 +281,7 @@ date_default_timezone_set('Europe/Istanbul');
                                 <div class="form-group">
                                     <label>Verilen Biyet</label>
                                     <input v-model="biyet.biyetVerilenBiyet"
-                                           @change="handleVerilenBiyet($event)"
+                                           @change="handleBiyetBrut($event)"
                                            class="form-control" type="number"
                                            step="1" placeholder="0">
                                 </div>

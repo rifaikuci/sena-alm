@@ -221,90 +221,90 @@ function teneferBaskiSiraBul($type, $etKalinlik, $count) {
 
     if($type == 1){
         if($etKalinlik < 1 ) {
-            if($count == 0 ) return  500;
-            else if ($count == 1) return 1000;
-            else if ($count == 2) return 1600;
-            else if ($count == 3) return 2400;
+            if($count == 1 ) return  500;
+            else if ($count == 2) return 1000;
+            else if ($count == 3) return 1600;
+            else if ($count == 4) return 2400;
             else return 4800;
         } else if ($etKalinlik >= 1 && $etKalinlik < 1.2) {
-            if($count == 0 ) return  850;
-            else if ($count == 1) return 2000;
-            else if ($count == 2) return 2600;
-            else if ($count == 3) return 4200;
+            if($count == 1 ) return  850;
+            else if ($count == 2) return 2000;
+            else if ($count == 3) return 2600;
+            else if ($count == 4) return 4200;
             else return 8400;
         } else if ($etKalinlik >= 1.2 && $etKalinlik < 1.5) {
-            if($count == 0 ) return  1400;
-            else if ($count == 1) return 3000;
-            else if ($count == 2) return 3500;
-            else if ($count == 3) return 8400;
+            if($count == 1 ) return  1400;
+            else if ($count == 2) return 3000;
+            else if ($count == 3) return 3500;
+            else if ($count == 4) return 8400;
             else return 12700;
         } else if ($etKalinlik >= 1.5 && $etKalinlik < 1.8) {
-            if($count == 0 ) return  1700;
-            else if ($count == 1) return 3800;
-            else if ($count == 2) return 4300;
-            else if ($count == 3) return 9500;
+            if($count == 1 ) return  1700;
+            else if ($count == 2) return 3800;
+            else if ($count == 3) return 4300;
+            else if ($count == 4) return 9500;
             else return 14500;
         } else if ($etKalinlik >= 1.8 && $etKalinlik < 2.6) {
-            if($count == 0 ) return  2100;
-            else if ($count == 1) return 4500;
-            else if ($count == 2) return 6500;
-            else if ($count == 3) return 12000;
+            if($count == 1 ) return  2100;
+            else if ($count == 2) return 4500;
+            else if ($count == 3) return 6500;
+            else if ($count == 4) return 12000;
             else return 18000;
         } else if ($etKalinlik >= 2.6 && $etKalinlik < 3.5) {
-            if($count == 0 ) return  2800;
-            else if ($count == 1) return 7500;
-            else if ($count == 2) return 10700;
-            else if ($count == 3) return 18000;
+            if($count == 1 ) return  2800;
+            else if ($count == 2) return 7500;
+            else if ($count == 3) return 10700;
+            else if ($count == 4) return 18000;
             else return 24000;
         } else {
-            if($count == 0 ) return  3500;
-            else if ($count == 1) return 12000;
-            else if ($count == 2) return 16000;
-            else if ($count == 3) return 24000;
+            if($count == 1 ) return  3500;
+            else if ($count == 2) return 12000;
+            else if ($count == 3) return 16000;
+            else if ($count == 4) return 24000;
             else return 36000;
         }
     } else {
         if($etKalinlik < 1 ) {
-            if($count == 0 ) return  700;
-            else if ($count == 1) return 1300;
-            else if ($count == 2) return 2000;
-            else if ($count == 3) return 3000;
+            if($count == 1 ) return  700;
+            else if ($count == 2) return 1300;
+            else if ($count == 3) return 2000;
+            else if ($count == 4) return 3000;
             else return 6000;
         } else if ($etKalinlik >= 1 && $etKalinlik < 1.2) {
-            if($count == 0 ) return  1200;
-            else if ($count == 1) return 2600;
-            else if ($count == 2) return 3300;
-            else if ($count == 3) return 5300;
+            if($count == 1 ) return  1200;
+            else if ($count == 2) return 2600;
+            else if ($count == 3) return 3300;
+            else if ($count == 4) return 5300;
             else return 10500;
         } else if ($etKalinlik >= 1.2 && $etKalinlik < 1.5) {
-            if($count == 0 ) return  2000;
-            else if ($count == 1) return 4000;
-            else if ($count == 2) return 4500;
-            else if ($count == 3) return 10600;
+            if($count == 1 ) return  2000;
+            else if ($count == 2) return 4000;
+            else if ($count == 3) return 4500;
+            else if ($count == 4) return 10600;
             else return 15800;
         } else if ($etKalinlik >= 1.5 && $etKalinlik < 1.8) {
-            if($count == 0 ) return  2400;
-            else if ($count == 1) return 5000;
-            else if ($count == 2) return 5500;
-            else if ($count == 3) return 12000;
+            if($count == 1 ) return  2400;
+            else if ($count == 2) return 5000;
+            else if ($count == 3) return 5500;
+            else if ($count == 4) return 12000;
             else return 18000;
         } else if ($etKalinlik >= 1.8 && $etKalinlik < 2.6) {
-            if($count == 0 ) return  3000;
-            else if ($count == 1) return 6000;
-            else if ($count == 2) return 8200;
-            else if ($count == 3) return 15000;
+            if($count == 1 ) return  3000;
+            else if ($count == 2) return 6000;
+            else if ($count == 3) return 8200;
+            else if ($count == 4) return 15000;
             else return 22500;
         } else if ($etKalinlik >= 2.6 && $etKalinlik < 3.5) {
-            if($count == 0 ) return  4000;
-            else if ($count == 1) return 10000;
-            else if ($count == 2) return 13500;
-            else if ($count == 3) return 22500;
+            if($count == 1 ) return  4000;
+            else if ($count == 2) return 10000;
+            else if ($count == 3) return 13500;
+            else if ($count == 4) return 22500;
             else return 30000;
         } else {
-            if($count == 0 ) return  5000;
-            else if ($count == 1) return 16000;
-            else if ($count == 2) return 20000;
-            else if ($count == 3) return 30000;
+            if($count == 1 ) return  5000;
+            else if ($count == 2) return 16000;
+            else if ($count == 3) return 20000;
+            else if ($count == 4) return 30000;
             else return 45000;
         }
     }

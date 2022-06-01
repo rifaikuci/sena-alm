@@ -85,6 +85,7 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
                             <th>Konumu</th>
                             <th>Brüt Kg</th>
                             <th>Net Kg</th>
+                            <th>Tenefer Durum</th>
                             <th>İşlem</th>
                             <th></th>
                         </tr>
@@ -92,6 +93,22 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
 
                         <?php $sira = 1;
                         while ($row = $result->fetch_array()) {
+                            $kalan = $row['yapilanTeneferBaski'] - $row['siradakiTeneferBaski'];
+                            $isTenefer = false;
+                              if($row['yapilanTeneferBaski'] == 0) {
+
+                                  $isTenefer = false;
+                              } else {
+                                  if($row['yapilanTeneferBaski'] > 0 && $row['siradakiTeneferBaski'] > 0) {
+                                      $oran = $row['yapilanTeneferBaski'] / $row['siradakiTeneferBaski'] ;
+                                      echo $oran;
+                                      if($oran >= 0.85) {
+                                          $isTenefer = true;
+                                      } else {
+                                          $isTenefer = false;
+                                      }
+                                  }
+                              }
 
                             ?>
                             <tr>
@@ -101,12 +118,12 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
                                 <td><?php echo takimDurumBul($row['konum']) ?></td>
                                 <td><?php echo sayiFormatla($row['brutKilo']); ?></td>
                                 <td><?php echo sayiFormatla($row['netKilo']); ?></td>
+                                <td><?php echo sayiFormatla($kalan) . " Kg"; ?></td>
 
                                 <td>
                                     <?php
                                     $takimId = $row['id'];
                                     $teneferSayisi = teneferSayisiGetir($db, $takimId);
-
                                     if($teneferSayisi > 0){
                                     if ($row['konum'] == "P") {
                                         "";
@@ -167,6 +184,15 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
                                             <i class="fa fa-print" aria-hidden="true"></i>
                                         </button>
 
+                                      <?php if($isTenefer) {
+                                            $olProcess = "K3";
+                                            $newProcess = "N4";
+                                          ?>
+                                            <button class="btn btn-outline-secondary" onclick="<?php
+                                            $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess'" . ')';
+                                            echo $function ?>">Tenefer Yap
+                                            </button>
+                                            <?php } ?>
                                     <?php } else if ($row['konum'] == "T1") {
                                         $olProcess = "T1";
                                         $newProcess = "T2";
@@ -332,15 +358,7 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
                                         echo $function ?>">
                                             <i class="fa fa-print" aria-hidden="true"></i>
                                         </button>
-
-                                        <button class="btn btn-outline-secondary" onclick="<?php
-                                        $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess'" . ')';
-                                        echo $function ?>">Tenefer Yap
-                                        </button>
-                                    <?php }
-
-
-                                    } else  {
+                                    <?php } } else  {
                                         echo "<span style='color: red;font-weight: bold'>Önce Tenefer Yapınız</span>";
                                     }?>
                                 </td>
@@ -359,7 +377,7 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
                                         <i class="fa fa-edit"></i></a>
 
                                     <?php }
-                                    if ($row['konum'] == "K3") {
+                                    if ($row['konum'] == "K3" &&  $teneferSayisi == 0) {
                                         $olProcess = "K3";
                                         $newProcess = "N4";
                                         ?>

@@ -166,12 +166,12 @@ if (isset($_POST['baskiekle'])) {
     mysqli_query($db, $sqlBaski);
 
 
-    $sqlTakim = "Select * from tbltakim where id = '$takimId'";
-    $result = mysqli_query($db, $sqlTakim);
-    $takim = $result->fetch_assoc();
+    $takim = tablogetir("tbltakim", "id", $takimId, $db);
+
     $brutKilo = $takim['brutKilo'] + $basilanBrutKg;
     $netKilo = $takim['netKilo'] + $basilanNetKg;
     $oldProcess = $takim['konum'];
+    $yapilanTeneferBaski = $takim['yapilanTeneferBaski'] + $basilanBrutKg;
 
     $sqlKalipIslem = "INSERT INTO tblkaliphane (takimId,basilanNetKilo, basilanBrutKilo, oldProcess, newProcess, operatorId ) 
                 VALUES ('$takimId', '$basilanNetKg', '$basilanBrutKg', '$oldProcess', '$takimSonDurum','$operatorId')";
@@ -183,7 +183,8 @@ if (isset($_POST['baskiekle'])) {
                     brutKilo = '$brutKilo',
                     netKilo = '$netKilo',
                     konum = '$takimSonDurum',
-                    sonGramaj = '$guncelGr'
+                    sonGramaj = '$guncelGr',
+                    yapilanTeneferBaski = '$yapilanTeneferBaski'
                     where id = '$takimId'";
     mysqli_query($db, $sqlTakimgGuncelle);
 
@@ -564,7 +565,8 @@ if (isset($_POST['baskiIdG'])) {
     $netKilo = $takim['netKilo'] + $basilanNetKg;
     $oldProcess = $takim['konum'];
 
-    $sqlKalipIslem = "INSERT INTO tblKalipIslem (takimId,basilanNetKilo, basilanBrutKilo, oldProcess, newProcess, operatorId ) 
+    $yapilanTeneferBaski = $takim['yapilanTeneferBaski'] + $basilanBrutKg;
+    $sqlKalipIslem = "INSERT INTO tblkaliphane (takimId,basilanNetKilo, basilanBrutKilo, oldProcess, newProcess, operatorId ) 
                 VALUES ('$takimId', '$basilanNetKg', '$basilanBrutKg', '$oldProcess', '$takimSonDurum','$operatorId')";
 
     mysqli_query($db, $sqlKalipIslem);
@@ -573,7 +575,8 @@ if (isset($_POST['baskiIdG'])) {
                     brutKilo = '$brutKilo',
                     netKilo = '$netKilo',
                     konum = '$takimSonDurum',
-                    sonGramaj = '$guncelGr'
+                    sonGramaj = '$guncelGr',
+                    yapilanTeneferBaski = '$yapilanTeneferBaski'
                     where id = '$takimId'";
     mysqli_query($db, $sqlTakimgGuncelle);
 
