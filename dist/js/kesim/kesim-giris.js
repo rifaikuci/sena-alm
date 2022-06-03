@@ -77,8 +77,7 @@ var kesimgiris = new Vue({
                     let sepet2 = this.sepet2Adet ? this.sepet2Adet : 0;
                     let sepet3 = this.sepet3Adet ? this.sepet3Adet : 0;
                     let hurda = this.hurdaAdet ? this.hurdaAdet : 0;
-                    this.netAdet = (Number(sepet1) + Number(sepet2) + Number(sepet3)) -  Number(hurda);
-                    debugger;
+                    this.netAdet = (Number(sepet1) + Number(sepet2) + Number(sepet3));
                     if(Number(sepet1) + Number(sepet2) + Number(sepet3) + Number(hurda) == Number(this.basilanNetAdet)) {
                         this.bitir = true;
                     } else {
