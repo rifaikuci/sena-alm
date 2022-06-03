@@ -39,7 +39,6 @@ var kesimgiris = new Vue({
             methods: {
                 handleHurda($event) {
                     this.hurdaAdet = this.hurdaAdet ? this.hurdaAdet : "";
-                    this.netAdet = this.basilanNetAdet ? this.basilanNetAdet - this.hurdaAdet ? this.hurdaAdet : 0 : 0
                     if(this.hurdaAdet) {
 
                         if(this.hurdaAdet > 0 && this.hurdaAdet >= this.basilanNetAdet)  {
@@ -50,6 +49,7 @@ var kesimgiris = new Vue({
                     } else {
                         this.hurdaAdetKontrolHata =  false;
                     }
+                    this.hesapla($event);
                 },
                 kesimOranHesapla($event) {
                     this.kesimFarkli = true;
@@ -77,6 +77,7 @@ var kesimgiris = new Vue({
                     let sepet2 = this.sepet2Adet ? this.sepet2Adet : 0;
                     let sepet3 = this.sepet3Adet ? this.sepet3Adet : 0;
                     let hurda = this.hurdaAdet ? this.hurdaAdet : 0;
+                    this.netAdet = (Number(sepet1) + Number(sepet2) + Number(sepet3)) -  Number(hurda);
                     debugger;
                     if(Number(sepet1) + Number(sepet2) + Number(sepet3) + Number(hurda) == Number(this.basilanNetAdet)) {
                         this.bitir = true;
