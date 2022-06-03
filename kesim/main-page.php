@@ -61,10 +61,6 @@ $result = $db->query($sql);
                                     <td><?php echo $row['hurdaAdet']; ?></td>
                                     <td><?php echo $row['netAdet']; ?></td>
                                     <td>
-                                        <a href=<?php echo "guncelle/?kesim=" . $row['id']; ?> class="btn
-                                           btn-warning">Düzenle</a>
-                                        <a href=<?php echo base_url() . "netting/kesim/index.php?kesimsil=" . $row['id']; ?> class="btn
-                                           btn-danger">Sil</a>
                                     <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
                                            class="btn btn-outline-primary">Görüntüle</a>
 

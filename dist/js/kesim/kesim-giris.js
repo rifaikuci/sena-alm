@@ -39,7 +39,7 @@ var kesimgiris = new Vue({
             methods: {
                 handleHurda($event) {
                     this.hurdaAdet = this.hurdaAdet ? this.hurdaAdet : "";
-                    this.netAdet = this.basilanNetAdet - this.hurdaAdet ? this.hurdaAdet : 0;
+                    this.netAdet = this.basilanNetAdet ? this.basilanNetAdet - this.hurdaAdet ? this.hurdaAdet : 0 : 0
                     if(this.hurdaAdet) {
 
                         if(this.hurdaAdet > 0 && this.hurdaAdet >= this.basilanNetAdet)  {
