@@ -71,8 +71,6 @@ $result = $db->query($sql);
                                     <td><?php echo $firma['firmaAd']; ?></td>
                                     <td><?php echo $boya['ad']; ?></td>
                                     <td style="text-align: center">
-                                        <a onclick="return confirm('İşleminiz Silmek istediğinizden emin misiniz?')" href="<?php echo base_url() . "netting/boyapaket/index.php?boyapaketsil=" . $row['id']; ?>"
-                                           class="btn btn-danger">Sil</a>
                                         <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
                                            class="btn btn-outline-primary">Görüntüle</a>
                                     </td>

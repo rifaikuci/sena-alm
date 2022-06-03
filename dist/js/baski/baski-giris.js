@@ -37,6 +37,7 @@ var baskigiris = new Vue({
             isCheck: false,
             baskiDurum: false,
             kalanKg: 0,
+            cizim : "",
 
             arrayBiyetBoy: [],
             arrayBiyetId: [],
@@ -306,7 +307,25 @@ var baskigiris = new Vue({
                 ) {
                     this.biyetData = true
                 } else  this.biyetData = false;
-            }
+            },
+
+            profilGecmisGetir(event) {
+                event.preventDefault();
+
+                $.ajax({
+                    url: '/sena/netting/baski/historyProfil.php',
+                    type: 'post',
+                    data: {
+                        profilId : this.profilId,
+                        boy :  this.boy
+                    },
+                    success: function (response) {
+                        $('.modal-body').html(response);
+                        $('#modalProfil').modal('show');
+
+                    }
+                });
+            },
         }
     }
 );
@@ -327,6 +346,7 @@ $('#supplier_id').on("change", async function () {
         baskigiris.satirNo = selectedRow.satirNo;
         baskigiris.musteriAd = selectedRow.musteriAd;
         baskigiris.profil = selectedRow.profil;
+        baskigiris.cizim = selectedRow.cizim;
         baskigiris.istenilenTermik = selectedRow.istenilenTermik;
         baskigiris.alasim = selectedRow.alasim;
         baskigiris.tolerans = selectedRow.tolerans;
@@ -339,8 +359,8 @@ $('#supplier_id').on("change", async function () {
         baskigiris.basilanAdet = selectedRow.basilanAdet;
         baskigiris.kiloAdet = selectedRow.kiloAdet;
         baskigiris.kalanKg = selectedRow.kalanKg;
+        baskigiris.profilId = selectedRow.profilId;
         baskigiris.siparisId = $(this).val();
-
         const takimlar = await axios.post('/sena/netting/baski/action.php', {
             action: 'takimgetir',
             profil: selectedRow.profilId,

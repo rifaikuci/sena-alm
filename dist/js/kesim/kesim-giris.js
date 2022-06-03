@@ -1,43 +1,96 @@
 var kesimgiris = new Vue({
-        el: "#kesim-giris",
-        data: {
-            sepetler1: [],
-            sepetler2: [],
-            sepetler3: [],
-            isSepet1Dolu : false,
-            isSepet2Dolu : false,
-            isSepet3Dolu : false,
-            sepet1Adet: 0,
-            sepet2Adet: 0,
-            sepet3Adet: 0,
-            netAdet: 0,
-            satirNo: "",
-            kayitTarih : "",
-            profil: "",
-            istenilenBoy: "",
-            siparisTur: "",
-            istenilenTermik: "",
-            baskiId: 0,
-            basilanNetAdet: "",
-            kesilenBoy: "",
-            sepet1: 0,
-            sepet2: 0,
-            sepet3: 0,
-            siparisId: 0,
-            hurdaAdet: 0,
-            adim: ""
+            el: "#kesim-giris",
+            data: {
+                sepetler1: [],
+                sepetler2: [],
+                sepetler3: [],
+                isSepet1Dolu: false,
+                isSepet2Dolu: false,
+                isSepet3Dolu: false,
+                sepet1Adet: 0,
+                sepet2Adet: 0,
+                sepet3Adet: 0,
+                netAdet: 0,
+                satirNo: "",
+                kayitTarih: "",
+                profil: "",
+                istenilenBoy: "",
+                siparisTur: "",
+                istenilenTermik: "",
+                baskiId: 0,
+                basilanNetAdet: "",
+                kesilenBoy: "",
+                sepet1: 0,
+                sepet2: 0,
+                sepet3: 0,
+                siparisId: 0,
+                hurdaAdet: 0,
+                adim: "",
+                kesimFarkli: true,
+                bitir : false,
+                hurdaAdetKontrolHata : false,
 
-        },
+            },
 
-        mounted: async function () {
+            mounted: async function () {
 
-        },
+            },
 
-        methods: {
+            methods: {
+                handleHurda($event) {
+                    this.hurdaAdet = this.hurdaAdet ? this.hurdaAdet : "";
+                    this.netAdet = this.basilanNetAdet - this.hurdaAdet ? this.hurdaAdet : 0;
+                    if(this.hurdaAdet) {
+
+                        if(this.hurdaAdet > 0 && this.hurdaAdet >= this.basilanNetAdet)  {
+                            this.hurdaAdetKontrolHata = true;
+                        } else {
+                            this.hurdaAdetKontrolHata = false;
+                        }
+                    } else {
+                        this.hurdaAdetKontrolHata =  false;
+                    }
+                },
+                kesimOranHesapla($event) {
+                    this.kesimFarkli = true;
+                    if (this.kesilenBoy && this.kesilenBoy > 0 && this.istenilenBoy && this.istenilenBoy > 0) {
+                        this.kesilenBoy = parseFloat(this.kesilenBoy);
+                        this.istenilenBoy = parseFloat(this.istenilenBoy);
+                        if (this.kesilenBoy >= this.istenilenBoy && this.kesilenBoy <= this.istenilenBoy + 10) {
+                            this.kesimFarkli = true;
+                        } else  {
+                            this.kesimFarkli = false;
+                        }
+
+                    } else {
+                        this.kesimFarkli = true;
+                    }
+                },
+
+                hesapla($event) {
+                    this.sepet1Adet = this.sepet1Adet ? this.sepet1Adet : "";
+                    this.sepet2Adet = this.sepet2Adet ? this.sepet2Adet : "";
+                    this.sepet3Adet = this.sepet3Adet ? this.sepet3Adet : "";
+                    this.hurdaAdet = this.hurdaAdet ? this.hurdaAdet : "";
+
+                    let sepet1 = this.sepet1Adet ? this.sepet1Adet : 0;
+                    let sepet2 = this.sepet2Adet ? this.sepet2Adet : 0;
+                    let sepet3 = this.sepet3Adet ? this.sepet3Adet : 0;
+                    let hurda = this.hurdaAdet ? this.hurdaAdet : 0;
+                    debugger;
+                    if(Number(sepet1) + Number(sepet2) + Number(sepet3) + Number(hurda) == Number(this.basilanNetAdet)) {
+                        this.bitir = true;
+                    } else {
+                        this.bitir = false;
+                    }
+
+
+                }
+            },
 
         }
-    }
-);
+    )
+;
 
 $('#kesim_baski_id').on("change", async function () {
 
@@ -63,9 +116,9 @@ $('#kesim_baski_id').on("change", async function () {
         kesimgiris.siparisId = response.siparisId;
         kesimgiris.kayitTarih = response.kayitTarih;
 
-        if(kesimgiris.istenilenTermik  == "Termiksiz") {
+        if (kesimgiris.istenilenTermik == "Termiksiz") {
 
-            if(kesimgiris.siparisTur == "Boyalı") {
+            if (kesimgiris.siparisTur == "Boyalı") {
                 kesimgiris.adim = "kromat"
             } else {
                 kesimgiris.adim = "araba"
@@ -81,15 +134,12 @@ $('#kesim_baski_id').on("change", async function () {
         }).then((res2) => {
             return res2.data
         });
-
-        console.log(response2)
-
         kesimgiris.sepetler1 = response2;
         kesimgiris.sepetler2 = response2;
         kesimgiris.sepetler3 = response2;
 
     } else {
-       this.baskiId = 0
+        this.baskiId = 0
     }
 
 
@@ -97,17 +147,15 @@ $('#kesim_baski_id').on("change", async function () {
 
 $('#kesim_sepet1').on("change", async function () {
 
-    if($(this).val()) {
-        kesimgiris.sepet1=$(this).val();
+    if ($(this).val()) {
+        kesimgiris.sepet1 = $(this).val();
         kesimgiris.isSepet1Dolu = false;
 
-        kesimgiris.sepetler2 = kesimgiris.sepetler1.filter(e=> e.id != $(this).val() )
+        kesimgiris.sepetler2 = kesimgiris.sepetler1.filter(e => e.id != $(this).val())
     } else {
         kesimgiris.sepetler2 = kesimgiris.sepetler1;
     }
 });
-
-
 
 
 $('#kesim_baski_id').select2({});

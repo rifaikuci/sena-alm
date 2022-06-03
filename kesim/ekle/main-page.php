@@ -8,7 +8,7 @@ $kesimsql = "SELECT * FROM tblbaski where 0 >= kesimId and bitisZamani !='' AND 
  and  0 >= kromatId  and  0 >= naylonId  and  0 >= paketId  and  0 >= boyaPaketId  and  0 >= termikId";
 $baskilar = $db->query($kesimsql);
 
-#todo net adet ve kesim alınan adetin toplamı kontrolü yapılacak uayrı verilecek işlem yaptırmayacak
+
 ?>
 
 <section class="content">
@@ -130,20 +130,27 @@ $baskilar = $db->query($kesimsql);
                             <input type="hidden" name="sepet1" :value="sepet1">
                             <input type="hidden" name="sepet2" :value="sepet2">
                             <input type="hidden" name="sepet3" :value="sepet3">
-                            <input required v-model="kesilenBoy" type="number" class="form-control form-control-lg"
+
+                            <input required v-model="kesilenBoy"  type="number" class="form-control form-control-lg"
                                    name="kesilenBoy"
+                                   @input="kesimOranHesapla($event)"
                                    min="0.1" step="0.1"
                                    placeholder="0.1">
-                            <span v-if="kesilenBoy && kesilenBoy > 0 && istenilenBoy != kesilenBoy" style="color: red">Kesilen Boy istenen boydan farklı</span>
+
+                            <span v-if="!kesimFarkli" style="color: red">Kesilen Boy istenen boydan farklı</span>
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Hurda Adet</label>
-                            <input @input="() => {netAdet = basilanNetAdet - hurdaAdet}" v-model="hurdaAdet" required
+                            <input @input="handleHurda($event)"
+                                   v-model="hurdaAdet"
+                                   required
                                    type="number" class="form-control form-control-lg" name="hurdaAdet"
-                                   min="0" step="0.1"
+                                   min="0"
                                    placeholder="0.1">
+                            <span v-if="hurdaAdetKontrolHata" style="color: red">Hurda adedini gözden geçiriniz.</span>
+
                         </div>
                     </div>
                     <div class="col-sm-4">
@@ -155,6 +162,7 @@ $baskilar = $db->query($kesimsql);
                                     <option value="<?php echo $hurdaSebep[$i] ?>"><?php echo $hurdaSebep[$i] ?></option>
                                 <?php } ?>
                             </select>
+
                         </div>
                     </div>
 
@@ -174,7 +182,7 @@ $baskilar = $db->query($kesimsql);
                                     style="width: 100%;">
                                 <option selected disabled value="">Sepet</option>
 
-                                <option v-for="sepet in sepetler1" :value="sepet.id">{{sepet.ad }}</option>
+                                <option v-for="sepet in sepetler1" value="sepet.id">{{sepet.ad }}</option>
                             </select>
                         </div>
                     </div>
@@ -182,6 +190,7 @@ $baskilar = $db->query($kesimsql);
                         <div class="form-group">
                             <label>Adet </label>
                             <input type="number" v-model="sepet1Adet" placeholder="0"
+                                   @input="hesapla($event)"
                                    class="form-control form-control-lg">
 
                         </div>
@@ -218,6 +227,7 @@ $baskilar = $db->query($kesimsql);
                         <div class="form-group">
                             <label>Adet </label>
                             <input type="number" name="sepet2Adet" v-model="sepet2Adet" placeholder="0"
+                                   @input="hesapla($event)"
                                    class="form-control form-control-lg">
 
                         </div>
@@ -252,6 +262,7 @@ $baskilar = $db->query($kesimsql);
                         <div class="form-group">
                             <label>Adet </label>
                             <input type="number" name="sepet3Adet" v-model="sepet3Adet" placeholder="0"
+                                   @input="hesapla($event)"
                                    class="form-control form-control-lg">
 
                         </div>
@@ -274,7 +285,7 @@ $baskilar = $db->query($kesimsql);
 
                 <div class="card-footer">
                     <div>
-                        <button type="submit" class="btn btn-info float-right">Ekle</button>
+                        <button :disabled="!bitir" type="submit" class="btn btn-info float-right">Ekle</button>
                         <a href="../"
                            class="btn btn-warning float-left">Vazgeç</a>
                     </div>

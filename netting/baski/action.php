@@ -37,6 +37,8 @@ if ($received_data->action == 'baskigetir') {
         $data['basilanAdet'] = $row['basilanAdet'];
         $data['kiloAdet'] = $row['kiloAdet'];
         $data['kalanKg'] = $row['kilo'] - $row['basilanKilo'];
+        $data['cizim'] = base_url().$profil['resim'];
+
     }
 
     echo json_encode($data);

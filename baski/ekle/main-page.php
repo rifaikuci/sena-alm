@@ -9,8 +9,10 @@ $siparisler = $db->query($siparissql);
 $biyetSql = "SELECT * FROM tblstokbiyet where kalanKg > 0";
 $biyetler = $db->query($biyetSql);
 
+#TODO -> aynı profil aynı boy için geçmiş detayları gösterilecek Son 10 (modal ) ile -> biyetboy, araiş fire, konveyorBoy, boylamFire
 
-date_default_timezone_set('Europe/Istanbul');
+#Todo-> aynı profil aynı boy için geçmiş baslıların son 10 tanesini getir -> filtresi biyet brütün net kg oranı en düşük olanı getirecekKES
+ date_default_timezone_set('Europe/Istanbul');
 ?>
 
 <section class="content">
@@ -57,10 +59,14 @@ date_default_timezone_set('Europe/Istanbul');
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-8">
+                                        <a :href="cizim" target="_blank">
+
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Profil: </span>
                                             {{profil}}
                                         </h6>
+                                        </a>
+
 
                                     </div>
                                 </div>
@@ -130,10 +136,16 @@ date_default_timezone_set('Europe/Istanbul');
                                     <div class="col-sm-2">
 
                                     </div>
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-6">
                                         <h3 style="color: red">
                                             {{aciklama}}
                                         </h3>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <button v-if="profilId && profilId > 0"
+                                                type="submit"
+                                                v-on:click="profilGecmisGetir($event)"
+                                                class="btn btn-outline-secondary float-right">Geçmiş Profil Detaylarını Getir</button>
                                     </div>
                                 </div>
                             </div>
@@ -244,6 +256,10 @@ date_default_timezone_set('Europe/Istanbul');
 
 
                         <div class="row">
+                            <div v-if="boy && boy > 0" class="col-sm-12" style="margin: 10px; margin-bottom: 20PX">
+                                <button  class="btn btn-dark float-right">Geçmiş Biyet Detaylarını Getir</button>
+                            </div>
+
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Biyetler</label>
@@ -568,6 +584,21 @@ date_default_timezone_set('Europe/Istanbul');
                     </div>
                 </div>
 
+                <div id="modalProfil" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-xl">
+
+                        <div class="modal-content">
+                            <div style="margin: 10px">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <div class="modal-body">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
                 <div class="card-footer">
                     <div>
                         <button v-if="baskiBitir" type="submit" name="baskiekle"
@@ -578,8 +609,6 @@ date_default_timezone_set('Europe/Istanbul');
                     </div>
                 </div>
         </div>
-
-
         </form>
     </div>
 

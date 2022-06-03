@@ -31,7 +31,6 @@ $result = $db->query($sql);
         durumDanger("Takıma parçası değiştirilirken bir hata oluştu");
     } ?>
 
-    <!-- TODO : Sena No ya çift tık yapıldığında kalıbın geçmişi açılsın, kalıphaneden getirilecek. -->
     <div style="text-align: center">
         <h4 style="color: #0b93d5">Takımlar</h4>
     </div>

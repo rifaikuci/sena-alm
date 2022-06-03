@@ -44,14 +44,14 @@ if (isset($_POST['boyabaslat'])) {
 
     for($i = 0; $i <count($arraySepetId); $i++ ) {
 
-        $arrays = $arrays . $array[$i] . ";";
-        $sepetIds = $sepetIds . $arraySepetId[$i] . ";";
-        $satirNos = $satirNos . $arraySatirNo[$i] . ";";
-        $baskiIds = $baskiIds . $arrayBaskiId[$i] . ";";
-        $profilIds = $profilIds . $arrayProfilId[$i] . ";";
-        $adets = $adets . $arrayAdet[$i] . ";";
-        $hurdaAdets = $hurdaAdets . $arrayHurdaAdet[$i] . ";";
-        $hurdaSebeps = $hurdaSebeps . $arrayHurdaSebep[$i] . ";";
+        $arrays = $arrays.$array[$i].";";
+        $sepetIds = $sepetIds.$arraySepetId[$i].";";
+        $satirNos = $satirNos.$arraySatirNo[$i].";";
+        $baskiIds = $baskiIds.$arrayBaskiId[$i].";";
+        $profilIds = $profilIds.$arrayProfilId[$i].";";
+        $adets = $adets.$arrayAdet[$i].";";
+        $hurdaAdets = $hurdaAdets.$arrayHurdaAdet[$i].";";
+        $hurdaSebeps = $hurdaSebeps.$arrayHurdaSebep[$i].";";
 
 
         $sepetId = $arraySepetId[$i];
@@ -83,8 +83,8 @@ if (isset($_POST['boyabaslat'])) {
         }
 
         for ($j = 0; $j < count($arrayAdetSepet); $j++) {
-            $adetTablo = $adetTablo . "" . $arrayAdetSepet[$j] . ";";
-            $icindeTablo = $icindeTablo . "" . $arrayIcinde[$j] . ";";
+            $adetTablo = $adetTablo."".$arrayAdetSepet[$j].";";
+            $icindeTablo = $icindeTablo."".$arrayIcinde[$j].";";
         }
 
         $adetTablo = str_replace("bitti;", "", $adetTablo);
