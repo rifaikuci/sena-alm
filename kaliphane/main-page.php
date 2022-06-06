@@ -376,6 +376,8 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
                                     <?php if($teneferSayisi > 0) { ?>
                                     <a href="<?php echo "guncelle/?takimno=" . $row['takimNo']; ?>" class="btn btn-outline-warning">
                                         <i class="fa fa-edit"></i></a>
+                                        <a href="<?php echo "detay-goster/?takimId=" . $row['id']; ?>" class="btn btn-outline-success">
+                                            Detay Göster (Filtreli) </a>
 
                                     <?php }
                                     if ($row['konum'] == "K3" &&  $teneferSayisi == 0) {
