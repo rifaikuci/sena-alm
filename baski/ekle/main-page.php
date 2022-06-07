@@ -1,4 +1,3 @@
-
 <?php
 include "../../netting/baglan.php";
 require_once "../../include/sql.php";
@@ -6,13 +5,18 @@ require_once "../../include/data.php";
 $siparissql = "SELECT * FROM tblsiparis where baskiDurum = 0 order by termimTarih asc";
 $siparisler = $db->query($siparissql);
 
-$biyetSql = "SELECT * FROM tblstokbiyet where kalanKg > 0";
+$biyetSql = "SELECT tblstokbiyet.id as id, tblalasim.ad as ad, tblfirma.firmaAd as firmaAd, biyetBirimGramaj, partino
+FROM tblstokbiyet
+         INNER JOIN tblalasim ON tblalasim.id = tblstokbiyet.alasimId
+         INNER JOIN tblfirma ON tblfirma.id = tblstokbiyet.firmaId
+where kalanKg > 0";
 $biyetler = $db->query($biyetSql);
 
-#TODO -> aynı profil aynı boy için geçmiş detayları gösterilecek Son 10 (modal ) ile -> biyetboy, araiş fire, konveyorBoy, boylamFire
 
+#TODO -> aynı profil aynı boy için geçmiş detayları gösterilecek Son 10 (modal ) ile -> biyetboy, araiş fire, konveyorBoy, boylamFire
 #Todo-> aynı profil aynı boy için geçmiş baslıların son 10 tanesini getir -> filtresi biyet brütün net kg oranı en düşük olanı getirecekKES
- date_default_timezone_set('Europe/Istanbul');
+
+date_default_timezone_set('Europe/Istanbul');
 ?>
 
 <section class="content">
@@ -61,10 +65,10 @@ $biyetler = $db->query($biyetSql);
                                     <div class="col-sm-8">
                                         <a :href="cizim" target="_blank">
 
-                                        <h6>
-                                            <span style="color: darkcyan; font-weight: bold"> Profil: </span>
-                                            {{profil}}
-                                        </h6>
+                                            <h6>
+                                                <span style="color: darkcyan; font-weight: bold"> Profil: </span>
+                                                {{profil}}
+                                            </h6>
                                         </a>
 
 
@@ -145,7 +149,9 @@ $biyetler = $db->query($biyetSql);
                                         <button v-if="profilId && profilId > 0"
                                                 type="submit"
                                                 v-on:click="profilGecmisGetir($event)"
-                                                class="btn btn-outline-secondary float-right">Geçmiş Profil Detaylarını Getir</button>
+                                                class="btn btn-outline-secondary float-right">Geçmiş Profil Detaylarını
+                                            Getir
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -170,11 +176,11 @@ $biyetler = $db->query($biyetSql);
                                     Satır No
                                 </option>
 
-                            <?php while ($siparis = $siparisler->fetch_array()) { ?>
-                                <option value="<?php echo $siparis['id']; ?>">
-                                    <?php echo $siparis['satirNo']; ?>
-                                </option>
-                            <?php } ?>
+                                <?php while ($siparis = $siparisler->fetch_array()) { ?>
+                                    <option value="<?php echo $siparis['id']; ?>">
+                                        <?php echo $siparis['satirNo']; ?>
+                                    </option>
+                                <?php } ?>
                             </select>
 
                         </div>
@@ -216,7 +222,7 @@ $biyetler = $db->query($biyetSql);
                     </div>
                     <input type="hidden" name="istenilenTermik"
                            :value="istenilenTermik">
-                    <input type="hidden"  name="satirNo" :value="satirNo">
+                    <input type="hidden" name="satirNo" :value="satirNo">
                     <input type="hidden" name="boy" :value="boy">
                     <input type="hidden" value="baski-ekle" name="baskiekle">
                     <input type="hidden"
@@ -257,7 +263,7 @@ $biyetler = $db->query($biyetSql);
 
                         <div class="row">
                             <div v-if="boy && boy > 0" class="col-sm-12" style="margin: 10px; margin-bottom: 20PX">
-                                <button  class="btn btn-dark float-right">Geçmiş Biyet Detaylarını Getir</button>
+                                <button class="btn btn-dark float-right">Geçmiş Biyet Detaylarını Getir</button>
                             </div>
 
                             <div class="col-sm-4">
@@ -269,17 +275,13 @@ $biyetler = $db->query($biyetSql);
                                         <option selected value="">
                                             Parti No - Alaşım - Firma
                                         </option>
-                                        <?php while ($biyet = $biyetler->fetch_array()) {
-                                            $alasim = tablogetir('tblalasim', 'id', $biyet['alasimId'], $db);
-                                            $firma = tablogetir('tblfirma', 'id', $biyet['firmaId'], $db)['firmaAd'];
-                                            $id = $biyet['id'];
-                                            $value = $id.";".$biyet['partino'].";".$alasim['ad'].";".$firma.";".$alasim['biyetBirimGramaj'];
-                                            ?>
-                                            <option value="<?php echo $value ; ?>">
-                                                <?php echo $biyet['partino'] . " - " . $alasim['ad'] . " - " . $firma; ?>
+                                        <?php while
+                                        ($item = $biyetler->fetch_array()) {
+                                            $value = $item['id'] . ";" . $item['partino'] . ";" . $item['ad'] . ";" . $item['firmaAd'] . ";" . $item['biyetBirimGramaj']; ?>
+                                            <option value="<?php echo $value; ?>">
+                                                <?php echo $item['partino'] . " - " . $item['ad'] . " - " . $item['firmaAd']; ?>
                                             </option>
                                         <?php } ?>
-
                                     </select>
 
                                 </div>
@@ -359,7 +361,8 @@ $biyetler = $db->query($biyetSql);
 
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <button :disabled="!biyetData" v-on:click="biyetbaskisiekle" class="btn btn-success float-right">
+                                    <button :disabled="!biyetData" v-on:click="biyetbaskisiekle"
+                                            class="btn btn-success float-right">
                                         Biyet Ekle
                                     </button>
                                 </div>
@@ -372,7 +375,7 @@ $biyetler = $db->query($biyetSql);
                         <div v-if="arrayBiyetler.length > 0" style="text-align: center" class="col-sm-12">
                             <h4 style="color: deepskyblue">Kullanılan Biyetler</h4>
                         </div>
-                        <div v-if="arrayBiyetler.length > 0"   class="card-body table-responsive p-0">
+                        <div v-if="arrayBiyetler.length > 0" class="card-body table-responsive p-0">
 
 
                             <table class="table table-hover text-nowrap">

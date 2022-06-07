@@ -7,7 +7,6 @@ $result = $db->query($sql);
 
 $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
 
-# todo-> konumlarına göre bir filtre gerekcek, olmazsa eski konumu sadece pres olanları getir.
 ?>
 
 

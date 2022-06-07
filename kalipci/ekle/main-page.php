@@ -8,6 +8,8 @@ $firmalar = $db->query($firmasql);
 
 $profillerrsql = "SELECT * FROM tblprofil";
 $profiller = $db->query($profillerrsql);
+
+#todo burada kaldık.
 ?>
 
 <section class="content">

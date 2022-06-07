@@ -7,7 +7,8 @@ if ($_GET['id']) {
 
     $id = $_GET['id'];
 
-    $sqlkromat = "SELECT * FROM tblkromat WHERE id = '$id'";
+    $sqlkromat = "SELECT k.id as id, k.adetler, hurdalar, sebepler, sepetler, sepetId, baslaZaman, bitisZaman, ad
+       FRom tblkromat k  INNER JOIN tblsepet s on  s.id = k.sepetId  WHERE k.id = '$id'";
     $kromat = mysqli_query($db, $sqlkromat)->fetch_assoc();
 
     $adetler = rtrim($kromat['adetler'], ";");
@@ -40,7 +41,7 @@ if ($_GET['id']) {
                         <div class="form-group">
                             <label>Sepet</label>
                             <input disabled
-                                   value="<?php echo tablogetir("tblsepet", 'id', $kromat['sepetId'], $db)['ad'] ?>"
+                                   value="<?php echo $kromat['ad'] ?>"
                                    type="text" class="form-control form-control-lg"
                                    placeholder="0.1">
                         </div>
@@ -67,7 +68,6 @@ if ($_GET['id']) {
                     </div>
 
 
-
                     <div class="col-sm-12" style="margin: 30px">
                         <div style="text-align: center">
                             <h3 style="color: #0c525d">Sepet Bilgileri</h3>
@@ -76,46 +76,47 @@ if ($_GET['id']) {
                 </div>
 
                 <?php for ($i = 0; $i < count($adetler); $i++) { ?>
-                <div class="row">
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Sepet</label>
-                            <input type="text" required class="form-control form-control-lg"
-                                   value="<?php echo tablogetir("tblsepet", 'id', $sepetler[$i], $db)['ad'] ?>" disabled
-                                   placeholder="0.1">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Sepet</label>
+                                <input type="text" required class="form-control form-control-lg"
+                                       value="<?php echo tablogetir("tblsepet", 'id', $sepetler[$i], $db)['ad'] ?>"
+                                       disabled
+                                       placeholder="0.1">
+                            </div>
                         </div>
-                    </div>
 
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Kromata Gönderilecek Adet</label>
-                            <input type="text" required class="form-control form-control-lg"
-                                   value="<?php echo $adetler[$i]?>" disabled
-                                   placeholder="0.1">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Kromata Gönderilecek Adet</label>
+                                <input type="text" required class="form-control form-control-lg"
+                                       value="<?php echo $adetler[$i] ?>" disabled
+                                       placeholder="0.1">
+                            </div>
                         </div>
-                    </div>
 
 
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Hurda Adet</label>
-                            <input type="text" required class="form-control form-control-lg"
-                                   value="<?php echo $hurdalar[$i]?>" disabled
-                                   placeholder="0.1">
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <label>Hurda Adet</label>
+                                <input type="text" required class="form-control form-control-lg"
+                                       value="<?php echo $hurdalar[$i] ?>" disabled
+                                       placeholder="0.1">
+                            </div>
                         </div>
-                    </div>
 
-                    <?php if($hurdalar[$i] != 0){ ?>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <label>Hurdaya Atılma Sebebi</label>
-                            <input type="text" required class="form-control form-control-lg"
-                                   value="<?php echo $sebepler[$i]?>" disabled
-                                   placeholder="">
-                        </div>
+                        <?php if ($hurdalar[$i] != 0) { ?>
+                            <div class="col-sm-3">
+                                <div class="form-group">
+                                    <label>Hurdaya Atılma Sebebi</label>
+                                    <input type="text" required class="form-control form-control-lg"
+                                           value="<?php echo $sebepler[$i] ?>" disabled
+                                           placeholder="">
+                                </div>
+                            </div>
+                        <?php } ?>
                     </div>
-                    <?php } ?>
-                </div>
                 <?php } ?>
 
                 <div class="card-footer">

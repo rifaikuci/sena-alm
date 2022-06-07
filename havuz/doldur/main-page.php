@@ -4,11 +4,16 @@ include "../../include/sql.php";
 require_once "../../include/data.php";
 
 
-
 if ($_GET['id']) {
-
     $id = $_GET['id'];
-    $malzemeSql = "SELECT * FROM tblstokmalzeme where durum = 1";
+    $malzemeSql = "select sm.id as id,
+       firmaAd,
+       barkod,
+       ad
+from tblstokmalzeme sm
+         INNER JOIN tblfirma f ON f.id = sm.firmaId
+         INNER JOIN tblmalzemeler m ON sm.malzemeId = m.id
+where durum = 1";
     $malzemeler = $db->query($malzemeSql);
 } ?>
 
@@ -16,27 +21,26 @@ if ($_GET['id']) {
 <section class="content">
     <div class="card card-info">
         <div class="card-header">
-        <?php echo $id == 1  ? "Kromat Havuz Doldurma Alanı" : "Asit Havuz Doldurma Alanı" ?>
+            <?php echo $id == 1 ? "Kromat Havuz Doldurma Alanı" : "Asit Havuz Doldurma Alanı" ?>
         </div>
         <div class="card-body">
             <form method="post" action="<?php echo base_url() . 'netting/havuz/index.php' ?>"
                   enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="form-group" >
+                        <div class="form-group">
                             <label>Malzemeler Seçiniz</label>
                             <div class="select2-blue">
-                                <select  required name="malzemeler[]" class="select2" multiple="multiple"
-                                         data-dropdown-css-class="select2-blue"
-                                         data-placeholder="Barkod - Malzeme -  Firma "
-                                         style="width: 100%;">
-                                    <?php while ($malzeme = $malzemeler->fetch_array())  {  ?>
-                                        <option value="<?php echo $malzeme['id']?>">
+                                <select required name="malzemeler[]" class="select2" multiple="multiple"
+                                        data-dropdown-css-class="select2-blue"
+                                        data-placeholder="Barkod - Malzeme -  Firma "
+                                        style="width: 100%;">
+                                    <?php while ($malzeme = $malzemeler->fetch_array()) { ?>
+                                        <option value="<?php echo $malzeme['id'] ?>">
                                             <?php
-                                            $firma  = tablogetir("tblfirma", 'id', $malzeme['firmaId'] ,$db);
-                                            $malzemeadi  = tablogetir("tblmalzemeler", 'id', $malzeme['malzemeId'] ,$db)['ad'];
+                                            $malzemeadi = $malzeme['ad'];
 
-                                            echo $malzeme['barkod'] ." - " . $malzemeadi . " - " . $firma['firmaAd'] ?>
+                                            echo $malzeme['barkod'] . " - " . $malzemeadi . " - " . $malzeme['firmaAd'] ?>
                                         </option>
                                     <?php } ?>
                                 </select>
@@ -48,7 +52,7 @@ if ($_GET['id']) {
                                name="operatorId">
                         <input type="hidden" value="havuzdoldur" name="havuzdoldur"/>
                         <input type="hidden" value="<?php echo $id; ?>" name="id"/>
-                        <input type="hidden" value="<?php echo $id == 1 ? "kromat" : "asit" ; ?>" name="tur"/>
+                        <input type="hidden" value="<?php echo $id == 1 ? "kromat" : "asit"; ?>" name="tur"/>
 
                     </div>
                 </div>

@@ -7,7 +7,14 @@ if ($_GET['id']) {
     require_once "../../../include/helper.php";
     require_once "../../../include/data.php";
 
-    $sql = "SELECT * FROM tblsevkiyat WHERE id = '$id'";
+    $sql = "
+    select s.id as id, kod, sevkiyatTarih,
+       p1.adsoyad as p1adsoyad, p2.adsoyad as p2adsoyad,
+       plaka, aciklama
+from tblsevkiyat s
+         INNER JOIN tblpersonel p1 ON p1.id = s.personelId1
+         LEFT JOIN tblpersonel p2 ON p2.id = s.personelId2 where s.id = '$id'
+    ";
     $result = mysqli_query($db, $sql);
     $detail = $result->fetch_assoc();
 
@@ -39,8 +46,8 @@ if ($_GET['id']) {
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>Şoförler: </label> <?php
-                            $personel1 = tablogetir('tblpersonel', 'id', $detail['personelId1'], $db)['adsoyad'];
-                            echo $detail['personelId2'] ? $personel1 . "- " . tablogetir('tblpersonel', 'id', $detail['personelId2'], $db)['adsoyad'] :
+                            $personel1 = $detail['p1adsoyad'];
+                            echo $detail['p2adsoyad'] ? $personel1 . "- " . $detail['p2adsoyad'] :
                                 $personel1; ?>
 
                         </div>
@@ -61,8 +68,15 @@ if ($_GET['id']) {
                     </div>
                 </div>
 
-                <?php if (isTableSevkiyat($db, "tblstokbiyet", $detail['id']) > 0) {
-                    $sqlbiyet = "SELECT * FROM tblstokbiyet where sevkiyatId =" . $detail['id'] ;
+                <?php
+                $sevkiyatId = $detail['id'];
+                if (isTableSevkiyat($db, "tblstokbiyet", $detail['id']) > 0) {
+
+                    $sqlbiyet = "
+                     select s.id as id, sevkiyatId, partino, firmaAd, ad, cap, toplamKg, ortalamaBoy from tblstokbiyet s
+INNER JOIN tblfirma f ON f.id = s.firmaId
+INNER JOIN tblalasim a ON a.id = s.alasimId
+                     where sevkiyatId ='$sevkiyatId' ";
                     $resultbiyet = $db->query($sqlbiyet);
 
                     ?>
@@ -93,11 +107,11 @@ if ($_GET['id']) {
                                     <tr>
                                         <td> <?php echo $sira; ?></td>
                                         <td> <?php echo $biyet['partino'] ?></td>
-                                        <td> <?php echo tablogetir('tblfirma','id',$biyet['firmaId'], $db)['firmaAd'] ?></td>
-                                        <td> <?php echo tablogetir('tblalasim','id',$biyet['alasimId'], $db)['ad'] ?></td>
+                                        <td> <?php echo $biyet['firmaAd'] ?></td>
+                                        <td> <?php echo $biyet['ad'] ?></td>
                                         <td> <?php echo $biyet["cap"] ?></td>
-                                        <td> <?php echo $biyet["toplamKg"]. " Kg" ?></td>
-                                        <td> <?php echo $biyet["ortalamaBoy"]. " Cm"  ?></td>
+                                        <td> <?php echo $biyet["toplamKg"] . " Kg" ?></td>
+                                        <td> <?php echo $biyet["ortalamaBoy"] . " Cm" ?></td>
                                         <td>
                                             <button type="button" class="btn btn-outline-primary biyetim"
                                                     data-toggle="modal" data-target="#biyet"
@@ -114,8 +128,15 @@ if ($_GET['id']) {
                     <br><br><br>
                 <?php } ?>
 
-                <?php if (isTableSevkiyat($db, "tblstokboya", $detail['id']) > 0) {
-                    $sqlboya = "SELECT * FROM `tblstokboya` where sevkiyatId =" . $detail['id'] . " group  by partino, firmaId, boyaTuru,sicaklik,cins, kilo,adet";
+                <?php
+
+                if (isTableSevkiyat($db, "tblstokboya", $detail['id']) > 0) {
+                    $sqlboya = "
+                    select s.id as id, sevkiyatId, partino, firmaAd, ad, sicaklik, cins, adet, kilo, firmaId, boyaTuru
+                        from tblstokboya s
+                        INNER JOIN tblfirma f ON f.id = s.firmaId
+                        INNER JOIN tblprboya a ON a.id = s.boyaTuru 
+                     where sevkiyatId =" . $sevkiyatId . " group  by partino, firmaId, boyaTuru,sicaklik,cins, kilo,adet";
                     $resultboya = $db->query($sqlboya);
                     ?>
                     <div style="text-align: center">
@@ -147,8 +168,8 @@ if ($_GET['id']) {
                                     <tr>
                                         <td> <?php echo $sira; ?></td>
                                         <td> <?php echo $boya['partino'] ?></td>
-                                        <td> <?php echo tablogetir('tblfirma','id',$boya['firmaId'], $db)['firmaAd'] ?></td>
-                                        <td> <?php echo tablogetir('tblprboya','id',$boya["boyaTuru"], $db)['ad'] ?></td>
+                                        <td> <?php echo tablogetir('tblfirma', 'id', $boya['firmaId'], $db)['firmaAd'] ?></td>
+                                        <td> <?php echo tablogetir('tblprboya', 'id', $boya["boyaTuru"], $db)['ad'] ?></td>
                                         <td> <?php echo $boya['sicaklik'] ?></td>
                                         <td> <?php echo $boya['cins'] ?></td>
                                         <td> <?php echo $boya['adet'] ?></td>
@@ -178,7 +199,9 @@ if ($_GET['id']) {
 
                 <?php if (isTableSevkiyat($db, "tblstokmalzeme", $detail['id']) > 0) {
 
-                    $sqlmalzeme = "SELECT * FROM `tblstokmalzeme` where sevkiyatId =" . $detail['id'] . " group  by partino, firmaId, malzemeId,adet";
+                    $sqlmalzeme = "select malzemeId, partino, firmaAd,ad, adet, birimMiktari  from tblstokmalzeme s
+INNER JOIN tblmalzemeler m ON m.id =s.malzemeId
+INNER JOIN tblfirma f ON f.id = s.firmaId where sevkiyatId =" . $detail['id'] . " group  by partino, firmaId, malzemeId,adet";
                     $resultmalzeme = $db->query($sqlmalzeme);
                     ?>
                     <div class="card">
@@ -204,15 +227,14 @@ if ($_GET['id']) {
                                 <tbody>
                                 <?php $sira = 1;
                                 while ($malzeme = $resultmalzeme->fetch_array()) {
-                                    $malzemegetir = tablogetir('tblmalzemeler','id',$malzeme["malzemeId"], $db)
                                     ?>
                                     <tr>
                                         <td> <?php echo $sira; ?></td>
                                         <td> <?php echo $malzeme['partino'] ?></td>
-                                        <td> <?php echo tablogetir('tblfirma','id',$malzeme['firmaId'], $db)['firmaAd']?></td>
-                                        <td> <?php echo $malzemegetir['ad'] ?></td>
+                                        <td> <?php echo $malzeme['firmaAd'] ?></td>
+                                        <td> <?php echo $malzeme['ad'] ?></td>
                                         <td> <?php echo $malzeme['adet'] ?></td>
-                                        <td> <?php echo $malzeme['adet'] * $malzemegetir['birimMiktari']; ?></td>
+                                        <td> <?php echo $malzeme['adet'] * $malzeme['birimMiktari']; ?></td>
                                         <td>
                                             <button id="malzemebilgi" type="button"
                                                     class="btn btn-outline-primary malzemem"

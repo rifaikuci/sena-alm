@@ -3,7 +3,10 @@
 include "../netting/baglan.php";
 include "../include/sql.php";
 
-$sql = "SELECT * FROM tblnaylon order by id desc ";
+$sql = "
+ select n.id as id, satirNo, zaman from tblnaylon n
+INNER JOIN tblbaski b ON n.baskiId = b.id order by n.id desc 
+ ";
 $result = $db->query($sql);
 ?>
 
@@ -52,7 +55,7 @@ $result = $db->query($sql);
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td>
-                                        <?php $satirNo = tablogetir("tblbaski", 'id', $row['baskiId'],$db)['satirNo']; echo $satirNo; ?></td>
+                                        <?php echo $row['satirNo']; ?></td>
                                     <td><?php echo tarihsaat($row['zaman']); ?></td>
                                     <td style="text-align: center">
                                         <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"

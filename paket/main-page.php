@@ -3,7 +3,11 @@
 include "../netting/baglan.php";
 include "../include/sql.php";
 
-$sql = "SELECT * FROM tblpaket order by id desc ";
+$sql = "select p.id as id, b.satirNo, netAdet, baskiId, profilNo, boy, firmaAd from tblpaket p 
+INNER JOIN  tblbaski b ON b.id = p.baskiId
+INNER JOIN tblsiparis s ON s.id = b.siparisId
+INNER JOIN tblprofil pr ON pr.id = s.profilId
+INNER JOIN tblfirma f ON f.id = s.musteriId order by p.id desc ";
 $result = $db->query($sql);
 ?>
 
@@ -52,24 +56,20 @@ $result = $db->query($sql);
                             </thead>
 
                             <?php $sira = 1;
-                            while ($row = $result->fetch_array()) {
-                                $baski = tablogetir("tblbaski", 'id', $row['baskiId'],$db);
-                                $satirNo = $baski['satirNo'];
-                                $siparis = tablogetir("tblsiparis", 'satirNo', $satirNo,$db);
-                                $profil = tablogetir("tblprofil", 'id', $siparis['profilId'],$db);
-                                $firma = tablogetir('tblfirma', 'id', $siparis['musteriId'],$db); ?>
+                            while ($row = $result->fetch_array()) {?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php
-                                        $satirNo= tablogetir("tblbaski", 'id', $row['baskiId'],$db)['satirNo'];
+                                        $satirNo = tablogetir("tblbaski", 'id', $row['baskiId'], $db)['satirNo'];
                                         echo $satirNo; ?></td>
                                     <td><?php echo tarihsaat($row['zaman']); ?></td>
                                     <td><?php echo $row['netAdet']; ?></td>
-                                    <td><?php echo $profil['profilNo']; ?></td>
-                                    <td><?php echo $siparis['boy']; ?></td>
-                                    <td><?php echo $firma['firmaAd']; ?></td>
+                                    <td><?php echo $row['profilNo']; ?></td>
+                                    <td><?php echo $row['boy']; ?></td>
+                                    <td><?php echo $row['firmaAd']; ?></td>
                                     <td style="text-align: center">
-                                        <a onclick="return confirm('İşleminiz Silmek istediğinizden emin misiniz?')" href="<?php echo base_url() . "netting/boyapaket/index.php?boyapaketsil=" . $row['id']; ?>"
+                                        <a onclick="return confirm('İşleminiz Silmek istediğinizden emin misiniz?')"
+                                           href="<?php echo base_url() . "netting/boyapaket/index.php?boyapaketsil=" . $row['id']; ?>"
                                            class="btn btn-danger">Sil</a>
                                         <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
                                            class="btn btn-outline-primary">Görüntüle</a>

@@ -7,7 +7,14 @@ require_once "../../include/data.php";
 if ($_GET['id']) {
 
     $id = $_GET['id'];
-    $malzemeSql = "SELECT * FROM tblstokmalzeme where durum = 1";
+    $malzemeSql = "select sm.id as id,
+       firmaAd,
+       barkod,
+       ad
+from tblstokmalzeme sm
+         INNER JOIN tblfirma f ON f.id = sm.firmaId
+         INNER JOIN tblmalzemeler m ON sm.malzemeId = m.id
+where durum = 1";
     $malzemeler = $db->query($malzemeSql);
 
 } ?>
@@ -33,10 +40,10 @@ if ($_GET['id']) {
                                     <?php while ($malzeme = $malzemeler->fetch_array()) { ?>
                                         <option value="<?php echo $malzeme['id'] ?>">
                                             <?php
-                                            $firma = tablogetir("tblfirma", 'id', $malzeme['firmaId'], $db);
-                                            $malzemeadi = tablogetir("tblmalzemeler", 'id', $malzeme['malzemeId'], $db)['ad'];
+                                            $malzemeadi = $malzeme['ad'];
 
-                                            echo $malzeme['barkod'] . " - " . $malzemeadi . " - " . $firma['firmaAd'] ?>
+
+                                            echo $malzeme['barkod'] . " - " . $malzemeadi . " - " . $malzeme['firmaAd'] ?>
                                         </option>
                                     <?php } ?>
                                 </select>

@@ -2,7 +2,11 @@
 
 include "../netting/baglan.php";
 include "../include/sql.php";
-$sql = "SELECT * FROM tblkesim order by id desc ";
+$sql = "
+select  
+    b.kesimId as id, satirNo, baskiId, tarih, kesilenBoy, hurdaAdet, netAdet
+    from tblkesim k INNER JOIN tblbaski b ON b.kesimId = k.id order by id desc
+";
 $result = $db->query($sql);
 
 ?>
@@ -54,7 +58,7 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td><?php echo tablogetir("tblbaski", 'kesimId', $row['id'], $db)['satirNo']; ?></td>
+                                    <td><?php echo $row['satirNo']; ?></td>
                                     <td><?php echo $row['baskiId']; ?></td>
                                     <td><?php echo tarih($row['tarih']); ?></td>
                                     <td><?php echo $row['kesilenBoy']; ?></td>

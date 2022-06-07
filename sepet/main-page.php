@@ -123,8 +123,6 @@ include "../include/sql.php";
                         </div>
 
                     </div>
-
-
                 </div>
             </div>
         </div>

@@ -8,12 +8,26 @@ $kesimId = 0;
 if (isset($_GET['id'])) {
     $kesimId = $_GET['id'];
 
-    $sql = "SELECT * FROM tblkesim WHERE id = '$kesimId'";
-    $kesim = mysqli_query($db, $sql)->fetch_assoc();
+    $sql = "select b.satirNo,
+       profilNo,
+       siparisTuru,
+       istenilenTermik,
+       basilanNetAdet,
+       kesilenBoy,
+       hurdaAdet,
+       hurdaSebep,
+       netAdet,
+       sepet1Adet, sepetId1, sepet2Adet, sepetId2, sepet3Adet, sepetId3,
+       s1.ad as sepet1Ad, s2.ad as sepet2Ad, s3.ad as sepet3Ad
+from tblkesim k
+         INNER JOIN tblbaski b ON k.id = b.kesimId
+         INNER JOIN tblsiparis s ON s.id = b.siparisId
+         INNER JOIN tblprofil p ON p.id = s.profilId
+         LEFT JOIN tblsepet s1 ON s1.id = k.sepetId1
+         LEFT JOIN tblsepet s2 ON s2.id = k.sepetId2
+         LEFT JOIN tblsepet s3 ON s3.id = k.sepetId3 where k.id = '$kesimId'";
 
-    $baski = tablogetir("tblbaski", "id", $kesim['baskiId'], $db);
-    $siparis = tablogetir("tblsiparis", 'id', $baski['siparisId'], $db);
-    $profil = tablogetir("tblprofil", 'id', $siparis['profilId'], $db);
+    $kesim = mysqli_query($db, $sql)->fetch_assoc();
 
 }
 
@@ -44,7 +58,7 @@ date_default_timezone_set('Europe/Istanbul');
                                         <div>
                                             <H2>
 
-                                                <?php echo $siparis['satirNo']; ?>
+                                                <?php echo $kesim['satirNo']; ?>
                                                 <span style="color: #2b6b4f"> </span>
                                             </H2>
                                         </div>
@@ -57,7 +71,7 @@ date_default_timezone_set('Europe/Istanbul');
                                 <div class="col-sm-8">
                                     <h6>
                                         <span style="color: darkcyan; font-weight: bold"> Profil: </span>
-                                        <?php echo $profil['profilNo']; ?>
+                                        <?php echo $kesim['profilNo']; ?>
                                     </h6>
 
                                 </div>
@@ -66,7 +80,7 @@ date_default_timezone_set('Europe/Istanbul');
                                 <div class="col-sm-8">
                                     <h6>
                                         <span style="color: darkcyan; font-weight: bold"> Sipariş Türü: </span>
-                                        <?php echo $siparis['siparisTuru'] == "B" ? 'Boyalı' : ($siparis['siparisTuru'] == "E" ? "Eloksal" : "Ham"); ?>
+                                        <?php echo $kesim['siparisTuru'] == "B" ? 'Boyalı' : ($kesim['siparisTuru'] == "E" ? "Eloksal" : "Ham"); ?>
                                     </h6>
 
                                 </div>
@@ -75,7 +89,7 @@ date_default_timezone_set('Europe/Istanbul');
                                 <div class="col-sm-8">
                                     <h6>
                                         <span style="color: darkcyan; font-weight: bold"> İstenilen Termik: </span>
-                                        <?php echo $siparis['istenilenTermik']; ?>
+                                        <?php echo $kesim['istenilenTermik']; ?>
                                     </h6>
 
                                 </div>
@@ -85,7 +99,7 @@ date_default_timezone_set('Europe/Istanbul');
                                 <div class="col-sm-8">
                                     <h6>
                                         <span style="color: darkcyan; font-weight: bold">Net Adet: </span>
-                                        <?php echo $baski['basilanNetAdet']; ?>
+                                        <?php echo $kesim['basilanNetAdet']; ?>
                                     </h6>
                                 </div>
                             </div>
@@ -99,7 +113,7 @@ date_default_timezone_set('Europe/Istanbul');
                     <div class="form-group">
                         <label>Kesilen Boy</label>
                         <input class="form-control" disabled value="<?php echo $kesim['kesilenBoy'] ?>">
-                        <?php if ($kesim['kesilenBoy'] && $kesim['kesilenBoy'] > 0 && $kesim['kesilenBoy'] != $siparis['boy']) { ?>
+                        <?php if ($kesim['kesilenBoy'] && $kesim['kesilenBoy'] > 0 && $kesim['kesilenBoy'] != $kesim['boy']) { ?>
                             <span style="color: red">Kesilen Boy istenen boydan farklı</span>
                         <?php } ?>
                     </div>

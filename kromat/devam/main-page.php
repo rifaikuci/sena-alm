@@ -4,6 +4,7 @@ include "../../include/sql.php";
 require_once "../../include/data.php";
 
 
+#Todo BURADA KALINDI
 $kromatId = 0;
 if (isset($_GET['kromat'])) {
     $kromatId = $_GET['kromat'];

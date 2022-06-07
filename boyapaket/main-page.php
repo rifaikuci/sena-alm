@@ -3,7 +3,25 @@
 include "../netting/baglan.php";
 include "../include/sql.php";
 
-$sql = "SELECT * FROM tblboyapaket order by id desc ";
+$sql = "
+select
+    bp.id as id,
+    b.satirNo,
+    b.id as baskiId,
+    s.id as siparisId,
+    zaman,
+    netAdet,
+    profilNo,
+    boy,
+    firmaAd,
+    ad
+    from tblboyapaket bp
+INNER JOIN  tblbaski  b ON b.id = bp.baskiid
+INNER JOIN  tblsiparis s ON s.id = b.siparisid
+INNER JOIN tblprofil p ON p.id = s.profilid
+INNER JOIN tblfirma f On f.id = s.musteriId
+INNER JOIN  tblprboya pr On s.boyaId = pr.id order by id desc
+";
 $result = $db->query($sql);
 ?>
 
@@ -54,22 +72,16 @@ $result = $db->query($sql);
 
                             <?php $sira = 1;
                             while ($row = $result->fetch_array()) {
-                                $baski = tablogetir("tblbaski", 'id', $row['baskiId'],$db);
-                                $satirNo = $baski['satirNo'];
-                                $siparis = tablogetir("tblsiparis", 'satirNo', $satirNo,$db);
-                                $profil = tablogetir("tblprofil", 'id', $siparis['profilId'],$db);
-                                $firma = tablogetir('tblfirma', 'id', $siparis['musteriId'],$db);
-                                $boya = tablogetir('tblprboya', 'id', $siparis['boyaId'],$db);
-                                ?>
+                                $satirNo = $row['satirNo']; ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td><?php  echo $satirNo; ?></td>
+                                    <td><?php echo $satirNo; ?></td>
                                     <td><?php echo tarihsaat($row['zaman']); ?></td>
                                     <td><?php echo $row['netAdet']; ?></td>
-                                    <td><?php echo $profil['profilNo']; ?></td>
-                                    <td><?php echo $siparis['boy']; ?></td>
-                                    <td><?php echo $firma['firmaAd']; ?></td>
-                                    <td><?php echo $boya['ad']; ?></td>
+                                    <td><?php echo $row['profilNo']; ?></td>
+                                    <td><?php echo $row['boy']; ?></td>
+                                    <td><?php echo $row['firmaAd']; ?></td>
+                                    <td><?php echo $row['ad']; ?></td>
                                     <td style="text-align: center">
                                         <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
                                            class="btn btn-outline-primary">Görüntüle</a>

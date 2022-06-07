@@ -2,7 +2,8 @@
 
 include "../netting/baglan.php";
 include "../include/sql.php";
-$sql = "SELECT * FROM tblboya order by id desc ";
+$sql = "
+select baslaZaman, topAdet, partino, tblboya.id as id  from tblboya INNER JOIN  tblstokboya on tblboya.boyaId = tblstokboya.id order by  id desc";
 $result = $db->query($sql);
 
 ?>
@@ -53,7 +54,7 @@ $result = $db->query($sql);
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo tarihsaat($row['baslaZaman']); ?></td>
                                     <td><?php echo $row['topAdet']; ?></td>
-                                    <td><?php echo tablogetir('tblstokboya', 'id', $row['boyaId'], $db)['partino']; ?></td>
+                                    <td><?php echo $row['partino']; ?></td>
                                     <td><a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
                                            class="btn btn-outline-primary">Görüntüle</a></td>
 

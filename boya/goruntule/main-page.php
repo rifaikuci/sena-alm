@@ -3,13 +3,19 @@ include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
 
+#todo burada kaldım
 if ($_GET['id']) {
 
     $id = $_GET['id'];
 
-    $sqlboya = "SELECT * FROM tblboya WHERE id = '$id'";
-    $boya = mysqli_query($db, $sqlboya)->fetch_assoc();
 
+    $sqlboya = "select boya.id as id, partino, barkodNo, kullanilanBoya, siklonKullanilanKg, askiId, rutusId, profilAdi, profilId, profilNo, rutusAdet,siklonAyrilanKg,
+            netBoya, topAski, ortAskiAdet, siklonId, topAdet, sepetler, adetler,baskilar, hurdaAdetler, hurdaSebepler
+            from tblboya as boya
+            INNER JOIN tblstokboya as stokboya ON boya.boyaId = stokboya.id
+            LEFT  JOIN tblrutusprofil on rutusId = tblrutusprofil.id
+            INNER  JOIN tblprofil on tblrutusprofil.profilId = tblprofil.id where boya.id = '$id'";
+    $boya = mysqli_query($db, $sqlboya)->fetch_assoc();
 
     $sepetler = explode(";", $boya['sepetler']);
     $baskilar = explode(";", $boya['baskilar']);
@@ -49,15 +55,19 @@ if ($_GET['id']) {
                             <tbody>
 
                             <?php for ($i = 0; $i < count($adetler); $i++) {
-                                $baski = tablogetir("tblbaski", "id", $baskilar[$i], $db);
-                                $siparis = tablogetir("tblsiparis", "satirNo", $baski['satirNo'], $db);
-                                $profil = tablogetir("tblprofil", "id", $siparis['profilId'], $db);
+                                $baskiId = $baskilar[$i];
+                                $sqlbaski = "
+                                select siparis.satirNo, profilNo, baski.id from tblbaski as baski INNER JOIN tblsiparis as siparis
+                                    ON baski.siparisId = siparis.id
+                                    INNER JOIN tblprofil as profil On profil.id = siparis.profilId where baski.id = '$baskiId' ";
+                                $baski = mysqli_query($db, $sqlbaski)->fetch_assoc();
+
                                 ?>
                                 <tr>
                                     <td><?php echo $sepetler[$i] ?></td>
                                     <td><?php echo $baskilar[$i] ?></td>
                                     <td><?php echo $baski['satirNo'] ?></td>
-                                    <td><?php echo $profil['profilNo'] ?></td>
+                                    <td><?php echo $baski['profilNo'] ?></td>
                                     <td><?php echo $adetler[$i] ?></td>
                                     <td><?php echo $hurdaAdetler[$i] ?></td>
                                     <td><?php echo $hurdaSebepler[$i] ?></td>
@@ -77,13 +87,11 @@ if ($_GET['id']) {
                         </div>
                     </div>
 
-                    <?php $stokboya = tablogetir("tblstokboya", "id", $boya['boyaId'], $db); ?>
-
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Boya Barkod</label>
                             <input class="form-control" disabled
-                                   value="<?php echo $stokboya['barkodNo'] ?>">
+                                   value="<?php echo $boya['barkodNo'] ?>">
                         </div>
                     </div>
 
@@ -91,7 +99,7 @@ if ($_GET['id']) {
                         <div class="form-group">
                             <label>Parti No</label>
                             <input class="form-control" disabled
-                                   value="<?php echo $stokboya['partino'] ?>">
+                                   value="<?php echo $boya['partino'] ?>">
                         </div>
                     </div>
 
@@ -143,15 +151,13 @@ if ($_GET['id']) {
                     <?php
                     if ($boya['rutusId'] > 0) {
 
-                        $rutusProfil = tablogetir("tblrutusprofil", 'id', $boya['rutusId'], $db);
-                        $rutus = tablogetir("tblprofil", 'id', $rutusProfil['id'], $db);
                         ?>
 
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <label>Rutuş Profil</label>
                                 <input class="form-control" disabled
-                                       value="<?php echo $rutus['profilNo'] ?>">
+                                       value="<?php echo $boya['profilNo'] ?>">
                             </div>
                         </div>
 
@@ -193,7 +199,7 @@ if ($_GET['id']) {
                         <div class="form-group">
                             <label>Top. Adet</label>
                             <input class="form-control" disabled
-                                   value="<?php echo $boya['topAski'] ?>">
+                                   value="<?php echo $boya['topAdet'] ?>">
                         </div>
                     </div>
 

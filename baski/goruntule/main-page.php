@@ -7,16 +7,25 @@ if ($_GET['id']) {
 
     $id = $_GET['id'];
 
-    $sqlbaski = "SELECT * FROM tblbaski WHERE id = '$id'";
+    $sqlbaski = "SELECT
+          t.satirNo, firmaAd, t.profilId,profilAdi, profilNo, alasimId, takimId, takimNo, ad,
+    biyetId, biyetBoy, verilenBiyet, araIsFire, konveyorBoy, boylamFire, biyetFire,
+    baskiFire, biyetBrut, t.maxTolerans, t.istenilenTermik, t.boy, t.kilo, t.adet,
+       basilanKilo, kalanKilo, tblbaski.aciklama, baslaZamani, bitisZamani,takimNo,
+       kalipCins, cap, guncelGr, basilanNetAdet, basilanNetKg,basilanBrutKg, fire,
+    kovanSicaklik, kalipSicaklik, biyetSicaklik, hiz, takimSonDurum, sonlanmaNeden, t.baskiAciklama
+        FROM tblbaski
+             INNER JOIN tblsiparis t ON t.id = tblbaski.siparisId
+        INNER JOIN tblfirma ON tblfirma.id = t.musteriId
+        INNER JOIN tblprofil ON tblprofil.id = t.profilId
+        INNER JOIN tblalasim ON tblalasim.id = t.alasimId
+        INNER JOIN tbltakim ON tbltakim.id = tblbaski.takimId where tblbaski.id ='$id' ";
+
     $baski = mysqli_query($db, $sqlbaski)->fetch_assoc();
     $satirNo = $baski['satirNo'];
 
-    $sqlSiparis = "SELECT * FROM tblsiparis  where satirNo = '$satirNo'";
-    $siparis = mysqli_query($db, $sqlSiparis)->fetch_assoc();
-    $musteriAd = tablogetir("tblfirma", 'id', $siparis['musteriId'], $db)['firmaAd'];
-    $profil = tablogetir('tblprofil', 'id', $siparis['profilId'], $db);
-    $alasim = tablogetir('tblalasim', 'id', $siparis['alasimId'], $db);
-    $takim = tablogetir('tbltakim', 'id', $baski['takimId'], $db);
+
+    $musteriAd = $baski['firmaAd'];
 
     $biyetId = explode(";", $baski['biyetId']);
     $biyetBoy = explode(";", $baski['biyetBoy']);
@@ -73,7 +82,7 @@ if ($_GET['id']) {
                                 <div class="col-sm-8">
                                     <h6>
                                         <span style="color: darkcyan; font-weight: bold"> Profil: </span>
-                                        <?php echo $profil['profilAdi'] . " - " . $profil['profilNo']; ?>
+                                        <?php echo $baski['profilAdi'] . " - " . $baski['profilNo']; ?>
                                     </h6>
 
                                 </div>
@@ -82,7 +91,7 @@ if ($_GET['id']) {
                                 <div class="col-sm-8">
                                     <h6>
                                         <span style="color: darkcyan; font-weight: bold"> Alaşım: </span>
-                                        <?php echo $alasim['ad']; ?>
+                                        <?php echo $baski['ad']; ?>
                                     </h6>
 
                                 </div>
@@ -91,7 +100,7 @@ if ($_GET['id']) {
                                 <div class="col-sm-8">
                                     <h6>
                                         <span style="color: darkcyan; font-weight: bold"> Tolerans: </span>
-                                        <?php echo $siparis['maxTolerans']; ?>
+                                        <?php echo $baski['maxTolerans']; ?>
                                     </h6>
 
                                 </div>
@@ -100,7 +109,7 @@ if ($_GET['id']) {
                                 <div class="col-sm-8">
                                     <h6>
                                         <span style="color: darkcyan; font-weight: bold"> İstenilen Termik: </span>
-                                        <?php echo $siparis['istenilenTermik']; ?>
+                                        <?php echo $baski['istenilenTermik']; ?>
                                     </h6>
 
                                 </div>
@@ -109,7 +118,7 @@ if ($_GET['id']) {
                                 <div class="col-sm-8">
                                     <h6>
                                         <span style="color: darkcyan; font-weight: bold"> Boy: </span>
-                                        <?php echo $siparis['boy']; ?>
+                                        <?php echo $baski['boy']; ?>
                                     </h6>
 
                                 </div>
@@ -118,7 +127,7 @@ if ($_GET['id']) {
                                 <div class="col-sm-8">
                                     <h6>
                                         <span style="color: darkcyan; font-weight: bold"> Kilo: </span>
-                                        <?php echo $siparis['kilo']; ?>
+                                        <?php echo $baski['kilo']; ?>
                                     </h6>
                                 </div>
                             </div>
@@ -126,7 +135,7 @@ if ($_GET['id']) {
                                 <div class="col-sm-8">
                                     <h6>
                                         <span style="color: darkcyan; font-weight: bold"> Basılan Kg - Kalan Kg: </span>
-                                        <?php echo $siparis['basilanKilo'] ." - ". $siparis['kalanKilo']; ?>
+                                        <?php echo $baski['basilanKilo'] . " - " . $baski['kalanKilo']; ?>
                                     </h6>
                                 </div>
                             </div>
@@ -135,7 +144,7 @@ if ($_GET['id']) {
                                 <div class="col-sm-8">
                                     <h6>
                                         <span style="color: darkcyan; font-weight: bold"> Adet: </span>
-                                        <?php echo $siparis['adet']; ?>
+                                        <?php echo $baski['adet']; ?>
                                     </h6>
                                 </div>
                             </div>
@@ -146,7 +155,7 @@ if ($_GET['id']) {
                                 </div>
                                 <div class="col-sm-8">
                                     <h3 style="color: red">
-                                        <?php echo $baski['aciklama']; ?>
+                                        <?php echo $baski['baskiAciklama']; ?>
                                     </h3>
                                 </div>
                             </div>
@@ -173,7 +182,7 @@ if ($_GET['id']) {
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label>Takım</label>
-                        <input value="<?php echo $takim['takimNo'] ?>"
+                        <input value="<?php echo $baski['takimNo'] ?>"
                                class="form-control"
                                type="text" disabled>
                     </div>
@@ -181,7 +190,7 @@ if ($_GET['id']) {
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label>Kalıp</label>
-                        <input value="<?php echo kalipBul($takim['kalipCins']); ?>"
+                        <input value="<?php echo kalipBul($baski['kalipCins']); ?>"
                                class="form-control"
                                type="text" disabled>
                     </div>
@@ -190,7 +199,7 @@ if ($_GET['id']) {
                 <div class="col-sm-3">
                     <div class="form-group">
                         <label>Çap</label>
-                        <input value="<?php echo $takim['cap'] ?>"
+                        <input value="<?php echo $baski['cap'] ?>"
                                class="form-control"
                                type="text" disabled>
                     </div>
@@ -216,50 +225,50 @@ if ($_GET['id']) {
 
                     <div class="row">
 
-                    <div style="text-align: center" class="col-sm-12">
-                        <h4 style="color: deepskyblue">Kullanılan Biyetler</h4>
+                        <div style="text-align: center" class="col-sm-12">
+                            <h4 style="color: deepskyblue">Kullanılan Biyetler</h4>
+                        </div>
+                        <div class="card-body table-responsive p-0">
+
+
+                            <table class="table table-hover text-nowrap">
+                                <thead>
+                                <tr>
+                                    <th>Biyet</th>
+                                    <th>Boy</th>
+                                    <th>Verilen Biyet</th>
+                                    <th>Araiş Fire</th>
+                                    <th>Konveyör Boy</th>
+                                    <th>Boylam Fire</th>
+                                    <th>Fire Biyet</th>
+                                    <th>Baskı Fire</th>
+                                    <th>Brüt Kg</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+
+                                <?php
+                                for ($i = 0; $i < count($biyetId); $i++) {
+
+                                    $biyetAd = tablogetir("tblstokbiyet", "id", $biyetId[$i], $db)['partino'];
+                                    ?>
+
+                                    <tr>
+                                        <td><?php echo $biyetAd; ?></td>
+                                        <td><?php echo $biyetBoy[$i]; ?></td>
+                                        <td><?php echo $verilenBiyet[$i]; ?></td>
+                                        <td><?php echo $araIsFire[$i]; ?></td>
+                                        <td><?php echo $konveyor[$i]; ?></td>
+                                        <td><?php echo $boylamFire[$i]; ?></td>
+                                        <td><?php echo $biyetFire[$i]; ?></td>
+                                        <td><?php echo $baskiFire[$i]; ?></td>
+                                        <td><?php echo $biyetBrut[$i]; ?></td>
+                                    </tr>
+                                <?php } ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                    <div class="card-body table-responsive p-0">
-
-
-                        <table class="table table-hover text-nowrap">
-                            <thead>
-                            <tr>
-                                <th>Biyet</th>
-                                <th>Boy</th>
-                                <th>Verilen Biyet</th>
-                                <th>Araiş Fire</th>
-                                <th>Konveyör Boy</th>
-                                <th>Boylam Fire</th>
-                                <th>Fire Biyet</th>
-                                <th>Baskı Fire</th>
-                                <th>Brüt Kg</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            <?php
-                            for($i = 0; $i<count($biyetId); $i++) {
-
-                                $biyetAd = tablogetir("tblstokbiyet", "id", $biyetId[$i],$db)['partino'];
-                                ?>
-
-                            <tr>
-                                <td><?php echo $biyetAd; ?></td>
-                                <td><?php echo $biyetBoy[$i]; ?></td>
-                                <td><?php echo $verilenBiyet[$i]; ?></td>
-                                <td><?php echo $araIsFire[$i]; ?></td>
-                                <td><?php echo $konveyor[$i]; ?></td>
-                                <td><?php echo $boylamFire[$i]; ?></td>
-                                <td><?php echo $biyetFire[$i]; ?></td>
-                                <td><?php echo $baskiFire[$i]; ?></td>
-                                <td><?php echo $biyetBrut[$i]; ?></td>
-                            </tr>
-                            <?php } ?>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
 
                 </div>
             </div>
@@ -271,11 +280,11 @@ if ($_GET['id']) {
                 <div class="col-sm-2">
                     <div class="form-group">
                         <label>Güncel Gr</label>
-                        <input 
-                               disabled
-                               class="form-control"
-                               type="text" 
-                               value="<?php echo $baski['guncelGr'] ?>">
+                        <input
+                                disabled
+                                class="form-control"
+                                type="text"
+                                value="<?php echo $baski['guncelGr'] ?>">
                     </div>
                 </div>
 
@@ -283,9 +292,9 @@ if ($_GET['id']) {
                     <div class="form-group">
                         <label>Basılan Net Adet</label>
                         <input disabled
-                                class="form-control"
-                                type="text"
-                                value="<?php echo $baski['basilanNetAdet'] ?>">
+                               class="form-control"
+                               type="text"
+                               value="<?php echo $baski['basilanNetAdet'] ?>">
                     </div>
                 </div>
 
@@ -293,9 +302,9 @@ if ($_GET['id']) {
                     <div class="form-group">
                         <label>Basılan Net Kg</label>
                         <input disabled
-                                class="form-control"
-                                type="text"
-                                value="<?php echo $baski['basilanNetKg'] ?>">
+                               class="form-control"
+                               type="text"
+                               value="<?php echo $baski['basilanNetKg'] ?>">
                     </div>
                 </div>
 
@@ -303,9 +312,9 @@ if ($_GET['id']) {
                     <div class="form-group">
                         <label>Basılan Brüt Kg</label>
                         <input disabled
-                                class="form-control"
-                                type="text"
-                                value="<?php echo $baski['basilanBrutKg'] ?>">
+                               class="form-control"
+                               type="text"
+                               value="<?php echo $baski['basilanBrutKg'] ?>">
                     </div>
                 </div>
 
@@ -313,9 +322,9 @@ if ($_GET['id']) {
                     <div class="form-group">
                         <label>Fire (Kg)</label>
                         <input disabled
-                                class="form-control"
-                                type="text"
-                                value="<?php echo $baski['fire'] ?>">
+                               class="form-control"
+                               type="text"
+                               value="<?php echo $baski['fire'] ?>">
 
                     </div>
                 </div>
@@ -325,9 +334,9 @@ if ($_GET['id']) {
                     <div class="form-group">
                         <label>Kovan Sıcaklığı (°C)</label>
                         <input disabled
-                                class="form-control"
-                                type="text"
-                                value="<?php echo $baski['kovanSicaklik'] ?>">
+                               class="form-control"
+                               type="text"
+                               value="<?php echo $baski['kovanSicaklik'] ?>">
                     </div>
                 </div>
 
@@ -336,9 +345,9 @@ if ($_GET['id']) {
                     <div class="form-group">
                         <label>Kalıp Sıcaklığı (°C)</label>
                         <input disabled
-                                class="form-control"
-                                type="text"
-                                value="<?php echo $baski['kalipSicaklik'] ?>">
+                               class="form-control"
+                               type="text"
+                               value="<?php echo $baski['kalipSicaklik'] ?>">
                     </div>
                 </div>
 
@@ -346,9 +355,9 @@ if ($_GET['id']) {
                     <div class="form-group">
                         <label>Biyet Sıcaklığı (°C)</label>
                         <input disabled
-                                class="form-control"
-                                type="text"
-                                value="<?php echo $baski['biyetSicaklik'] ?>">
+                               class="form-control"
+                               type="text"
+                               value="<?php echo $baski['biyetSicaklik'] ?>">
                     </div>
                 </div>
 
@@ -356,9 +365,9 @@ if ($_GET['id']) {
                     <div class="form-group">
                         <label>Hız (A)</label>
                         <input disabled
-                                class="form-control"
-                                type="text"
-                                value="<?php echo $baski['hiz'] ?>">
+                               class="form-control"
+                               type="text"
+                               value="<?php echo $baski['hiz'] ?>">
                     </div>
                 </div>
 
@@ -368,10 +377,10 @@ if ($_GET['id']) {
                         <label>Takım Son Durum</label>
 
                         <input disabled
-                                class="form-control"
-                                type="text"
-                                value="<?php echo
-                               takimDurumBul( $baski['takimSonDurum']) ?>">
+                               class="form-control"
+                               type="text"
+                               value="<?php echo
+                               takimDurumBul($baski['takimSonDurum']) ?>">
 
                     </div>
                 </div>
@@ -380,20 +389,20 @@ if ($_GET['id']) {
                     <div class="form-group">
                         <label>Açıklama</label>
                         <input disabled
-                                class="form-control"
-                                type="text"
-                                value="<?php echo $baski['aciklama'] ?>">
+                               class="form-control"
+                               type="text"
+                               value="<?php echo $baski['aciklama'] ?>">
                     </div>
                 </div>
-                
+
                 <div v-if="!baskiDurum" class="col-sm-2">
                     <div class="form-group">
                         <label>Baskı Sonlanma Nedeni</label>
 
                         <input disabled
-                                class="form-control"
-                                type="text"
-                                value="<?php echo $baski['sonlanmaNeden'] ?>">
+                               class="form-control"
+                               type="text"
+                               value="<?php echo $baski['sonlanmaNeden'] ?>">
 
                     </div>
                 </div>

@@ -7,21 +7,38 @@ if ($_GET['id']) {
 
     $id = $_GET['id'];
 
-    $sqlpaket = "SELECT * FROM tblboyapaket WHERE id = '$id'";
+    $sqlpaket = "
+            select bp.id as id,
+            b.id      as baskiId,
+               s.id      as siparisId,
+               s.satirNo as satirNo,
+               firmaAd,
+               profilNo,
+               ad,
+               maxTolerans,
+               boy,
+               korumaBandi,
+               araKagit,
+               paketAciklama,
+               hurdaAdet,
+               hurdaSebep,
+               rutusAdet,
+               rutusSebep,
+               paketAdet
+            from tblboyapaket bp
+                 INNER JOIN tblbaski b ON bp.baskiId = b.id
+                 INNER JOIN tblsiparis s ON b.siparisId = s.id
+                 INNER JOIN tblprofil p ON s.profilId = p.id
+                 INNER JOIN tblalasim a On a.id = s.alasimId
+                 INNER JOIN tblfirma f ON s.musteriId = f.id where bp.id = '$id'";
     $paket = mysqli_query($db, $sqlpaket)->fetch_assoc();
 
-    $baski = tablogetir("tblbaski", 'id', $paket['baskiId'], $db);
-    $siparis = tablogetir("tblsiparis", 'satirNo', $baski['satirNo'], $db);
 
-    $firma = tablogetir("tblfirma", 'id', $siparis['musteriId'], $db);
-    $profil  = tablogetir("tblprofil", 'id', $siparis['profilId'], $db);
-    $alasim   = tablogetir("tblalasim", 'id', $siparis['alasimId'], $db);
-
-    $paketIcAdet = $profil['paketAdet'];
-    $netAdet = $paket['netAdet'] ? $paket['netAdet'] : 0 ;
-    $rutusAdet = $paket['rutusAdet'] ? $paket['rutusAdet'] : 0 ;
-    $rutusAdet = $paket['rutusAdet'] ? $paket['rutusAdet'] : 0 ;
-    $rutusAdet = $paket['hurdaAdet'] ? $paket['hurdaAdet'] : 0 ;
+    $paketIcAdet = $paket['paketAdet'];
+    $netAdet = $paket['netAdet'] ? $paket['netAdet'] : 0;
+    $rutusAdet = $paket['rutusAdet'] ? $paket['rutusAdet'] : 0;
+    $rutusAdet = $paket['rutusAdet'] ? $paket['rutusAdet'] : 0;
+    $rutusAdet = $paket['hurdaAdet'] ? $paket['hurdaAdet'] : 0;
     $tamPaket = 0;
     $tamAdet = 0;
     $yarimPaket = 0;
@@ -30,7 +47,7 @@ if ($_GET['id']) {
     $toplamPaket = 0;
 
 
-    if($netAdet % $paketIcAdet == 0 ) {
+    if ($netAdet % $paketIcAdet == 0) {
         $tamPaket = $netAdet / $paketIcAdet;
         $yarimPaket = 0;
         $kalanAdet = 0;
@@ -50,7 +67,7 @@ if ($_GET['id']) {
         <div class="card-header">
             Boya Paket Alanı
         </div>
-        <div class="card-body" >
+        <div class="card-body">
             <form>
                 <div class="row">
                     <div class="col-sm-12">
@@ -68,7 +85,7 @@ if ($_GET['id']) {
                                             <div>
                                                 <H2>
 
-                                                    <?php echo $siparis['satirNo'];?>
+                                                    <?php echo $paket['satirNo']; ?>
                                                     <span style="color: #2b6b4f"> </span>
                                                 </H2>
                                             </div>
@@ -80,7 +97,7 @@ if ($_GET['id']) {
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Müşteri: </span>
-                                            <?php echo $firma['firmaAd']?>
+                                            <?php echo $paket['firmaAd'] ?>
                                         </h6>
                                     </div>
                                 </div>
@@ -88,7 +105,7 @@ if ($_GET['id']) {
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Profil: </span>
-                                            <?php echo $profil['profilNo']?>
+                                            <?php echo $paket['profilNo'] ?>
                                         </h6>
 
                                     </div>
@@ -97,7 +114,7 @@ if ($_GET['id']) {
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Alaşım: </span>
-                                            <?php echo $alasim['ad']?>
+                                            <?php echo $paket['ad'] ?>
                                         </h6>
 
                                     </div>
@@ -106,7 +123,7 @@ if ($_GET['id']) {
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Tolerans: </span>
-                                            <?php echo $siparis['maxTolerans']?>
+                                            <?php echo $paket['maxTolerans'] ?>
                                         </h6>
 
                                     </div>
@@ -115,7 +132,7 @@ if ($_GET['id']) {
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Boy: </span>
-                                            <?php echo $siparis['boy']?>
+                                            <?php echo $paket['boy'] ?>
                                         </h6>
 
                                     </div>
@@ -135,7 +152,7 @@ if ($_GET['id']) {
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Paket Iç Adet: </span>
-                                            <?php echo $paketIcAdet?>
+                                            <?php echo $paketIcAdet ?>
                                         </h6>
 
                                     </div>
@@ -147,7 +164,7 @@ if ($_GET['id']) {
                                             <span style="color: darkcyan; font-weight: bold"> Koruma Bandı: </span>
                                             <?php
 
-                                            echo  $siparis['korumaBandi'] == 1 ? "Baskılı" : ( $siparis['korumaBandi'] == 2  ? "Baskısız" : "Yok" );
+                                            echo $paket['korumaBandi'] == 1 ? "Baskılı" : ($paket['korumaBandi'] == 2 ? "Baskısız" : "Yok");
                                             ?>
                                         </h6>
 
@@ -160,7 +177,7 @@ if ($_GET['id']) {
                                             <span style="color: darkcyan; font-weight: bold"> Ara Kağıt: </span>
                                             <?php
 
-                                            echo  $siparis['araKagit'] == 1 ? "Var " : "Yok" ;
+                                            echo $paket['araKagit'] == 1 ? "Var " : "Yok";
                                             ?>
                                         </h6>
 
@@ -171,11 +188,15 @@ if ($_GET['id']) {
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Paket Detayı: </span>
-                                            <span style="color: green"> <?php echo $tamPaket;?> </span> Tam Paket, <span
-                                                    style="color: red"><?php echo $yarimPaket;?> </span> Yarım Paket olmak üzere
+                                            <span style="color: green"> <?php echo $tamPaket; ?> </span> Tam Paket,
+                                            <span
+                                                    style="color: red"><?php echo $yarimPaket; ?> </span> Yarım Paket
+                                            olmak üzere
                                             toplam
-                                            <span style="color: dimgray">  <?php echo $toplamPaket;?> </span> Oluşturulmuştur.
-                                            Yarım Pakette bulunan Adet : <span style="color: red"><?php echo $kalanAdet;?> </span>
+                                            <span style="color: dimgray">  <?php echo $toplamPaket; ?> </span>
+                                            Oluşturulmuştur.
+                                            Yarım Pakette bulunan Adet : <span
+                                                    style="color: red"><?php echo $kalanAdet; ?> </span>
                                         </h6>
 
                                     </div>
@@ -187,7 +208,7 @@ if ($_GET['id']) {
                                     </div>
                                     <div class="col-sm-8">
                                         <h3 style="color: red">
-                                            <?php echo $siparis['paketAciklama']?>
+                                            <?php echo $paket['paketAciklama'] ?>
                                         </h3>
                                     </div>
                                 </div>
@@ -200,7 +221,7 @@ if ($_GET['id']) {
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Hurda Adet</label>
-                            <input disabled value="<?php echo $paket['hurdaAdet']?>"
+                            <input disabled value="<?php echo $paket['hurdaAdet'] ?>"
                                    class="form-control"
                                    placeholder="0">
 
@@ -210,7 +231,7 @@ if ($_GET['id']) {
                     <div class="col-sm-2" v-if="hurdaAdet && hurdaAdet > 0">
                         <div class="form-group">
                             <label>Hurda Sebebi</label>
-                            <input disabled value="<?php echo $paket['hurdaSebep']?>"
+                            <input disabled value="<?php echo $paket['hurdaSebep'] ?>"
                                    class="form-control"
                                    placeholder="">
                         </div>
@@ -219,7 +240,7 @@ if ($_GET['id']) {
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Rutuş Adet</label>
-                            <input disabled value="<?php echo $paket['rutusAdet']?>"
+                            <input disabled value="<?php echo $paket['rutusAdet'] ?>"
                                    class="form-control"
                                    placeholder="0">
                         </div>
@@ -228,7 +249,7 @@ if ($_GET['id']) {
                     <div class="col-sm-2" v-if="rutusAdet && rutusAdet > 0">
                         <div class="form-group">
                             <label>Rütuş Sebebi</label>
-                            <input disabled value="<?php echo $paket['rutusSebep']?>"
+                            <input disabled value="<?php echo $paket['rutusSebep'] ?>"
                                    class="form-control"
                                    placeholder="">
                         </div>

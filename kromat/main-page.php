@@ -2,7 +2,8 @@
 
 include "../netting/baglan.php";
 include "../include/sql.php";
-$sql = "SELECT * FROM tblkromat order by id desc ";
+$sql = "select k.id as id, baslaZaman, havuzKromatId, havuzAsitId, bitisZaman, ad  from tblkromat k
+INNER JOIN tblsepet s on k.sepetId  = s.id order by k.id desc";
 $result = $db->query($sql);
 
 
@@ -54,8 +55,8 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td><?php echo tarihsaat($row['baslaTarih']); ?></td>
-                                    <td><?php echo tablogetir('tblsepet', 'id', $row['sepetId'], $db)['ad']; ?></td>
+                                    <td><?php echo tarihsaat($row['baslaZaman']); ?></td>
+                                    <td><?php echo $row['ad']; ?></td>
                                     <td><?php echo $row['havuzKromatId']; ?></td>
                                     <td><?php echo $row['havuzAsitId']; ?></td>
                                     <td><?php if ($row['bitisZaman']) { ?>

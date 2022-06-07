@@ -96,10 +96,17 @@ function tablogetir($table, $kriter, $deger, $db)
 
 function kiloBul($baskiId, $adet, $db)
 {
-    $baski = tablogetir("tblbaski", 'id', $baskiId, $db);
+
+    $sqlbaski = "select
+    b.id as id,
+    kesimId,
+    guncelGr, kesilenBoy
+    from tblbaski as b INNER JOIN tblkesim k On k.id = b.kesimId where b.id = '$baskiId'";
+
+    $baski = mysqli_query($db, $sqlbaski)->fetch_assoc();
+
     $gr = $baski['guncelGr'];
-    $kesimId = $baski['kesimId'];
-    $boy = tablogetir("tblkesim", 'id', $kesimId, $db)['kesilenBoy'];
+    $boy = $baski['kesilenBoy'];
     $kilo = $adet * $boy * $gr;
     return $kilo;
 }

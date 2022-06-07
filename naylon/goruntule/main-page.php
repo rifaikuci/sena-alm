@@ -7,7 +7,11 @@ if ($_GET['id']) {
 
     $id = $_GET['id'];
 
-    $sqlnaylon = "SELECT * FROM tblnaylon WHERE id = '$id'";
+    $sqlnaylon = "select  n.id as id, satirNo, naylonId1, naylonId2,kullanilan1, kullanilan2, s1.barkod as barkod1, s2.barkod as barkod2
+from tblnaylon n
+INNER JOIN tblbaski t ON n.baskiId = t.id
+LEFT JOIN   tblstokmalzeme s1 ON s1.id = n.naylonId1
+LEFT JOIN   tblstokmalzeme s2 ON s2.id = n.naylonId2 WHERE n.id = '$id'";
     $naylon = mysqli_query($db, $sqlnaylon)->fetch_assoc();
 
 
@@ -25,7 +29,7 @@ if ($_GET['id']) {
                         <div class="form-group">
                             <label> Satır No  - Adet</label>
                             <input disabled
-                                   value="<?php $satirNo = tablogetir("tblbaski", 'id', $naylon['baskiId'],$db)['satirNo']; echo $satirNo  . " -  " . $naylon['adet'] ?>"
+                                   value="<?php echo $naylon['satirNo']  . " -  " . $naylon['adet'] ?>"
                                    type="text" class="form-control form-control-lg"
                                    placeholder="">
 
@@ -38,7 +42,7 @@ if ($_GET['id']) {
                         <div class="form-group">
                             <label> Naylon </label>
                             <input disabled
-                                   value="<?php echo $naylon['naylonId1'] > 0 ? tablogetir('tblstokmalzeme', 'id', $naylon['naylonId1'], $db)['barkod'] : ""; ?>"
+                                   value="<?php echo $naylon['barkod1']; ?>"
                                    type="text" class="form-control form-control-lg"
                                    placeholder="">
 
@@ -60,7 +64,7 @@ if ($_GET['id']) {
                 <div class="form-group">
                     <label> Naylon </label>
                     <input disabled
-                           value="<?php echo $naylon['naylonId2'] > 0 ? tablogetir('tblstokmalzeme', 'id', $naylon['naylonId2'], $db)['barkod'] : ""; ?>"
+                           value="<?php echo $naylon['barkod2']; ?>"
                            type="text" class="form-control form-control-lg"
                            placeholder="">
 

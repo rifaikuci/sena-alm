@@ -2,7 +2,14 @@
 
 include "../netting/baglan.php";
 include "../include/sql.php";
-$sql = "SELECT * FROM tblkalipparcalar order by id desc ";
+$sql = "
+ select k.id as id,
+       profilNo,
+       firmaAd,kalipCins,parca,cap,kisaKod,kalipciNo, durum,takimNo,senaNo
+from tblkalipparcalar k
+         INNER JOIN tblprofil p ON k.profilId = p.id
+         INNER JOIN tblfirma f ON f.id = k.firmaId order by k.id desc
+ ";
 $result = $db->query($sql);
 
 ?>
@@ -55,17 +62,16 @@ $result = $db->query($sql);
 
                             <?php $sira = 1;
                             while ($row = $result->fetch_array()) {
-                                $firma = tablogetir('tblfirma', 'id', $row['firmaId'], $db)
                                 ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['senaNo']; ?></td>
-                                    <td><?php echo tablogetir('tblprofil', 'id', $row['profilId'], $db)['profilNo']; ?></td>
-                                    <td><?php echo $firma['firmaAd']; ?></td>
+                                    <td><?php echo$row['profilNo']; ?></td>
+                                    <td><?php echo $row['firmaAd']; ?></td>
                                     <td><?php echo kalipBul($row['kalipCins']); ?></td>
                                     <td><?php echo trim(parcaBul($row['parca'])); ?></td>
                                     <td><?php echo $row['cap']; ?></td>
-                                    <td><?php echo $firma['kisaKod'] . $row['kalipciNo']; ?></td>
+                                    <td><?php echo $row['kisaKod'] . $row['kalipciNo']; ?></td>
                                     <td style="color: <?php echo $row['durum'] == 1 ? '#00b44e' : ($row['durum'] == 2 ? '#d55537' : '#b8860b') ?>">
                                         <b>
                                             <?php echo $row['durum'] == 1 ? "Aktif" : ($row['durum'] == 2 ? 'Pasif' : 'Çöp')

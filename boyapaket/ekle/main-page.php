@@ -3,9 +3,10 @@ include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
 
-$boyaSql = "SELECT * FROM tblboya where isFirin = '1' and isPaket = '0'";
+$boyaSql = "SELECT   boya.id as id,  t.satirNo, siparisId, korumaBandi, topAdet, isPaket, isFirin, baski.id as baskiId from tblboya boya  INNER JOIN tblbaski baski ON  SUBSTRING_INDEX(boya.baskilar, ';', 1) = baski.id
+INNER JOIN  tblsiparis t on baski.siparisId = t.id where isFirin = '1' and isPaket = '0'";
 $boyaSepet = $db->query($boyaSql);
-
+#TODO BURADA kaldım.
 ?>
 
 <section class="content">
@@ -154,14 +155,11 @@ $boyaSepet = $db->query($boyaSql);
                                     style="width: 100%;">
                                 <option selected value="0">Satır No - Toplam Adet </option>
                                 <?php while ($boya = $boyaSepet->fetch_array()) {
-                                    $baskilar = explode(";",$boya['baskilar']);
-                                    $baskiId = $baskilar[0];
-                                    $siparisId = tablogetir('tblbaski', 'id', $baskiId, $db)['siparisId'];
-                                    $siparis = tablogetir('tblsiparis', 'id', $siparisId, $db);
-                                    $satirNo = $siparis['satirNo'];
-                                    $koruma = $siparis['korumaBandi'];
+
+                                    $satirNo = $boya['satirNo'];
+                                    $koruma = $boya['korumaBandi'];
                                     $value = $satirNo . " - " . $boya['topAdet'] ;
-                                    $key = $baskiId . ";" . $siparisId . ";" . $boya['topAdet'] . ";" . $koruma . ";" . $boya['id'] ?>
+                                    $key = $boya['baskiId'] . ";" . $boya['siparisId'] . ";" . $boya['topAdet'] . ";" . $koruma . ";" . $boya['id'] ?>
                                     <option value="<?php echo $key ?>"> <?php echo $value ?></option>
                                 <?php } ?>
                             </select>
