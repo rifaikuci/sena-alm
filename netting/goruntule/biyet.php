@@ -6,7 +6,9 @@ require_once "../../include/helper.php";
 
 $id = $_POST['id'];
 
-$sql = "SELECT * FROM tblstokbiyet  where id = '$id'";
+$sql = "select s.id as id, barkodNo, partino, firmaAd, ad, cap, toplamKg, ortalamaBoy from tblstokbiyet s 
+INNER JOIN tblfirma f ON f.id = s.firmaid
+INNER JOIN tblalasim a ON a.id = s.alasimid where s.id = '$id'";
 $result = $db->query($sql);
 
 
@@ -31,11 +33,11 @@ $result = $db->query($sql);
             <tr>
                 <td><?php echo $biyet['barkodNo'] ?></td>
                 <td> <?php echo $biyet['partino'] ?></td>
-                <td> <?php echo tablogetir('tblfirma','id',$biyet['firmaId'], $db)['firmaAd'] ?></td>
-                <td> <?php echo tablogetir('tblalasim','id',$biyet['alasimId'], $db)['ad'] ?></td>
+                <td> <?php echo $biyet['firmaAd'] ?></td>
+                <td> <?php echo $biyet['ad'] ?></td>
                 <td> <?php echo $biyet["cap"] ?></td>
-                <td> <?php echo $biyet["toplamKg"]. " Kg" ?></td>
-                <td> <?php echo $biyet["ortalamaBoy"]. " Cm"  ?></td>
+                <td> <?php echo $biyet["toplamKg"] . " Kg" ?></td>
+                <td> <?php echo $biyet["ortalamaBoy"] . " Cm" ?></td>
             </tr>
         <?php } ?>
         </tbody>

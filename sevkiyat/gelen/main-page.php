@@ -2,9 +2,13 @@
 include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
-$sql = "SELECT * FROM tblsevkiyat order by id desc ";
+$sql = "
+ select s.id as id, kod, p1.adsoyad as p1adsoyad, p2.adsoyad as p2adsoyad, plaka, aciklama
+from tblsevkiyat s
+         INNER JOIN tblpersonel p1 ON p1.id = s.personelId1
+         LEFT JOIN tblpersonel p2 ON p2.id = s.personelId2 order by s.id desc
+ ";
 $result = $db->query($sql);
-#TODO BURADA kalınıd
 ?>
 
 <section class="content">
@@ -69,8 +73,8 @@ $result = $db->query($sql);
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['kod']; ?></td>
                                     <td><?php
-                                        $personel1 = tablogetir('tblpersonel', 'id', $row['personelId1'], $db)['adsoyad'];
-                                        echo $row['personelId2'] ? $personel1 . "- " . tablogetir('tblpersonel', 'id', $row['personelId2'], $db)['adsoyad'] :
+                                        $personel1 = $row['p1adsoyad'];
+                                        echo $row['p2adsoyad'] ? $personel1 . "- " . $row['p2adsoyad'] :
                                             $personel1; ?>
                                     </td>
                                     <td><?php echo $row['plaka']; ?></td>

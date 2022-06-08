@@ -10,8 +10,12 @@ $profillerrsql = "SELECT * FROM tblprofil";
 $profiller = $db->query($profillerrsql);
 
 
-$bolstersql = "SELECT * FROM tblkalipparcalar where durum =1 and parca =100";
+$bolstersql = "select k.id as id, firmaAd, senaNo, kalipciNo, kalite, figurSayi
+from tblkalipparcalar k
+         INNER JOIN
+tblfirma f ON f.id = k.firmaId where durum =1 and parca =100";
 $bolsterler = $db->query($bolstersql);
+
 ?>
 
 <section class="content">
@@ -124,7 +128,7 @@ $bolsterler = $db->query($bolstersql);
                                     <?php
                                     while ($bolster = $bolsterler->fetch_array()) { ?>
                                         <option value="<?php echo $bolster['id'] ?>">
-                                            <?php echo $bolster['senaNo'] . " - " . tablogetir('tblfirma','id',$bolster['firmaId'], $db)['firmaAd'] . " - " . $bolster['kalipciNo'] . " - " . $bolster['kalite'] . " - " . $bolster['figurSayi'] ?>
+                                            <?php echo $bolster['senaNo'] . " - " . $bolster['firmaAd'] . " - " . $bolster['kalipciNo'] . " - " . $bolster['kalite'] . " - " . $bolster['figurSayi'] ?>
                                         </option>
                                     <?php } ?>
                                 </select>

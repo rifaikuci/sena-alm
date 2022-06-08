@@ -95,7 +95,30 @@ if ($received_data->action == 'destekId') {
     $profilId = $received_data->profilId;
     $figur = $received_data->figur;
     $cap = $received_data->cap;
-    $sql = "SELECT * FROM tblkalipparcalar WHERE durum = '1' AND $firmaId = '$firmaId' AND figurSayi = '$figur' AND cap = '$cap' AND parca IN($parca) ";
+    $sql = "
+    select k.id as id,
+       senaNo,
+       profilId,
+       cap,
+       kalite,
+       figurSayi,
+       kalipCins,
+       kalipciNo,
+       parca,
+       durum,
+       netKilo,
+       brutKilo,
+       profilNo,
+       firmaAd
+from tblkalipparcalar k
+         INNER JOIN tblprofil p on p.id = k.profilId
+         INNER JOIN tblfirma f on f.id = k.firmaId
+WHERE k.durum = '1'
+  AND k.firmaId = '$firmaId'
+  AND k.figurSayi = '$figur'
+  AND k.cap = '$cap'
+  AND k.parca IN ($parca)
+    ";
 
     $result = $db->query($sql);
     $listedestekler = array();
@@ -112,8 +135,8 @@ if ($received_data->action == 'destekId') {
         $data['durum'] = $row['durum'];
         $data['netKilo'] = $row['netKilo'];
         $data['brutKilo'] = $row['brutKilo'];
-        $data['profilNo'] = tablogetir('tblprofil','id',$row['profilId'], $db)['profilNo'];
-        $data['firmaAdi'] = tablogetir('tblfirma','id',$row['firmaId'], $db)['firmaAd'];
+        $data['profilNo'] = $row['profilNo'];
+        $data['firmaAdi'] = $row['firmaAd'];
         array_push($listedestekler, $data);
     }
 

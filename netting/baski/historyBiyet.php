@@ -13,8 +13,8 @@ select  tblbaski.siparisId, tblbaski.id, tblbaski.operatorId, tblsiparis.boy, tb
        tblbaski.biyetBoy, tblbaski.araIsFire,tblbaski.konveyorBoy, tblbaski.boylamFire
 from tblsiparis
          INNER JOIN tblbaski ON tblsiparis.id = tblbaski.siparisId
-where tblsiparis.profilId = 4
-  and tblsiparis.boy = 3000 order by bitisZamani desc LIMIT 10
+where tblsiparis.profilId = '$profilId'
+  and tblsiparis.boy = '$boy' order by bitisZamani desc LIMIT 10
  ";
 
 

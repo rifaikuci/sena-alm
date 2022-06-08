@@ -9,7 +9,28 @@ $data = array();
 
 if ($received_data->action == 'balyalamagetir') {
 
-    $balyalamasql = "SELECT * FROM tblbalyalama   where    sevkiyatId = 0";
+    $balyalamasql = "
+    select b.id as id,
+       operatorId,
+       tarih,
+       baskiId,
+       netAdet,
+       netKilo,
+       mtGr,
+       paketDetay,
+       realTolerans,
+       teorikTolerans,
+       satirNo,
+       siparisNo,
+       balyaNo,
+       balyaBoy,
+       balyaKilo,
+       musteriId,
+       firmaAd,
+        sevkiyatId
+from tblbalyalama b
+         INNER JOIN tblfirma f on f.id = b.musteriId where b.sevkiyatId = 0
+    ";
 
 
     $result = $db->query($balyalamasql);
@@ -34,7 +55,7 @@ if ($received_data->action == 'balyalamagetir') {
         $balyalama['balyaBoy'] = $row['balyaBoy'];
         $balyalama['balyaKilo'] = $row['balyaKilo'];
         $balyalama['musteriId'] = $row['musteriId'];
-        $balyalama['musteri'] = tablogetir("tblfirma",'id',$row['musteriId'], $db)['firmaAd'];
+        $balyalama['musteri'] = $row['firmaAd'];
 
     array_push($datam,$balyalama);
     }

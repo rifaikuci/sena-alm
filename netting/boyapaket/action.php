@@ -12,27 +12,43 @@ if ($received_data->action == 'siparisgetir') {
 
     $id = $received_data->id;
     $id = intval($id);
-    $sql = "SELECT * FROM tblsiparis WHERE id = '$id' ";
+    $sql = "
+     select s.id as id,
+       satirNo,
+       firmaAd,
+       profilAdi,
+       profilNo,
+       ad,
+       paketAdet,
+       biyetBirimGramaj,
+       maxTolerans,
+       paketAciklama,
+       boy,
+       kilo,
+       adet,
+       profilId, basilanKilo,
+       basilanAdet, kiloAdet,naylonDurum, araKagit, krepeKagit
+
+from tblsiparis s
+         INNER JOIN tblprofil p ON p.id = s.profilId
+         INNER JOIN tblalasim a ON a.id = S.alasimId
+         INNER JOIN tblfirma f ON f.id = s.musteriId where s.id = '$id'
+     ";
 
     $result = $db->query($sql);
     while ($row = $result->fetch_array()) {
-        $profil = tablogetir('tblprofil','id',$row['profilId'], $db );
-        $alasim  = tablogetir('tblalasim','id',$row['alasimId'], $db);
-
-
         $data['id'] = $row['id'];
         $data['satirNo'] = $row['satirNo'];
-        $data['musteriAd'] = tablogetir('tblfirma','id',$row['musteriId'], $db)['firmaAd'];
-        $data['profil'] = $profil['profilAdi'] . " - " . $profil['profilNo'];
-        $data['alasim'] =  $alasim['ad'];
-        $data['paketIcAdet'] = $profil['paketAdet'];
-        $data['biyetBirimGramaj'] =  $alasim['biyetBirimGramaj'];
+        $data['musteriAd'] = $row['firmaAd'];
+        $data['profil'] = $row['profilAdi'] . " - " . $row['profilNo'];
+        $data['alasim'] =  $row['ad'];
+        $data['paketIcAdet'] = $row['paketAdet'];
+        $data['biyetBirimGramaj'] =  $row['biyetBirimGramaj'];
         $data['tolerans'] = $row['maxTolerans'];
-        $data['paketAciklama'] = $row['maxTolerans'];
+        $data['paketAciklama'] = $row['paketAciklama'];
         $data['boy'] = $row['boy'];
         $data['kg'] = $row['kilo'];
         $data['adet'] = $row['adet'];
-        $data['paketAciklama'] = $row['paketAciklama'];
         $data['profilId'] = $row['profilId'];
         $data['basilanKilo'] = $row['basilanKilo'];
         $data['basilanAdet'] = $row['basilanAdet'];

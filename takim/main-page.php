@@ -4,7 +4,8 @@ include "../netting/baglan.php";
 include "../include/sql.php";
 
 
-$sql = "SELECT * FROM tbltakim where durum = 1 order by id desc ";
+$sql = "select t.id as id, takimNo, profilId, profilNo, cap, sonGramaj, netKilo, brutKilo, destek, durum, bolster from tbltakim t
+INNER JOIN tblprofil p ON t.profilId = p.id where durum = 1 order by id desc ";
 
 $result = $db->query($sql);
 
@@ -67,8 +68,8 @@ $result = $db->query($sql);
                                             tablogetir('tblprofil', 'id', $row['profilId'], $db)['profilNo'] : "-"; ?></td>
                                     <td><?php echo $row['cap']; ?></td>
                                     <td><?php echo $row['sonGramaj'] ?></td>
-                                    <td><?php echo sayiFormatla($row['netKilo']);?></td>
-                                    <td><?php echo sayiFormatla($row['brutKilo']);?></td>
+                                    <td><?php echo sayiFormatla($row['netKilo']); ?></td>
+                                    <td><?php echo sayiFormatla($row['brutKilo']); ?></td>
                                     <td>
                                         <button type="button" v-on:click="destekgoster($event)" class="btn btn-success"
                                                 data-toggle="modal" data-parca="<?php echo $row['destek'] ?>">Destekler

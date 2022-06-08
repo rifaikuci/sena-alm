@@ -3,6 +3,7 @@ include '../baglan.php';
 include '../../include/helper.php';
 include '../../include/sql.php';
 
+#todo burada kaldık.
 $received_data = json_decode(file_get_contents("php://input"));
 $data = array();
 
@@ -53,15 +54,45 @@ if ($received_data->action == 'siparislerlistesi') {
 
     $siparisNo  = $received_data->siparisNo;
 
-    $sql = "SELECT  * from tblsiparis where siparisNo = '$siparisNo'";
+    $sql = "
+    select s.id as id,
+       profilAdi,
+       profilNo,
+       siparisNo,
+       profilId,
+       adet,
+       kilo,
+       siparisTuru,
+       alasimId,
+       ad,
+       musteriId,
+       naylonDurum,
+       korumaBandi,
+       araKagit,
+       krepeKagit,
+       termimTarih,
+       boyaId,
+       eloksalId,
+       maxTolerans,
+       boy,
+       satirNo,
+       istenilenTermik,
+       paketAciklama,
+       boyaAciklama,
+       baskiAciklama,
+       kiloAdet,
+       kalanAdet,
+       kalanKilo
+from tblsiparis s
+         INNER JOIN tblprofil p on p.id = s.profilId
+         INNER JOIN tblalasim a on a.id = s.alasimId where s.siparisNo = '$siparisNo'
+    ";
     $result = $db->query($sql);
     $datam = array();
     $siparis = null;
     while ($row = $result->fetch_array()) {
-        $alasim = tablogetir('tblalasim','id',$row['alasimId'], $db );
-        $profil = tablogetir('tblprofil','id',$row['profilId'], $db );
-        $profilAdi =  $profil['profilAdi'];
-        $profilNo =  $profil['profilNo'];
+        $profilAdi =  $row['profilAdi'];
+        $profilNo =  $row['profilNo'];
         $siparis['id'] =  $row['id'];
         $siparis['profil'] = $row['profilId'].";".$profilNo."-".$profilAdi;
         $siparis['profilId'] = $row['profilId'];
@@ -69,8 +100,8 @@ if ($received_data->action == 'siparislerlistesi') {
         $siparis['adet'] =  $row['adet'];
         $siparis['kilo'] =  sayiFormatla($row['kilo']);
         $siparis['siparisTur'] =  $row['siparisTuru'] == 'H'  ? "Ham" : ($row['siparisTuru'] == 'B' ? "Boyalı": "Eloksal") ;
-        $siparis['alasim'] =  $row['alasimId'].";".$alasim['ad'];
-        $siparis['alasimAd'] = $alasim['ad'];
+        $siparis['alasim'] =  $row['alasimId'].";".$row['ad'];
+        $siparis['alasimAd'] = $row['ad'];
         $siparis['alasimId'] = $row['alasimId'];
         $siparis['musteriId'] =  $row['musteriId'];
         $siparis['naylonId'] =  $row['naylonDurum'];

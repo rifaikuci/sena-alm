@@ -13,7 +13,26 @@ $kilo = $_POST['kilo'];
 $adet = $_POST['adet'];
 
 
-$sql = "SELECT * FROM tblstokboya  where partino = '$partino' AND firmaId = '$firmaId' AND boyaTuru= '$boyaTuru' AND   adet = '$adet' AND sicaklik = '$sicaklik' AND cins = '$cins' AND kilo = '$kilo'";
+$sql = "select s.id as id,
+       barkodNo,
+       partino,
+       firmaAd,
+       ad,
+       sicaklik,
+       cins,
+       kilo,
+       boyaTuru,
+       adet
+from tblstokboya s
+         INNER JOIN tblfirma f ON f.id = s.firmaid
+         INNER JOIN tblprboya p on p.id = s.boyaTuru
+where s.partino = '$partino'
+  AND s.firmaId = '$firmaId'
+  AND s.boyaTuru = '$boyaTuru'
+  AND s.adet = '$adet'
+  AND s.sicaklik = '$sicaklik'
+  AND s.cins = '$cins'
+  AND s.kilo = '$kilo'  ";
 $result = $db->query($sql);
 
 
@@ -38,8 +57,8 @@ $result = $db->query($sql);
             <tr>
                 <td><?php echo $boya['barkodNo'] ?></td>
                 <td><?php echo $boya['partino'] ?></td>
-                <td> <?php echo tablogetir('tblfirma', 'id',$boya["firmaId"], $db )['firmaAd']; ?></td>
-                <td> <?php echo tablogetir('tblprboya', 'id',$boya["boyaTuru"], $db )['ad']; ?></td>
+                <td> <?php echo $boya['firmaAd']; ?></td>
+                <td> <?php echo $boya['ad']; ?></td>
                 <td> <?php echo $boya['sicaklik'] ?></td>
                 <td> <?php echo $boya['cins'] ?></td>
                 <td> <?php echo $boya['kilo']; ?></td>

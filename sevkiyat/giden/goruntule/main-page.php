@@ -24,7 +24,8 @@ if ($_GET['id']) {
 
     $balyaText = rtrim($balyaText, ',');
 
-    $sql = "SELECT * FROM tblbalyalama where  id in  (" . $balyaText . ")";
+    $sql = "SELECT b.id as id, balyaNo, balyaKilo, balyaBoy, firmaAd FROM tblbalyalama b
+INNER JOIN  tblfirma f ON f.id = b.musteriId where  b.id in  (" . $balyaText . ")";
     $result = $db->query($sql);
 
 
@@ -107,8 +108,7 @@ if ($_GET['id']) {
                                     <td><?php echo $row['balyaNo']; ?></td>
                                     <td><?php echo $row['balyaKilo']; ?></td>
                                     <td><?php echo $row['balyaBoy']; ?></td>
-                                    <td><?php $musteri = tablogetir("tblfirma", 'id', $row['musteriId'], $db)['firmaAd'];
-                                        echo $musteri;
+                                    <td><?php echo $row['firmaAd'];
                                         ?></td>
                                     <td style="text-align: center">
                                         <button type="button" v-on:click="detayGoster($event)"

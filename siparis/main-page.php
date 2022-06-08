@@ -2,7 +2,13 @@
 
 include "../netting/baglan.php";
 include "../include/sql.php";
-$sql = "SELECT * FROM tblsiparis group by siparisNo order by id desc";
+$sql = "
+SELECT s.id as id, siparisNo,firmaAd, siparisTarih
+FROM tblsiparis s
+         INNER JOIN tblfirma f ON f.id = s.musteriId
+group by s.siparisNo
+order by s.id desc
+";
 $result = $db->query($sql);
 
 ?>
@@ -52,7 +58,7 @@ $result = $db->query($sql);
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['siparisNo']; ?></td>
-                                    <td><?php echo tablogetir('tblfirma','id',$row['musteriId'], $db)['firmaAd']; ?></td>
+                                    <td><?php echo $row['firmaAd']; ?></td>
                                     <td><?php echo tarih($row['siparisTarih']); ?></td>
 
                                     <td>

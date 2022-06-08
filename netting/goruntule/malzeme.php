@@ -9,7 +9,23 @@ $malzemeId = $_POST['malzemeId'];
 $adet = $_POST['adet'];
 
 
-$sql = "SELECT * FROM tblstokmalzeme  where partino = '$partino' AND firmaId = '$firmaId' AND malzemeId= '$malzemeId' AND   adet = '$adet'";
+$sql = "select s.id as id,
+       barkod,
+       partino,
+       firmaAd,
+       ad,
+       birimMiktari,
+       firmaId,
+       malzemeId,
+       adet
+from tblstokmalzeme s
+         INNER JOIN tblmalzemeler m ON s.malzemeId = m.id
+         INNER JOIN tblfirma f ON f.id = s.firmaId
+where s.partino = '$partino'
+  AND s.firmaId = '$firmaId'
+  AND s.malzemeId = '$malzemeId'
+  AND s.adet = '$adet'
+ ";
 $result = $db->query($sql);
 
 $sira = 1;
@@ -30,14 +46,13 @@ $sira = 1;
         <tbody>
         <?php
         while ($malzeme = $result->fetch_array()) {
-            $malzemegetir = tablogetir('tblmalzemeler','id',$malzeme["malzemeId"], $db);
             ?>
             <tr>
                 <td><?php echo $malzeme['barkod'] ?></td>
                 <td><?php echo $malzeme['partino'] ?></td>
-                <td> <?php echo tablogetir('tblfirma','id',$malzeme['firmaId'], $db)['firmaAd']; ?></td>
-                <td> <?php echo $malzemegetir['ad'] ?></td>
-                <td> <?php echo $malzemegetir['birimMiktari'] ?></td>
+                <td> <?php echo $malzeme['firmaAd']; ?></td>
+                <td> <?php echo $malzeme['ad'] ?></td>
+                <td> <?php echo $malzeme['birimMiktari'] ?></td>
             </tr>
         <?php } ?>
         </tbody>

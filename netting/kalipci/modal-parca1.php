@@ -14,14 +14,41 @@ if ($_POST['cap'] != "" && $_POST['firmaId'] != "" && $_POST['profilId'] != "" &
     $firmaId = trim($_POST['firmaId']);
     $profilId = trim($_POST['profilId']);
     $figurSayi = trim($_POST['figur']);
-    $sql = "SELECT * FROM tblkalipparcalar  
-            where kalipCins = '$kalipCins' AND takimNo = '' AND cap= '$cap' AND  firmaId = '$firmaId' AND
-                profilId = '$profilId' AND figurSayi = '$figurSayi' AND parca = $parca AND durum = '1'";
+    $sql = "  select k.id as id,
+       kalipCins,
+       takimNo,
+       cap,
+       firmaId,
+       profilId,
+       parca,
+       durum,
+       senaNo,
+       firmaAd,
+       profilNo,
+       figurSayi, kalite
+from tblkalipparcalar k
+         INNER JOIN tblprofil p On p.id = k.profilid
+         INNER JOIN tblfirma f ON f.id = k.firmaId
+            where k.kalipCins = '$kalipCins' AND k.takimNo = '' AND k.cap= '$cap' AND  k.firmaId = '$firmaId' AND
+                k.profilId = '$profilId' AND k.figurSayi = '$figurSayi' AND k.parca = $parca AND k.durum = '1'";
 } else {
-    $sql = "SELECT * FROM tblkalipparcalar  
-                    where kalipCins = '$kalipCins' AND takimNo = '' AND parca  = $parca AND durum = '1' ";
+    $sql = "select k.id as id,
+       kalipCins,
+       takimNo,
+       cap,
+       firmaId,
+       profilId,
+       parca,
+       durum,
+       senaNo,
+       firmaAd,
+       profilNo,
+       figurSayi, kalite
+from tblkalipparcalar k
+         INNER JOIN tblprofil p On p.id = k.profilid
+         INNER JOIN tblfirma f ON f.id = k.firmaId 
+                    where k.kalipCins = '$kalipCins' AND k.takimNo = '' AND k.parca  = $parca AND k.durum = '1' ";
 }
-
 
 $result = $db->query($sql);
 
@@ -50,22 +77,21 @@ $result = $db->query($sql);
         <tbody>
         <?php
         while ($parca = $result->fetch_array()) {
-            $profil = tablogetir('tblprofil','id',$parca['profilId'], $db );
 
             ?>
             <tr>
                 <td class="parcaselected" style="color: indianred"
                     data-senaNo="<?php echo $parca['senaNo'] ?>"
                     data-firmaId="<?php echo $parca['firmaId'] ?>"
-                    data-firmaAd="<?php echo tablogetir('tblfirma','id',$parca['firmaId'], $db)['firmaAd'] ?>"
+                    data-firmaAd="<?php echo $parca['firmaAd'] ?>"
                     data-profilId="<?php echo $parca['profilId'] ?>"
-                    data-profilAd="<?php echo $profil['profilNo'] ?>"
+                    data-profilAd="<?php echo $parca['profilNo'] ?>"
                     data-figurSayi="<?php echo $parca['figurSayi'] ?>"
                     data-cap="<?php echo $parca['cap'] ?>"> <?php echo $parca['senaNo'] ?>
                 </td>
-                <td> <?php echo tablogetir('tblfirma','id',$parca['firmaId'], $db)['firmaAd'] ?></td>
+                <td> <?php echo $parca['firmaAd'] ?></td>
                 <td><?php echo $parca['kalipciNo'] ?></td>
-                <td> <?php echo $profil['profilNo'] ?></td>
+                <td> <?php echo $parca['profilNo'] ?></td>
                 <td><?php echo trim(parcaBul($parca['parca'])); ?></td>
                 <td> <?php echo $parca['cap'] ?></td>
                 <td> <?php echo $parca['kalite']; ?></td>

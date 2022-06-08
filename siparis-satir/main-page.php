@@ -2,7 +2,9 @@
 
 include "../netting/baglan.php";
 include "../include/sql.php";
-$sql = "SELECT * FROM tblsiparis order by termimTarih asc";
+$sql = "select s.id as id,  termimTarih, siparisNo, satirNo, profilNo, profilAdi, boy, adet, firmaAd,siparisTarih  from tblsiparis s
+INNER  JOIN tblprofil p ON p.id = s.profilId
+INNER JOIN  tblfirma f  order by s.termimTarih asc ";
 $result = $db->query($sql);
 
 ?>
@@ -55,11 +57,11 @@ $result = $db->query($sql);
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['siparisNo']; ?></td>
                                     <td><?php echo $row['satirNo']; ?></td>
-                                    <td><?php echo tablogetir('tblprofil', 'id', $row['profilId'], $db)['profilNo']; ?></td>
+                                    <td><?php echo $row['profilNo']; ?></td>
                                     <td><?php echo $row['boy']?></td>
                                     <td><?php echo $row['adet']?></td>
                                     <td><?php echo sayiFormatla($row['kilo']);?></td>
-                                    <td><?php echo tablogetir('tblfirma','id',$row['musteriId'], $db)['firmaAd']; ?></td>
+                                    <td><?php echo $row['firmaAd']; ?></td>
                                     <td><?php echo tarih($row['siparisTarih']); ?></td>
                                     <td><?php echo tarih($row['termimTarih']); ?></td>
 

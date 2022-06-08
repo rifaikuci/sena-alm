@@ -199,7 +199,7 @@ INNER JOIN tblalasim a ON a.id = s.alasimId
 
                 <?php if (isTableSevkiyat($db, "tblstokmalzeme", $detail['id']) > 0) {
 
-                    $sqlmalzeme = "select malzemeId, partino, firmaAd,ad, adet, birimMiktari  from tblstokmalzeme s
+                    $sqlmalzeme = "select malzemeId, partino, firmaAd,ad, adet, birimMiktari, firmaId  from tblstokmalzeme s
 INNER JOIN tblmalzemeler m ON m.id =s.malzemeId
 INNER JOIN tblfirma f ON f.id = s.firmaId where sevkiyatId =" . $detail['id'] . " group  by partino, firmaId, malzemeId,adet";
                     $resultmalzeme = $db->query($sqlmalzeme);

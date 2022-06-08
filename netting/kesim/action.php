@@ -37,24 +37,34 @@ if ($received_data->action == 'sepetgetir') {
 if ($received_data->action == 'baskigetir') {
 
     $id = $received_data->id;
-    $id = intval($id);
-    $sql = "SELECT * FROM tblbaski WHERE id = $id ";
+    $sql = "
+    select b.id as id,
+       siparisId,
+       profilId,
+       siparisTuru,
+       b.satirNo,
+       boy,
+       istenilenTermik,
+       basilanAdet,
+       kayitTarih,
+       profilNo
+from tblbaski b
+         INNER JOIN tblsiparis s on s.id = b.siparisId
+         INNER JOIN tblprofil p on p.id = s.profilId where b.id = '$id'
+    ";
 
     $result = $db->query($sql);
     while ($row = $result->fetch_array()) {
-        $siparis = tablogetir('tblsiparis','id',$row['siparisId'], $db);
-        $profilId =$siparis['profilId'];
-        $siparisTur =$siparis['siparisTuru'];
-        $profil = tablogetir('tblprofil','id',$profilId, $db);
+        $profilId =$row['profilId'];
+        $siparisTur =$row['siparisTuru'];
         $data['id'] = $row['id'];
-        $data['satirNo'] = $siparis['satirNo'];
-        $data['istenilenBoy'] = $siparis['boy'];
-        $data['istenilenTermik'] = $siparis['istenilenTermik'];
+        $data['satirNo'] = $row['satirNo'];
+        $data['istenilenBoy'] = $row['boy'];
+        $data['istenilenTermik'] = $row['istenilenTermik'];
         $data['basilanNetAdet'] = $row['basilanNetAdet'];
         $data['kayitTarih'] = $row['kayitTarih'];
-        $data['hurdaAdet'] = $row['hurdaAdet'];
         $data['siparisId'] = $row['siparisId'];
-        $data['profil'] = $profil['profilAdi'] . " - " .  $profil['profilNo'];
+        $data['profil'] = $row['profilAdi'] . " - " .  $row['profilNo'];
         $data['siparisTur'] = $siparisTur == "B" ? "Boyalı" : ($siparisTur == "E" ? "Eloksal" : "Ham");
     }
 

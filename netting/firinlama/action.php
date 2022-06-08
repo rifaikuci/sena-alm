@@ -11,7 +11,11 @@ if ($received_data->action == 'boyagetir') {
 
 
 
-    $boyasql = "SELECT * FROM tblboya where   isFirin = 0";
+    $boyasql = "
+    select b.id as id, sepetler, baskilar, topAdet, baslaZaman, sicaklik, boyaTuru, isFirin
+from tblboya b
+         INNER JOIN tblstokboya s on s.id = b.boyaId where isFirin = 0
+    ";
 
 
     
@@ -19,14 +23,13 @@ if ($received_data->action == 'boyagetir') {
     $datam = array();
     $boya = null;
     while ($row = $result->fetch_array()) {
-        $stokboya = tablogetir("tblstokboya",'id',$row['boyaId'],$db);
-        $boya['sepetId'] = $row['sepetId'];
-        $boya['baskiId'] = $row['baskiId'];
+        $boya['sepetId'] = $row['sepetler'];
+        $boya['baskiId'] = $row['baskilar'];
         $boya['id'] = $row['id'];
         $boya['topAdet'] = $row['topAdet'];
         $boya['baslaZaman'] = $row['baslaZaman'];
-        $boya['firinSicaklik'] = $stokboya['sicaklik'];
-        $boya['boyaTuru'] = $stokboya['boyaTuru'];
+        $boya['firinSicaklik'] = $row['sicaklik'];
+        $boya['boyaTuru'] = $row['boyaTuru'];
         array_push($datam, $boya);
     }
     echo json_encode($datam);

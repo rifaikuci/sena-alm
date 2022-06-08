@@ -8,8 +8,16 @@ $parca = $_POST['parca'];
 
 
 
-$sql = "SELECT * FROM tblkalipparcalar  
-            where id IN($parca)";
+$sql = "select k.id as id,
+       senaNo,
+       firmaAd,
+       kisaKod,
+       kalipciNo,
+       cap,
+       kalite,
+       figurSayi
+from tblkalipparcalar k
+         INNER JOIN tblfirma f on f.id = k.firmaId  where k.id IN($parca)";
 
 
 $result = $db->query($sql);
@@ -38,12 +46,11 @@ $result = $db->query($sql);
         <tbody>
         <?php
         while ($row = $result->fetch_array()) {
-            $firma = tablogetir('tblfirma','id',$row['firmaId'], $db)
             ?>
             <tr>
                 <td><?php echo $row['senaNo'] ?></td>
-                <td> <?php echo $firma['firmaAd'] ?></td>
-                <td><?php echo $firma['kisaKod'].$row['kalipciNo'] ?></td>
+                <td> <?php echo $row['firmaAd'] ?></td>
+                <td><?php echo $row['kisaKod'].$row['kalipciNo'] ?></td>
                 <td>Destek</td>
                 <td> <?php echo $row['cap'] ?></td>
                 <td> <?php echo $row['kalite']; ?></td>

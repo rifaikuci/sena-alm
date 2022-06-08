@@ -3,7 +3,9 @@ include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
 
-$sql = "SELECT * FROM tblpersonel order by id desc";
+$sql = "select p.id as id,  adsoyad,rol, telefon, isecikistarih
+from tblpersonel p
+         INNER JOIN tblrol r ON r.id = p.rolId order by p.id desc";
 $result = $db->query($sql);
 
 ?>
@@ -54,7 +56,7 @@ $result = $db->query($sql);
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['adsoyad']; ?></td>
-                                    <td><?php echo tablogetir('tblrol','id',$row['rolId'], $db)['rol']; ?></td>
+                                    <td><?php echo $row['rol']; ?></td>
                                     <td><?php echo $row['telefon']; ?></td>
                                     <td><?php echo $row['isecikistarih'] != "0000-00-00 00:00:00.000000" ?
                                             "<b style='color: green'>Aktif</b>" : "<b style='color: red'>Pasif</b>"; ?></td>

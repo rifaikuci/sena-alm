@@ -1,17 +1,3 @@
-$(document).ready(function () {
-    $('.profilim').click(function () {
-        var id = $(this).data('id');
-        $.ajax({
-            url: '/sena/netting/goruntule/profil.php',
-            type: 'post',
-            data: {id: id},
-            success: function (response) {
-                $('.modal-body').html(response);
-                $('#profil').modal('show');
-            }
-        });
-    });
-});
 
 
 $(document).ready(function () {

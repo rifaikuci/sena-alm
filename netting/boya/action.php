@@ -12,7 +12,11 @@ if ($received_data->action == 'boyagetir') {
 
      $sicaklik  = $received_data->sicaklik;
 
-    $boyasql = "SELECT * FROM tblstokboya where sicaklik = '$sicaklik' AND  kalan > 0 order by kalan + 0 asc";
+    $boyasql = "
+    SELECT  sicaklik, boyaTuru, s.id as id,partino, firmaId, sevkiyatId, cins, kilo, barkodNo, adet, kalan, ad FROM tblstokboya s
+INNER  JOIN  tblprboya pr on pr.id = s.boyaTuru
+where s.sicaklik = '$sicaklik' AND  s.kalan > 0 order by s.kalan + 0 asc
+    ";
 
 
     
@@ -23,7 +27,7 @@ if ($received_data->action == 'boyagetir') {
         $boya['partino'] = $row['partino'];
         $boya['firmaId'] = $row['firmaId'];
         $boya['sevkiyatId'] = $row['sevkiyatId'];
-        $boya['boyaTur'] = tablogetir("tblprboya", "id",  $row['boyaTuru'], $db)['ad'];
+        $boya['boyaTur'] = $row['ad'];
         $boya['sicaklik'] = $row['sicaklik'];
         $boya['id'] = $row['id'];
         $boya['cins'] = $row['cins'];

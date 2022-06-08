@@ -6,9 +6,27 @@ require_once "../../include/helper.php";
 
 $balyaNo = $_POST['balyano'];
 
-$row = tablogetir('tblbalyalama', 'balyaNo', $balyaNo, $db);
+$sql = "select b.balyaNo,
+       kod,
+       baskiId,
+       netAdet,
+       netKilo,
+       mtGr,
+       paketDetay,
+       realTolerans,
+       teorikTolerans,
+       satirNo,
+       siparisNo,
+       balyaBoy,
+       balyaKilo,
+       firmaAd
+from tblbalyalama b
+         INNER JOIN tblsevkiyatcikis s ON s.id = b.sevkiyatId
+         INNER JOIN tblfirma f ON f.id = b.musteriId where b.balyaNo = '$balyaNo'
+        ";
+$row = mysqli_query($db, $sql)->fetch_assoc();
 
-$sevkiyatNo = tablogetir('tblsevkiyatcikis', 'id', $row['sevkiyatId'], $db)['kod'];
+$sevkiyatNo = $row['kod'];
 
 $baskiId = explode(";", $row['baskiId']);
 $netAdet = explode(";", $row['netAdet']);
@@ -52,7 +70,7 @@ $siparisNo = explode(";", $row['siparisNo']);
     <div class="col-sm-6">
         <div class="form-group">
             <label style="color: #0b2e13">Balya
-                No: <?php $musteri = tablogetir("tblfirma", 'id', $row['musteriId'], $db)['firmaAd'];
+                No: <?php $musteri = $row['firmaAd'];
                 echo $musteri ?></label>
         </div>
     </div>

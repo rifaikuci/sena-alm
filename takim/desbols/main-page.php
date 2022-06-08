@@ -4,13 +4,16 @@ include "../../include/sql.php";
 require_once "../../include/data.php";
 if ($_GET['takimno']) {
     $takimno = $_GET['takimno'];
-    $sql = "SELECT * FROM tbltakim WHERE takimNo = '$takimno'";
+    $sql = "
+    select takimNo, firmaAd, profilNo, profilAdi, cap, parca1, parca2, kalipCins, firmaId from tbltakim t
+INNER JOIN tblfirma f ON f.id = t.firmaId
+INNER JOIN tblprofil p ON p.id = t.profilId where takimNo = '$takimno'
+    ";
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_assoc();
-    $firmaId = $row['firmaId'];
-    $profilId = $row['profilId'];
     $cap = $row['cap'];
 
+    $firmaId = $row['firmaId'];
     $parca1 = $row['parca1'];
     $parca2 = $row['parca2'];
     $sqlParca1 = "select * from tblkalipparcalar where  senaNo ='$parca1'";
@@ -28,14 +31,15 @@ if ($_GET['takimno']) {
     $bolsterler = explode(",", $row['bolster']);
     $destekler = explode(",", $row['destek']);
 
-    $bolstersql = "SELECT * FROM tblkalipparcalar where durum =1 and parca =100";
+    $bolstersql = "select k.id as id, kalipciNo, kalite, figurSayi, durum, parca,  senaNo, firmaAd from tblkalipparcalar  k
+INNER JOIN tblfirma f ON f.id = k.firmaId where durum =1 and parca =100";
     $bolstergetir = $db->query($bolstersql);
 
     $parcacins = $row['kalipCins'] == 0 || $row['kalipCins'] == 1 ? '2,5' : ($row['kalipCins'] == 2 ? '8' : ($row['kalipCins'] == 3 ? '10' : '100'));
 
-    $desteksql = "SELECT * FROM tblkalipparcalar WHERE durum = '1' AND $firmaId = '$firmaId' AND figurSayi = '$figurSayi' AND cap = '$cap' AND parca IN($parcacins) ";
+    $desteksql = "select k.id as id, firmaId,cap,parca, senaNo, firmaAd, kalipciNo, kalite, figurSayi, durum from tblkalipparcalar k
+INNER JOIN  tblfirma f ON f.id = k.firmaId WHERE durum = '1' AND k.firmaId = '$firmaId' AND k.figurSayi = '$figurSayi' AND k.cap = '$cap' AND k.parca IN($parcacins) ";
     $destekgetir = $db->query($desteksql);
-
 
 
 }
@@ -57,7 +61,7 @@ if ($_GET['takimno']) {
                             <label>Takım No</label>
                             <input disabled type="text" class="form-control form-control-lg"
                                    value="<?php echo $row['takimNo'] ?>">
-                            <input  type="hidden" class="form-control form-control-lg" name="takim"
+                            <input type="hidden" class="form-control form-control-lg" name="takim"
                                    value="<?php echo $row['takimNo'] ?>">
 
                         </div>
@@ -68,7 +72,7 @@ if ($_GET['takimno']) {
                         <div class="form-group">
                             <label>Profil</label>
                             <input disabled type="text" class="form-control form-control-lg"
-                                   value="<?php echo tablogetir('tblprofil','id',$row['profilId'], $db)['profilNo']; ?>">
+                                   value="<?php echo $row['profilNo']; ?>">
                         </div>
                     </div>
 
@@ -76,7 +80,7 @@ if ($_GET['takimno']) {
                         <div class="form-group">
                             <label>Firma</label>
                             <input disabled type="text" class="form-control form-control-lg"
-                                   value="<?php echo tablogetir('tblfirma','id',$row['firmaId'], $db)['firmaAd']; ?>">
+                                   value="<?php echo $row['firmaAd']; ?>">
                         </div>
                     </div>
 
@@ -96,14 +100,14 @@ if ($_GET['takimno']) {
                         </div>
                     </div>
 
-                    <?php if($row['parca2']) {?>
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Parça 2</label>
-                            <input disabled type="text" class="form-control form-control-lg"
-                                   value="<?php echo $row['parca2']; ?>">
+                    <?php if ($row['parca2']) { ?>
+                        <div class="col-sm-4">
+                            <div class="form-group">
+                                <label>Parça 2</label>
+                                <input disabled type="text" class="form-control form-control-lg"
+                                       value="<?php echo $row['parca2']; ?>">
+                            </div>
                         </div>
-                    </div>
                     <?php } ?>
 
                     <div class="col-sm-4">
@@ -122,10 +126,11 @@ if ($_GET['takimno']) {
                     </div>
 
                     <div class="col-sm-12">
-                        <div class="form-group" >
+                        <div class="form-group">
                             <label>Bolster Seçiniz</label>
                             <div class="select2-blue">
-                                <select :disabled="!ekle" required name="bolsterler[]" class="select2" multiple="multiple"
+                                <select :disabled="!ekle" required name="bolsterler[]" class="select2"
+                                        multiple="multiple"
                                         data-dropdown-css-class="select2-blue"
                                         data-placeholder="Sena No - Firma Adı -Kalıpçı No - Kalite - Figür Sayı"
                                         style="width: 100%;">
@@ -134,7 +139,7 @@ if ($_GET['takimno']) {
                                         <option value="<?php echo $bolster['id'] ?>"
                                             <?php echo in_array($bolster['id'], $bolsterler) ? "selected" : "" ?>
                                         >
-                                            <?php echo $bolster['senaNo'] . " - " . tablogetir('tblfirma','id',$bolster['firmaId'], $db)['firmaAd'] . " - " . $bolster['kalipciNo'] . " - " . $bolster['kalite'] . " - " . $bolster['figurSayi'] ?>
+                                            <?php echo $bolster['senaNo'] . " - " . $bolster['firmaAd'] . " - " . $bolster['kalipciNo'] . " - " . $bolster['kalite'] . " - " . $bolster['figurSayi'] ?>
                                         </option>
                                     <?php } ?>
                                 </select>
@@ -147,7 +152,8 @@ if ($_GET['takimno']) {
                         <div class="form-group">
                             <label>Destek Seçiniz</label>
                             <div class="select2-blue">
-                                <select :disabled="!ekle" required name="destekler[]" class="select2" multiple="multiple"
+                                <select :disabled="!ekle" required name="destekler[]" class="select2"
+                                        multiple="multiple"
                                         data-dropdown-css-class="select2-blue"
                                         data-placeholder="Sena No - Firma Adı -Kalıpçı No - Kalite - Figür Sayı"
                                         style="width: 100%;">
@@ -156,7 +162,7 @@ if ($_GET['takimno']) {
                                         <option value="<?php echo $destek['id'] ?>"
                                             <?php echo in_array($destek['id'], $destekler) ? "selected" : "" ?>
                                         >
-                                            <?php echo $destek['senaNo'] . " - " . tablogetir('tblfirma','id',$destek['firmaId'], $db)['firmaAd']  . " - " . $destek['kalipciNo'] . " - " . $destek['kalite'] . " - " . $destek['figurSayi'] ?>
+                                            <?php echo $destek['senaNo'] . " - " . $destek['firmaAd'] . " - " . $destek['kalipciNo'] . " - " . $destek['kalite'] . " - " . $destek['figurSayi'] ?>
                                         </option>
                                     <?php } ?>
                                 </select>

@@ -4,7 +4,6 @@ require_once "../../include/sql.php";
 require_once "../../include/helper.php";
 
 
-
 if ($_POST['cap'] != "" && $_POST['firmaId'] != "" && $_POST['profilId'] != "" && $_POST['figurSayi'] != "") {
     $cap = trim($_POST['cap']);
     $firmaId = trim($_POST['firmaId']);
@@ -12,12 +11,41 @@ if ($_POST['cap'] != "" && $_POST['firmaId'] != "" && $_POST['profilId'] != "" &
     $figurSayi = trim($_POST['figurSayi']);
     $parca = trim($_POST['parca']);
 
-    $sql = "SELECT * FROM tblkalipparcalar  
-            where takimNo = '' AND cap= '$cap' AND  firmaId = '$firmaId' AND
-                profilId = '$profilId' AND figurSayi = '$figurSayi' AND  durum = '1' AND parca = '$parca'";
+    $sql = "select k.id as id,
+       senaNo,
+       firmaAd,
+       kalipciNo,
+       profilNo,
+       parca,
+       cap,
+       kalite,
+       figurSayi
+from tblkalipparcalar k
+         INNER JOIN tblfirma f on f.id = k.firmaId
+         INNER JOIN tblprofil p on p.id = k.profilId
+where k.takimNo = ''
+  AND k.cap = '$cap'
+  AND k.firmaId = '$firmaId'
+  AND k.profilId = '$profilId'
+  AND k.figurSayi = '$figurSayi'
+  AND k.durum = '1'
+  AND k.parca = '$parca'";
 } else {
-    $sql = "SELECT * FROM tblkalipparcalar  
-                    where takimNo = '' AND  durum = '1' ";
+    $sql = "select k.id as id,
+       senaNo,
+       firmaAd,
+       kalipciNo,
+       profilNo,
+       parca,
+       cap,
+       kalite,
+       figurSayi
+from tblkalipparcalar k
+         INNER JOIN tblfirma f on f.id = k.firmaId
+         INNER JOIN tblprofil p on p.id = k.profilId
+where k.takimNo = ''
+  AND k.durum = '1'
+ ";
 }
 
 
@@ -27,7 +55,7 @@ $result = $db->query($sql);
 ?>
 <div style="text-align: center">
     <h4 style="color: #0e84b5">
-        <?php echo parcaBul($parca)?>
+        <?php echo parcaBul($parca) ?>
     </h4>
 </div>
 
@@ -54,9 +82,9 @@ $result = $db->query($sql);
                     data-senano="<?php echo $parca['senaNo'] ?>">
                     <?php echo $parca['senaNo'] ?>
                 </td>
-                <td> <?php echo tablogetir('tblfirma','id',$parca['firmaId'], $db)['firmaAd']; ?></td>
+                <td> <?php echo $parca['firmaAd']; ?></td>
                 <td><?php echo $parca['kalipciNo'] ?></td>
-                <td> <?php echo tablogetir('tblprofil','id',$parca["profilId"], $db)['profilNo']; ?></td>
+                <td> <?php echo $parca['profilNo']; ?></td>
                 <td><?php echo trim(parcaBul($parca['parca'])); ?></td>
                 <td> <?php echo $parca['cap'] ?></td>
                 <td> <?php echo $parca['kalite']; ?></td>

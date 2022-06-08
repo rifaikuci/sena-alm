@@ -6,7 +6,23 @@ require_once "../../include/helper.php";
 
 $siparisNo = $_POST['siparisNo'];
 
-$sql = "SELECT * FROM tblsiparis  where siparisNo = '$siparisNo'";
+$sql = "
+select s.id as id,
+       satirNo,
+       profilId,
+       boy,
+       adet,
+       kilo,
+       ad,
+       termimTarih,
+       maxTolerans,
+       araKagit,
+       krepeKagit,
+       naylonDurum,
+       siparisNo
+from tblsiparis s
+         INNER JOIN tblalasim a on
+    s.alasimId = a.id where s.siparisNo =  '$siparisNo'";
 $result = $db->query($sql);
 
 $sql2 = "SELECT * FROM tblsiparis  where siparisNo = '$siparisNo'";
@@ -68,7 +84,7 @@ $firstrow = mysqli_fetch_assoc($resultfirst);
             <td><?php  echo $row['boy'];?></td>
             <td><?php  echo $row['adet'];?></td>
             <td><?php  echo sayiFormatla($row['kilo']);?></td>
-            <td><?php  echo tablogetir('tblalasim','id',$row['alasimId'], $db )['ad'];?></td>
+            <td><?php  echo $row['ad'];?></td>
             <td><?php  echo tarih($row['termimTarih']);?></td>
             <td><?php  echo "%".$row['maxTolerans'];?></td>
             <td><?php  echo $row['araKagit'] == "1" ? "Var" : "Yok";?></td>

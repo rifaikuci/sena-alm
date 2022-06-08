@@ -12,20 +12,34 @@ if ($received_data->action == 'baskigetir') {
 
     $id = $received_data->id;
     $id = intval($id);
-    $sql = "SELECT * FROM tblsiparis WHERE id = $id ";
+    $sql = "
+    select s.id as id,
+       satirNo,
+       firmaAd,
+       profilNo,
+       profilAdi,
+       ad,
+       biyetBirimGramaj,
+       maxTolerans,
+       boy,
+       istenilenTermik,
+       kilo, adet, baskiAciklama, profilId, basilanAdet, kiloAdet, basilanKilo, resim
+from tblsiparis s
+         INNER JOIN tblprofil p ON s.profilId = p.id
+         INNER JOIN tblalasim a ON a.id = s.alasimId
+         INNER JOIN tblfirma f ON f.id = s.musteriId where s.id = '$id'
+    ";
 
     $result = $db->query($sql);
     while ($row = $result->fetch_array()) {
-        $profil = tablogetir('tblprofil','id',$row['profilId'], $db );
-        $alasim  = tablogetir('tblalasim','id',$row['alasimId'], $db);
 
         $data['id'] = $row['id'];
         $data['satirNo'] = $row['satirNo'];
-        $data['musteriAd'] = tablogetir('tblfirma','id',$row['musteriId'], $db)['firmaAd'];
-        $data['profil'] = $profil['profilAdi'] . " - " . $profil['profilNo'];
-        $data['alasim'] =  $alasim['ad'];
+        $data['musteriAd'] = $row['firmaAd'];
+        $data['profil'] = $row['profilAdi'] . " - " . $row['profilNo'];
+        $data['alasim'] =  $row['ad'];
 
-        $data['biyetBirimGramaj'] =  $alasim['biyetBirimGramaj'];
+        $data['biyetBirimGramaj'] =  $row['biyetBirimGramaj'];
         $data['tolerans'] = $row['maxTolerans'];
         $data['boy'] = $row['boy'];
         $data['istenilenTermik'] = $row['istenilenTermik'];
@@ -37,7 +51,7 @@ if ($received_data->action == 'baskigetir') {
         $data['basilanAdet'] = $row['basilanAdet'];
         $data['kiloAdet'] = $row['kiloAdet'];
         $data['kalanKg'] = $row['kilo'] - $row['basilanKilo'];
-        $data['cizim'] = base_url().$profil['resim'];
+        $data['cizim'] = base_url().$row['resim'];
 
     }
 
@@ -48,7 +62,10 @@ if ($received_data->action == 'baskigetir') {
 if ($received_data->action == 'takimgetir') {
 
     $profilId = $received_data->profil;
-    $sql = "SELECT * FROM tbltakim WHERE durum = '1' AND konum = 'P' AND profilId = '$profilId' order by sonGramaj asc";
+    $sql = "Select t.id as id, profilId, konum, durum, sonGramaj, parca1, parca1, takimNo, firmaAd, cap, kalipCins
+from tbltakim t
+         INNER JOIN tblfirma f ON t.firmaId = f.id
+WHERE t.durum = '1' AND t.konum = 'P' AND t.profilId = '$profilId' order by t.sonGramaj asc ";
 
     $result = $db->query($sql);
     $datas = array();
@@ -57,7 +74,7 @@ if ($received_data->action == 'takimgetir') {
         $data['parca1'] = $row['parca1'];
         $data['parca2'] = $row['parca2'];
         $data['takimNo'] = $row['takimNo'];
-        $data['firma'] = tablogetir('tblfirma','id',$row['firmaId'], $db)['firmaAd'];
+        $data['firma'] = $row['firmaAd'];
         $data['sonGramaj'] = $row['sonGramaj'];
         $data['cap'] = $row['cap'];
         $data['kalipCins'] = kalipBul($row['kalipCins']);
@@ -89,8 +106,41 @@ if ($received_data->action == 'baskibaslat') {
 if ($received_data->action == 'baskiguncellegetir') {
 
     $id = $received_data->id;
-    $id = intval($id);
-    $sql = "SELECT * FROM tblbaski WHERE id = $id ";
+   // $id = intval($id);
+    $sql = "select b.id as id,
+       siparisId,
+       takimId,
+       baslaZamani,
+       bitisZamani,
+       kayitTarih,
+       vardiyaKod,
+       vardiya,
+       b.operatorId,
+       biyetId,
+       biyetBoy,
+       araIsFire,
+       konveyorBoy,
+       boylamFire,
+       baskiFire,
+       biyetFire,
+       istenilenTermik,
+       verilenBiyet,
+       guncelGr,
+       basilanBrutKg,
+       basilanNetKg,
+       basilanNetAdet,
+       kovanSicaklik,
+       kalipSicaklik,
+       biyetSicaklik,
+       hiz,
+       fire,
+       performans,
+       takimSonDurum,
+       aciklama,
+       sonlanmaNeden,
+       profilId
+from tblbaski b
+         INNER JOIN tblsiparis s ON s.id = b.siparisId where b.id = '$id'";
 
     $result = $db->query($sql);
     while ($row = $result->fetch_array()) {
@@ -127,9 +177,8 @@ if ($received_data->action == 'baskiguncellegetir') {
         $data['takimSonDurum'] = $row['takimSonDurum'];
         $data['aciklama'] = $row['aciklama'];
         $data['sonlanmaNeden'] = $row['sonlanmaNeden'];
-        $siparis =  tablogetir('tblsiparis','id',$row['siparisId'], $db);
-        $data['profilId'] =$siparis['profilId'];
-        $data['istenilenTermik'] =$siparis['istenilenTermik'];
+        $data['profilId'] =$row['profilId'];
+        $data['istenilenTermik'] =$row['istenilenTermik'];
 
 
 

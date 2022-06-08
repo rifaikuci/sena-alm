@@ -10,7 +10,34 @@ $data = array();
 if ($received_data->action == 'anbargetir') {
 
 
-    $balyalamasql = "SELECT * FROM tblanbar   where    kalanAdet  > 0 group by satirNo  order by tarih asc";
+    $balyalamasql = "
+    select a.id as id,
+       a.satirNo,
+       musteriId,
+       firmaAd,
+       s.boy,ss
+       figurSayi,
+       baskiId,
+       siparisNo,
+       krepeKagit,
+       korumaBandi,
+       naylonDurum,
+       t.takimNo,
+       takimId,
+       s.profilId,
+       profilNo,
+       profilAdi,
+       gramaj, a.kalanAdet,
+       a.tarih as tarih
+from tblanbar a
+         INNER JOIN tblbaski b ON b.id = a.baskiId
+         INNER JOIN tblsiparis s ON s.id = b.siparisId
+         INNER JOIN tblfirma f ON f.id = s.musteriId
+         INNER JOIN tbltakim t on b.takimId = t.id
+         INNER JOIN tblkalipparcalar t2 ON t2.senaNo = t.parca1
+         INNER JOIN tblprofil pr on pr.id = s.profilId where a.kalanAdet > 0 group by a.satirNo order by a.tarih asc
+
+    ";
 
 
     $result = $db->query($balyalamasql);
@@ -18,33 +45,28 @@ if ($received_data->action == 'anbargetir') {
     $balyalama = null;
     while ($row = $result->fetch_array()) {
 
-        $baski = tablogetir("tblbaski", 'id', $row['baskiId'], $db);
-        $siparis = tablogetir("tblsiparis", 'satirNo', $baski['satirNo'], $db);
-
-        $satirno = $baski['satirNo'];
+        $satirno = $row['satirNo'];
         $sqlOrtGramaj = "SELECT  AVG(guncelGr) as deger FROM tblbaski where satirNo = '$satirno' group by satirNo";
         $deger = mysqli_query($db, $sqlOrtGramaj)->fetch_assoc();
 
         $balyalama['id'] = $row['id'];
         $balyalama['baskiId'] = $row['baskiId'];
-        $balyalama['satirNo'] = $baski['satirNo'];
-        $balyalama['musteriId'] = $siparis['musteriId'];
-        $balyalama['musteri'] = tablogetir("tblfirma", 'id',$siparis['musteriId'], $db )['firmaAd'] ;
-        $balyalama['siparisNo'] = $siparis['siparisNo'];
-        $balyalama['boy'] = $siparis['boy'];
-        $balyalama['takimId'] = $baski['takimId'];
-        $takim = tablogetir("tbltakim", 'id',$baski['takimId'], $db );
-        $balyalama['figurSayi'] = tablogetir("tblkalipparcalar", 'senaNo',$takim['parca1'], $db )['figurSayi'];
-        $balyalama['profilId'] = $siparis['profilId'];
-        $profil =  tablogetir("tblprofil", 'id',$siparis['profilId'], $db);
-        $balyalama['gramaj'] = $profil['gramaj'];
+        $balyalama['satirNo'] = $row['satirNo'];
+        $balyalama['musteriId'] = $row['musteriId'];
+        $balyalama['musteri'] = $row['firmaAd'] ;
+        $balyalama['siparisNo'] = $row['siparisNo'];
+        $balyalama['boy'] = $row['boy'];
+        $balyalama['takimId'] = $row['takimId'];
+        $balyalama['figurSayi'] = $row['figurSayi'];
+        $balyalama['profilId'] = $row['profilId'];
+        $balyalama['gramaj'] = $row['gramaj'];
         $balyalama['ortGramaj'] = $deger['deger'];
 
-        $balyalama['pIA'] = $profil['paketAdet'];
-        $balyalama['araKagit'] = $siparis['araKagit'] == 1 ? "Var" : "Yok";
-        $balyalama['krepeKagit'] = $siparis['krepeKagit'] == 1 ? "Var" : "Yok";
-        $balyalama['korumaBandi'] = $siparis['korumaBandi'] == 1 || $siparis['korumaBandi'] == 2 ? "Var" : "Yok";
-        $balyalama['naylonDurum'] = $siparis['naylonDurum'] == 1 || $siparis['naylonDurum'] == 2 ? "Var" : "Yok";
+        $balyalama['pIA'] = $row['paketAdet'];
+        $balyalama['araKagit'] = $row['araKagit'] == 1 ? "Var" : "Yok";
+        $balyalama['krepeKagit'] = $row['krepeKagit'] == 1 ? "Var" : "Yok";
+        $balyalama['korumaBandi'] = $row['korumaBandi'] == 1 || $row['korumaBandi'] == 2 ? "Var" : "Yok";
+        $balyalama['naylonDurum'] = $row['naylonDurum'] == 1 || $row['naylonDurum'] == 2 ? "Var" : "Yok";
 
         $balyalama['adet'] = $row['adet'];
         $balyalama['kalanAdet'] = $row['kalanAdet'];

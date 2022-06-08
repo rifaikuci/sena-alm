@@ -2,7 +2,13 @@
 include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
-$sql = "SELECT * FROM tblsevkiyatcikis order by id desc ";
+$sql = "
+select s.id as id, kod, plaka, sevkiyatTarih, aciklama, 
+       p1.adsoyad as p1adsoyad, p2.adsoyad as p2adsoyad
+       from tblsevkiyatcikis  s
+INNER JOIN tblpersonel p1 ON s.personelId1 = p1.id
+LEFT JOIN tblpersonel p2 ON s.personelId2 = p2.id order by s.id desc
+";
 $result = $db->query($sql);
 
 ?>
@@ -54,8 +60,8 @@ $result = $db->query($sql);
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['kod']; ?></td>
                                     <td><?php
-                                        $personel1 = tablogetir('tblpersonel', 'id', $row['personelId1'], $db)['adsoyad'];
-                                        echo $row['personelId2'] ? $personel1 . "- " . tablogetir('tblpersonel', 'id', $row['personelId2'], $db)['adsoyad'] :
+                                        $personel1 = $row['p1adsoyad'];
+                                        echo $row['p2adsoyad'] ? $personel1 . "- " . $row['p2adsoyad'] :
                                             $personel1; ?>
                                     </td>
                                     <td><?php echo $row['plaka']; ?></td>

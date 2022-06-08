@@ -3,7 +3,10 @@ include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
 
-$sql = "SELECT * FROM tblfirma order by id desc";
+$sql = "select f.id as id, firmaAd, ad, kisaKod, yetkiliKisi
+from tblfirma f
+         INNER JOIN tblfirmatur ft ON ft.id = f.firmaTurId
+order by f.id desc";
 $result = $db->query($sql);
 
 ?>
@@ -55,8 +58,7 @@ $result = $db->query($sql);
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['firmaAd']; ?></td>
                                     <td><?php
-                                        $firmatur = tablogetir('tblfirmatur', 'id', $row['firmaTurId'], $db);
-                                        echo $firmatur['ad']; ?></td>
+                                        echo $row['ad']; ?></td>
                                     <td><?php echo $row['kisaKod']; ?></td>
                                     <td><?php echo $row['yetkiliKisi']; ?></td>
                                     <td>

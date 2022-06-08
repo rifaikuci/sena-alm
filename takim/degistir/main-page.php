@@ -3,7 +3,9 @@ include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";if ($_GET['takimno']) {
     $takimno = $_GET['takimno'];
-    $sql = "SELECT * FROM tbltakim WHERE takimNo = '$takimno'";
+    $sql = "select parca1, parca2,takimNo, profilNo, firmaAd,kalipCins, cap from tbltakim t
+INNER JOIN tblprofil p ON p.id = t.profilId
+INNER JOIN tblfirma f ON f.id = t.firmaId where t.takimNo = '$takimno'";
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_assoc();
 
@@ -47,7 +49,7 @@ require_once "../../include/data.php";if ($_GET['takimno']) {
                         <div class="form-group">
                             <label>Profil</label>
                             <input disabled type="text" class="form-control form-control-lg"
-                                   value="<?php echo tablogetir('tblprofil','id',$row['profilId'], $db)['profilNo']; ?>">
+                                   value="<?php echo $row['profilNo']; ?>">
                         </div>
                     </div>
 
@@ -55,7 +57,7 @@ require_once "../../include/data.php";if ($_GET['takimno']) {
                         <div class="form-group">
                             <label>Firma</label>
                             <input disabled type="text" class="form-control form-control-lg"
-                                   value="<?php echo tablogetir('tblfirma','id',$row['firmaId'], $db)['firmaAd']; ?>">
+                                   value="<?php echo $row['firmaAd']; ?>">
                         </div>
                     </div>
 
