@@ -149,8 +149,8 @@ date_default_timezone_set('Europe/Istanbul');
                                         <button v-if="profilId && profilId > 0"
                                                 type="submit"
                                                 v-on:click="profilGecmisGetir($event)"
-                                                class="btn btn-outline-secondary float-right">Geçmiş Profil Detaylarını
-                                            Getir
+                                                class="btn btn-outline-secondary float-right">Geçmiş Profil Detayları Getir (Son 5)
+
                                         </button>
                                     </div>
                                 </div>
@@ -262,9 +262,6 @@ date_default_timezone_set('Europe/Istanbul');
 
 
                         <div class="row">
-                            <div v-if="boy && boy > 0" class="col-sm-12" style="margin: 10px; margin-bottom: 20PX">
-                                <button class="btn btn-dark float-right">Geçmiş Biyet Detaylarını Getir</button>
-                            </div>
 
                             <div class="col-sm-4">
                                 <div class="form-group">
