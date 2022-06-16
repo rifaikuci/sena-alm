@@ -16,11 +16,19 @@ select str_to_date(b.bitisZamani, '%d.%m.%Y %H:%i') as bitisZamani,
        b.araIsFire,
        b.konveyorBoy,
        b.boylamFire,
-       b.baskiFire
+       b.baskiFire,
+       t.takimNo,
+       s.profilId
 from tblbaski b
+         INNER JOIN tbltakim t ON b.takimId = t.id
+INNER JOIN tblsiparis s ON s.id = b.siparisId
+where s.profilId = '$profilId'
+  and s.boy = '$boy'
 ORDER BY b.bitisZamani desc
 LIMIT 5
  ";
+
+
 $profil = tablogetir("tblprofil", 'id', $profilId, $db);
 $result = $db->query($sql);
 
@@ -69,96 +77,57 @@ $result = $db->query($sql);
                 <table class="table table-condensed table-striped">
                     <thead>
                     <tr>
-                        <th>Fist Name</th>
-                        <th>Last Name</th>
-                        <th>City</th>
-                        <th>State</th>
-                        <th>Status</th>
+                        <th>İşlem Zamanı</th>
+                        <th>Baskı Id</th>
+                        <th>Takım No</th>
+                        <th>Güncel Gr</th>
+                        <th>Fire</th>
                     </tr>
                     </thead>
+                    <?php $sira = 1; while ($row = $result->fetch_array()) {
+                        $idText = "demo".$sira;
 
-                    <tr data-toggle="collapse" data-target="#demo2" class="accordion-toggle">
-                        <td>Carlos</td>
-                        <td>Mathias</td>
-                        <td>Leme</td>
-                        <td>SP</td>
-                        <td>new</td>
+                        $biyetBoy = explode(";",$row['biyetBoy']);
+                        $araIsFire = explode(";",$row['araIsFire']);
+                        $konveyorBoy = explode(";",$row['konveyorBoy']);
+                        $boylamFire = explode(";",$row['boylamFire']);
+                        $baskiFire = explode(";",$row['baskiFire']);
+                        ?>
+                    <tr data-toggle="collapse" data-target="<?php echo "#".$idText;?>" class="accordion-toggle">
+                        <td><?php echo tarihsaat($row['bitisZamani'])?></td>
+                        <td><?php echo $row['takimNo']?></td>
+                        <td><?php echo $row['id']?></td>
+                        <td><?php echo $row['guncelGr']?></td>
+                        <td><?php echo $row['fire']?></td>
                     </tr>
 
                     <tr>
                         <td colspan="12" class="hiddenRow">
-                            <div class="accordian-body collapse" id="demo2">
+                            <div class="accordian-body collapse" id="<?php echo $idText;?>">
                                 <table class="table table-striped">
                                     <thead style="background-color: #0b93d5">
                                     <tr class="info">
-                                        <th>Job</th>
-                                        <th>Company</th>
-                                        <th>Salary</th>
-                                        <th>Date On</th>
-                                        <th>Date off</th>
+                                        <th>Biyet Boy</th>
+                                        <th>Araiş Fire</th>
+                                        <th>Konveyör Boy</th>
+                                        <th>Boylam Fire</th>
+                                        <th>Baskı Fire</th>
                                     </tr>
                                     </thead>
 
                                     <tbody>
 
-                                    <tr data-toggle="collapse"  class="accordion-toggle" data-target="#demo10">
-                                        <td>Enginner Software</a></td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
 
-                                    </tr>
-
+                                    <?php for ($i=0; $i < count($biyetBoy); $i++) { ?>
                                     <tr>
-                                        <td>Scrum Master</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-                                       
-                                    </tr>
-
-
-                                    <tr>
-                                        <td>Back-end</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-                                     
-                                    </tr>
-
-                                    <tr>
-                                        <td>Back-end</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>   <tr>
-                                        <td>Back-end</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>   <tr>
-                                        <td>Back-end</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
+                                        <td> <?php  echo $biyetBoy[$i]; ?> </td>
+                                        <td> <?php  echo $araIsFire[$i]; ?> </td>
+                                        <td> <?php  echo $konveyorBoy[$i]; ?> </td>
+                                        <td> <?php  echo $boylamFire[$i]; ?> </td>
+                                        <td> <?php  echo $baskiFire[$i]; ?> </td>
 
                                     </tr>
-                                    <tr>
-                                        <td>Front-end</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-                                        
-                                    </tr>
+                                    <?php  }  ?>
 
 
                                     </tbody>
@@ -167,189 +136,8 @@ $result = $db->query($sql);
                             </div>
                         </td>
                     </tr>
+                    <?php $sira++; } ?>
 
-                    <tr data-toggle="collapse" data-target="#demo3" class="accordion-toggle">
-                        <td>Carlos</td>
-                        <td>Mathias</td>
-                        <td>Leme</td>
-                        <td>SP</td>
-                        <td>new</td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="12" class="hiddenRow">
-                            <div class="accordian-body collapse" id="demo3">
-                                <table class="table table-striped">
-                                    <thead style="background-color: #0b93d5">
-                                    <tr class="info">
-                                        <th>Job</th>
-                                        <th>Company</th>
-                                        <th>Salary</th>
-                                        <th>Date On</th>
-                                        <th>Date off</th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-
-                                    <tr data-toggle="collapse"  class="accordion-toggle" data-target="#demo10">
-                                        <td>Enginner Software</a></td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>
-
-                                    <tr>
-                                        <td>Scrum Master</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>
-
-
-                                    <tr>
-                                        <td>Back-end</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>
-
-                                    <tr>
-                                        <td>Back-end</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>   <tr>
-                                        <td>Back-end</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>   <tr>
-                                        <td>Back-end</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>Front-end</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>
-
-
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr data-toggle="collapse" data-target="#demo4" class="accordion-toggle">
-                        <td>Carlos</td>
-                        <td>Mathias</td>
-                        <td>Leme</td>
-                        <td>SP</td>
-                        <td>new</td>
-                    </tr>
-
-                    <tr>
-                        <td colspan="12" class="hiddenRow">
-                            <div class="accordian-body collapse" id="demo4">
-                                <table class="table table-striped">
-                                    <thead style="background-color: #0b93d5">
-                                    <tr class="info">
-                                        <th>Job</th>
-                                        <th>Company</th>
-                                        <th>Salary</th>
-                                        <th>Date On</th>
-                                        <th>Date off</th>
-                                    </tr>
-                                    </thead>
-
-                                    <tbody>
-
-                                    <tr data-toggle="collapse"  class="accordion-toggle" data-target="#demo10">
-                                        <td>Enginner Software</a></td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>
-
-                                    <tr>
-                                        <td>Scrum Master</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>
-
-
-                                    <tr>
-                                        <td>Back-end</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>
-
-                                    <tr>
-                                        <td>Back-end</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>   <tr>
-                                        <td>Back-end</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>   <tr>
-                                        <td>Back-end</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>
-                                    <tr>
-                                        <td>Front-end</td>
-                                        <td>Google</td>
-                                        <td>U$8.00000 </td>
-                                        <td> 2016/09/27</td>
-                                        <td> 2017/09/27</td>
-
-                                    </tr>
-
-
-                                    </tbody>
-                                </table>
-
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
                 </table>
             </div>
 
