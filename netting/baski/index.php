@@ -227,9 +227,9 @@ if (isset($_POST['baskiekle'])) {
 
     mysqli_query($db, $sqlprofilstok);
 
-    $hurdaKilo = $fire * $guncelGr * $boy;
+    $fire = sayiFormatla($fire);
     $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer, kilo) 
-                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id','baski', '$hurdaKilo' )";
+                VALUES ('1', 'Baskı Firesi', '$operatorId', '$id','baski', '$fire' )";
 
     mysqli_query($db, $sqlHurda);
 
@@ -240,11 +240,18 @@ if (isset($_POST['baskiekle'])) {
     for ($s = 0; $s < count($biyetler); $s++) {
         $kalanBiyet = 0;
         $idBiyet = $biyetler[$s];
-        $kalanBiyet = tablogetir('tblstokbiyet', 'id', $idBiyet, $db)['kalanKg'];
+        $biyetGetir = tablogetir('tblstokbiyet', 'id', $idBiyet, $db);
+        $kalanBiyet = $biyetGetir['kalanKg'];
         $kalanBiyet = $kalanBiyet - $brutler[$s];
 
+        $ortlamaBoy = $biyetGetir['ortlamaBoy'];
+        $alasimGetir =  tablogetir('tblalasim', 'id', $biyetGetir['alasimId'], $db);
+        $ortlamaBoy = $kalanBiyet / $alasimGetir['biyetBirimGramaj'];
+        $ortlamaBoy   = sayiFormatla($ortlamaBoy);
+
         $sqlbiyet = "UPDATE tblstokbiyet set
-                    kalanKg = '$kalanBiyet'
+                    kalanKg = '$kalanBiyet',
+                    ortalamaBoy = '$ortlamaBoy'
                     where id= '$idBiyet'";
 
         mysqli_query($db, $sqlbiyet);
@@ -551,10 +558,10 @@ if (isset($_POST['baskiIdG'])) {
     mysqli_query($db, $sqlBaski);
 
 
-    $hurdaKilo = $fire * $guncelGr * $boy;
+    $fire = sayiFormatla($fire);
 
     $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId,geldigiYer, kilo) 
-                VALUES ('$fire', 'Baskı Firesi', '$operatorId', '$id', 'baski', '$hurdaKilo')";
+                VALUES ('1', 'Baskı Firesi', '$operatorId', '$id', 'baski', '$fire')";
 
     mysqli_query($db, $sqlHurda);
 

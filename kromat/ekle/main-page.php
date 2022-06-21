@@ -9,6 +9,7 @@ $sepetler = $db->query($sepetsql);
 $kromatSql = "SELECT * FROM tblsepet where tur = 'kromatS' AND durum = 0";
 $kromatSepet = $db->query($kromatSql);
 
+#todo ,-> max adet kontrolü yapılacak
 ?>
 
 <section class="content">

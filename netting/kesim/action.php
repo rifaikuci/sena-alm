@@ -45,9 +45,10 @@ if ($received_data->action == 'baskigetir') {
        b.satirNo,
        boy,
        istenilenTermik,
-       basilanAdet,
+       b.basilanNetAdet,
        kayitTarih,
-       profilNo
+       profilNo,
+       p.profilAdi
 from tblbaski b
          INNER JOIN tblsiparis s on s.id = b.siparisId
          INNER JOIN tblprofil p on p.id = s.profilId where b.id = '$id'

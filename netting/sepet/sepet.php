@@ -64,6 +64,10 @@ if($durum == 1) {
     $durumAciklama = "Dolu";
 }
 
+if($durum == 2) {
+    $durumAciklama = "Termik Bitti";
+}
+
 
 ?>
 

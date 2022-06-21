@@ -7,6 +7,10 @@ INNER  JOIN tblprofil p ON p.id = s.profilId
 INNER JOIN  tblfirma f  order by s.termimTarih asc ";
 $result = $db->query($sql);
 
+
+$islemArray = [1];
+$sonuc = in_array($operatorId, $islemArray);
+
 ?>
 
 <section class="content">
@@ -47,7 +51,9 @@ $result = $db->query($sql);
                                 <th>Müşteri</th>
                                 <th>Tarih</th>
                                 <th>Termin Tarihi</th>
+                                <?php if($sonuc) { ?>
                                 <th style="text-align: center"></th>
+                                <?php } ?>
                             </tr>
                             </thead>
 
@@ -64,7 +70,7 @@ $result = $db->query($sql);
                                     <td><?php echo $row['firmaAd']; ?></td>
                                     <td><?php echo tarih($row['siparisTarih']); ?></td>
                                     <td><?php echo tarih($row['termimTarih']); ?></td>
-
+                                    <?php if($sonuc) { ?>
                                     <td>
                                         <a
                                                 href="<?php echo "./guncelle/index.php?satirno=" . $row['satirNo']; ?>"
@@ -77,6 +83,7 @@ $result = $db->query($sql);
                                                 class="btn btn-outline-danger"><i class="fa fa-trash"></i>
                                         </a>
                                     </td>
+                                    <?php } ?>
                                 </tr>
                                 <?php $sira++;
                             } ?>

@@ -4,7 +4,11 @@ include "../../netting/baglan.php";
 $sql = "SELECT * FROM tblprofil order by id desc";
 $result = $db->query($sql);
 
+#TODO düzenle yerine görüntüle olacak
+$islemArray = [1];
+$sonuc = in_array($operatorId, $islemArray);
 ?>
+
 
 <section class="content">
 
@@ -40,10 +44,12 @@ $result = $db->query($sql);
     <div class="card-body">
         <div class="row">
             <div class="col-12">
-                <div style="text-align: right;margin-right: auto">
-                    <a href="ekle/" class="btn btn-primary"><i class="fa fa-plus"><?php echo "\t\t\t\t" ?>
-                            Ekle</i></a>
-                </div>
+                <?php if ($sonuc) { ?>
+                    <div style="text-align: right;margin-right: auto">
+                        <a href="ekle/" class="btn btn-primary"><i class="fa fa-plus"><?php echo "\t\t\t\t" ?>
+                                Ekle</i></a>
+                    </div>
+                <?php } ?>
                 <br>
                 <div class="card">
                     <div class="card-body">
@@ -65,17 +71,23 @@ $result = $db->query($sql);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td><img class="img-fluid"  src="<?php echo base_url().$row['cizim']?>"</td>
-                                    <td><?php echo $row['profilNo']. " - " .$row['profilAdi']; ?></td>
+                                    <td><img class="img-fluid" src="<?php echo base_url() . $row['cizim'] ?>"</td>
+                                    <td><?php echo $row['profilNo'] . " - " . $row['profilAdi']; ?></td>
                                     <td><?php echo sayiFormatla($row['alan']); ?></td>
                                     <td><?php echo sayiFormatla($row['cevre']); ?></td>
                                     <td><?php echo sayiFormatla($row['gramaj']); ?></td>
-                                    <td><a target="_blank" href="<?php echo base_url() . $row['resim']; ?>"> Çizim </a></td>
+                                    <td><a target="_blank" href="<?php echo base_url() . $row['resim']; ?>"> Çizim </a>
+                                    </td>
+
                                     <td>
                                         <a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
-                                           btn-warning">Düzenle</a>
-                                        <a onclick="confirm('Profil Silinecek')" href=<?php echo base_url() . "netting/tanimlar/profil.php?profilsil=" . $row['id']; ?> class="btn
-                                           btn-danger">Sil</a>
+                                           btn-outline-success">Görüntüle</a>
+                                        <?php if ($sonuc) { ?>
+                                            <a onclick="confirm('Profil Silinecek')"
+                                               href=<?php echo base_url() . "netting/tanimlar/profil.php?profilsil=" . $row['id']; ?> class="btn
+                                               btn-danger">Sil</a>
+                                        <?php } ?>
+
                                     </td>
                                 </tr>
                                 <?php $sira++;

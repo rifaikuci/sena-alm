@@ -17,7 +17,7 @@ if (isset($_GET['id'])) {
        hurdaAdet,
        hurdaSebep,
        netAdet,
-       sepet1Adet, sepetId1, sepet2Adet, sepetId2, sepet3Adet, sepetId3,
+       sepet1Adet, sepetId1, sepet2Adet, sepetId2, sepet3Adet, sepetId3, s.boy,
        s1.ad as sepet1Ad, s2.ad as sepet2Ad, s3.ad as sepet3Ad
 from tblkesim k
          INNER JOIN tblbaski b ON k.id = b.kesimId
@@ -100,6 +100,15 @@ date_default_timezone_set('Europe/Istanbul');
                                     <h6>
                                         <span style="color: darkcyan; font-weight: bold">Net Adet: </span>
                                         <?php echo $kesim['basilanNetAdet']; ?>
+                                    </h6>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-8">
+                                    <h6>
+                                        <span style="color: darkcyan; font-weight: bold">Boy : </span>
+                                        <?php echo $kesim['boy']; ?>
                                     </h6>
                                 </div>
                             </div>

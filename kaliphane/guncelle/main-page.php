@@ -87,6 +87,5 @@ if ($_GET['takimno']) {
 
 
     </form>
-    </div>
 
 </section>

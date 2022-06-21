@@ -9,6 +9,8 @@ select
 ";
 $result = $db->query($sql);
 
+$islemArray = [1,2];
+$sonuc = in_array($operatorId, $islemArray);
 ?>
 
 <section class="content">
@@ -33,10 +35,12 @@ $result = $db->query($sql);
     <div class="card-body">
         <div class="row">
             <div class="col-12">
-                <div style="text-align: right;margin-right: auto">
+                <?php if($sonuc) { ?>
+                    <div style="text-align: right;margin-right: auto">
                     <a href="ekle/" class="btn btn-primary"><i class="fa fa-plus"><?php echo "\t\t\t\t" ?>
                             Ekle</i></a>
                 </div>
+                <?php } ?>
                 <br>
                 <div class="card">
                     <div class="card-body">

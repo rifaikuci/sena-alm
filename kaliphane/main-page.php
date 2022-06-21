@@ -5,8 +5,8 @@ include "../include/sql.php";
 $sql = "SELECT * FROM tbltakim order by sonIslemZamani DESC";
 $result = $db->query($sql);
 
-$operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
-
+$islemArray = [1,4];
+$sonuc = in_array($operatorId, $islemArray);
 ?>
 
 
@@ -373,8 +373,11 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
                                     </button>
 
                                     <?php if($teneferSayisi > 0) { ?>
+                                            <?php if($sonuc) { ?>
                                     <a href="<?php echo "guncelle/?takimno=" . $row['takimNo']; ?>" class="btn btn-outline-warning">
                                         <i class="fa fa-edit"></i></a>
+                                                <?php } ?>
+
                                         <a href="<?php echo "detay-goster/?takimId=" . $row['id']; ?>" class="btn btn-outline-success">
                                             Detay Göster (Filtreli) </a>
 
@@ -415,7 +418,6 @@ $operatorId = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
             </div>
 
         </div>
-    </div>
     </div>
 
 

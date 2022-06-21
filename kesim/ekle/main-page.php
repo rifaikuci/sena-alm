@@ -134,8 +134,8 @@ $baskilar = $db->query($kesimsql);
                             <input required v-model="kesilenBoy"  type="number" class="form-control form-control-lg"
                                    name="kesilenBoy"
                                    @input="kesimOranHesapla($event)"
-                                   min="0.1" step="0.1"
-                                   placeholder="0.1">
+                                   min="1"
+                                   placeholder="1">
 
                             <span v-if="!kesimFarkli" style="color: red">Kesilen Boy istenen boydan farklı</span>
                         </div>
@@ -182,7 +182,7 @@ $baskilar = $db->query($kesimsql);
                                     style="width: 100%;">
                                 <option selected disabled value="">Sepet</option>
 
-                                <option v-for="sepet in sepetler1" value="sepet.id">{{sepet.ad }}</option>
+                                <option v-for="sepet in sepetler1" :value="sepet.id">{{sepet.ad }}</option>
                             </select>
                         </div>
                     </div>

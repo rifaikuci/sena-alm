@@ -9,6 +9,10 @@ INNER JOIN tblprofil p ON t.profilId = p.id where durum = 1 order by id desc ";
 
 $result = $db->query($sql);
 
+
+$islemArray = [1];
+$sonuc = in_array($operatorId, $islemArray);
+
 ?>
 
 <section class="content">
@@ -84,12 +88,14 @@ $result = $db->query($sql);
                                     </td>
 
                                     <td>
+                                        <?php if($sonuc){  ?>
                                         <button type="button" @click="modaltrash($event)" class="btn btn-danger"
                                                 data-parca1="<?php echo $row['parca1'] ?>"
                                                 data-parca2="<?php echo $row['parca2'] ?>"
                                                 data-takimno="<?php echo $row['takimNo'] ?>"
                                                 data-toggle="modal"><i class="fa fa-trash"></i>
                                         </button>
+                                        <?php } ?>
                                         <a href="<?php echo "desbols/?takimno=" . $row['takimNo']; ?>"
                                            class="btn btn-outline-dark"><i class="fa fa-list"></i></a>
                                         <?php if ($row['kalipCins'] != 3) { ?>

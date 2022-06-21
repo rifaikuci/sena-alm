@@ -39,7 +39,6 @@ var kesimgiris = new Vue({
             methods: {
                 handleHurda($event) {
                     this.hurdaAdet = this.hurdaAdet ? this.hurdaAdet : "";
-                    debugger;
                     if(this.hurdaAdet) {
 
                         if(Number(this.hurdaAdet )> 0 && Number(this.hurdaAdet) >= Number(this.basilanNetAdet))  {
@@ -138,6 +137,7 @@ $('#kesim_baski_id').on("change", async function () {
         kesimgiris.sepetler1 = response2;
         kesimgiris.sepetler2 = response2;
         kesimgiris.sepetler3 = response2;
+        console.log(kesimgiris.sepetler1)
 
     } else {
         this.baskiId = 0

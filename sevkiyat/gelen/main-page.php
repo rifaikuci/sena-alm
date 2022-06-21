@@ -99,10 +99,7 @@ $result = $db->query($sql);
 
                                     <td style="text-align: center">
                                         <a href=<?php echo "goruntule/?id=" . $row['id']; ?> class="btn
-                                           btn-warning">Görüntüle</a>
-                                        <a onclick="return confirm('Silmek istediğinizden emin misiniz?')"
-                                           href=<?php echo base_url() . "netting/sevkiyat/gelen.php?gelensil=" . $row['id']; ?> class="btn
-                                           btn-danger">Sil</a>
+                                           btn-outline-success">Görüntüle</a>
                                     </td>
 
                                 </tr>

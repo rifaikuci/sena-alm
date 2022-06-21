@@ -1,3 +1,4 @@
+
 <?php
 
 include '../baglan.php';
@@ -103,6 +104,10 @@ if (isset($_POST['kromatbaslat'])) {
             $kiloStok = -1 * $kilo;
             $kiloHurda = $kilo;
 
+            $kiloHurda = $kiloHurda / 1000000;
+            $kiloHurda = sayiFormatla($kiloHurda);
+            $kiloStok  = $kiloStok / 1000000;
+            $kiloStok = sayiFormatla($kiloStok);
             $sqlprofil = "INSERT INTO tblstokprofil ( adet, geldigiYer, baskiId, kilo) 
                 VALUES ('$hurdaStok', 'kromat', '$baskiId', '$kiloStok')";
 

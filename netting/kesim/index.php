@@ -11,9 +11,9 @@ if (isset($_POST['kesimekle'])) {
     $isSepet1Dolu = strval($_POST['isSepet1Dolu']) == "true" ? 1 : 0;
     $isSepet2Dolu = strval($_POST['isSepet2Dolu']) == "true" ? 1 : 0;
     $isSepet3Dolu = strval($_POST['isSepet3Dolu']) == "true" ? 1 : 0;
-    $sepet1Adet = $_POST['sepet1Adet'];
-    $sepet2Adet = $_POST['sepet2Adet'];
-    $sepet3Adet = $_POST['sepet3Adet'];
+    $sepet1Adet = $_POST['sepet1Adet'] ? $_POST['sepet1Adet'] : 0;
+    $sepet2Adet = $_POST['sepet2Adet'] ? $_POST['sepet2Adet'] : 0;
+    $sepet3Adet = $_POST['sepet3Adet'] ? $_POST['sepet3Adet'] : 0;
     $sepet1 = $_POST['sepet1'];
     $sepet2 = $_POST['sepet2'] == "" ? 0 : $_POST['sepet2'];
     $sepet3 = $_POST['sepet3'] == "" ? 0 : $_POST['sepet3'];
@@ -40,7 +40,6 @@ if (isset($_POST['kesimekle'])) {
                       hurdaAdet, netAdet, vardiyaKod, sepet1Adet, sepet2Adet, sepet3Adet) 
                 VALUES ('$baskiId', '$kesilenBoy', '$operatorId', '$sepet1', '$sepet2', '$sepet3', '$hurdaSebep', 
                         '$hurdaAdet', '$netAdet', '$vardiyaKod', '$sepet1Adet', '$sepet2Adet', '$sepet3Adet')";
-
     mysqli_query($db, $sqlKesim);
 
     $kesimId = mysqli_insert_id($db);
@@ -108,10 +107,14 @@ if (isset($_POST['kesimekle'])) {
     $guncelGr = tablogetir('tblbaski', 'id', $baskiId, $db)['guncelGr'];
     $adet = -1 * ($hurdaAdet);
     $kilo = $adet * $guncelGr * $kesilenBoy;
+    $kilo = $kilo / 1000000;
+    $kilo = sayiFormatla($kilo);
     $sqlprofil = "INSERT INTO tblstokprofil (kilo, adet, geldigiYer,baskiId) 
                 VALUES ('$kilo', '$adet', 'kesim', '$baskiId')";
 
     $hurdaKilo = $hurdaAdet * $guncelGr * $kesilenBoy;
+    $hurdaKilo = $hurdaKilo / 1000000;
+    $hurdaKilo = sayiFormatla($hurdaKilo);
     $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer, kilo) 
                 VALUES ('$hurdaAdet', '$hurdaSebep', '$operatorId','$baskiId', 'kesim', '$hurdaKilo')";
     mysqli_query($db, $sqlHurda);
