@@ -15,7 +15,6 @@ new Vue({
                         siparisNo: event.target.dataset.siparisno,
                     },
                     success: function (response) {
-                        console.log(response);
                         $('.modal-body').html(response);
                         $('#modalviewdetay').modal('show');
 

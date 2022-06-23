@@ -15,7 +15,6 @@ new Vue({
                         balyano: event.target.dataset.balyano,
                     },
                     success: function (response) {
-                        console.log(response);
                         $('.modal-body').html(response);
                         $('#balyalar').modal('show');
 

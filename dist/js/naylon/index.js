@@ -18,7 +18,6 @@ var naylonGiris = new Vue({
             check(event) {
                 if(this.naylon1Adet && this.naylon1Adet > 0 && this.naylon1Max &&  parseFloat(this.naylon1Max) <= parseFloat(this.naylon1Adet)) {
                     this.naylonlar2 = this.naylonlar.filter(x => x.id != this.naylon1.id);
-                    console.log(this.naylonlar2);
                 }
 
             }

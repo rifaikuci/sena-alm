@@ -48,7 +48,6 @@ var sepetGiris = new Vue({
         },
 
         detayGoster(event,id) {
-            console.log(id);
             if (id) {
                 $.ajax({
                     url: '/sena/netting/sepet/sepet.php',

@@ -13,7 +13,6 @@ var firinlamaGiris = new Vue({
             }).then((response) => {
                 return response.data
             });
-            debugger;
             this.boyalar = boyalar.map(x => {
                     return ({
                         ...x,
@@ -39,7 +38,6 @@ var firinlamaGiris = new Vue({
             },
 
             selectedBoya: function (boya) {
-                debugger;
                 if (this.boyalar.find(x => x.selected === true && x.firinSicaklik != boya.firinSicaklik)) {
                     this.boyalar.forEach(x => x.selected = false);
                 }

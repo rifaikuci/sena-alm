@@ -31,7 +31,6 @@ var balyalamaGiris = new Vue({
         }).then((response) => {
             return response.data
         });
-        console.log(anbarlar);
         this.anbarlar = anbarlar.map(x => {
             return ({
                 ...x,

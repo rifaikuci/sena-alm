@@ -384,7 +384,6 @@ $('#biyet_id').on("change", async function () {
     baskigiris.biyet.biyetAd = array[2];
     baskigiris.biyet.biyetFirma = array[3];
     baskigiris.biyetBirimGramaj = array[4];
-    console.log(array)
 
 });
 
