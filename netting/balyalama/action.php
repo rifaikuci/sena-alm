@@ -15,7 +15,7 @@ if ($received_data->action == 'anbargetir') {
        a.satirNo,
        musteriId,
        firmaAd,
-       s.boy,ss
+       s.boy,
        figurSayi,
        baskiId,
        siparisNo,
@@ -28,7 +28,8 @@ if ($received_data->action == 'anbargetir') {
        profilNo,
        profilAdi,
        gramaj, a.kalanAdet,
-       a.tarih as tarih
+       a.tarih as tarih,
+       pr.paketAdet 
 from tblanbar a
          INNER JOIN tblbaski b ON b.id = a.baskiId
          INNER JOIN tblsiparis s ON s.id = b.siparisId

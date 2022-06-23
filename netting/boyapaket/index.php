@@ -31,6 +31,13 @@ if (isset($_POST['boyapaketbaslat'])) {
         $kiloStok = -1 * $kilo;
         $kiloHurda = $kilo;
 
+
+        $kiloHurda = $kiloHurda / 1000000;
+        $kiloHurda = sayiFormatla($kiloHurda);
+        $kiloStok  = $kiloStok / 1000000;
+        $kiloStok = sayiFormatla($kiloStok);
+
+
         $sqlprofil = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId, operatorId, kilo) 
                 VALUES ( '$geciciAdet', 'boyapaket', '$baskiId', '$operatorId', '$kiloStok')";
         mysqli_query($db, $sqlprofil);
@@ -44,6 +51,14 @@ if (isset($_POST['boyapaketbaslat'])) {
         $sqlrutusprofil = "INSERT INTO tblrutusprofil (adet,kalan,sebep,profilId, operatorId, baskiId) 
                 VALUES ( '$rutusAdet', '$rutusAdet', '$rutusSebep', '$profilId', '$operatorId', '$baskiId')";
         mysqli_query($db, $sqlrutusprofil);
+
+        $rutusAdetR = -1 * $rutusAdet;
+        $kiloR = kiloBul($baskiId, $rutusAdetR,$db);
+        $kiloR = $kiloR / 1000000;
+        $kiloR = sayiFormatla($kiloR);
+        $sqlprofilr = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId, operatorId, kilo) 
+                VALUES ( '$rutusAdetR', 'rutus', '$baskiId', '$operatorId', '$kiloR')";
+        mysqli_query($db, $sqlprofilr);
     }
 
 

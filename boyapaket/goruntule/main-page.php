@@ -24,7 +24,8 @@ if ($_GET['id']) {
                hurdaSebep,
                rutusAdet,
                rutusSebep,
-               paketAdet
+               paketAdet,
+               netAdet
             from tblboyapaket bp
                  INNER JOIN tblbaski b ON bp.baskiId = b.id
                  INNER JOIN tblsiparis s ON b.siparisId = s.id

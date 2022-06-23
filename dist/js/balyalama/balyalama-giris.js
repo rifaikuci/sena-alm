@@ -20,8 +20,9 @@ var balyalamaGiris = new Vue({
         satirNos: "",
         anbarIds: "",
         siparisNos: "",
-        musteriId : ""
-
+        musteriId : "",
+        kontrolKilo: 0,
+        balyaBoy : 0,
     },
 
     mounted: async function () {
@@ -30,6 +31,7 @@ var balyalamaGiris = new Vue({
         }).then((response) => {
             return response.data
         });
+        console.log(anbarlar);
         this.anbarlar = anbarlar.map(x => {
             return ({
                 ...x,
@@ -109,9 +111,11 @@ var balyalamaGiris = new Vue({
         },
 
         hesapla(event) {
+            this.kontrolKilo = 0;
+            this.toplamKilo = 0;
             item = this.anbarlar.find(x => x.id === event);
             if (item.netKilo && item.netKilo > 0 && item.netAdet && item.netAdet && item.boy && item.boy) {
-                item.mtGr = ((item.netKilo / item.netAdet / item.boy) * 1000).toFixed(1);
+                item.mtGr = ((item.netKilo / item.netAdet / item.boy) * 1000000).toFixed(1);
 
                 item.teorikTolerans = (item.mtGr / item.gramaj).toFixed(2) * 100;
                 item.teorikTolerans = (item.teorikTolerans - 100).toFixed(2);
@@ -149,8 +153,8 @@ var balyalamaGiris = new Vue({
                 filterAnbar.forEach(x => {
                     kilo = parseFloat(kilo) + parseFloat(x.netKilo)
                 });
+                this.kontrolKilo = kilo;
                 this.toplamKilo = formatter.format(kilo);
-                console.log(this.toplamKilo)
             }
         },
 

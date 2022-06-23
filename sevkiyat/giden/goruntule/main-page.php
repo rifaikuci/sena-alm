@@ -101,7 +101,7 @@ INNER JOIN  tblfirma f ON f.id = b.musteriId where  b.id in  (" . $balyaText . "
                             </thead>
                             <tbody>
                             <?php $sira = 1;
-                            $toplamBalyaKilo = 0;
+                            $toplamBalyaKilo = 0.0;
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira ?></td>
@@ -120,7 +120,9 @@ INNER JOIN  tblfirma f ON f.id = b.musteriId where  b.id in  (" . $balyaText . "
                                     </td>
                                 </tr>
                                 <?php $sira++;
-                                $toplamBalyaKilo = $row['balyaKilo'] + $toplamBalyaKilo;
+                                $let = str_replace(",",".",$row['balyaKilo']);
+                                $toplamBalyaKilo = $let + $toplamBalyaKilo;
+
                             } ?>
 
                             </tbody>
@@ -130,7 +132,7 @@ INNER JOIN  tblfirma f ON f.id = b.musteriId where  b.id in  (" . $balyaText . "
                 </div>
 
                 <div style="text-align: center">
-                    <h3 style="color: #0b93d5"> <?php echo "Toplam Sevkiyat Kilo  : " . $toplamBalyaKilo ?></h3>
+                    <h3 style="color: #0b93d5"> <?php echo "Toplam Sevkiyat Kilo  : " . sayiFormatla($toplamBalyaKilo) ?></h3>
                 </div>
 
 

@@ -139,7 +139,7 @@ $personeller2 = $db->query($personelsql2);
 
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Sevkiyata Alınankar</h3>
+                        <h3 class="card-title">Sevkiyata Alınanlar</h3>
 
                         <div class="card-tools">
                             <button type="button" class="btn btn-tool" data-card-widget="collapse" data-toggle="tooltip"
@@ -214,7 +214,6 @@ $personeller2 = $db->query($personelsql2);
                            class="btn btn-warning float-left">Vazgeç</a>
                     </div>
                 </div>
-        </div>
 
 
         </form>

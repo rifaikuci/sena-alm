@@ -95,7 +95,8 @@ if (isset($_POST['boyabaslat'])) {
                         icindekiler = null ,
                         adetler = null ,
                         durum = '0',
-                        isTermik = '0'
+                        isTermik = '0',
+                        finishedKronat = '0'
                     where id = '$sepetId'";
 
 
@@ -117,6 +118,12 @@ if (isset($_POST['boyabaslat'])) {
 
             $kiloStok = -1 * $kilo;
             $kiloHurda = $kilo;
+
+
+            $kiloHurda = $kiloHurda / 1000000;
+            $kiloHurda = sayiFormatla($kiloHurda);
+            $kiloStok  = $kiloStok / 1000000;
+            $kiloStok = sayiFormatla($kiloStok);
 
             $sqlprofil = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId, kilo) 
                 VALUES ( '$geciciAdet', 'boya', '$baskiId', '$kiloStok')";

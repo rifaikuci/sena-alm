@@ -21,9 +21,10 @@ $sql = "select b.balyaNo,
        balyaKilo,
        firmaAd
 from tblbalyalama b
-         INNER JOIN tblsevkiyatcikis s ON s.id = b.sevkiyatId
-         INNER JOIN tblfirma f ON f.id = b.musteriId where b.balyaNo = '$balyaNo'
+         left JOIN tblsevkiyatcikis s ON s.id = b.sevkiyatId
+         left JOIN tblfirma f ON f.id = b.musteriId where b.balyaNo = '$balyaNo'
         ";
+
 $row = mysqli_query($db, $sql)->fetch_assoc();
 
 $sevkiyatNo = $row['kod'];
@@ -98,7 +99,7 @@ $siparisNo = explode(";", $row['siparisNo']);
                 <td><?php echo $siparisNo[$i] ?></td>
                 <td><?php echo $satirNo[$i] ?></td>
                 <td><?php echo $netAdet[$i] ?></td>
-                <td><?php echo $netKilo[$i] ?></td>
+                <td><?php echo sayiFormatla($netKilo[$i]) ?></td>
                 <td><?php echo $mtGr[$i] ?></td>
                 <td style="color: <?php echo $realTolerans[$i] > 0 ? '#ff0000' : '#3ea800' ?> "><?php echo "%" . $realTolerans[$i] ?></td>
                 <td style="color: <?php echo $teorikTolerans[$i] > 0 ? '#ff0000' : '#3ea800' ?> "><?php echo "%" . $teorikTolerans[$i] ?></td>

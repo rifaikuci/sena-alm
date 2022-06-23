@@ -12,9 +12,10 @@ if ($_GET['id']) {
     $sqlboya = "select boya.id as id, partino, barkodNo, kullanilanBoya, siklonKullanilanKg, askiId, rutusId, profilAdi, profilId, profilNo, rutusAdet,siklonAyrilanKg,
             netBoya, topAski, ortAskiAdet, siklonId, topAdet, sepetler, adetler,baskilar, hurdaAdetler, hurdaSebepler
             from tblboya as boya
-            INNER JOIN tblstokboya as stokboya ON boya.boyaId = stokboya.id
+            LEFT JOIN tblstokboya as stokboya ON boya.boyaId = stokboya.id
             LEFT  JOIN tblrutusprofil on rutusId = tblrutusprofil.id
-            INNER  JOIN tblprofil on tblrutusprofil.profilId = tblprofil.id where boya.id = '$id'";
+            left  JOIN tblprofil on tblrutusprofil.profilId = tblprofil.id where boya.id = '$id'";
+
     $boya = mysqli_query($db, $sqlboya)->fetch_assoc();
 
     $sepetler = explode(";", $boya['sepetler']);
