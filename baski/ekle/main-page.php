@@ -525,6 +525,20 @@ date_default_timezone_set('Europe/Istanbul');
                     </div>
 
 
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label> Baskı Açıklama</label>
+                            <input required
+                                   class="form-control" type="text" name="aciklama"
+                                   placeholder="Açıklama Giriniz...">
+                            <input type="hidden" :value="baskiDurum" name="baskiDurum">
+
+                        </div>
+                    </div>
+
+
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Takım Son Durum</label>
@@ -544,16 +558,7 @@ date_default_timezone_set('Europe/Istanbul');
                         </div>
                     </div>
 
-                    <div class="col-sm-2">
-                        <div class="form-group">
-                            <label>Açıklama</label>
-                            <input required
-                                   class="form-control" type="text" name="aciklama"
-                                   placeholder="Açıklama Giriniz...">
-                            <input type="hidden" :value="baskiDurum" name="baskiDurum">
 
-                        </div>
-                    </div>
 
                     <div class="col-sm-2" v-if="isCheck">
                         <div class="form-group">
