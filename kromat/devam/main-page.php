@@ -48,7 +48,7 @@ date_default_timezone_set('Europe/Istanbul');
 
                 <div class="row">
 
-                    <div class="col-sm-8">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Kromat Sepet</label>
                             <input type="text" value="<?php echo $sepetKromat['ad'] ?>" class="form-control form-control-lg" disabled>
@@ -60,7 +60,7 @@ date_default_timezone_set('Europe/Istanbul');
 
 
 
-                    <div class="col-sm-12" style="margin: 30px">
+                    <div class="col-sm-6" style="margin: 30px">
                         <div style="text-align: center">
                             <h3 style="color: #0c525d">Sepet Bilgileri</h3>
                         </div>
@@ -70,9 +70,9 @@ date_default_timezone_set('Europe/Istanbul');
                 <?php for($k = 0; $k < count($adetler); $k++ ) {?>
                 <div class="row">
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Satır No</label>
+                            <label>Satır No - Profil Adı - Profil Boy - Rengi - Adet</label>
                             <input value="<?php
                             $satirNo = tablogetir('tblbaski', 'id', $icindekiler[$k],$db)['satirNo'];
                             echo $satirNo ?>"
@@ -82,7 +82,7 @@ date_default_timezone_set('Europe/Istanbul');
                         </div>
                     </div>
                     
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Kromat Adedi</label>
                             <input value="<?php echo $adetler[$k] ?>"
@@ -92,7 +92,7 @@ date_default_timezone_set('Europe/Istanbul');
                         </div>
                     </div>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Hurda Adedi</label>
                             <input value="<?php echo $hurdalar[$k] ?>"
@@ -104,7 +104,7 @@ date_default_timezone_set('Europe/Istanbul');
 
                     <?php if($hurdalar[$k] && $hurdalar[$k] > 0) { ?>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Sebepler</label>
                             <input value="<?php echo $sebepler[$k] ?>"

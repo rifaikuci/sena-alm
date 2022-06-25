@@ -5,6 +5,8 @@ include "../include/sql.php";
 $sql = "SELECT * FROM tbltermik order by id desc ";
 $result = $db->query($sql);
 
+
+#todo sepetler ve içindekiler aynı hücrede yazılacak sepetler ve ynaındaki hücreyi birleştiricez.
 ?>
 
 <section class="content">

@@ -9,6 +9,8 @@ $result = $db->query($sql);
 $islemArray = [1,5];
 $sonuc = in_array($rolId, $islemArray);
 
+#todo eğer kromat havuz asit dolu değilse kromat yapmasına izin verilmesin
+
 ?>
 
 <section class="content">
@@ -49,8 +51,6 @@ $sonuc = in_array($rolId, $islemArray);
                                 <th>#</th>
                                 <th>Başlama Tarih</th>
                                 <th>Sepet</th>
-                                <th>Havuz Kromat</th>
-                                <th>Havuz Asidi</th>
                                 <th>Durum</th>
                                 <th style="text-align: center">İşlem</th>
                             </tr>
@@ -61,8 +61,6 @@ $sonuc = in_array($rolId, $islemArray);
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo tarihsaat($row['baslaZaman']); ?></td>
                                     <td><?php echo $row['ad']; ?></td>
-                                    <td><?php echo $row['havuzKromatId']; ?></td>
-                                    <td><?php echo $row['havuzAsitId']; ?></td>
                                     <td><?php if ($row['bitisZaman']) { ?>
                                             <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
                                                class="btn btn-outline-primary">Görüntüle</a>

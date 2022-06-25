@@ -3,6 +3,7 @@ include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
 
+# todo Satır No - Profil Adı - Profil Boy - Rengi - Adet -> sepet kısmında bu bilgielrde gelcek
 if ($_GET['id']) {
 
     $id = $_GET['id'];
@@ -37,7 +38,7 @@ if ($_GET['id']) {
 
                 <div class="row">
 
-                    <div class="col-sm-8">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Sepet</label>
                             <input disabled
@@ -47,7 +48,7 @@ if ($_GET['id']) {
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Başlama Zamanı</label>
                             <input disabled
@@ -57,7 +58,7 @@ if ($_GET['id']) {
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Başlama Zamanı</label>
                             <input disabled
@@ -77,9 +78,9 @@ if ($_GET['id']) {
 
                 <?php for ($i = 0; $i < count($adetler); $i++) { ?>
                     <div class="row">
-                        <div class="col-sm-3">
+                        <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Sepet</label>
+                                <label>Satır No - Profil Adı - Profil Boy - Rengi - Adet</label>
                                 <input type="text" required class="form-control form-control-lg"
                                        value="<?php echo tablogetir("tblsepet", 'id', $sepetler[$i], $db)['ad'] ?>"
                                        disabled
@@ -87,7 +88,7 @@ if ($_GET['id']) {
                             </div>
                         </div>
 
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <div class="form-group">
                                 <label>Kromata Gönderilecek Adet</label>
                                 <input type="text" required class="form-control form-control-lg"
@@ -97,7 +98,7 @@ if ($_GET['id']) {
                         </div>
 
 
-                        <div class="col-sm-3">
+                        <div class="col-sm-2">
                             <div class="form-group">
                                 <label>Hurda Adet</label>
                                 <input type="text" required class="form-control form-control-lg"
@@ -107,7 +108,7 @@ if ($_GET['id']) {
                         </div>
 
                         <?php if ($hurdalar[$i] != 0) { ?>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <label>Hurdaya Atılma Sebebi</label>
                                     <input type="text" required class="form-control form-control-lg"

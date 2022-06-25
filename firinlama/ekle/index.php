@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-        <?php include "../include/helper.php"; ?>
+    <?php include "../../include/helper.php"; ?>
 
     <?php include "../../include/head.php" ?>
     <title>SENA | Fırın Ekle</title>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-        <?php include "../include/helper.php"; ?>
+    <?php include "../../include/helper.php"; ?>
 
     <?php include "../../include/head.php" ?>
     <title>SENA | Sektörler</title>

@@ -23,6 +23,7 @@ if ($_GET['id']) {
     $adetler = explode(";", $boya['adetler']);
     $hurdaAdetler = explode(";", $boya['hurdaAdetler']);
     $hurdaSebepler = explode(";", $boya['hurdaSebepler']);
+#todo sipariş bilgierlinde başka alanlarda getiririlcek
 
 } ?>
 

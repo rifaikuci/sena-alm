@@ -10,6 +10,7 @@ $kromatSql = "SELECT * FROM tblsepet where tur = 'kromatS' AND durum = 0";
 $kromatSepet = $db->query($kromatSql);
 
 #todo ,-> max adet kontrolü yapılacak
+#todo -> Sepet kısmında,
 ?>
 
 <section class="content">
@@ -22,9 +23,9 @@ $kromatSepet = $db->query($kromatSql);
 
                 <div class="row">
 
-                    <div class="col-sm-8">
+                    <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Sepet</label>
+                            <label>Kromat Sepetleri</label>
                             <select required name="kromatSepet" class="select2"
                                     data-dropdown-css-class="select2-blue"
                                     data-placeholder="Sepet "
@@ -47,10 +48,10 @@ $kromatSepet = $db->query($kromatSql);
 
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <label></label>
+                            <label> Satır No - Profil Adı - Profil Boy - Rengi - Adet </label>
                             <select required name="sepetler[]" id="kromat_sepet" class="select2" multiple="multiple"
                                     data-dropdown-css-class="select2-gray"
-                                    data-placeholder="Sepet - Sipariş -  Adet "
+                                    data-placeholder="Satır No - Profil Adı - Profil Boy - Rengi - Adet "
                                     style="width: 100%;">
                                 <option disabled value="">Sepet - Baskılar - Adet</option>
                                 <?php while ($sepet = $sepetler->fetch_array()) {
@@ -82,7 +83,7 @@ $kromatSepet = $db->query($kromatSql);
                 </div>
 
                 <div class="row" v-for="baski in baskilar">
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Kromata Gönderilecek Adet</label>
                             <input required v-model="baski.adet"
@@ -93,7 +94,7 @@ $kromatSepet = $db->query($kromatSql);
                     </div>
 
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Hurda Adet</label>
                             <input v-model="baski.hurdaAdet"

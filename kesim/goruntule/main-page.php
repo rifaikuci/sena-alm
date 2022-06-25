@@ -118,7 +118,7 @@ date_default_timezone_set('Europe/Istanbul');
             </div>
 
             <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-2">
                     <div class="form-group">
                         <label>Kesilen Boy</label>
                         <input class="form-control" disabled value="<?php echo $kesim['kesilenBoy'] ?>">
@@ -127,15 +127,24 @@ date_default_timezone_set('Europe/Istanbul');
                         <?php } ?>
                     </div>
                 </div>
+
+                <div class="col-sm-2">
+                    <div class="form-group">
+                        <label>Net Adet</label>
+                        <input type="text" value="<?php echo $kesim['netAdet'] ?>" disabled
+                               class="form-control form-control-lg">
+                    </div>
+                </div>
+
                 <?php if ($kesim['hurdaAdet'] && $kesim['hurdaAdet'] > 0) { ?>
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Hurda Adet</label>
                             <input disabled class="form-control form-control-lg"
                                    value="<?php echo $kesim['hurdaAdet']; ?>">
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label>Hurdaya Atılma Sebebi</label>
                             <input disabled class="form-control form-control-lg"
@@ -144,13 +153,7 @@ date_default_timezone_set('Europe/Istanbul');
                     </div>
                 <?php } ?>
 
-                <div class="col-sm-4">
-                    <div class="form-group">
-                        <label>Net Adet</label>
-                        <input type="text" value="<?php echo $kesim['netAdet'] ?>" disabled
-                               class="form-control form-control-lg">
-                    </div>
-                </div>
+
 
 
                 <?php if ($kesim['sepetId1'] && $kesim['sepetId1'] > 0) {
@@ -164,7 +167,7 @@ date_default_timezone_set('Europe/Istanbul');
                             </div>
                         </div>
 
-                        <div class="col-sm-4">
+                        <div class="col-sm-2">
                             <div class="form-group">
                                 <label>Adet 1 </label>
                                 <input type="text" value="<?php echo $kesim['sepet1Adet'] ?>" disabled
@@ -172,6 +175,7 @@ date_default_timezone_set('Europe/Istanbul');
 
                             </div>
                         </div>
+            </div><div class="row">
 
                 <?php } ?>
 
@@ -186,7 +190,7 @@ date_default_timezone_set('Europe/Istanbul');
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Adet 2 </label>
                             <input type="text" value="<?php echo $kesim['sepet2Adet'] ?>" disabled
@@ -194,6 +198,8 @@ date_default_timezone_set('Europe/Istanbul');
 
                         </div>
                     </div>
+            </div>
+            <div class="row">
 
                 <?php } ?>
 
@@ -208,7 +214,7 @@ date_default_timezone_set('Europe/Istanbul');
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Adet 3 </label>
                             <input type="text" value="<?php echo $kesim['sepet3Adet'] ?>" disabled

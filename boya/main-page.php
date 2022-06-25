@@ -6,6 +6,9 @@ $sql = "
 select baslaZaman, topAdet, partino, tblboya.id as id  from tblboya INNER JOIN  tblstokboya on tblboya.boyaId = tblstokboya.id order by  id desc";
 $result = $db->query($sql);
 
+
+#todo tablo bilgieri değiştirildi doğrusu getiriilcek.
+#
 ?>
 
 <section class="content">
@@ -42,8 +45,11 @@ $result = $db->query($sql);
                             <tr>
                                 <th>#</th>
                                 <th>İşlem Tarihi</th>
+                                <th>Satır No</th>
+                                <th>Profil Adı/No</th>
+                                <th>Boy</th>
                                 <th>Toplam Adet</th>
-                                <th>Parti No</th>
+                                <th>Renk Cinsi ile beraber</th>
                                 <th>Durum</th>
                             </tr>
                             </thead>
