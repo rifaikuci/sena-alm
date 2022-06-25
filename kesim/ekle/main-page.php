@@ -8,7 +8,7 @@ $kesimsql = "SELECT * FROM tblbaski where 0 >= kesimId and bitisZamani !='' AND 
  and  0 >= kromatId  and  0 >= naylonId  and  0 >= paketId  and  0 >= boyaPaketId  and  0 >= termikId";
 $baskilar = $db->query($kesimsql);
 
-
+ #todo sipariş no kısmında bilgiler getirilecke
 ?>
 
 <section class="content">
@@ -94,9 +94,9 @@ $baskilar = $db->query($kesimsql);
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-8">
+                    <div class="col-sm-6">
                         <div class="form-group">
-                            <label></label>
+                            <label>Baskı Id - Satır No - Profil No - Profil Adı Sipariş Boy - Basılan Adet  </label>
                             <select id="kesim_baski_id" name="baskiId" required class="form-control select2"
                                     style="width: 100%;">
                                 <option selected disabled value="">Sipariş No</option>
@@ -109,7 +109,7 @@ $baskilar = $db->query($kesimsql);
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Kesilen Boy</label>
                             <input type="hidden" name="isSepet1Dolu" :value="isSepet1Dolu">
@@ -140,7 +140,16 @@ $baskilar = $db->query($kesimsql);
                             <span v-if="!kesimFarkli" style="color: red">Kesilen Boy istenen boydan farklı</span>
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Net Adet</label>
+                            <input type="text" v-model="netAdet" disabled
+                                   class="form-control form-control-lg">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Hurda Adet</label>
                             <input @input="handleHurda($event)"
@@ -166,13 +175,9 @@ $baskilar = $db->query($kesimsql);
                         </div>
                     </div>
 
-                    <div class="col-sm-4">
-                        <div class="form-group">
-                            <label>Net Adet</label>
-                            <input type="text" v-model="netAdet" disabled
-                                   class="form-control form-control-lg">
-                        </div>
-                    </div>
+
+                </div>
+                <div class="row">
 
 
                     <div class="col-sm-4">
@@ -180,13 +185,13 @@ $baskilar = $db->query($kesimsql);
                             <label>Sepet 1 </label>
                             <select v-model="sepet1" id="kesim_sepet1" class="form-control select2"
                                     style="width: 100%;">
-                                <option selected disabled value="">Sepet</option>
+                                <option selected disabled value="">Sepet Ad </option>
 
                                 <option v-for="sepet in sepetler1" :value="sepet.id">{{sepet.ad }}</option>
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Adet </label>
                             <input type="number" v-model="sepet1Adet" placeholder="0"
@@ -223,7 +228,7 @@ $baskilar = $db->query($kesimsql);
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-4" v-if="isSepet1Dolu">
+                    <div class="col-sm-2" v-if="isSepet1Dolu">
                         <div class="form-group">
                             <label>Adet </label>
                             <input type="number" name="sepet2Adet" v-model="sepet2Adet" placeholder="0"
@@ -232,7 +237,7 @@ $baskilar = $db->query($kesimsql);
 
                         </div>
                     </div>
-                    <div class="col-sm-4" v-if="isSepet1Dolu && sepet2Adet && sepet2Adet > 0">
+                    <div class="col-sm-2" v-if="isSepet1Dolu && sepet2Adet && sepet2Adet > 0">
                         <div class="form-group">
                             <label>~~</label>
                             <div class="form-group clearfix">
@@ -246,6 +251,8 @@ $baskilar = $db->query($kesimsql);
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row">
 
 
                     <div class="col-sm-4" v-if="isSepet1Dolu && isSepet2Dolu">
@@ -258,7 +265,7 @@ $baskilar = $db->query($kesimsql);
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-4" v-if="isSepet1Dolu && isSepet2Dolu ">
+                    <div class="col-sm-2" v-if="isSepet1Dolu && isSepet2Dolu ">
                         <div class="form-group">
                             <label>Adet </label>
                             <input type="number" name="sepet3Adet" v-model="sepet3Adet" placeholder="0"
@@ -267,7 +274,7 @@ $baskilar = $db->query($kesimsql);
 
                         </div>
                     </div>
-                    <div class="col-sm-4" v-if="isSepet1Dolu && isSepet2Dolu && sepet3Adet && sepet3Adet > 0  ">
+                    <div class="col-sm-2" v-if="isSepet1Dolu && isSepet2Dolu && sepet3Adet && sepet3Adet > 0  ">
                         <div class="form-group">
                             <label>~~</label>
                             <div class="form-group clearfix">

@@ -179,31 +179,16 @@ if ($_GET['id']) {
                     </div>
                 </div>
 
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <div class="form-group">
-                        <label>Takım</label>
+                        <label>Takım | Çap | Figür Sayı</label>
                         <input value="<?php echo $baski['takimNo'] ?>"
                                class="form-control"
                                type="text" disabled>
                     </div>
                 </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label>Kalıp</label>
-                        <input value="<?php echo kalipBul($baski['kalipCins']); ?>"
-                               class="form-control"
-                               type="text" disabled>
-                    </div>
-                </div>
+                <?php  #todo takımno figur sayi ve çap tek kutucuk kesik çizgi  ?>
 
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <label>Çap</label>
-                        <input value="<?php echo $baski['cap'] ?>"
-                               class="form-control"
-                               type="text" disabled>
-                    </div>
-                </div>
             </div>
 
             <br>
@@ -370,7 +355,18 @@ if ($_GET['id']) {
                                value="<?php echo $baski['hiz'] ?>">
                     </div>
                 </div>
+            </div>
+            <div class="row">
 
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label>Açıklama</label>
+                        <input disabled
+                               class="form-control"
+                               type="text"
+                               value="<?php echo $baski['aciklama'] ?>">
+                    </div>
+                </div>
 
                 <div class="col-sm-2">
                     <div class="form-group">
@@ -385,15 +381,7 @@ if ($_GET['id']) {
                     </div>
                 </div>
 
-                <div class="col-sm-2">
-                    <div class="form-group">
-                        <label>Açıklama</label>
-                        <input disabled
-                               class="form-control"
-                               type="text"
-                               value="<?php echo $baski['aciklama'] ?>">
-                    </div>
-                </div>
+
 
                 <div v-if="!baskiDurum" class="col-sm-2">
                     <div class="form-group">
