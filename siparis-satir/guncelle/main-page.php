@@ -29,6 +29,7 @@ $eloksallar = $db->query($eloksalsql);
 $alasimsql = "SELECT * FROM tblalasim";
 $alasimlar = $db->query($alasimsql);
 
+#todo güncelleme ypılacak. -> profil kısmıda getirecek
 ?>
 
 <section class="content" id="siparisguncelleneceksatir" satirno="<?php echo $satirno ?>">

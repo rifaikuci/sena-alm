@@ -111,7 +111,7 @@ if ($_GET['siparisno']) {
         <div class="row">
             <div class="col-md-6">
                 <div style="text-align: right; margin: 5px">
-                    <h5 style="color: #2b6b4f">Sipariş Detayı</h5>
+                    <h5 style="color: #2b6b4f">Sipariş Detayı </h5>
                 </div>
             </div>
 
@@ -129,9 +129,9 @@ if ($_GET['siparisno']) {
                 <div class="card card-default">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <div class="form-group">
-                                    <label>No</label>
+                                    <label>Satır No</label>
                                     <input v-model="siparis.satirNo" type="text"
                                            class="form-control form-control-lg"
                                            disabled>
@@ -140,7 +140,7 @@ if ($_GET['siparisno']) {
                             <div class="col-sm-3">
                                 <div class="form-group">
                                     <label>Profiller</label>
-                                    <select @change="profilOnChange($event)" v-model="siparis.profil"
+                                    <select disabled @change="profilOnChange($event)" v-model="siparis.profil"
                                             name="profilId" class="form-control select2">
                                         <option selected disabled value="">Profil Seçiniz</option>
                                         <?php while ($profil = $profiller->fetch_array()) { ?>
@@ -150,39 +150,39 @@ if ($_GET['siparisno']) {
                                     </select>
                                 </div>
                             </div>
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <label>Boy (mm)</label>
-                                    <input v-model="siparis.boy" type="number" placeholder="1 mm"
+                                    <input disabled v-model="siparis.boy" type="number" placeholder="1 mm"
                                            @input="checkBoy($event)"
                                            class="form-control form-control-lg" name="boy">
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <label>Adet</label>
-                                    <input :disabled="adetDisabled" v-model="siparis.adet" type="number"
+                                    <input disabled v-model="siparis.adet" type="number"
                                            class="form-control form-control-lg" name="adet"
                                            @input="checkAdet($event)"
                                            placeholder="1" step="1">
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <label>Kilo (Kg)</label>
-                                    <input :disabled="kiloDisabled" v-model="siparis.kilo" step="0.1"
+                                    <input disabled v-model="siparis.kilo" step="0.1"
                                            placeholder="0.1 kg" type="number"
                                            @input="checkKilo($event)"
                                            class="form-control form-control-lg" name="kilo">
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <label>Sipariş Türü</label>
-                                    <select @change="onChangeSiparis($event)" v-model="siparis.siparisTur"
+                                    <select disabled @change="onChangeSiparis($event)" v-model="siparis.siparisTur"
                                             name="siparisTur" class="form-control">
                                         <option selected disabled value="">Sipariş Türü Seçiniz</option>
                                         <?php for ($i = 0; $i < count($profilTur); $i++) { ?>
@@ -195,7 +195,7 @@ if ($_GET['siparisno']) {
                             <div class="col-sm-3" v-if="isBoya">
                                 <div class="form-group">
                                     <label>Boyalar </label>
-                                    <select v-model="siparis.boyaId" name="boyaId" class="form-control">
+                                    <select disabled v-model="siparis.boyaId" name="boyaId" class="form-control">
                                         <option selected disabled value="">Boya Seçiniz</option>
                                         <?php while ($boya = $boyalar->fetch_array()) { ?>
                                             <option
@@ -208,7 +208,7 @@ if ($_GET['siparisno']) {
                             <div class="col-sm-3" v-if="isEloksal">
                                 <div class="form-group">
                                     <label>Eloksal </label>
-                                    <select v-model="siparis.eloksalId" name="eloksalId" class="form-control">
+                                    <select disabled v-model="siparis.eloksalId" name="eloksalId" class="form-control">
                                         <option selected disabled value="">Eloksal Seçiniz</option>
                                         <?php while ($eloksal = $eloksallar->fetch_array()) { ?>
                                             <option
@@ -218,10 +218,10 @@ if ($_GET['siparisno']) {
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <label>Alaşımlar </label>
-                                    <select v-model="siparis.alasim" name="alasimlId" class="form-control"
+                                    <select disabled v-model="siparis.alasim" name="alasimlId" class="form-control"
                                             @change="alasimOnChange($event)">
                                         <option selected disabled value="">Alaşım Seçiniz</option>
                                         <?php while ($alasim = $alasimlar->fetch_array()) { ?>
@@ -232,18 +232,10 @@ if ($_GET['siparisno']) {
                                 </div>
                             </div>
 
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label>Termin Tarihi</label>
-                                    <input v-model="siparis.termimTarih" type="date"
-                                           class="form-control form-control-lg" name="termimTarih">
-                                </div>
-                            </div>
-
-                            <div class="col-sm-3">
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <label>Tolerans (%)</label>
-                                    <input v-model="siparis.maxTolerans" placeholder="1 (%)" type="number"
+                                    <input disabled v-model="siparis.maxTolerans" placeholder="1 (%)" type="number"
                                            @input="checkTolerans($event)"
                                            class="form-control form-control-lg" name="maxTolerans">
                                     <span v-if="errorShow" style="color: red" class="help-block"> Mevcut Kalıplar ile istenilen tolerans yakalanamaz. </span>
@@ -252,10 +244,20 @@ if ($_GET['siparisno']) {
 
                             <div class="col-sm-2">
                                 <div class="form-group">
+                                    <label>Termin Tarihi</label>
+                                    <input disabled v-model="siparis.termimTarih" type="date"
+                                           class="form-control form-control-lg" name="termimTarih">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+                            <div class="col-sm-2">
+                                <div class="form-group">
                                     <label>~~</label>
                                     <div class="form-group clearfix">
                                         <div class="icheck-primary d-inline">
-                                            <input v-model="siparis.araKagit" name="araKagit" type="checkbox"
+                                            <input disabled v-model="siparis.araKagit" name="araKagit" type="checkbox"
                                                    id="checkboxPrimary1"
                                                    @input="checkKagit()">
                                             <label style="color: #0e84b5" for="checkboxPrimary1">
@@ -270,7 +272,7 @@ if ($_GET['siparisno']) {
                                     <label>~~</label>
                                     <div class="form-group clearfix">
                                         <div class="icheck-primary d-inline">
-                                            <input v-model="siparis.krepeKagit" name="krepeKagit"
+                                            <input disabled v-model="siparis.krepeKagit" name="krepeKagit"
                                                    type="checkbox" id="checkboxPrimary2"
                                                    @input="checkKagit()">
                                             <label style="color: #0e84b5" for="checkboxPrimary2">
@@ -284,7 +286,7 @@ if ($_GET['siparisno']) {
                             <div class="col-sm-2">
                                 <div class="form-group">
                                     <label>Naylon</label>
-                                    <select v-model="siparis.naylonId" name="naylonDurum" class="form-control">
+                                    <select disabled v-model="siparis.naylonId" name="naylonDurum" class="form-control">
                                         <option selected disabled value="">Naylon Seçiniz</option>
                                         <option value="1">Baskılı</option>
                                         <option value="2">Baskısız</option>
@@ -296,7 +298,7 @@ if ($_GET['siparisno']) {
                             <div class="col-sm-2">
                                 <div class="form-group">
                                     <label>Koruma B.</label>
-                                    <select v-model="siparis.korumaBandi" name="korumaBandi" class="form-control">
+                                    <select disabled v-model="siparis.korumaBandi" name="korumaBandi" class="form-control">
                                         <option selected disabled value="">Koruma Bandı Seçiniz</option>
                                         <option value="1">Baskılı</option>
                                         <option value="2">Baskısız</option>
@@ -305,10 +307,10 @@ if ($_GET['siparisno']) {
                                 </div>
                             </div>
 
-                            <div class="col-sm-5">
+                            <div class="col-sm-2">
                                 <div class="form-group">
                                     <label>İstenilen Termik</label>
-                                    <select v-model="siparis.istenilenTermik" name="istenilenTermik"
+                                    <select disabled v-model="siparis.istenilenTermik" name="istenilenTermik"
                                             class="form-control">
                                         <option selected disabled value="">İstenilen Termik</option>
                                         <?php for ($i = 0; $i < count($termikDurum); $i++) { ?>
@@ -318,11 +320,13 @@ if ($_GET['siparisno']) {
                                 </div>
                             </div>
 
+                        </div>
+                        <div class="row" >
 
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Baskı Açıklama</label>
-                                    <input v-model="siparis.baskiAciklama" type="text"
+                                    <input disabled v-model="siparis.baskiAciklama" type="text"
                                            class="form-control form-control-lg" name="baskiAciklama"
                                            @input="checkAciklama($event)"
                                            placeholder="Baskı Açıklama Giriniz ">
@@ -331,7 +335,7 @@ if ($_GET['siparisno']) {
                             <div class="col-sm-4">
                                 <div class="form-group">
                                     <label>Paket Açıklama</label>
-                                    <input v-model="siparis.paketAciklama" type="text"
+                                    <input disabled v-model="siparis.paketAciklama" type="text"
                                            class="form-control form-control-lg" name="paketAciklama"
                                            @input="checkAciklama($event)"
                                            placeholder=" Paket Açıklama Giriniz ">
@@ -341,20 +345,12 @@ if ($_GET['siparisno']) {
                             <div v-if="siparis.siparisTur == 'Boyalı' " class="col-sm-4">
                                 <div class="form-group">
                                     <label>Boya Açıklama</label>
-                                    <input v-model="siparis.boyaAciklama" type="text"
+                                    <input disabled v-model="siparis.boyaAciklama" type="text"
                                            class="form-control form-control-lg" name="boyaAciklama"
                                            @input="checkAciklama($event)"
                                            placeholder="Boya Açıklama Giriniz ">
                                 </div>
                             </div>
-                            <div class="col-sm-12">
-                                <div style="text-align: right">
-                                    <button @click="guncelle($event)" class="btn btn-dark float-right">Güncelle
-                                    </button>
-                                </div>
-                            </div>
-                            <br>
-                            <br>
                         </div>
                     </div>
                 </div>

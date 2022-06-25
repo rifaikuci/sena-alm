@@ -62,7 +62,7 @@ from tblsiparis s
 if ($received_data->action == 'takimgetir') {
 
     $profilId = $received_data->profil;
-    $sql = "Select t.id as id, profilId, konum, durum, sonGramaj, parca1, parca1, takimNo, firmaAd, cap, kalipCins
+    $sql = "Select t.id as id, profilId, konum, durum, sonGramaj, parca1, parca2, takimNo, firmaAd, cap, kalipCins
 from tbltakim t
          INNER JOIN tblfirma f ON t.firmaId = f.id
 WHERE t.durum = '1' AND t.konum = 'P' AND t.profilId = '$profilId' order by t.sonGramaj asc ";

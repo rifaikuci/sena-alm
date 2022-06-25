@@ -2,6 +2,9 @@
 include "../../netting/baglan.php";
 require_once "../../include/sql.php";
 require_once "../../include/data.php";
+
+#todo burası siparis no 'daki bilgielr getirilecek.
+
 $siparissql = "SELECT * FROM tblsiparis where baskiDurum = 0 order by termimTarih asc";
 $siparisler = $db->query($siparissql);
 
@@ -173,12 +176,12 @@ date_default_timezone_set('Europe/Istanbul');
                             <select name="siparisId" required class="form-control select2" id="supplier_id"
                                     style="width: 100%;">
                                 <option selected disabled value="">
-                                    Satır No
+                                    Satır No - Yüzey Detay - Profil No - Boy  - Kilo/Adet - Müşteri - Termin Tarihi
                                 </option>
 
                                 <?php while ($siparis = $siparisler->fetch_array()) { ?>
                                     <option value="<?php echo $siparis['id']; ?>">
-                                        <?php echo $siparis['satirNo']; ?>
+                                        <?php echo $siparis['satirNo'] . "  - "; ?>
                                     </option>
                                 <?php } ?>
                             </select>
@@ -194,11 +197,11 @@ date_default_timezone_set('Europe/Istanbul');
                                     required
                                     style="width: 100%;">
                                 <option selected disabled value="">
-                                    Takım No - Kalıp - Çap
+                                    Takım No - Figür Sayı - Çap - Son Gr
                                 </option>
 
                                 <option v-for="takim in takimlar" :value="takim.id">
-                                    {{takim.takimNo}} - {{ takim.kalipCins }} - {{takim.cap}}
+                                    {{takim.takimNo}} - {{ takim.cap }} - {{takim.figurSayi}}
                                 </option>
 
                             </select>

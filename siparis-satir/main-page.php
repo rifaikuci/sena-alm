@@ -2,8 +2,11 @@
 
 include "../netting/baglan.php";
 include "../include/sql.php";
-$sql = "select s.id as id,  termimTarih, siparisNo, satirNo, profilNo, profilAdi, boy, adet, firmaAd,siparisTarih  from tblsiparis s
+$sql = "select s.id as id,  termimTarih, siparisNo, s.siparisTuru, satirNo, profilNo, profilAdi, boy, adet, firmaAd,siparisTarih, e.ad as eloksalAd, b.ad as boyaAd  from tblsiparis s
 INNER  JOIN tblprofil p ON p.id = s.profilId
+LEFT JOIN tbleloksal e ON e.id = s.eloksalId
+LEFT JOIN tblprboya b ON b.id = s.boyaId
+    
 INNER JOIN  tblfirma f  order by s.termimTarih asc ";
 $result = $db->query($sql);
 
@@ -41,10 +44,10 @@ $sonuc = in_array($rolId, $islemArray);
                         <table id="example1" class="table table-bordered table-striped">
                             <thead>
                             <tr>
-                                <th>#</th>
                                 <th>Sipariş No</th>
                                 <th>Satır No</th>
                                 <th>Profil No</th>
+                                <th>Yüzey Detay</th>
                                 <th>Boy</th>
                                 <th>Adet</th>
                                 <th>Kilo</th>
@@ -60,10 +63,13 @@ $sonuc = in_array($rolId, $islemArray);
                             <?php $sira = 1;
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
-                                    <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo $row['siparisNo']; ?></td>
                                     <td><?php echo $row['satirNo']; ?></td>
                                     <td><?php echo $row['profilNo']; ?></td>
+                                    <td><?php echo
+                                        $row['siparisTuru'] == "B" ? $row['boyaAd'] : ($row['siparisTuru'] == "E" ? $row['eloksalAd'] : "Ham" ) ;
+
+                                    ?></td>
                                     <td><?php echo $row['boy']?></td>
                                     <td><?php echo $row['adet']?></td>
                                     <td><?php echo sayiFormatla($row['kilo']);?></td>
