@@ -7,7 +7,7 @@ INNER JOIN tblsepet s on k.sepetId  = s.id order by k.id desc";
 $result = $db->query($sql);
 
 $islemArray = [1,5];
-$sonuc = in_array($operatorId, $islemArray);
+$sonuc = in_array($rolId, $islemArray);
 
 ?>
 

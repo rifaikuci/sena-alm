@@ -9,7 +9,7 @@ if (isset($_POST['personelekleme'])) {
     try {
         $adsoyad = $_POST['adsoyad'];
         $isegiristarih = $_POST['isegiristarih'];
-        $isecikistarih = $_POST['isecikistarih'];
+        $isecikistarih = $_POST['isecikistarih'] ? $_POST['isecikistarih'] : "0000-00-00 00:00:00";
         $adres = $_POST['adres'];
         $tc = $_POST['tc'];
         $telefon = $_POST['telefon'];
@@ -17,11 +17,12 @@ if (isset($_POST['personelekleme'])) {
         $bedentshirt = $_POST['bedentshirt'];
         $bedenpantalon = $_POST['bedenpantalon'];
         $bedenayakkabi = $_POST['bedenayakkabi'];
+        $password = $_POST['password'];
         $rolId = $_POST['rolId'];
         $sql = "INSERT INTO tblpersonel (adsoyad, isegiristarih, isecikistarih, adres, tc, telefon,
-                                      mail, bedentshirt, bedenpantalon, bedenayakkabi, rolId)
+                                      mail, bedentshirt, bedenpantalon, bedenayakkabi, rolId, password)
                 VALUES ('$adsoyad', '$isegiristarih','$isecikistarih', '$adres','$tc', '$telefon',
-                        '$mail', '$bedentshirt','$bedenpantalon', '$bedenayakkabi','$rolId')";
+                        '$mail', '$bedentshirt','$bedenpantalon', '$bedenayakkabi','$rolId', '$password')";
         if (mysqli_query($db, $sql)) {
             header("Location:../../tanimlar/personel/?durumekle=ok");
             exit();
@@ -51,7 +52,7 @@ if (isset($_POST['personelguncelleme'])) {
     $id = $_POST['id'];
     $adsoyad = $_POST['adsoyad'];
     $isegiristarih = $_POST['isegiristarih'];
-    $isecikistarih = $_POST['isecikistarih'];
+    $isecikistarih = $_POST['isecikistarih'] ? $_POST['isecikistarih'] : "0000-00-00 00:00:00";
     $adres = $_POST['adres'];
     $tc = $_POST['tc'];
     $telefon = $_POST['telefon'];
@@ -59,12 +60,13 @@ if (isset($_POST['personelguncelleme'])) {
     $bedentshirt = $_POST['bedentshirt'];
     $bedenpantalon = $_POST['bedenpantalon'];
     $bedenayakkabi = $_POST['bedenayakkabi'];
+    $password = $_POST['password'];
     $rolId = $_POST['rolId'];
 
     $sql = "UPDATE tblpersonel set 
         adsoyad = '$adsoyad', isegiristarih = '$isegiristarih', isecikistarih = '$isecikistarih', adres = '$adres',
         tc = '$tc', telefon = '$telefon', mail = '$mail', bedentshirt = '$bedentshirt', 
-                       bedenpantalon = '$bedenpantalon', bedenayakkabi ='$bedenayakkabi', rolId = '$rolId' 
+                       bedenpantalon = '$bedenpantalon', bedenayakkabi ='$bedenayakkabi', rolId = '$rolId', password = '$password' 
             WHERE id='$id'";
     if (mysqli_query($db, $sql)) {
         header("Location:../../tanimlar/personel/?durumguncelleme=ok");

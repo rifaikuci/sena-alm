@@ -12,7 +12,7 @@ order by s.id desc
 $result = $db->query($sql);
 
 $islemArray = [1];
-$sonuc = in_array($operatorId, $islemArray);
+$sonuc = in_array($rolId, $islemArray);
 
 ?>
 

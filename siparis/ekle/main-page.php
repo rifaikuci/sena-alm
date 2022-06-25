@@ -29,7 +29,7 @@ $alasimlar = $db->query($alasimsql);
             <form method="post" action="<?php echo base_url() . 'netting/siparis/index.php' ?>"
                   enctype="multipart/form-data">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <input name="arrayProfilId" :value="arrayProfilId" type="hidden">
                         <input name="arrayBoy" :value="arrayBoy" type="hidden">
                         <input name="arrayAdet" :value="arrayAdet" type="hidden">
@@ -49,12 +49,12 @@ $alasimlar = $db->query($alasimsql);
                         <input name="arrayBoyaAciklama" :value="arrayBoyaAciklama" type="hidden">
                         <input name="arrayPaketAciklama" :value="arrayPaketAciklama" type="hidden">
                         <input name="arrayistenilenTermik" :value="arrayistenilenTermik" type="hidden">
-                        <input type="hidden" value="<?php echo isset($_SESSION['operatorId']) ?  $_SESSION['operatorId'] : 0; ?>" name="operatorId">
+                        <input type="hidden" value="<?php echo $operatorId; ?>" name="operatorId">
 
 
 
                         <div class="form-group">
-                            <label>Müşteri</label>
+                            <label>Müşteri Ünvanı</label>
                             <select required name="musteriId" class="form-control select2" style="width: 100%;">
                                 <option selected disabled value="">Müşteri Seçiniz</option>
                                 <?php while ($firma = $firmalar->fetch_array()) { ?>
@@ -65,11 +65,19 @@ $alasimlar = $db->query($alasimsql);
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Tarih</label>
                             <input disabled type="date" class="form-control form-control-lg" name="siparisTarih"
                                    value="<?php echo date("Y-m-d") ?>">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Termin Tarihi</label>
+                            <input v-model="siparis.termimTarih" type="date"
+                                   class="form-control form-control-lg" name="termimTarih">
                         </div>
                     </div>
                 </div>
@@ -90,7 +98,7 @@ $alasimlar = $db->query($alasimsql);
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <div class="form-group">
                                             <label>Profiller</label>
                                             <select id="siparisProfilId"  v-model="siparis.profil"
@@ -98,12 +106,12 @@ $alasimlar = $db->query($alasimsql);
                                                 <option selected disabled value="">Profil Seçiniz</option>
                                                 <?php while ($profil = $profiller->fetch_array()) { ?>
                                                     <option
-                                                            value="<?php echo $profil['id'] . ";" . $profil['profilNo'] . "-" . $profil['profilAdi'] ?>"><?php echo $profil['profilNo'] . "-" . $profil['profilAdi']; ?></option>
+                                                            value="<?php echo $profil['id'] . ";" . $profil['profilNo'] . "-" . $profil['profilAdi'] ?>"><?php echo $profil['profilNo'] . " - " . $profil['profilAdi']; ?></option>
                                                 <?php } ?>
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         <div class="form-group">
                                             <label>Boy (mm)</label>
                                             <input v-model="siparis.boy" type="number" placeholder="1 mm"
@@ -112,7 +120,7 @@ $alasimlar = $db->query($alasimsql);
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         <div class="form-group">
                                             <label>Adet</label>
                                             <input :disabled="adetDisabled" v-model="siparis.adet" type="number"
@@ -122,7 +130,7 @@ $alasimlar = $db->query($alasimsql);
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         <div class="form-group">
                                             <label>Kilo (Kg)</label>
                                             <input :disabled="kiloDisabled" v-model="siparis.kilo" step="0.1"
@@ -132,46 +140,7 @@ $alasimlar = $db->query($alasimsql);
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-3">
-                                        <div class="form-group">
-                                            <label>Sipariş Türü</label>
-                                            <select @change="onChangeSiparis($event)" v-model="siparis.siparisTur"
-                                                    name="siparisTur" class="form-control">
-                                                <option selected disabled value="">Sipariş Türü Seçiniz</option>
-                                                <?php for ($i = 0; $i < count($profilTur); $i++) { ?>
-                                                    <option value="<?php echo $profilTur[$i] ?>"><?php echo $profilTur[$i] ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-3" v-if="isBoya">
-                                        <div class="form-group">
-                                            <label>Boyalar </label>
-                                            <select v-model="siparis.boyaId" name="boyaId" class="form-control">
-                                                <option selected disabled value="">Boya Seçiniz</option>
-                                                <?php while ($boya = $boyalar->fetch_array()) { ?>
-                                                    <option
-                                                            value="<?php echo $boya['id']; ?>"><?php echo $boya['ad']; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-3" v-if="isEloksal">
-                                        <div class="form-group">
-                                            <label>Eloksal </label>
-                                            <select v-model="siparis.eloksalId" name="eloksalId" class="form-control">
-                                                <option selected disabled value="">Eloksal Seçiniz</option>
-                                                <?php while ($eloksal = $eloksallar->fetch_array()) { ?>
-                                                    <option
-                                                            value="<?php echo $eloksal['id']; ?>"><?php echo $eloksal['ad']; ?></option>
-                                                <?php } ?>
-                                            </select>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         <div class="form-group">
                                             <label>Alaşımlar </label>
                                             <select v-model="siparis.alasim" name="alasimlId" class="form-control"
@@ -185,15 +154,50 @@ $alasimlar = $db->query($alasimsql);
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2">
                                         <div class="form-group">
-                                            <label>Termin Tarihi</label>
-                                            <input v-model="siparis.termimTarih" type="date"
-                                                   class="form-control form-control-lg" name="termimTarih">
+                                            <label>Sipariş Türü</label>
+                                            <select @change="onChangeSiparis($event)" v-model="siparis.siparisTur"
+                                                    name="siparisTur" class="form-control">
+                                                <option selected disabled value="">Sipariş Türü Seçiniz</option>
+                                                <?php for ($i = 0; $i < count($profilTur); $i++) { ?>
+                                                    <option value="<?php echo $profilTur[$i] ?>"><?php echo $profilTur[$i] ?></option>
+                                                <?php } ?>
+                                            </select>
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2" v-if="isBoya">
+                                        <div class="form-group">
+                                            <label>Boyalar </label>
+                                            <select v-model="siparis.boyaId" name="boyaId" class="form-control">
+                                                <option selected disabled value="">Boya Seçiniz</option>
+                                                <?php while ($boya = $boyalar->fetch_array()) { ?>
+                                                    <option
+                                                            value="<?php echo $boya['id']; ?>"><?php echo $boya['ad']; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-2" v-if="isEloksal">
+                                        <div class="form-group">
+                                            <label>Eloksal </label>
+                                            <select v-model="siparis.eloksalId" name="eloksalId" class="form-control">
+                                                <option selected disabled value="">Eloksal Seçiniz</option>
+                                                <?php while ($eloksal = $eloksallar->fetch_array()) { ?>
+                                                    <option
+                                                            value="<?php echo $eloksal['id']; ?>"><?php echo $eloksal['ad']; ?></option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+
+
+                                    <div class="col-sm-2">
                                         <div class="form-group">
                                             <label>Tolerans (%)</label>
                                             <input v-model="siparis.maxTolerans" placeholder="1 (%)" type="number"
@@ -203,7 +207,7 @@ $alasimlar = $db->query($alasimsql);
                                         </div>
                                     </div>
 
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-2">
                                         <div class="form-group">
                                             <label>İstenilen Termik</label>
                                             <select v-model="siparis.istenilenTermik" name="istenilenTermik" class="form-control">
@@ -214,6 +218,8 @@ $alasimlar = $db->query($alasimsql);
                                             </select>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="row">
 
                                     <div class="col-sm-2">
                                         <div class="form-group">
@@ -270,6 +276,8 @@ $alasimlar = $db->query($alasimsql);
                                         </div>
                                     </div>
 
+                                </div>
+                                <div class="row">
 
                                     <div class="col-sm-4">
                                         <div class="form-group">

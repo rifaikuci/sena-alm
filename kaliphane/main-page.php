@@ -6,7 +6,7 @@ $sql = "SELECT * FROM tbltakim order by sonIslemZamani DESC";
 $result = $db->query($sql);
 
 $islemArray = [1,4];
-$sonuc = in_array($operatorId, $islemArray);
+$sonuc = in_array($rolId, $islemArray);
 ?>
 
 

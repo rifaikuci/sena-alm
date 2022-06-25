@@ -25,7 +25,7 @@ if ($_GET['ayarok'] == "ok") {
             <form method="post" action="<?php echo base_url() . 'netting/ayar/ayar.php' ?>">
                 <div class="row">
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-1">
                         <div class="form-group">
                             <label>Vardiya</label>
                             <select required name="vardiya" class="select2" style="width: 100%;">

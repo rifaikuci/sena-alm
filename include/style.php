@@ -1,4 +1,14 @@
-<?php $operatorId = 1; ?>
+
+<?php
+
+include "../netting/baglan.php";
+session_start();
+if (!isset($_SESSION['operatorId'])) {
+    header("Location:" . base_url() . "login/");
+}
+
+
+?>
 
 <link rel="stylesheet" href=<?php echo base_url() . "plugins/fontawesome-free/css/all.min.css" ?>>
 <link rel="stylesheet" href=<?php echo base_url() . "dist/css/adminlte.min.css" ?>>

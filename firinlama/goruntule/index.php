@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <?php require_once "../../include/helper.php"; ?>
+        <?php include "../include/helper.php"; ?>
+
     <?php include "../../include/head.php" ?>
       <title>SENA | Fırın Görüntüle</title>
     <?php include "../../include/style.php" ?>

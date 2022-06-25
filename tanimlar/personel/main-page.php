@@ -58,7 +58,7 @@ $result = $db->query($sql);
                                     <td><?php echo $row['adsoyad']; ?></td>
                                     <td><?php echo $row['rol']; ?></td>
                                     <td><?php echo $row['telefon']; ?></td>
-                                    <td><?php echo $row['isecikistarih'] != "0000-00-00 00:00:00.000000" ?
+                                    <td><?php echo $row['isecikistarih'] == "0000-00-00 00:00:00" ?
                                             "<b style='color: green'>Aktif</b>" : "<b style='color: red'>Pasif</b>"; ?></td>
                                     <td>
                                         <a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <?php require_once "../../include/helper.php"; ?>
+
     <?php include "../../include/head.php" ?>
     <?php include "../../include/style.php" ?>
 </head>

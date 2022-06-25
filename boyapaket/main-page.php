@@ -25,7 +25,7 @@ INNER JOIN  tblprboya pr On s.boyaId = pr.id order by id desc
 $result = $db->query($sql);
 
 $islemArray = [1,7];
-$sonuc = in_array($operatorId, $islemArray);
+$sonuc = in_array($rolId, $islemArray);
 
 ?>
 

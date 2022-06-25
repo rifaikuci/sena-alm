@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php require_once "../../include/helper.php"; ?>
+        <?php include "../include/helper.php"; ?>
+
     <?php include "../../include/head.php" ?>
     <title>SENA | Takım Değiştir</title>
     <?php include "../../include/style.php" ?>

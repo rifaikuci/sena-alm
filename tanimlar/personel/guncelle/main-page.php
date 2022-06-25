@@ -114,6 +114,14 @@ if ($_GET['id']) {
                         </div>
                     </div>
 
+                    <div class="col-sm-4">
+                        <div class="form-group">
+                            <label>Şifre</label>
+                            <input required type="text" class="form-control form-control-lg" name="password"
+                                   value="<?php echo $row['password'] ?>">
+                        </div>
+                    </div>
+
                 </div>
                 <div class="card-footer">
                     <div>
