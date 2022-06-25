@@ -116,6 +116,15 @@ if ($_GET['id']) {
 
                     <div class="col-sm-4">
                         <div class="form-group">
+                            <label>Kullanıcı Adı</label>
+                            <input type="text" class="form-control form-control-lg" name="username"
+                                   value="<?php echo $row['username'] ?>"
+                                   placeholder="Kullanıcı Adı Giriniz">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
                             <label>Şifre</label>
                             <input required type="text" class="form-control form-control-lg" name="password"
                                    value="<?php echo $row['password'] ?>">

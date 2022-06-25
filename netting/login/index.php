@@ -8,7 +8,7 @@ if (isset($_POST['girisyap'])) {
     $name = $_POST['name'];
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM tblpersonel WHERE mail = '$name'  AND password = '$password' ";
+    $sql = "SELECT * FROM tblpersonel WHERE username = '$name'  AND password = '$password' ";
     $sonuc = mysqli_query($db, $sql);
     $row = $sonuc->fetch_assoc();
 

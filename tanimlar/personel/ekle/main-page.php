@@ -105,6 +105,14 @@ $result = $db->query($sql);
 
                     <div class="col-sm-4">
                         <div class="form-group">
+                            <label>Kullanıcı Adı</label>
+                            <input type="text" class="form-control form-control-lg" name="username"
+                                   placeholder="Kullanıcı Adı Giriniz">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-4">
+                        <div class="form-group">
                             <label>Şifre</label>
                             <input type="text" class="form-control form-control-lg" name="password"
                                    placeholder="Şifre Giriniz">
