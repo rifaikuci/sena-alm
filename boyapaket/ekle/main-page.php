@@ -6,8 +6,11 @@ require_once "../../include/data.php";
 $boyaSql = "SELECT   boya.id as id,  t.satirNo, siparisId, korumaBandi, topAdet, isPaket, isFirin, baski.id as baskiId from tblboya boya  INNER JOIN tblbaski baski ON  SUBSTRING_INDEX(boya.baskilar, ';', 1) = baski.id
 INNER JOIN  tblsiparis t on baski.siparisId = t.id where isFirin = '1' and isPaket = '0'";
 $boyaSepet = $db->query($boyaSql);
-#TODO BURADA kaldım.
+
+#todo başka bilgilerde getirilecek.
 ?>
+
+
 
 <section class="content">
     <div class="card card-info">
@@ -153,19 +156,20 @@ $boyaSepet = $db->query($boyaSql);
                                     data-dropdown-css-class="select2-blue"
                                     data-placeholder="Paketlenecek Ürünü Seçiniz "
                                     style="width: 100%;">
-                                <option selected value="0">Satır No - Toplam Adet </option>
+                                <option selected value="0">Fırın Id - Satır No -  Profil No - Boy- Renk - Toplam Adet </option>
                                 <?php while ($boya = $boyaSepet->fetch_array()) {
 
                                     $satirNo = $boya['satirNo'];
                                     $koruma = $boya['korumaBandi'];
-                                    $value = $satirNo . " - " . $boya['topAdet'] ;
+                                    $value = $satirNo . " - " . $boya['topAdet'];
                                     $key = $boya['baskiId'] . ";" . $boya['siparisId'] . ";" . $boya['topAdet'] . ";" . $koruma . ";" . $boya['id'] ?>
                                     <option value="<?php echo $key ?>"> <?php echo $value ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                     </div>
-
+                </div>
+                <div class="row">
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Hurda Adet</label>

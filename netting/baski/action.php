@@ -62,9 +62,10 @@ from tblsiparis s
 if ($received_data->action == 'takimgetir') {
 
     $profilId = $received_data->profil;
-    $sql = "Select t.id as id, profilId, konum, durum, sonGramaj, parca1, parca2, takimNo, firmaAd, cap, kalipCins
+    $sql = "Select t.id as id, t.profilId, konum, t.durum, sonGramaj, parca1, parca2, t.takimNo, firmaAd, t.cap, t.kalipCins, figurSayi
 from tbltakim t
          INNER JOIN tblfirma f ON t.firmaId = f.id
+         INNER JOIN  tblkalipparcalar k ON t.parca1 = k.senaNo
 WHERE t.durum = '1' AND t.konum = 'P' AND t.profilId = '$profilId' order by t.sonGramaj asc ";
 
     $result = $db->query($sql);
@@ -76,6 +77,7 @@ WHERE t.durum = '1' AND t.konum = 'P' AND t.profilId = '$profilId' order by t.so
         $data['takimNo'] = $row['takimNo'];
         $data['firma'] = $row['firmaAd'];
         $data['sonGramaj'] = $row['sonGramaj'];
+        $data['figurSayi'] = $row['figurSayi'];
         $data['cap'] = $row['cap'];
         $data['kalipCins'] = kalipBul($row['kalipCins']);
         array_push($datas, $data);

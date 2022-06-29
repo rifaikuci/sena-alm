@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
+    <?php include "../../include/helper.php"; ?>
 
     <?php include "../../include/head.php" ?>
     <?php include "../../include/style.php" ?>

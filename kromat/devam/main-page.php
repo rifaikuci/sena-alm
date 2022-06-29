@@ -4,7 +4,6 @@ include "../../include/sql.php";
 require_once "../../include/data.php";
 
 
-#Todo BURADA KALINDI
 $kromatId = 0;
 if (isset($_GET['kromat'])) {
     $kromatId = $_GET['kromat'];
@@ -16,6 +15,10 @@ if (isset($_GET['kromat'])) {
     $adetler =  $kromat['adetler'];
     $adetler = rtrim($adetler, ";");
     $adetler = explode(";",$adetler);
+
+    $sepetler =  $kromat['sepetler'];
+    $sepetler = rtrim($sepetler, ";");
+    $sepetler = explode(";",$sepetler);
 
     $hurdalar =  $kromat['hurdalar'];
     $hurdalar = rtrim($hurdalar, ";");
@@ -72,10 +75,19 @@ date_default_timezone_set('Europe/Istanbul');
 
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Satır No - Profil Adı - Profil Boy - Rengi - Adet</label>
+                            <label>Sepet - Satır No - Profil No - Profil Adi - Profil Boy - Rengi - Adet </label>
                             <input value="<?php
-                            $satirNo = tablogetir('tblbaski', 'id', $icindekiler[$k],$db)['satirNo'];
-                            echo $satirNo ?>"
+
+                            $baskiId= $icindekiler[$k];
+                            $sqltemp = "SELECT b.satirNo, profilNo, profilAdi, boy, pr.ad,siparisTuru FROM tblbaski b
+                                                        LEFT JOIN tblsiparis s on b.siparisId = s.id
+                                                        LEFT JOIN tblprofil p on p.id = s.profilId
+                                                        LEFT JOIN tblprboya pr on pr.id = s.boyaId  where b.id = '$baskiId'";
+                            $temp = mysqli_query($db, $sqltemp)->fetch_assoc();
+
+                            $sepetAd = tablogetir("tblsepet", 'id',$sepetler[$k],$db)['ad'];
+                            echo $sepetAd . " - " . $temp['satirNo'] . " - ". $temp['profilNo'] . " - " .
+                                $temp['profilAdi'] . " - " . $temp['boy'] . " - " . $temp['ad']  . " - " . $adetler[$k] ?>"
                                    disabled
                                    type="text" class="form-control form-control-lg"
                                    placeholder="0.1">

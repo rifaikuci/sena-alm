@@ -7,19 +7,57 @@ if ($_GET['id']) {
 
     $id = $_GET['id'];
 
-    $sqlbaski = "SELECT
-          t.satirNo, firmaAd, t.profilId,profilAdi, profilNo, alasimId, takimId, takimNo, ad,
-    biyetId, biyetBoy, verilenBiyet, araIsFire, konveyorBoy, boylamFire, biyetFire,
-    baskiFire, biyetBrut, t.maxTolerans, t.istenilenTermik, t.boy, t.kilo, t.adet,
-       basilanKilo, kalanKilo, tblbaski.aciklama, baslaZamani, bitisZamani,takimNo,
-       kalipCins, cap, guncelGr, basilanNetAdet, basilanNetKg,basilanBrutKg, fire,
-    kovanSicaklik, kalipSicaklik, biyetSicaklik, hiz, takimSonDurum, sonlanmaNeden, t.baskiAciklama
-        FROM tblbaski
-             INNER JOIN tblsiparis t ON t.id = tblbaski.siparisId
-        INNER JOIN tblfirma ON tblfirma.id = t.musteriId
-        INNER JOIN tblprofil ON tblprofil.id = t.profilId
-        INNER JOIN tblalasim ON tblalasim.id = t.alasimId
-        INNER JOIN tbltakim ON tbltakim.id = tblbaski.takimId where tblbaski.id ='$id' ";
+    $sqlbaski = "SELECT t.satirNo,
+       firmaAd,
+       t.profilId,
+       profilAdi,
+       profilNo,
+       alasimId,
+       takimId,
+       ad,
+       biyetId,
+       biyetBoy,
+       verilenBiyet,
+       araIsFire,
+       konveyorBoy,
+       boylamFire,
+       biyetFire,
+       baskiFire,
+       biyetBrut,
+       t.maxTolerans,
+       t.istenilenTermik,
+       t.boy,
+       t.kilo,
+       t.adet,
+       basilanKilo,
+       kalanKilo,
+       tblbaski.aciklama,
+       baslaZamani,
+       bitisZamani,
+       ta.takimNo,
+       ta.kalipCins,
+       ta.cap,
+       guncelGr,
+       basilanNetAdet,
+       basilanNetKg,
+       basilanBrutKg,
+       fire,
+       kovanSicaklik,
+       kalipSicaklik,
+       biyetSicaklik,
+       hiz,
+       takimSonDurum,
+       sonlanmaNeden,
+       t.baskiAciklama,
+       figurSayi
+FROM tblbaski
+         INNER JOIN tblsiparis t ON t.id = tblbaski.siparisId
+         INNER JOIN tbltakim ta ON ta.id = tblbaski.takimId
+         INNER JOIN tblkalipParcalar k ON k.senaNo = ta.parca1
+         INNER JOIN tblfirma ON tblfirma.id = t.musteriId
+         INNER JOIN tblprofil ON tblprofil.id = t.profilId
+         INNER JOIN tblalasim ON tblalasim.id = t.alasimId
+ where tblbaski.id ='$id' ";
 
     $baski = mysqli_query($db, $sqlbaski)->fetch_assoc();
     $satirNo = $baski['satirNo'];
@@ -182,12 +220,11 @@ if ($_GET['id']) {
                 <div class="col-sm-4">
                     <div class="form-group">
                         <label>Takım | Çap | Figür Sayı</label>
-                        <input value="<?php echo $baski['takimNo'] ?>"
+                        <input value="<?php echo $baski['takimNo'] ." | " . $baski['cap']  . " | " .  $baski['figurSayi']    ?>"
                                class="form-control"
                                type="text" disabled>
                     </div>
                 </div>
-                <?php  #todo takımno figur sayi ve çap tek kutucuk kesik çizgi  ?>
 
             </div>
 

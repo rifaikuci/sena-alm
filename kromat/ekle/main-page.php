@@ -9,7 +9,6 @@ $sepetler = $db->query($sepetsql);
 $kromatSql = "SELECT * FROM tblsepet where tur = 'kromatS' AND durum = 0";
 $kromatSepet = $db->query($kromatSql);
 
-#todo ,-> max adet kontrolü yapılacak
 #todo -> Sepet kısmında,
 ?>
 
@@ -48,10 +47,10 @@ $kromatSepet = $db->query($kromatSql);
 
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <label> Satır No - Profil Adı - Profil Boy - Rengi - Adet </label>
+                            <label> Sepet - Satır No - Profil No - Profil Adi - Profil Boy - Rengi - Adet </label>
                             <select required name="sepetler[]" id="kromat_sepet" class="select2" multiple="multiple"
                                     data-dropdown-css-class="select2-gray"
-                                    data-placeholder="Satır No - Profil Adı - Profil Boy - Rengi - Adet "
+                                    data-placeholder="Sepet - Satır No - Profil No - Profil Adı - Profil Boy - Rengi - Adet "
                                     style="width: 100%;">
                                 <option disabled value="">Sepet - Baskılar - Adet</option>
                                 <?php while ($sepet = $sepetler->fetch_array()) {
@@ -61,13 +60,20 @@ $kromatSepet = $db->query($kromatSql);
                                     $adetler = explode(";", $adetler);
 
                                     for ($i = 0; $i < count($icindekiler); $i++) {
-                                        $satirNo = tablogetir("tblbaski", 'id', $icindekiler[$i], $db)['satirNo'];
+                                        #todo sorgu yazılacak
+                                        $baskiId= $icindekiler[$i];
+                                        $sqltemp = "SELECT b.satirNo, profilNo, profilAdi, boy, pr.ad,siparisTuru FROM tblbaski b
+                                                        LEFT JOIN tblsiparis s on b.siparisId = s.id
+                                                        LEFT JOIN tblprofil p on p.id = s.profilId
+                                                        LEFT JOIN tblprboya pr on pr.id = s.boyaId  where b.id = '$baskiId'";
+                                        $temp = mysqli_query($db, $sqltemp)->fetch_assoc();
 
 
-                                        if ($satirNo[3] == "B") { ?>
+                                        if ($temp['siparisTuru'] == "B") { ?>
 
                                             <option value="<?php echo $sepet['id'] . ";" . $icindekiler[$i] . ";" . $adetler[$i] ?>">
-                                                <?php echo $sepet['ad'] . " - " . $satirNo . " - " . $adetler[$i] ?>
+                                                <?php echo $sepet['ad'] . " - " . $temp['satirNo'] . " - ". $temp['profilNo'] . " - " .
+                                                    $temp['profilAdi'] . " - " . $temp['boy'] . " - " . $temp['ad']  . " - " . $adetler[$i] ?>
                                             </option>
                                         <?php }
                                     }
@@ -82,14 +88,16 @@ $kromatSepet = $db->query($kromatSql);
                     </div>
                 </div>
 
-                <div class="row" v-for="baski in baskilar">
+                <div class="row" v-for="(baski,index) in baskilar">
                     <div class="col-sm-2">
                         <div class="form-group">
                             <label>Kromata Gönderilecek Adet</label>
                             <input required v-model="baski.adet"
                                    type="number" class="form-control form-control-lg"
-                                   min="0.1" step="0.1"
-                                   placeholder="0.1">
+                                   min="0" step="1"
+                                   @input="calculate($event,baski,index)"
+                                   :max ="baski.sepetAdet-baski.hurdaAdet"
+                                   placeholder="0">
                         </div>
                     </div>
 
@@ -98,6 +106,8 @@ $kromatSepet = $db->query($kromatSql);
                         <div class="form-group">
                             <label>Hurda Adet</label>
                             <input v-model="baski.hurdaAdet"
+                                   @input="calculate($event,baski,index)"
+                                   :max ="baski.sepetAdet-baski.adet"
                                    type="number" class="form-control form-control-lg" min="0"
                                    placeholder="0">
                         </div>
@@ -115,11 +125,17 @@ $kromatSepet = $db->query($kromatSql);
                             </select>
                         </div>
                     </div>
+                    <div class="col-sm-4" v-if="baski.isEkle">
+                        <div style="text-align: center">
+                            <label style="color: red;margin-top: 35px">Verileri kontrole ediniz.</label>
+                        </div>
+
+                    </div>
                 </div>
 
                 <div class="card-footer">
                     <div>
-                        <button v-on:click="kromatekle" type="submit" class="btn btn-info float-right">Başlat</button>
+                        <button :disabled="!isBitir" v-on:click="kromatekle" type="submit" class="btn btn-info float-right">Başlat</button>
                         <a href="../"
                            class="btn btn-warning float-left">Vazgeç</a>
                     </div>

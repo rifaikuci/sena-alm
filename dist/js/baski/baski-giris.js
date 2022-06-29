@@ -272,6 +272,7 @@ var baskigiris = new Vue({
             dataKontrol() {
                 if (
                     this.basilanNetKg &&
+                    this.baskiId &&
                     this.satirNo &&
                     this.isSelected == true &&
                     this.boy &&

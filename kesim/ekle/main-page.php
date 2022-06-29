@@ -4,11 +4,21 @@ include "../../include/sql.php";
 require_once "../../include/data.php";
 
 
-$kesimsql = "SELECT * FROM tblbaski where 0 >= kesimId and bitisZamani !='' AND 0 >= boyaId and  0 >= firinlamaId
- and  0 >= kromatId  and  0 >= naylonId  and  0 >= paketId  and  0 >= boyaPaketId  and  0 >= termikId";
+$kesimsql = "SELECT b.id as id, b.satirNo, profilNo, profilAdi, boy, basilanNetAdet, b.satirNo
+FROM tblbaski b
+         INNER JOIN tblsiparis s on s.id = b.siparisId
+         INNER JOIN tblprofil p on p.id = s.profilId
+where 0 >= kesimId
+  and bitisZamani != ''
+  AND 0 >= b.boyaId
+  and 0 >= b.firinlamaId
+  and 0 >= b.kromatId
+  and 0 >= b.naylonId
+  and 0 >= b.paketId
+  and 0 >= b.boyaPaketId
+  and 0 >= b.termikId";
 $baskilar = $db->query($kesimsql);
 
- #todo sipariş no kısmında bilgiler getirilecke
 ?>
 
 <section class="content">
@@ -96,14 +106,18 @@ $baskilar = $db->query($kesimsql);
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="form-group">
-                            <label>Baskı Id - Satır No - Profil No - Profil Adı Sipariş Boy - Basılan Adet  </label>
+                            <label>Baskı Id - Satır No - Profil No - Profil Adı Sipariş Boy - Basılan Net Adet </label>
                             <select id="kesim_baski_id" name="baskiId" required class="form-control select2"
                                     style="width: 100%;">
-                                <option selected disabled value="">Sipariş No</option>
+                                <option selected disabled value="">Baskı Id - Satır No - Profil No - Profil Adı -
+                                    Sipariş Boy - Basılan Net Adet
+                                </option>
                                 <?php while ($baski = $baskilar->fetch_array()) {
                                     ?>
                                     <option
-                                            value="<?php echo $baski['id']; ?>"><?php echo $baski['satirNo']; ?></option>
+                                            value="<?php echo $baski['id']; ?>">
+                                        <?php echo $baski['id'] . " - " . $baski['satirNo'] . " - " . $baski['profilNo'] . " - " . $baski['profilAdi'] . " - " . $baski['boy'] . " - " . $baski['basilanNetAdet']; ?>
+                                    </option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -131,7 +145,7 @@ $baskilar = $db->query($kesimsql);
                             <input type="hidden" name="sepet2" :value="sepet2">
                             <input type="hidden" name="sepet3" :value="sepet3">
 
-                            <input required v-model="kesilenBoy"  type="number" class="form-control form-control-lg"
+                            <input required v-model="kesilenBoy" type="number" class="form-control form-control-lg"
                                    name="kesilenBoy"
                                    @input="kesimOranHesapla($event)"
                                    min="1"
@@ -185,7 +199,7 @@ $baskilar = $db->query($kesimsql);
                             <label>Sepet 1 </label>
                             <select v-model="sepet1" id="kesim_sepet1" class="form-control select2"
                                     style="width: 100%;">
-                                <option selected disabled value="">Sepet Ad </option>
+                                <option selected disabled value="">Sepet Ad</option>
 
                                 <option v-for="sepet in sepetler1" :value="sepet.id">{{sepet.ad }}</option>
                             </select>
@@ -298,8 +312,6 @@ $baskilar = $db->query($kesimsql);
                     </div>
                 </div>
         </div>
-
-
         </form>
     </div>
 

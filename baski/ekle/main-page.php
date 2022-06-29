@@ -3,10 +3,25 @@ include "../../netting/baglan.php";
 require_once "../../include/sql.php";
 require_once "../../include/data.php";
 
-#todo burası siparis no 'daki bilgielr getirilecek.
 
-$siparissql = "SELECT * FROM tblsiparis where baskiDurum = 0 order by termimTarih asc";
+$siparissql = "SELECT s.id as id,
+       satirNo,
+       s.siparisTuru as tur,
+       p.profilNo,
+       s.boy,
+       s.kilo,
+       s.adet,
+       f.firmaAd,
+       s.termimTarih,
+       s.baskiDurum
+FROM tblsiparis s
+         INNER JOIN tblprofil p on p.id = s.profilId
+         INNER JOIN tblfirma f on f.id = s.musteriId
+
+where s.baskiDurum = 0
+order by s.termimTarih asc";
 $siparisler = $db->query($siparissql);
+
 
 $biyetSql = "SELECT tblstokbiyet.id as id, tblalasim.ad as ad, tblfirma.firmaAd as firmaAd, biyetBirimGramaj, partino
 FROM tblstokbiyet
@@ -16,8 +31,6 @@ where kalanKg > 0";
 $biyetler = $db->query($biyetSql);
 
 
-#TODO -> aynı profil aynı boy için geçmiş detayları gösterilecek Son 10 (modal ) ile -> biyetboy, araiş fire, konveyorBoy, boylamFire
-#Todo-> aynı profil aynı boy için geçmiş baslıların son 10 tanesini getir -> filtresi biyet brütün net kg oranı en düşük olanı getirecekKES
 
 date_default_timezone_set('Europe/Istanbul');
 ?>
@@ -179,9 +192,15 @@ date_default_timezone_set('Europe/Istanbul');
                                     Satır No - Yüzey Detay - Profil No - Boy  - Kilo/Adet - Müşteri - Termin Tarihi
                                 </option>
 
-                                <?php while ($siparis = $siparisler->fetch_array()) { ?>
+                                <?php while ($siparis = $siparisler->fetch_array()) {
+                                    $tur = $siparis['tur'] == 'B' ? "Boyalı" : ($siparis['tur']  == "E"? "Eloksal" : "Pres");
+
+                                    ?>
                                     <option value="<?php echo $siparis['id']; ?>">
-                                        <?php echo $siparis['satirNo'] . "  - "; ?>
+                                        <?php echo $siparis['satirNo'] . "  - " . $tur . " - ". $siparis['profilNo']
+                                        . " - " . $siparis['boy'] . " - " . $siparis['kilo']."/".$siparis['adet'] . " - " .
+                                            $siparis['firmaAd'] . " - ". tarih($siparis['termimTarih']);
+                                        ; ?>
                                     </option>
                                 <?php } ?>
                             </select>
@@ -201,7 +220,7 @@ date_default_timezone_set('Europe/Istanbul');
                                 </option>
 
                                 <option v-for="takim in takimlar" :value="takim.id">
-                                    {{takim.takimNo}} - {{ takim.cap }} - {{takim.figurSayi}}
+                                    {{takim.takimNo}} - {{ takim.figurSayi }} - {{takim.cap}} - {{takim.sonGramaj}}
                                 </option>
 
                             </select>
@@ -418,7 +437,7 @@ date_default_timezone_set('Europe/Istanbul');
 
                 <br>
                 <br>
-                <div class="row">
+                <div class="row" v-if="baskiId">
 
                     <div class="col-sm-2">
                         <div class="form-group">
@@ -526,7 +545,7 @@ date_default_timezone_set('Europe/Istanbul');
 
 
                 </div>
-                <div class="row">
+                <div class="row" v-if="baskiId">
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label> Baskı Açıklama</label>

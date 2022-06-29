@@ -39,7 +39,6 @@ $result = $db->query($sql);
                             Ekle</i></a>
                 </div>
 
-                <!-- TODO buraya operatorId zamanında tabloya kullanıcının bilgileri de gösterilecek !-->
                 <br>
                 <div class="card">
                     <div class="card-body">

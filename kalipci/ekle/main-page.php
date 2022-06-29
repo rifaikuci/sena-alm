@@ -2,14 +2,13 @@
 include "../../netting/baglan.php";
 include "../../include/data.php";
 
-
+#todo burada kaldık boyutlandırma için....
 $firmasql = "SELECT * FROM tblfirma  ";
 $firmalar = $db->query($firmasql);
 
 $profillerrsql = "SELECT * FROM tblprofil";
 $profiller = $db->query($profillerrsql);
 
-#todo burada kaldık.
 ?>
 
 <section class="content">

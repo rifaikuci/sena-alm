@@ -3,12 +3,16 @@
 include "../netting/baglan.php";
 include "../include/sql.php";
 $sql = "
-select baslaZaman, topAdet, partino, tblboya.id as id  from tblboya INNER JOIN  tblstokboya on tblboya.boyaId = tblstokboya.id order by  id desc";
+select baslaZaman, topAdet, partino, tblboya.id as id, profilNo, profilAdi, boy,ad, kod, tblstokboya.cins, b.satirNo
+from tblboya
+         INNER JOIN tblstokboya on tblboya.boyaId = tblstokboya.id
+         INNER JOIN tblbaski b on b.id = SUBSTRING_INDEX(tblboya.baskilar, ';', 1)
+         INNER JOIN tblsiparis s on s.id = b.siparisId
+         INNER JOIN tblprofil p on p.id = s.profilId
+         INNER JOIN tblprboya pr on pr.id = s.boyaId
+order by id desc";
 $result = $db->query($sql);
 
-
-#todo tablo bilgieri değiştirildi doğrusu getiriilcek.
-#
 ?>
 
 <section class="content">
@@ -46,10 +50,10 @@ $result = $db->query($sql);
                                 <th>#</th>
                                 <th>İşlem Tarihi</th>
                                 <th>Satır No</th>
-                                <th>Profil Adı/No</th>
+                                <th>Profil No/Adı</th>
                                 <th>Boy</th>
                                 <th>Toplam Adet</th>
-                                <th>Renk Cinsi ile beraber</th>
+                                <th>Renk/Cins</th>
                                 <th>Durum</th>
                             </tr>
                             </thead>
@@ -59,8 +63,11 @@ $result = $db->query($sql);
                                 <tr>
                                     <td style="font-weight: bold"><?php echo $sira; ?></td>
                                     <td><?php echo tarihsaat($row['baslaZaman']); ?></td>
+                                    <td><?php echo $row['satirNo']; ?></td>
+                                    <td><?php echo $row['profilNo']."/".$row['profilAdi']; ?></td>
+                                    <td><?php echo $row['boy']; ?></td>
                                     <td><?php echo $row['topAdet']; ?></td>
-                                    <td><?php echo $row['partino']; ?></td>
+                                    <td><?php echo $row['ad']."/".$row['cins']; ?></td>
                                     <td><a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
                                            class="btn btn-outline-primary">Görüntüle</a></td>
 

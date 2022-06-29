@@ -25,6 +25,7 @@ if ($_GET['id']) {
     $sepetler = explode(";", $sepetler);
 
 
+
 } ?>
 
 
@@ -78,9 +79,9 @@ if ($_GET['id']) {
 
                 <?php for ($i = 0; $i < count($adetler); $i++) { ?>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-2">
                             <div class="form-group">
-                                <label>Satır No - Profil Adı - Profil Boy - Rengi - Adet</label>
+                                <label>Sepet</label>
                                 <input type="text" required class="form-control form-control-lg"
                                        value="<?php echo tablogetir("tblsepet", 'id', $sepetler[$i], $db)['ad'] ?>"
                                        disabled

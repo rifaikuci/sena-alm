@@ -7,17 +7,33 @@ var kromatGiris  = new Vue({
             adetler: [],
             hurdaAdetler: [],
             sebepler: [],
+            isBitir : false,
             baski : {
+                sepetAdet : "",
                 sepetId: "",
                 baskiId :"",
                 adet: "",
                 hurdaAdet: "",
-                sebep: ""
-            }
+                sebep: "",
+                isEkle : false
+            },
+
         },
 
 
         methods: {
+
+            calculate($event, baski,index) {
+
+                if(Number(baski.adet ? baski.adet : 0) + Number(baski.hurdaAdet ? baski.hurdaAdet : 0) ==Number(baski.sepetAdet)) {
+                    this.baskilar[index].isEkle   = false;
+                }  else {
+                    this.baskilar[index].isEkle = true;
+                }
+
+                this.isFinishe();
+
+            },
 
             kromatekle: async function () {
                 for( let i = 0; i <this.baskilar.length; i++  ) {
@@ -29,6 +45,16 @@ var kromatGiris  = new Vue({
                 }
 
 
+            },
+
+            isFinishe() {
+                let isWrong = this.baskilar.filter(x=> x.isEkle == true)
+
+                if(isWrong.length > 0 ) {
+                    this.isBitir = false;
+                } else {
+                    this.isBitir = true;
+                }
             }
 
         }
@@ -49,12 +75,15 @@ $('#kromat_sepet').on("change", async function () {
             baskiId: array[1],
             adet: array[2],
             hurdaAdet: "",
-            sebep: ""
+            sebep: "",
+            sepetAdet : array[2],
+            isEkle: false
         }
 
         kromatGiris.baskilar.push(kromatGiris.baski);
 
     }
+
 
 });
 $('#kromat_sepet').select2({});

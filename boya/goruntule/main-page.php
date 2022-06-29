@@ -3,7 +3,6 @@ include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
 
-#todo burada kaldım
 if ($_GET['id']) {
 
     $id = $_GET['id'];
@@ -23,7 +22,6 @@ if ($_GET['id']) {
     $adetler = explode(";", $boya['adetler']);
     $hurdaAdetler = explode(";", $boya['hurdaAdetler']);
     $hurdaSebepler = explode(";", $boya['hurdaSebepler']);
-#todo sipariş bilgierlinde başka alanlarda getiririlcek
 
 } ?>
 
@@ -48,7 +46,9 @@ if ($_GET['id']) {
                                 <th>Sepet No</th>
                                 <th>Baskı Id</th>
                                 <th>Satır No</th>
-                                <th>Profil No</th>
+                                <th>Profil No/Profil Ad</th>
+                                <th>Boy</th>
+                                <th>Boya</th>
                                 <th>Alınan Adet</th>
                                 <th>Hurda Adet</th>
                                 <th>Hurda Sebep</th>
@@ -58,18 +58,24 @@ if ($_GET['id']) {
 
                             <?php for ($i = 0; $i < count($adetler); $i++) {
                                 $baskiId = $baskilar[$i];
-                                $sqlbaski = "
-                                select siparis.satirNo, profilNo, baski.id from tblbaski as baski INNER JOIN tblsiparis as siparis
-                                    ON baski.siparisId = siparis.id
-                                    INNER JOIN tblprofil as profil On profil.id = siparis.profilId where baski.id = '$baskiId' ";
-                                $baski = mysqli_query($db, $sqlbaski)->fetch_assoc();
+                                $baskiSql = "SELECT t.id as 
+                                            siparisId, tblbaski.id as id, profilId,t.satirNo, 
+                                                       profilAdi, profilNo, t.boy, sp.ad, t.adet 
+                                        from tblbaski
+                                            INNER JOIN tblsiparis t on t.id =tblbaski.siparisId
+                                            INNER JOIN tblprofil p on p.id = t.profilId
+                                            INNER JOIN tblprboya sp on sp.id = t.boyaId 
+                                        where tblbaski.id = '$baskiId'";
+                                $baski = mysqli_query($db, $baskiSql)->fetch_assoc();
 
                                 ?>
                                 <tr>
                                     <td><?php echo $sepetler[$i] ?></td>
                                     <td><?php echo $baskilar[$i] ?></td>
                                     <td><?php echo $baski['satirNo'] ?></td>
-                                    <td><?php echo $baski['profilNo'] ?></td>
+                                    <td><?php echo $baski['profilNo'] . "/" . $baski['profilAdi'] ?></td>
+                                    <td><?php echo $baski['boy'] ?></td>
+                                    <td><?php echo $baski['ad'] ?></td>
                                     <td><?php echo $adetler[$i] ?></td>
                                     <td><?php echo $hurdaAdetler[$i] ?></td>
                                     <td><?php echo $hurdaSebepler[$i] ?></td>
