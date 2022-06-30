@@ -173,7 +173,7 @@ if ($_GET['siparisno']) {
                                 <div class="form-group">
                                     <label>Kilo (Kg)</label>
                                     <input disabled v-model="siparis.kilo" step="0.1"
-                                           placeholder="0.1 kg" type="number"
+                                           placeholder="0.1 kg" type="text"
                                            @input="checkKilo($event)"
                                            class="form-control form-control-lg" name="kilo">
                                 </div>

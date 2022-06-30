@@ -8,28 +8,38 @@ $satirno = 0;
 if (isset($_GET['satirno'])) {
     $satirno = $_GET['satirno'];
 
-    $sql = "Select * from tblsiparis where satirNo = '$satirno'";
+    $sql = "Select s.id,
+       s.satirNo,
+       s.siparisNo,
+       m.firmaAd,
+       s.siparisTarih,
+       profilAdi,
+       profilNo,
+       boy,
+       adet,
+       kilo,
+       siparisTuru,
+       pr.ad as boyaAd,
+       a.ad as alasimAd,
+       termimTarih,
+       maxTolerans,
+       araKagit,
+       krepeKagit,
+       korumaBandi,
+       naylonDurum,
+       istenilenTermik,
+       baskiAciklama, paketAciklama, boyaAciklama, e.ad as eloksalAd
+from tblsiparis s
+         INNER JOIN tblfirma m on s.musteriId = m.id
+         INNER JOIN tblprofil t on s.profilId = t.id
+         LEFT JOIN tblprboya pr on s.boyaId = pr.id
+        LEFT JOIN tbleloksal e on s.eloksalId =e.id
+         LEFT JOIN tblalasim a on s.alasimId = a.id
+where  s.satirNo = '$satirno'";
     $row = mysqli_query($db, $sql)->fetch_assoc();
 
 
 }
-
-$firmasql = "SELECT * FROM tblfirma";
-$firmalar = $db->query($firmasql);
-
-$profillerrsql = "SELECT * FROM tblprofil";
-$profiller = $db->query($profillerrsql);
-
-$boyasql = "SELECT * FROM tblprboya";
-$boyalar = $db->query($boyasql);
-
-$eloksalsql = "SELECT * FROM tbleloksal";
-$eloksallar = $db->query($eloksalsql);
-
-$alasimsql = "SELECT * FROM tblalasim";
-$alasimlar = $db->query($alasimsql);
-
-#todo güncelleme ypılacak. -> profil kısmıda getirecek
 ?>
 
 <section class="content" id="siparisguncelleneceksatir" satirno="<?php echo $satirno ?>">
@@ -43,7 +53,7 @@ $alasimlar = $db->query($alasimsql);
                                 Sipariş No: <?php echo $row['siparisNo'] ?></label>
                             <br>
                             <label style="color: #7f8c8d">Müşteri
-                                Adı: <?php echo tablogetir('tblfirma','id',$row['musteriId'], $db)['firmaAd'] ?></label>
+                                Adı: <?php echo $row['firmaAd'] ?></label>
                             <br>
                             <label style="color: #7f8c8d">Sipariş
                                 Tarihi: <?php echo tarih($row['siparisTarih']) ?></label>
@@ -71,8 +81,8 @@ $alasimlar = $db->query($alasimsql);
                             <div class="row">
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <label>No</label>
-                                        <input v-model="satirno" type="text"
+                                        <label> Satır No</label>
+                                        <input value="<?php echo $row['satirNo']?>" type="text"
                                                class="form-control form-control-lg"
                                                disabled>
                                         <input type="hidden" name="satirNo" :value="satirno">
@@ -90,22 +100,16 @@ $alasimlar = $db->query($alasimsql);
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <label>Profiller</label>
-                                        <select @change="profilOnChange($event)" v-model="profil"
-                                                    class="form-control">
-                                            <option selected disabled value="">Profil Seçiniz</option>
-                                            <?php while ($profil = $profiller->fetch_array()) { ?>
-                                                <option
-                                                        value="<?php echo $profil['id'] . ";" . $profil['profilNo'] . "-" . $profil['profilAdi'] ?>"><?php echo $profil['profilNo'] . "-" . $profil['profilAdi']; ?></option>
-                                            <?php } ?>
-                                        </select>
+                                        <label>Profil</label>
+                                        <input value="<?php echo $row['profilNo'] . " - " . $row['profilAdi']?>" type="text"
+                                               class="form-control form-control-lg"
+                                               disabled>
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label>Boy (mm)</label>
-                                        <input v-model="boy" type="number" placeholder="1 mm"
-                                               @input="checkBoy($event)" step="1"
+                                        <input  type="number" disabled value="<?php  echo $row['boy']?>"
                                                class="form-control form-control-lg" name="boy">
                                     </div>
                                 </div>
@@ -113,9 +117,8 @@ $alasimlar = $db->query($alasimsql);
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label>Adet</label>
-                                        <input :disabled="adetDisabled" v-model="adet" type="number"
+                                        <input disabled value="<?php  echo $row['adet']?>"
                                                class="form-control form-control-lg" name="adet"
-                                               @input="checkAdet($event)"
                                                placeholder="1" step="1">
                                     </div>
                                 </div>
@@ -123,9 +126,7 @@ $alasimlar = $db->query($alasimsql);
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label>Kilo</label>
-                                        <input :disabled="kiloDisabled" v-model="kilo" step="0.1"
-                                               placeholder="0.1" type="number"
-                                               @input="checkKilo($event)"
+                                        <input disabled value="<?php  echo sayiFormatla($row['kilo'])?>"
                                                class="form-control form-control-lg" name="kilo">
                                     </div>
                                 </div>
@@ -133,60 +134,33 @@ $alasimlar = $db->query($alasimsql);
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label>Sipariş Türü</label>
-                                        <select @change="onChangeSiparis($event)" v-model="siparisTur"
-                                                name="siparisTur" class="form-control">
-                                            <option selected disabled value="">Sipariş Türü Seçiniz</option>
-                                            <?php for ($i = 0; $i < count($profilTur); $i++) { ?>
-                                                <option value="<?php echo $profilTur[$i] ?>"><?php echo $profilTur[$i] ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-3" v-if="isBoya">
-                                    <div class="form-group">
-                                        <label>Boyalar </label>
-                                        <select  name="boyaId"  v-model = "boyaId" class="form-control">
-                                            <option selected disabled value="">Boya Seçiniz</option>
-                                            <?php while ($boya = $boyalar->fetch_array()) { ?>
-                                                <option
-                                                        value="<?php echo $boya['id']; ?>"><?php echo $boya['ad']; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="col-sm-3" v-if="isEloksal">
-                                    <div class="form-group">
-                                        <label>Eloksal </label>
-                                        <select name="eloksalId" v-model="eloksalId" class="form-control">
-                                            <option selected disabled value="">Eloksal Seçiniz</option>
-                                            <?php while ($eloksal = $eloksallar->fetch_array()) { ?>
-                                                <option
-                                                        value="<?php echo $eloksal['id']; ?>"><?php echo $eloksal['ad']; ?></option>
-                                            <?php } ?>
-                                        </select>
+                                        <input disabled value="<?php echo $row['siparisTuru'] == 'B' ? "Boyalı" : ($row['siparisTuru'] == 'E' ? "Eloksal" : "Pres")?>"
+                                               class="form-control form-control-lg" name="kilo">
                                     </div>
                                 </div>
 
                                 <div class="col-sm-3">
                                     <div class="form-group">
-                                        <label>Alaşımlar </label>
-                                        <select v-model="alasim" class="form-control"
-                                                @change="alasimOnChange($event)">
-                                            <option selected disabled value="">Alaşım Seçiniz</option>
-                                            <?php while ($alasim = $alasimlar->fetch_array()) { ?>
-                                                <option
-                                                        value="<?php echo $alasim['id'] . ";" . $alasim['ad']; ?>"><?php echo $alasim['ad']; ?></option>
-                                            <?php } ?>
-                                        </select>
+                                        <label>Sipariş Detay</label>
+                                        <input disabled value="<?php echo $row['siparisTuru'] == 'B' ? $row['boyaAd'] : ($row['siparisTuru'] == 'E' ? $row['eloksalAd'] : "")?>"
+                                               class="form-control form-control-lg" name="kilo">
+                                    </div>
+                                </div>
+
+
+
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <label>Alaşım </label>
+                                        <input disabled value="<?php echo $row['alasimAd'] ?>"
+                                               class="form-control form-control-lg" name="kilo">
                                     </div>
                                 </div>
 
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label>Termin Tarihi</label>
-                                        <input v-model="termimTarih" type="date"
+                                        <input value="<?php echo tarih($row['termimTarih'])?>" disabled
                                                class="form-control form-control-lg" name="termimTarih">
                                     </div>
                                 </div>
@@ -194,10 +168,8 @@ $alasimlar = $db->query($alasimsql);
                                 <div class="col-sm-3">
                                     <div class="form-group">
                                         <label>Tolerans (%)</label>
-                                        <input v-model="maxTolerans" placeholder="1 (%)" type="number"
-                                               @input="checkTolerans($event)"
-                                               class="form-control form-control-lg" name="maxTolerans">
-                                        <span v-if="errorShow" style="color: red" class="help-block"> Mevcut Kalıplar ile istenilen tolerans yakalanamaz. </span>
+                                        <input value="<?php echo $row['maxTolerans']?>" disabled
+                                               class="form-control form-control-lg" name="termimTarih">
                                     </div>
                                 </div>
 
@@ -206,10 +178,10 @@ $alasimlar = $db->query($alasimsql);
                                         <label>~~</label>
                                         <div class="form-group clearfix">
                                             <div class="icheck-primary d-inline">
-                                                <input type="checkbox"
-                                                        v-model="araKagit"
+                                                <input type="checkbox" disabled
+                                                       <?php echo $row['araKagit'] == '1' ? "checked" : "" ?>
                                                        id="checkboxPrimary1"
-                                                       @input="()=> {araKagit = !araKagit}">
+                                                      >
                                                 <label style="color: #0e84b5" for="checkboxPrimary1">
                                                     Ara Kağıt
                                                 </label>
@@ -222,9 +194,9 @@ $alasimlar = $db->query($alasimsql);
                                         <label>~~</label>
                                         <div class="form-group clearfix">
                                             <div class="icheck-primary d-inline">
-                                                <input v-model="krepeKagit"
+                                                <input disabled
                                                        type="checkbox" id="checkboxPrimary2"
-                                                       @input="()=> {krepeKagit = !krepeKagit}">
+                                                    <?php echo $row['krepeKagit'] == '1' ? "checked" : "" ?>>
                                                 <label style="color: #0e84b5" for="checkboxPrimary2">
                                                     Krepe Kağıt
                                                 </label>
@@ -232,72 +204,55 @@ $alasimlar = $db->query($alasimsql);
                                         </div>
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-2">
                                     <div class="form-group">
                                         <label>Naylon</label>
-                                        <select v-model="naylonId" name="naylonDurum" class="form-control">
-                                            <option selected disabled value="">Naylon Seçiniz</option>
-                                            <option value="1">Baskılı</option>
-                                            <option value="2">Baskısız</option>
-                                            <option value="3">Yok</option>
-                                        </select>
+                                        <input disabled value="<?php echo $row['naylonDurum'] == '1' ? "Baskılı" : ($row['naylonDurum'] == '2' ? "Baskısız" : "Yok")?>"
+                                               class="form-control form-control-lg" name="kilo">
+
                                     </div>
                                 </div>
 
                                 <div class="col-sm-2">
                                     <div class="form-group">
                                         <label>Koruma Bandı</label>
-                                        <select v-model="korumaBandi" name="korumaBandi" class="form-control">
-                                            <option selected disabled value="">Koruma Bandı Seçiniz</option>
-                                            <option value="1">Baskılı</option>
-                                            <option value="2">Baskısız</option>
-                                            <option value="3">Yok</option>
-                                        </select>
+                                        <input disabled value="<?php echo $row['korumaBandi'] == '1' ? "Baskılı" : ($row['korumaBandi'] == '2' ? "Baskısız" : "Yok")?>"
+                                               class="form-control form-control-lg" name="kilo">
                                     </div>
                                 </div>
 
-                                <div class="col-sm-5">
+                                <div class="col-sm-2">
                                     <div class="form-group">
                                         <label>İstenilen Termik</label>
-                                        <select v-model="istenilenTermik" name="istenilenTermik"
-                                                class="form-control">
-                                            <option selected disabled value="">İstenilen Termik</option>
-                                            <option value="Termiksiz">0</option>
-                                            <option value="Yarı Termikli">4 - 7</option>
-                                            <option value="Termikli">10 - 14</option>
-                                        </select>
+                                        <input disabled value="<?php echo $row['istenilenTermik'] == 'Termiksiz' ? "0" : ($row['istenilenTermik'] == 'Yarı Termikli' ? "4 - 7" : "10 - 14")?>"
+                                               class="form-control form-control-lg" name="kilo">
                                     </div>
                                 </div>
-
+                            </div>
+                            <div class="row">
 
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Baskı Açıklama</label>
-                                        <input v-model="baskiAciklama" type="text"
-                                               class="form-control form-control-lg" name="baskiAciklama"
-                                               @input="checkAciklama($event)"
-                                               placeholder="Baskı Açıklama Giriniz ">
+                                        <input disabled value="<?php  echo $row['baskiAciklama']?>"
+                                               class="form-control form-control-lg" name="kilo">
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group">
                                         <label>Paket Açıklama</label>
-                                        <input v-model="paketAciklama" type="text"
-                                               class="form-control form-control-lg" name="paketAciklama"
-                                               @input="checkAciklama($event)"
-                                               placeholder=" Paket Açıklama Giriniz ">
+                                        <input disabled value="<?php  echo $row['paketAciklama']?>"
+                                               class="form-control form-control-lg" name="kilo">
                                     </div>
                                 </div>
-                                <input type="hidden" name="siparissaitrguncelle" value="guncelleekrani">
 
                                 <div v-if="siparisTur == 'Boyalı' " class="col-sm-4">
                                     <div class="form-group">
                                         <label>Boya Açıklama</label>
-                                        <input v-model="boyaAciklama" type="text"
-                                               class="form-control form-control-lg" name="boyaAciklama"
-                                               @input="checkAciklama($event)"
-                                               placeholder="Boya Açıklama Giriniz ">
+                                        <input disabled value="<?php  echo $row['boyaAciklama']?>"
+                                               class="form-control form-control-lg" name="kilo">
                                     </div>
                                 </div>
                                 <div class="col-sm-12" v-if="isFullSiparisData">

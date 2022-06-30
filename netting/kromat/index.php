@@ -142,8 +142,8 @@ if (isset($_POST['kromatbaslat'])) {
 
     $zaman = date("Y-m-d H:i:s");
 
-    $sqlKromat = "INSERT INTO tblkromat (baslaVardiya, baslaZaman, sepetId,havuzKromatId, havuzAsitId, adetler, hurdalar, sebepler, sepetler ) 
-                VALUES ('$baslaVardiya','$zaman', '$kromatsepet', '$kromatHavuz', '$asitHavuz', '$kromatAdetler', '$kromatHurdalar', '$kromatSebepler', '$kromatSepetler')";
+    $sqlKromat = "INSERT INTO tblkromat (baslaVardiya, baslaZaman, sepetId,havuzKromatId, havuzAsitId, adetler, hurdalar, sebepler, sepetler,baskilar ) 
+                VALUES ('$baslaVardiya','$zaman', '$kromatsepet', '$kromatHavuz', '$asitHavuz', '$kromatAdetler', '$kromatHurdalar', '$kromatSebepler', '$kromatSepetler', '$kromatIcındekiler')";
     if (mysqli_query($db, $sqlKromat)) {
         header("Location:../../kromat/?durumekle=ok");
         exit();

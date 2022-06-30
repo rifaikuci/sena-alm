@@ -3,7 +3,6 @@ include '../baglan.php';
 include '../../include/helper.php';
 include '../../include/sql.php';
 
-#todo burada kaldık.
 $received_data = json_decode(file_get_contents("php://input"));
 $data = array();
 

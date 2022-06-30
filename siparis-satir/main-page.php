@@ -79,15 +79,15 @@ $sonuc = in_array($rolId, $islemArray);
                                     <?php if($sonuc) { ?>
                                     <td>
                                         <a
-                                                href="<?php echo "./guncelle/index.php?satirno=" . $row['satirNo']; ?>"
-                                                class="btn btn-outline-warning"><i class="fa fa-edit"></i>
+                                                href="<?php echo "./goruntule/index.php?satirno=" . $row['satirNo']; ?>"
+                                                class="btn btn-outline-success"><i class="fa fa-eye"></i>
                                         </a>
 
-                                        <a
-                                                onclick="return confirm('Silmek istediğinizden emin misiniz?')"
-                                                href="<?php echo base_url() . "netting/siparis-satir/index.php?siparissatirSil=" . $row['satirNo']; ?>"
+    <?php /* echo '                                  <a
+                                                onclick="return confirm("Silmek istediğinizden emin misiniz?")"
+                                                href="<?php echo base_url() . "netting/siparis-satir/index.php?siparissatirSil=" . $row["satirNo"];
                                                 class="btn btn-outline-danger"><i class="fa fa-trash"></i>
-                                        </a>
+                                        </a>'  */ t ?>
                                     </td>
                                     <?php } ?>
                                 </tr>

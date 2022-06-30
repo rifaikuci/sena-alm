@@ -8,30 +8,34 @@ if ($_GET['id']) {
     $id = $_GET['id'];
 
     $sqlpaket = "
-            select bp.id as id,
-            b.id      as baskiId,
-               s.id      as siparisId,
-               s.satirNo as satirNo,
-               firmaAd,
-               profilNo,
-               ad,
-               maxTolerans,
-               boy,
-               korumaBandi,
-               araKagit,
-               paketAciklama,
-               hurdaAdet,
-               hurdaSebep,
-               rutusAdet,
-               rutusSebep,
-               paketAdet,
-               netAdet
-            from tblboyapaket bp
-                 INNER JOIN tblbaski b ON bp.baskiId = b.id
-                 INNER JOIN tblsiparis s ON b.siparisId = s.id
-                 INNER JOIN tblprofil p ON s.profilId = p.id
-                 INNER JOIN tblalasim a On a.id = s.alasimId
-                 INNER JOIN tblfirma f ON s.musteriId = f.id where bp.id = '$id'";
+           select bp.id as id,
+       b.id      as baskiId,
+       s.id      as siparisId,
+       s.satirNo as satirNo,
+       firmaAd,
+       profilNo,
+       ad,
+       maxTolerans,
+       boy,
+       korumaBandi,
+       araKagit,
+       paketAciklama,
+       bp.hurdaAdet,
+       bp.hurdaSebep,
+       bp.rutusAdet,
+       bp.rutusSebep,
+       paketAdet,
+       netAdet,
+       bp.boyaId,
+       firinId
+from tblboyapaket bp
+         INNER JOIN tblbaski b ON bp.baskiId = b.id
+         INNER JOIN tblsiparis s ON b.siparisId = s.id
+         INNER JOIN tblprofil p ON s.profilId = p.id
+         INNER JOIN tblalasim a On a.id = s.alasimId
+         INNER JOIN tblfirma f ON s.musteriId = f.id
+         INNER JOIN tblboya  boya ON boya.id =bp.boyaId
+            where bp.id = '$id'";
     $paket = mysqli_query($db, $sqlpaket)->fetch_assoc();
 
 
@@ -94,6 +98,17 @@ if ($_GET['id']) {
 
                                     </div>
                                 </div>
+
+                                <div class="row">
+                                    <div class="col-sm-8">
+                                        <h6>
+                                            <span style="color: darkcyan; font-weight: bold"> Fırın ID: </span>
+                                            <?php echo $paket['firinId'] ?>
+                                        </h6>
+                                    </div>
+                                </div>
+
+
                                 <div class="row">
                                     <div class="col-sm-8">
                                         <h6>

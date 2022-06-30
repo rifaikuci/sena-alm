@@ -4,7 +4,6 @@ include "../../netting/baglan.php";
 $sql = "SELECT * FROM tblprofil order by id desc";
 $result = $db->query($sql);
 
-#TODO düzenle yerine görüntüle olacak
 $islemArray = [1];
 $sonuc = in_array($rolId, $islemArray);
 ?>

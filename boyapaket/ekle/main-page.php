@@ -3,13 +3,14 @@ include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
 
-$boyaSql = "SELECT   boya.id as id,  t.satirNo, siparisId, korumaBandi, topAdet, isPaket, isFirin, baski.id as baskiId from tblboya boya  INNER JOIN tblbaski baski ON  SUBSTRING_INDEX(boya.baskilar, ';', 1) = baski.id
-INNER JOIN  tblsiparis t on baski.siparisId = t.id where isFirin = '1' and isPaket = '0'";
+$boyaSql = "SELECT   boya.id as id,  t.satirNo, siparisId, korumaBandi, topAdet, isPaket, firinId, baski.id as baskiId, t.boy, ad, profilAdi, profilNo from tblboya boya  
+    INNER JOIN tblbaski baski ON  SUBSTRING_INDEX(boya.baskilar, ';', 1) = baski.id
+INNER JOIN  tblsiparis t on baski.siparisId = t.id
+INNER JOIN tblprofil pro on pro.id = t.profilId    
+INNER JOIN tblprboya pr on t.boyaId = pr.id  where firinId > 0 and isPaket = '0'";
 $boyaSepet = $db->query($boyaSql);
 
-#todo başka bilgilerde getirilecek.
 ?>
-
 
 
 <section class="content">
@@ -156,14 +157,25 @@ $boyaSepet = $db->query($boyaSql);
                                     data-dropdown-css-class="select2-blue"
                                     data-placeholder="Paketlenecek Ürünü Seçiniz "
                                     style="width: 100%;">
-                                <option selected value="0">Fırın Id - Satır No -  Profil No - Boy- Renk - Toplam Adet </option>
+                                <option selected value="0">Fırın Id - Satır No - Profil No - Boy- Renk - Toplam Adet
+                                </option>
                                 <?php while ($boya = $boyaSepet->fetch_array()) {
-
+                                    $firinId = $boya['firinId'];
                                     $satirNo = $boya['satirNo'];
+                                    $profilNo = $boya['profilNo'];
+                                    $profilAdi = $boya['profilAdi'];
+                                    $boy= $boya['boy'];
+                                    $ad= $boya['ad'];
+
                                     $koruma = $boya['korumaBandi'];
                                     $value = $satirNo . " - " . $boya['topAdet'];
+
                                     $key = $boya['baskiId'] . ";" . $boya['siparisId'] . ";" . $boya['topAdet'] . ";" . $koruma . ";" . $boya['id'] ?>
-                                    <option value="<?php echo $key ?>"> <?php echo $value ?></option>
+                                    <option value="<?php echo $key ?>">
+                                        <?php echo
+                                        $firinId . " - ". $satirNo . " - ". $profilNo . " - " . $profilAdi . " - " . $boy . " - ". $ad . " - " . $boya['topAdet']
+
+                                        ?></option>
                                 <?php } ?>
                             </select>
                         </div>
@@ -249,7 +261,6 @@ $boyaSepet = $db->query($boyaSql);
                     </div>
                 </div>
         </div>
-
 
         </form>
     </div>

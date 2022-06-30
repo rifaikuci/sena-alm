@@ -32,6 +32,7 @@ if (isset($_GET['kromat'])) {
     $icindekiler = rtrim($kromatIcındekiler, ";");
     $icindekiler = explode(";",$icindekiler);
 
+    #todo KROMAt kısmı yapılırken dikkat edilse iyi olur.
 
 
 }

@@ -27,14 +27,15 @@ if (isset($_POST['firinlamaekle'])) {
                     ( '$baslaOperator', '$boyalar','$baslaVardiya', '$baslaTarih', '$baskilarTemp', '$firinSicaklik', '$kurlenmeDakikasi')";
 
     $boyaArrayreplace = str_replace(";", ",", $boyalar);
-
+     mysqli_query($db, $sqlFirinlama);
+    $firinId = mysqli_insert_id($db);
     $sqlboya = "UPDATE tblboya set
-                     isFirin = '1'
+                     firinId = '$firinId'
                     where id in ($boyaArrayreplace)";
 
-    mysqli_query($db, $sqlboya);
+    ;
 
-    if (mysqli_query($db, $sqlFirinlama)) {
+    if (mysqli_query($db, $sqlboya)) {
         header("Location:../../firinlama/?durumekle=ok");
         exit();
     } else {
@@ -117,7 +118,7 @@ if (isset($_GET['firinlamasil'])) {
     $boyaArrayreplace = str_replace(";", ",", $boyalar);
 
     $sqlboya = "UPDATE tblboya set
-                     isFirin = '0'
+                     firinId = '0'
                     where id in ($boyaArrayreplace)";
     mysqli_query($db, $sqlboya);
 

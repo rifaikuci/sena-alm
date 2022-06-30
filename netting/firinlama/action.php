@@ -12,9 +12,14 @@ if ($received_data->action == 'boyagetir') {
 
 
     $boyasql = "
-    select b.id as id, sepetler, baskilar, topAdet, baslaZaman, sicaklik, boyaTuru, isFirin
+  select b.id as id, profilAdi, profilNo, ad,boy,  sepetler, baskilar, topAdet, baslaZaman, sicaklik, boyaTuru, firinId, baski.satirNo
 from tblboya b
-         INNER JOIN tblstokboya s on s.id = b.boyaId where isFirin = 0
+         INNER JOIN tblbaski baski on baski.id = SUBSTRING_INDEX(b.baskilar, ';', 1)
+         INNER JOIN tblstokboya s on s.id = b.boyaId
+         INNER JOIN tblsiparis si on si.id = baski.siparisId
+         INNER JOIN tblprofil p on p.id = si.profilId
+        INNER JOIN  tblprboya pr on pr.id = si.boyaId
+where firinId = 0
     ";
 
 
@@ -30,6 +35,11 @@ from tblboya b
         $boya['baslaZaman'] = $row['baslaZaman'];
         $boya['firinSicaklik'] = $row['sicaklik'];
         $boya['boyaTuru'] = $row['boyaTuru'];
+        $boya['satirNo'] = $row['satirNo'];
+        $boya['profilAdi'] = $row['profilAdi'];
+        $boya['profilNo'] = $row['profilNo'];
+        $boya['boyaAd'] = $row['ad'];
+        $boya['boy'] = $row['boy'];
         array_push($datam, $boya);
     }
     echo json_encode($datam);

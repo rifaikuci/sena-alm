@@ -62,9 +62,6 @@ $result = $db->query($sql);
                                             <a onclick=" return confirm('Fırınlama Tamamlanıyor')"
                                                href="<?php echo base_url() . "netting/firinlama/index.php?operator=" . $operatorId . "&firinlamabitir=" . $row['id']; ?>"
                                                class="btn btn-warning">Bitir</a>
-                                            <a onclick=" return confirm('Fırınlama İptal Ediliyor')"
-                                               href="<?php echo base_url() . "netting/firinlama/index.php?firinlamasil=" . $row['id']; ?>"
-                                               class="btn btn-danger">Sil</a>
                                         <?php } else {
                                             echo $row['bitisTarih'];
                                         } ?>

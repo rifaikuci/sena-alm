@@ -19,4 +19,3 @@ Sepetler eğer 1000 ile başlarsa termik, 3000 ile başlarsa kromat, eğer 5000 
 sepet durum eğer 2 ve istermik 1 ise bu demek oluyor ki termik bitirildi., istermik 0
 
 
-#TODO https://datatables.net/examples/api/multi_filter.html BURADA birden fazla değer filtreleme yapılabilir.

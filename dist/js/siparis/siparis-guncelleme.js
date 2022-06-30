@@ -290,7 +290,6 @@ new Vue({
                 },
                     this.arraySiparisler = allItems;
                 this.selectedRow = id;
-
                 this.isBoya = this.siparis.siparisTur == "Boyalı" ? true : false;
                 this.isEloksal = this.siparis.siparisTur == "Eloksal" ? true : false;
                 clearTimeout(this.timer);

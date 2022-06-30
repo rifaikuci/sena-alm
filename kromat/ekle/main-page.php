@@ -3,13 +3,14 @@ include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
 
-$sepetsql = "SELECT * FROM tblsepet where  (durum =  2 and isTermik != '1' and icindekiler != '' and tur = 'termik') or  (tur = 'kromat' and icindekiler != '')";
+$sepetsql = "
+SELECT * FROM tblsepet where  (durum =  2 and isTermik != '1' and icindekiler != '' and tur = 'termik') or  (tur = 'kromat' and icindekiler != '')
+";
 $sepetler = $db->query($sepetsql);
 
 $kromatSql = "SELECT * FROM tblsepet where tur = 'kromatS' AND durum = 0";
 $kromatSepet = $db->query($kromatSql);
 
-#todo -> Sepet kısmında,
 ?>
 
 <section class="content">
@@ -60,7 +61,6 @@ $kromatSepet = $db->query($kromatSql);
                                     $adetler = explode(";", $adetler);
 
                                     for ($i = 0; $i < count($icindekiler); $i++) {
-                                        #todo sorgu yazılacak
                                         $baskiId= $icindekiler[$i];
                                         $sqltemp = "SELECT b.satirNo, profilNo, profilAdi, boy, pr.ad,siparisTuru FROM tblbaski b
                                                         LEFT JOIN tblsiparis s on b.siparisId = s.id
