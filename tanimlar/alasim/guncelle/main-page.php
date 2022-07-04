@@ -9,7 +9,7 @@ if ($_GET['id']) {
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_assoc();
 
-    $firmasql = "SELECT * FROM tblfirma ";
+    $firmasql = "SELECT * FROM tblfirma where firmaTurId = 10 ";
     $firmalar = $db->query($firmasql);
 } ?>
 

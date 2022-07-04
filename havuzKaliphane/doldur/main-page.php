@@ -7,15 +7,30 @@ require_once "../../include/data.php";
 if ($_GET['id']) {
 
     $id = $_GET['id'];
-    $malzemeSql = "select sm.id as id,
+    if($id == 4) {
+
+    $tenefermalzemeSql = "select sm.id as id,
        firmaAd,
        barkod,
        ad
 from tblstokmalzeme sm
          INNER JOIN tblfirma f ON f.id = sm.firmaId
          INNER JOIN tblmalzemeler m ON sm.malzemeId = m.id
-where durum = 1";
-    $malzemeler = $db->query($malzemeSql);
+where kalan > 0 AND sm.malzemeId = 11";
+    $teneferMalzemeler = $db->query($tenefermalzemeSql);
+    } else if($id == 3) {
+
+        $kumsql = "select sm.id as id,
+       firmaAd,
+       barkod,
+       ad
+from tblstokmalzeme sm
+         INNER JOIN tblfirma f ON f.id = sm.firmaId
+         INNER JOIN tblmalzemeler m ON sm.malzemeId = m.id
+where kalan > 0 AND sm.malzemeId = 12";
+        $teneferMalzemeler = $db->query($kumsql);
+
+    }
 
 } ?>
 
@@ -37,13 +52,13 @@ where durum = 1";
                                         data-dropdown-css-class="select2-blue"
                                         data-placeholder="Barkod - Malzeme -  Firma "
                                         style="width: 100%;">
-                                    <?php while ($malzeme = $malzemeler->fetch_array()) { ?>
-                                        <option value="<?php echo $malzeme['id'] ?>">
+                                    <?php while ($tenefer = $teneferMalzemeler->fetch_array()) { ?>
+                                        <option value="<?php echo $tenefer['id'] ?>">
                                             <?php
-                                            $malzemeadi = $malzeme['ad'];
+                                            $malzemeadi = $tenefer['ad'];
 
 
-                                            echo $malzeme['barkod'] . " - " . $malzemeadi . " - " . $malzeme['firmaAd'] ?>
+                                            echo $tenefer['barkod'] . " - " . $malzemeadi . " - " . $tenefer['firmaAd'] ?>
                                         </option>
                                     <?php } ?>
                                 </select>
@@ -58,8 +73,8 @@ where durum = 1";
                     </div>
 
                     <?php if ($id == 4) {
-                        $malzemeSql2 = "SELECT * FROM tblstokmalzeme where durum = 1";
-                        $malzemeler2 = $db->query($malzemeSql2);
+                        $tenefermalzemeSql2 = "SELECT * FROM tblstokmalzeme where kalan > 0 AND malzemeId = 9";
+                        $malzemeler2 = $db->query($tenefermalzemeSql2);
                         ?>
                         <div class="col-sm-12">
                             <div class="form-group">

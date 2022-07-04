@@ -25,7 +25,7 @@ $result = $db->query($sql);
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>T.C.</label>
-                            <input required type="text" class="form-control form-control-lg" name="tc"
+                            <input required type="text" class="form-control form-control-lg" name="tc" maxlength="11"
                                    placeholder="T.C. Bilgisi ">
                             <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                         </div>

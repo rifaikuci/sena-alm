@@ -53,8 +53,6 @@ $result = $db->query($sql);
                                     <td>
                                         <a href=<?php echo "guncelle/?id=" . $row['id']; ?> class="btn
                                            btn-warning">Düzenle</a>
-                                        <a href=<?php echo base_url() . "netting/tanimlar/firmatur.php?firmatursil=" . $row['id']; ?> class="btn
-                                           btn-danger">Sil</a>
                                     </td>
 
                                 </tr>

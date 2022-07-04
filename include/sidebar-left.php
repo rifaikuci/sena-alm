@@ -40,6 +40,8 @@ $adsoyad = $_SESSION['adsoyad'];
                 require_once "sidebar/bpaket.php";
             } else if ($rolId == 8) {
                 require_once "sidebar/boya.php";
-            }
-            ?>
+            } else {
+
+                require_once "sidebar/noUser.php";
+             } ?>
     </nav>

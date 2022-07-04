@@ -8,11 +8,9 @@ $result = $db->query($sql);
 $islemArray = [1,4];
 $sonuc = in_array($rolId, $islemArray);
 
-$kromatSepetDurum = tablogetir("tblhavuz","tur",'kromat', $db)['durum'];
-$asitSepetDurum = tablogetir("tblhavuz","tur",'asit', $db)['durum'];
-$kumSepetDurum = tablogetir("tblhavuz","tur",'kum', $db)['durum'];
-$teneferSepetDurum = tablogetir("tblhavuz","tur",'tenefer', $db)['durum'];
-$kostikSepetDurum = tablogetir("tblhavuz","tur",'kostik', $db)['durum'];
+$kumHavuzDurum = tablogetir("tblhavuz","tur",'kum', $db)['durum'];
+$teneferHavuzDurum = tablogetir("tblhavuz","tur",'tenefer', $db)['durum'];
+$kostikHavuzDurum = tablogetir("tblhavuz","tur",'kostik', $db)['durum'];
 
 #todo datalar düzgün kontrol edilebilir.
 ?>
@@ -80,31 +78,20 @@ $kostikSepetDurum = tablogetir("tblhavuz","tur",'kostik', $db)['durum'];
 
 
         <br>
-        <?php if($kromatSepetDurum == 0) {  ?>
-        <div>
-            <p style="color: red; font-weight: bold">Kromat Yapabilmek için Kromat Havuzu doldurunuz!</p>
-        </div>
-        <?php } ?>
 
-        <?php if($asitSepetDurum == 0) {  ?>
-            <div>
-                <p style="color: red; font-weight: bold">Kromat Yapabilmek için Asit Havuzu doldurunuz!</p>
-            </div>
-        <?php } ?>
-
-        <?php if($teneferSepetDurum == 0) {  ?>
+        <?php if($teneferHavuzDurum == 0) {  ?>
             <div>
                 <p style="color: red; font-weight: bold">Tenefer Yapabilmek için Tenefer Havuzu doldurunuz!</p>
             </div>
         <?php } ?>
 
-        <?php if($kumSepetDurum == 0) {  ?>
+        <?php if($kumHavuzDurum == 0) {  ?>
             <div>
                 <p style="color: red; font-weight: bold">Kumlama Yapabilmek için Kum Havuzu doldurunuz!</p>
             </div>
         <?php } ?>
 
-        <?php if($kostikSepetDurum == 0) {  ?>
+        <?php if($kostikHavuzDurum == 0) {  ?>
             <div>
                 <p style="color: red; font-weight: bold">Kostik Yapabilmek için Kostik Havuzu doldurunuz!</p>
             </div>
@@ -199,11 +186,13 @@ $kostikSepetDurum = tablogetir("tblhavuz","tur",'kostik', $db)['durum'];
                                         $defaultProcess = "P"
                                         ?>
 
+                                            <?php if($kumHavuzDurum == 1) { ?>
                                         <button class="btn btn-default" onclick="<?php
                                         $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess'" . ')';
                                         echo $function ?>">
                                             <i class="fa fa-print" aria-hidden="true"></i>
                                         </button>
+                                            <?php }  ?>
 
                                         <button class="btn btn-primary" onclick="<?php
                                         $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$defaultProcess'" . ')';
@@ -254,12 +243,13 @@ $kostikSepetDurum = tablogetir("tblhavuz","tur",'kostik', $db)['durum'];
                                         $newProcess = "T3";
                                         $defaultProcess = "P"
                                         ?>
-
+                                        <?php if($kumHavuzDurum == 1) { ?>
                                         <button class="btn btn-default" onclick="<?php
                                         $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess'" . ')';
                                         echo $function ?>">
                                             <i class="fa fa-print" aria-hidden="true"></i>
                                         </button>
+                                            <?php } ?>
 
                                         <button class="btn btn-primary" onclick="<?php
                                         $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$defaultProcess'" . ')';
@@ -327,12 +317,13 @@ $kostikSepetDurum = tablogetir("tblhavuz","tur",'kostik', $db)['durum'];
                                         $olProcess = "N4";
                                         $newProcess = "N5";
                                         ?>
-
+                                        <?php if($kumHavuzDurum == 1) { ?>
                                         <button class="btn btn-default" onclick="<?php
                                         $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess'" . ')';
                                         echo $function ?>">
                                             <i class="fa fa-print" aria-hidden="true"></i>
                                         </button>
+                                            <?php } ?>
 
                                     <?php } else if($row['konum'] == "N5") {
                                         $olProcess = "N5";
@@ -376,13 +367,16 @@ $kostikSepetDurum = tablogetir("tblhavuz","tur",'kostik', $db)['durum'];
                                         $olProcess = "N2";
                                         $newProcess = "N3";
                                         ?>
-
-                                        <button class="btn btn-default" onclick="<?php
+                                        <?php if($kumHavuzDurum == 1) { ?>
+                                        <button
+                                                disabled = '$kumHavuzDurum'
+                                                class="btn btn-default" onclick="<?php
                                         $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess'" . ')';
                                         echo $function ?>">
                                             <i class="fa fa-print" aria-hidden="true"></i>
                                         </button>
 
+                                            <?php }?>
 
                                     <?php } else if($row['konum'] == "N3") {
                                         $olProcess = "N3";
@@ -424,11 +418,13 @@ $kostikSepetDurum = tablogetir("tblhavuz","tur",'kostik', $db)['durum'];
                                         $newProcess = "N4";
                                         ?>
 
+                                            <?php if($teneferHavuzDurum == 1) { ?>
                                         <button class="btn btn-outline-secondary" onclick="<?php
                                         $function = 'myFunction(' . $takimId . ',' . $operatorId . ",'$olProcess','$newProcess'" . ')';
                                         echo $function ?>">Tenefer Yap
                                         </button>
-                                    <?php } ?>
+
+                                    <?php } } ?>
 
 
                                 </td>

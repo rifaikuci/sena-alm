@@ -2,16 +2,16 @@
 include "../../../netting/baglan.php";
 include "../../../include/data.php";
 
-$personelsql = "SELECT * FROM tblpersonel";
+$personelsql = "SELECT * FROM tblpersonel where rolId = 10 AND isecikistarih = '0000-00-00 00:00:00' ";
 $personeller = $db->query($personelsql);
 
-$personelsql2 = "SELECT * FROM tblpersonel";
+$personelsql2 = "SELECT * FROM tblpersonel where rolId = 10 AND isecikistarih = '0000-00-00 00:00:00'";
 $personeller2 = $db->query($personelsql2);
 
-$firmasql = "SELECT * FROM tblfirma";
+$firmasql = "SELECT * FROM tblfirma where firmaTurId = 10";
 $firmalar = $db->query($firmasql);
 
-$firmaboyasql = "SELECT * FROM tblfirma ";
+$firmaboyasql = "SELECT * FROM tblfirma where firmaTurId = 9 ";
 $firmalarboya = $db->query($firmaboyasql);
 
 $alasimsql = "SELECT * FROM tblalasim";
@@ -23,7 +23,7 @@ $boyalar = $db->query($boyasql);
 $malzemelersql = "SELECT * FROM tblmalzemeler";
 $malzemeler = $db->query($malzemelersql);
 
-$malzemelerfirmasql = "SELECT * FROM tblfirma";
+$malzemelerfirmasql = "SELECT * FROM tblfirma where firmaTurId in (11,12,13)";
 $malzemelerfirma = $db->query($malzemelerfirmasql);
 
 $profilfirmasql = "SELECT * FROM tblfirma";

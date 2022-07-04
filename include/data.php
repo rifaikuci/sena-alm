@@ -51,7 +51,7 @@ $konumlar = ["Baskı", "Kesim", "Termik"];
 
 $birimler = ["Kg", "Lt", "Adet"];
 
-$kullanildigiAlanlar = ["Kalıphane", "Boyahane", "Kromat"];
+$kullanildigiAlanlar = ["Kalıphane", "Boyahane", "Kromat", "Paketleme"];
 
 
 // tbl stok proilf de sipariş-> üretimden gelen satırnoya denk gelmekte siparisNo ise sevkiyattan gelirken ki geldiği yer

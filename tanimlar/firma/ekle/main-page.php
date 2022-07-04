@@ -66,7 +66,7 @@ $result = $db->query($sql);
                         <div class="form-group">
                             <label>Telefon</label>
                             <input required
-                                   type="number" class="form-control form-control-lg" name="telefon"
+                                   type="text" class="form-control form-control-lg" name="telefon"
                                    minlength="10" maxlength="10"
                                    placeholder="Tel Giriniz...">
                         </div>

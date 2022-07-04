@@ -35,7 +35,7 @@ if ($_GET['id']) {
                     <div class="col-sm-4">
                         <div class="form-group">
                             <label>T.C.</label>
-                            <input required type="text" class="form-control form-control-lg" name="tc"
+                            <input required type="text" class="form-control form-control-lg" name="tc" maxlength="11"
                                    value="<?php echo $row['tc'] ?>">
                         </div>
                     </div>
