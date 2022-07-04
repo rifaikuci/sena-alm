@@ -69,21 +69,30 @@ date_default_timezone_set('Europe/Istanbul');
                     $baskiekle = "";
                     for ($i = 0; $i < count($baskilar); $i++) { ?>
                         <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-8">
                                 <div class="form-group">
 
                                     <label><?php
-                                        $baski = tablogetir("tblbaski","id",$baskilar[$i],$db);
 
-                                        $siparis = tablogetir('tblsiparis', 'id', $baski['siparisId'], $db);
-                                        $siparisler = $siparisler . $siparis['id'] . ",";
-                                        $tur = $tur . $siparis['siparisTuru'] . ",";
-                                        $baskiekle = $baskiekle . $baskilar[$i] . ",";
-                                        $termik = $termik . $siparis['istenilenTermik'] . ",";
-                                        echo "Sipariş Numarası : " . $siparis['satirNo'].  " Baskı Numarası  : " . $baskilar[$i] . " Termik Değeri : " . $siparis['istenilenTermik'] ;
+                                        $baskiId = $baskilar[$i];
+                                        $sql2 = "Select b.id, b.satirNo, boy,s.id as siparisId, istenilenTermik,siparisTuru  from tblbaski b
+                                            INNER JOIN tblsiparis s on s.id = b.siparisId
+where b.id = '$baskiId'";
+                                        $item = mysqli_query($db, $sql2)->fetch_assoc();
+
+
+                                        $satirNo =  $item['satirNo'];
+                                        $siparisId = $item['siparisId'];
+
+                                        $siparisler = $siparisler .$siparisId . ",";
+                                        $tur = $tur . $item['siparisTuru'] . ",";
+                                        $baskiekle = $baskiekle . $baskiId . ",";
+                                        $termik = $termik . $item['istenilenTermik'] . ",";
+                                        echo "Satır No : " . $satirNo.  " Baskı Numarası  : " . $baskilar[$i] . " Boy : " . $item['boy']. " Termik Değeri : " . $item['istenilenTermik'] ;
                                         ?></label>
-                                    <input name="<?php echo "baski" . $baski['id'] ?>" required class="form-control"
+                                    <input name="<?php echo "baski" . $item['id'] ?>" required class="form-control"
                                            type="number" placeholder="1">
+                                    <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                                 </div>
                             </div>
                         </div>
@@ -96,7 +105,7 @@ date_default_timezone_set('Europe/Istanbul');
                     $siparisler = rtrim($siparisler, ',');
                     ?>
                     <input type="hidden" name="baskilar" value="<?php echo $baskiekle ?>">
-                    <input type="hidden" name="id" value="<?php echo $termikId ?>">
+                    <input type="hidden" name="id" value="<?php echo $_GET['termik'] ?>">
                     <input type="hidden" name="siparisler" value="<?php echo $siparisler ?>">
 
 

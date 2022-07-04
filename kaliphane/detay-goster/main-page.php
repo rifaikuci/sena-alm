@@ -42,6 +42,8 @@ if (isset($_GET['takimId'])) {
                                 <label style="color: #0e84b5" for="<?php echo $id ?>">
                                     <?php echo $rowName . " - " . takimDurumBul($row['newProcess']) ?>
                                 </label>
+                                <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
+
                             </div>
                         </div>
                     </div>

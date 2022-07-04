@@ -2,7 +2,6 @@
 include "../../netting/baglan.php";
 include "../../include/data.php";
 
-#todo burada kaldık boyutlandırma için....
 $firmasql = "SELECT * FROM tblfirma  ";
 $firmalar = $db->query($firmasql);
 
@@ -20,7 +19,7 @@ $profiller = $db->query($profillerrsql);
             <form method="post" action="<?php echo base_url() . 'netting/kalipci/index.php' ?>"
                   enctype="multipart/form-data">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Firma Adı</label>
                             <select name="firmaId" required class="form-control select2" style="width: 100%;">
@@ -31,9 +30,19 @@ $profiller = $db->query($profillerrsql);
                                 <?php } ?>
                             </select>
                         </div>
+
+                        <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-2">
+                        <div class="form-group">
+                            <label>Kalıpçı No</label>
+                            <input required type="text" class="form-control form-control-lg" name="kalipciNo"
+                                   placeholder="Kalıpçı No giriniz..">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Kalıp Cinsi</label>
                             <select name="kalipCins" required @change="onChangeKalipCins($event)" class="form-control"
@@ -48,7 +57,7 @@ $profiller = $db->query($profillerrsql);
                         </div>
                     </div>
 
-                    <div class="col-sm-6" v-if="filterParca.length > 0 ? true : false">
+                    <div class="col-sm-2" v-if="filterParca.length > 0 ? true : false">
                         <input name="prefix" :value="prefix" type="hidden">
                         <div class="form-group">
                             <label>Parça</label>
@@ -61,9 +70,8 @@ $profiller = $db->query($profillerrsql);
                         </div>
                     </div>
 
-
                     <div v-if="kalipCins == 4  ? false : true && ['0', '1', '3', '4','6','7','9'].includes(parca) "
-                         class="col-sm-6">
+                         class="col-sm-4">
                         <div class="form-group">
                             <label>Profiller</label>
                             <select name="profilId"
@@ -71,22 +79,23 @@ $profiller = $db->query($profillerrsql);
                                 <option selected disabled value="">Profil Seçiniz</option>
                                 <?php while ($profil = $profiller->fetch_array()) { ?>
                                     <option
-                                            value="<?php echo $profil['id']; ?>"><?php echo $profil['profilNo']; ?></option>
+                                            value="<?php echo $profil['id']; ?>"><?php echo $profil['profilNo'] ." - ".  $profil['profilAdi']; ?></option>
                                 <?php } ?>
                             </select>
                         </div>
                     </div>
 
-
-                    <div class="col-sm-6">
+                    <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Kalıpçı No</label>
-                            <input required type="text" class="form-control form-control-lg" name="kalipciNo"
-                                   placeholder="Kalıpçı No giriniz..">
+                            <label>Figür Sayı</label>
+                            <input required type="number" class="form-control form-control-lg" name="figurSayi" min="1"
+                                   max="10"
+                                   placeholder="1">
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Çap</label>
                             <select name="cap" required class="form-control" style="width: 100%;">
@@ -96,15 +105,7 @@ $profiller = $db->query($profillerrsql);
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label>Boy (mm)</label>
-                            <input required type="number" class="form-control form-control-lg" name="boy" min="1"
-                                   placeholder="0">
-                        </div>
-                    </div>
-
-                    <div class="col-sm-6">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Kalite</label>
                             <select name="kalite" required class="form-control" style="width: 100%;">
@@ -116,16 +117,25 @@ $profiller = $db->query($profillerrsql);
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-2">
                         <div class="form-group">
-                            <label>Figür Sayı</label>
-                            <input required type="number" class="form-control form-control-lg" name="figurSayi" min="1"
-                                   max="10"
-                                   placeholder="1">
+                            <label>Boy (mm)</label>
+                            <input required type="number" class="form-control form-control-lg" name="boy" min="1"
+                                   placeholder="0">
                         </div>
                     </div>
 
-                    <div class="col-sm-6" v-if="kalipCins == 4">
+
+
+
+
+
+
+
+
+
+
+                    <div class="col-sm-2" v-if="kalipCins == 4">
                         <div style="text-align: center">
                             <div class="form-group">
                                 <label>Çizim Yükleyiniz...</label>

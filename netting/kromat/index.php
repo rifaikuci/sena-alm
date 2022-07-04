@@ -20,6 +20,7 @@ if (isset($_POST['kromatbaslat'])) {
     $hurdalar = explode(",", $hurdalar[0]);
     $sebepler = explode(",", $sebepler[0]);
     $uzunluk = count($sepetler);
+    $operatorId = isset($_POST['operatorId']) && $_POST['operatorId'] != "" ? $_POST['operatorId'] : 0;
 
     $kromatAdetler = "";
     $kromatHurdalar = "";
@@ -51,12 +52,12 @@ if (isset($_POST['kromatbaslat'])) {
     $sqlSepetKromat = "UPDATE tblsepet set
                         icindekiler = '$kromatIcındekiler',
                         adetler = '$kromatAdetler',
-                        durum = '1'
+                        durum = '1',
+                        operatorId = '$operatorId'
                     where id = '$kromatsepet'";
     mysqli_query($db, $sqlSepetKromat);
 
 
-    $operatorId = isset($_POST['operatorId']) && $_POST['operatorId'] != "" ? $_POST['operatorId'] : 0;
 
     $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $baslaVardiya = vardiyaBul($vardiya, date("H:i"));
@@ -108,8 +109,8 @@ if (isset($_POST['kromatbaslat'])) {
             $kiloHurda = sayiFormatla($kiloHurda);
             $kiloStok  = $kiloStok / 1000000;
             $kiloStok = sayiFormatla($kiloStok);
-            $sqlprofil = "INSERT INTO tblstokprofil ( adet, geldigiYer, baskiId, kilo) 
-                VALUES ('$hurdaStok', 'kromat', '$baskiId', '$kiloStok')";
+            $sqlprofil = "INSERT INTO tblstokprofil ( adet, geldigiYer, baskiId, kilo, operatorId) 
+                VALUES ('$hurdaStok', 'kromat', '$baskiId', '$kiloStok', '$operatorId')";
 
             mysqli_query($db, $sqlprofil);
             $sebep = $sebepler[$i];
@@ -126,14 +127,16 @@ if (isset($_POST['kromatbaslat'])) {
                         icindekiler = null ,
                         adetler = null ,
                         durum = '0',
-                        isTermik = '0'
+                        isTermik = '0',
+                        operatorId = '$operatorId'
                     where id = '$sepetId'";
             mysqli_query($db, $sqlSepet);
         } else {
             $sqlSepet = "UPDATE tblsepet set
                         icindekiler = '$icindeTablo',
                         adetler = '$adetTablo',
-                        isTermik = '0'
+                        isTermik = '0',
+                        operatorId = '$operatorId'
                     where id = '$sepetId'";
             mysqli_query($db, $sqlSepet);
         }
@@ -142,8 +145,8 @@ if (isset($_POST['kromatbaslat'])) {
 
     $zaman = date("Y-m-d H:i:s");
 
-    $sqlKromat = "INSERT INTO tblkromat (baslaVardiya, baslaZaman, sepetId,havuzKromatId, havuzAsitId, adetler, hurdalar, sebepler, sepetler,baskilar ) 
-                VALUES ('$baslaVardiya','$zaman', '$kromatsepet', '$kromatHavuz', '$asitHavuz', '$kromatAdetler', '$kromatHurdalar', '$kromatSebepler', '$kromatSepetler', '$kromatIcındekiler')";
+    $sqlKromat = "INSERT INTO tblkromat (baslaVardiya, baslaZaman, sepetId,havuzKromatId, havuzAsitId, adetler, hurdalar, sebepler, sepetler,baskilar, operatorId ) 
+                VALUES ('$baslaVardiya','$zaman', '$kromatsepet', '$kromatHavuz', '$asitHavuz', '$kromatAdetler', '$kromatHurdalar', '$kromatSebepler', '$kromatSepetler', '$kromatIcındekiler', '$operatorId')";
     if (mysqli_query($db, $sqlKromat)) {
         header("Location:../../kromat/?durumekle=ok");
         exit();
@@ -199,13 +202,15 @@ if (isset($_POST['kromatbitir'])) {
     }
 
     $sqlsepet = "UPDATE tblsepet set
-                     finishedKromat = '1'
+                     finishedKromat = '1',
+                     operatorId = '$operatorId'
                     where id = '$sepetId'";
 
     mysqli_query($db, $sqlsepet);
 
     $sqlKromat = "UPDATE tblkromat set
                         bitisVardiya = '$bitisVardiya',
+                        operatorId = '$operatorId',
                      bitisZaman = '$zaman'
                     where id = '$id'";
     if (mysqli_query($db, $sqlKromat)) {

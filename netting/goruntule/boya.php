@@ -25,7 +25,7 @@ $sql = "select s.id as id,
        adet
 from tblstokboya s
          INNER JOIN tblfirma f ON f.id = s.firmaid
-         INNER JOIN tblprboya p on p.id = s.boyaTuru
+         LEFT JOIN tblprboya p on p.id = s.boyaTuru
 where s.partino = '$partino'
   AND s.firmaId = '$firmaId'
   AND s.boyaTuru = '$boyaTuru'

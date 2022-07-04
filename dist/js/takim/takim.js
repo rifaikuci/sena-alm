@@ -33,7 +33,8 @@ new Vue({
             timer2: null,
             takimCheck: false,
             ekle: false,
-            destekler: []
+            destekler: [],
+            bolsterler: []
         },
 
 
@@ -210,6 +211,16 @@ new Vue({
                     });
                     this.destekler = destekler;
 
+                    const bolsterler = await axios.post('/sena/netting/action.php', {
+                        action: 'bolsterId',
+                        figur: this.figur,
+                    }).then((response) => {
+                        return response.data
+                    });
+
+
+                    this.bolsterler = bolsterler;
+
                     if (this.parca1SenaNo != "Parçayı Seç" && this.parca2SenaNo != "Parçayı Seç") {
                         this.ekle = true;
                     } else {
@@ -238,6 +249,15 @@ new Vue({
                     });
                     this.destekler = destekler;
 
+                    const bolsterler = await axios.post('/sena/netting/action.php', {
+                        action: 'bolsterId',
+                        figur: this.figur
+                    }).then((response) => {
+                        return response.data
+                    });
+
+                    this.bolsterler = bolsterler;
+
                     if (this.parca1SenaNo != "Parçayı Seç") {
                         this.ekle = true;
                     } else {
@@ -245,6 +265,7 @@ new Vue({
                     }
 
                 }
+                console.log(this.bolsterler)
                 if (this.takimCheck == true) {
                     this.ekle = true;
                 }

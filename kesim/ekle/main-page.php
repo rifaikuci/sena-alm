@@ -144,6 +144,7 @@ $baskilar = $db->query($kesimsql);
                             <input type="hidden" name="sepet1" :value="sepet1">
                             <input type="hidden" name="sepet2" :value="sepet2">
                             <input type="hidden" name="sepet3" :value="sepet3">
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
 
                             <input required v-model="kesilenBoy" type="number" class="form-control form-control-lg"
                                    name="kesilenBoy"

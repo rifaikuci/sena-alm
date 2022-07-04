@@ -9,6 +9,9 @@ $result = $db->query($sql);
 $islemArray = [1,5];
 $sonuc = in_array($rolId, $islemArray);
 
+$kromatSepetDurum = tablogetir("tblhavuz","tur",'kromat', $db)['durum'];
+$asitSepetDurum = tablogetir("tblhavuz","tur",'asit', $db)['durum'];
+
 #todo eğer kromat havuz asit dolu değilse kromat yapmasına izin verilmesin
 
 ?>
@@ -37,8 +40,24 @@ $sonuc = in_array($rolId, $islemArray);
             <div class="col-12">
                 <?php if($sonuc) { ?>
                 <div style="text-align: right;margin-right: auto">
+                    <?php  if($kromatSepetDurum > 0 && $asitSepetDurum > 0) {?>
                     <a href="ekle/" class="btn btn-primary"><i class="fa fa-plus"><?php echo "\t\t\t\t" ?>
                             Ekle</i></a>
+                    <?php } else { ?>
+
+                            <?php if($kromatSepetDurum == 0) { ?>
+                                <div>
+                                    <p style="color: red; font-weight: bold">Kromat ekleyebilmek için Kromat Havuzu doldurunuz!</p>
+                                </div>
+                                <?php } else if ($asitSepetDurum == 0) { ?>
+                                <div> <p style="color: red; font-weight: bold">Kromat ekleyebilmek için Asit Havuzu doldurunuz!</p>
+                                </div>
+                                <?php } else if ($kromatSepetDurum == 0 && $asitSepetDurum == 0 ) { ?>
+                            <div>
+                                <p style="color: red; font-weight: bold">Kromat ekleyebilmek için Kromat-Asit Havuzu doldurunuz!</p>
+                            </div>
+                                <?php } ?>
+                    <?php }?>
                 </div>
                 <?php } ?>
                 <br>

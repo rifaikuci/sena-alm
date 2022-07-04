@@ -197,7 +197,7 @@ $sepetler = $db->query($sepetsql);
                                    @change="netAdetCalculate($event)"
                                    class="form-control" type="number"
                                    placeholder="0">
-                            <input type="hidden" name="operatorId" value="<?php echo $_SESSION['operatorId'] ?>">
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                             <input name="paketbaslat" value="paketbaslat" type="hidden">
                             <input type="hidden" name="netAdet" :value="netAdet">
                             <input type="hidden" name="sepetId" :value="sepetId">

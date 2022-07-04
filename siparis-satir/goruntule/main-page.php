@@ -94,7 +94,7 @@ where  s.satirNo = '$satirno'";
                                         <input type="hidden" name="araKagit" :value="araKagit">
                                         <input type="hidden" name="krepeKagit" :value="krepeKagit">
                                         <input type="hidden" name="kiloAdet" :value="kiloAdet">
-                                        <input type="hidden" value="<?php echo isset($_SESSION['operatorId']) ?  $_SESSION['operatorId'] : 0; ?>" name="operatorId">
+                                        <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
 
                                     </div>
                                 </div>

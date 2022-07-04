@@ -96,7 +96,8 @@ if (isset($_POST['boyabaslat'])) {
                         adetler = null ,
                         durum = '0',
                         isTermik = '0',
-                        finishedKronat = '0'
+                        finishedKronat = '0',
+                        operatorId = '$operatorId'
                     where id = '$sepetId'";
 
 
@@ -105,7 +106,8 @@ if (isset($_POST['boyabaslat'])) {
             $sqlSepet = "UPDATE tblsepet set
                         icindekiler = '$icindeTablo',
                         adetler = '$adetTablo',
-                        isTermik = '0'
+                        isTermik = '0',
+                        operatorId = '$operatorId'
                     where id = '$sepetId'";
             mysqli_query($db, $sqlSepet);
         }
@@ -125,8 +127,8 @@ if (isset($_POST['boyabaslat'])) {
             $kiloStok  = $kiloStok / 1000000;
             $kiloStok = sayiFormatla($kiloStok);
 
-            $sqlprofil = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId, kilo) 
-                VALUES ( '$geciciAdet', 'boya', '$baskiId', '$kiloStok')";
+            $sqlprofil = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId, kilo, operatorId) 
+                VALUES ( '$geciciAdet', 'boya', '$baskiId', '$kiloStok',$operatorId )";
             mysqli_query($db, $sqlprofil);
 
             $sqlHurda = "INSERT INTO tblhurda (adet, aciklama,operatorId,baskiId, geldigiYer, kilo) 
@@ -140,8 +142,8 @@ if (isset($_POST['boyabaslat'])) {
 
     // siklon tablosuna kayıt eklenmesi
     if ($siklonAyrilanKg > 0) {
-        $sqlSiklon = "INSERT INTO tblsiklon (kilo, kalan,boyaId) 
-                VALUES ( '$siklonAyrilanKg', '$siklonAyrilanKg', '$boyaId')";
+        $sqlSiklon = "INSERT INTO tblsiklon (kilo, kalan,boyaId, operatorId) 
+                VALUES ( '$siklonAyrilanKg', '$siklonAyrilanKg', '$boyaId', '$operatorId')";
        mysqli_query($db, $sqlSiklon);
     }
 

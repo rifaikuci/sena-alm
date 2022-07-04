@@ -6,8 +6,8 @@ if ($_GET['takimno']) {
     $takimno = $_GET['takimno'];
     $sql = "
     select takimNo, firmaAd, profilNo, profilAdi, cap, parca1, parca2, kalipCins, firmaId from tbltakim t
-INNER JOIN tblfirma f ON f.id = t.firmaId
-INNER JOIN tblprofil p ON p.id = t.profilId where takimNo = '$takimno'
+LEFT JOIN tblfirma f ON f.id = t.firmaId
+LEFT JOIN tblprofil p ON p.id = t.profilId where takimNo = '$takimno'
     ";
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_assoc();
@@ -134,6 +134,7 @@ INNER JOIN  tblfirma f ON f.id = k.firmaId WHERE durum = '1' AND k.firmaId = '$f
                                         data-dropdown-css-class="select2-blue"
                                         data-placeholder="Sena No - Firma Adı -Kalıpçı No - Kalite - Figür Sayı"
                                         style="width: 100%;">
+                                    <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                                     <?php
                                     while ($bolster = $bolstergetir->fetch_array()) { ?>
                                         <option value="<?php echo $bolster['id'] ?>"

@@ -15,6 +15,7 @@ if ($_GET['id']) {
        netAdet,
        firmaAd,
        profilNo,
+       profilAdi,
        ad,
        maxTolerans,
        boy,
@@ -61,7 +62,7 @@ where p.id = '$id'
 <section class="content">
     <div class="card card-info">
         <div class="card-header">
-            Boya Paket Alanı
+            Paket Alanı
         </div>
         <div class="card-body" >
             <form>
@@ -101,7 +102,7 @@ where p.id = '$id'
                                     <div class="col-sm-8">
                                         <h6>
                                             <span style="color: darkcyan; font-weight: bold"> Profil: </span>
-                                            <?php echo $paket['profilNo']?>
+                                            <?php echo $paket['profilNo'] . " - " . $paket['profilAdi']?>
                                         </h6>
 
                                     </div>

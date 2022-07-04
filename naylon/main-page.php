@@ -4,8 +4,15 @@ include "../netting/baglan.php";
 include "../include/sql.php";
 
 $sql = "
- select n.id as id, satirNo, zaman from tblnaylon n
-INNER JOIN tblbaski b ON n.baskiId = b.id order by n.id desc 
+ select n.id as id, b.satirNo, n.zaman,
+        s.siparisTuru, n.adet, profilNo, profilAdi, boy, e.ad as eloksalAd, pr.ad as boyaAd,
+               p.paketAdet as pia
+ from tblnaylon n
+ LEFT JOIN tblbaski b ON n.baskiId = b.id
+         INNER JOIN tblsiparis s on s.id = b.siparisId
+         INNER JOIN tblprofil p on p.id = s.profilId
+         LEFT JOIN tbleloksal e on s.eloksalId = e.id
+         LEFT JOIN tblprboya pr on s.boyaId = pr.id order by n.zaman ASC 
  ";
 $result = $db->query($sql);
 ?>
@@ -43,9 +50,13 @@ $result = $db->query($sql);
                             <thead>
 
                             <tr>
-                                <th>#</th>
-                                <th>Satır No</th>
                                 <th>Tarih</th>
+                                <th>Satır No</th>
+                                <th>Profil No</th>
+                                <th>Boy</th>
+                                <th>Yüzey Detay</th>
+                                <th>Adet</th>
+                                <th>PIA</th>
                                 <th>İşlem</th>
                             </tr>
                             </thead>
@@ -53,10 +64,23 @@ $result = $db->query($sql);
                             <?php $sira = 1;
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
-                                    <td style="font-weight: bold"><?php echo $sira; ?></td>
-                                    <td>
-                                        <?php echo $row['satirNo']; ?></td>
                                     <td><?php echo tarihsaat($row['zaman']); ?></td>
+                                    <td>  <?php echo $row['satirNo']; ?></td>
+                                    <td>  <?php echo $row['profilNo']; ?></td>
+                                    <td>  <?php echo $row['boy']; ?></td>
+                                    <td>  <?php
+                                        $yuzey  = $row['siparisTuru'];
+                                        $yuzeyDetay = $yuzey == "B" ? "Boyalı" : ($yuzey == "E" ? "Eloksal" : "Pres");
+                                        $cins = $yuzey == "B" ? $row['boyaAd'] : ($yuzey == "E" ? $row['eloksalAd'] : "Pres");
+
+                                        echo
+
+                                        $yuzeyDetay."/".$cins; ?></td>
+                                    <td>  <?php echo $row['adet']; ?></td>
+                                    <td>  <?php echo $row['pia']; ?></td>
+
+
+
                                     <td style="text-align: center">
                                         <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
                                            class="btn btn-outline-primary">Görüntüle</a>

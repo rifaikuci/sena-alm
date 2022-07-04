@@ -3,9 +3,11 @@
 include "../netting/baglan.php";
 include "../include/sql.php";
 
-
-$sql = "select t.id as id, takimNo, profilId, profilNo, cap, sonGramaj, netKilo, brutKilo, destek, durum, bolster from tbltakim t
-INNER JOIN tblprofil p ON t.profilId = p.id where durum = 1 order by id desc ";
+$sql = "select t.id as id, t.takimNo, t.profilId, p.profilNo,p.profilAdi, t.cap, t.sonGramaj, k.figurSayi,
+       t.netKilo, t.brutKilo, t.destek, t.durum, t.bolster from tbltakim t
+LEFT JOIN tblprofil p ON t.profilId = p.id
+LEFT JOIN tblkalipparcalar k on k.senaNo = t.parca1
+where t.durum = 1 order by t.id desc ";
 
 $result = $db->query($sql);
 
@@ -55,6 +57,7 @@ $sonuc = in_array($rolId, $islemArray);
                                 <th>Sena No</th>
                                 <th>Profil</th>
                                 <th>Çap</th>
+                                <th>Figür</th>
                                 <th>Gramaj</th>
                                 <th>Basılan Kg</th>
                                 <th>Brüt Kg</th>
@@ -68,9 +71,9 @@ $sonuc = in_array($rolId, $islemArray);
                             while ($row = $result->fetch_array()) { ?>
                                 <tr>
                                     <td><?php echo $row['takimNo']; ?></td>
-                                    <td><?php echo $row['profilId'] ?
-                                            tablogetir('tblprofil', 'id', $row['profilId'], $db)['profilNo'] : "-"; ?></td>
+                                    <td><?php echo $row['profilNo'] . " - " . $row['profilAdi']; ?></td>
                                     <td><?php echo $row['cap']; ?></td>
+                                    <td><?php echo $row['figurSayi']; ?></td>
                                     <td><?php echo $row['sonGramaj'] ?></td>
                                     <td><?php echo sayiFormatla($row['netKilo']); ?></td>
                                     <td><?php echo sayiFormatla($row['brutKilo']); ?></td>

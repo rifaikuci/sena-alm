@@ -20,6 +20,7 @@ if (isset($_POST['kalipciekle'])) {
     $netKilo = 0;
     $brutKilo = 0;
     $durum = 1; //1 Aktif 2 Pasif 3 Çöp
+    $operatorId = isset($_POST['operatorId']) && $_POST['operatorId'] ? $_POST['operatorId'] : 0;
     $maxId = maxIdBul($db, "tblkalipparcalar") + 1;
     $maxId = sprintf('%04d', $maxId);
     $prefix = $_POST['prefix'];
@@ -48,9 +49,9 @@ if (isset($_POST['kalipciekle'])) {
 
 
     $sql = "INSERT INTO tblkalipparcalar (firmaId, profilId, kalipCins, parca, senaNo, kalipciNo,
-                                      cap, kalite, figurSayi, takimNo, durum, netKilo, brutKilo, cizim, boy)
+                                      cap, kalite, figurSayi, takimNo, durum, netKilo, brutKilo, cizim, boy, operatorId)
                 VALUES ('$firmaId', '$profilId','$kalipCins', '$parca','$senaNo', '$kalipciNo',
-                        '$cap', '$kalite','$figurSayi', '$takimNo','$durum', '$netKilo', '$brutKilo', '$cizim', '$boy')";
+                        '$cap', '$kalite','$figurSayi', '$takimNo','$durum', '$netKilo', '$brutKilo', '$cizim', '$boy', '$operatorId')";
 
     if (mysqli_query($db, $sql)) {
         header("Location:../../kalipci/?durumekle=ok");
@@ -85,6 +86,7 @@ if (isset($_POST['kalipciguncelleme'])) {
     $firmaId = $_POST['firmaId'];
     $profilId = $_POST['profilId'];
     $kalipciNo = $_POST['kalipciNo'];
+    $operatorId = isset($_POST['operatorId']) && $_POST['operatorId'] ? $_POST['operatorId'] : 0;
     $cap = $_POST['cap'];
     $boy = $_POST['boy'];
     $kalite = $_POST['kalite'];
@@ -109,7 +111,7 @@ if (isset($_POST['kalipciguncelleme'])) {
     }
     $sql = "UPDATE tblkalipparcalar set 
         firmaId = '$firmaId', profilId = '$profilId', kalipciNo = '$kalipciNo', cap = '$cap',
-        kalite = '$kalite', figurSayi = '$figurSayi', cizim = '$cizim', boy = '$boy' WHERE id='$id'";
+        kalite = '$kalite', figurSayi = '$figurSayi', cizim = '$cizim', boy = '$boy', operatorId = '$operatorId' WHERE id='$id'";
 
     if (mysqli_query($db, $sql)) {
         header("Location:../../kalipci/?durumguncelleme=ok");

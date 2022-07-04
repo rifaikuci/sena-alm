@@ -6,7 +6,7 @@ $sql = "SELECT * FROM tbltermik order by id desc ";
 $result = $db->query($sql);
 
 
-#todo sepetler ve içindekiler aynı hücrede yazılacak sepetler ve ynaındaki hücreyi birleştiricez.
+#todo sepetler ve içindekiler aynı hücrede yazılacak sepetler ve ynaındaki hücreyi birleştiricez. -> bu olmayacak sadece hangi sepetlerde bulunduğuna dair bilgi vereceğiz.
 ?>
 
 <section class="content">
@@ -44,7 +44,7 @@ $result = $db->query($sql);
                                 <th>#</th>
                                 <th>Baş. Tar.</th>
                                 <th>Sepetler</th>
-                                <th>Sip No - Baskı ID - T. Sonuç</th>
+                                <th>Satır No - Baskı ID - T. Sonuç</th>
                                 <th>Durum</th>
                                 <th style="text-align: center">İşlem /Bitirilme Zam.</th>
                                 <th></th>
@@ -84,8 +84,8 @@ $result = $db->query($sql);
                                     <td>
                                         <?php
                                         if ($row['bitisTarih']) { ?>
-                                        <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
-                                           class="btn btn-outline-primary">Görüntüle</a>
+                                            <a href="<?php echo "goruntule/?id=" . $row['id']; ?>"
+                                               class="btn btn-outline-primary">Görüntüle</a>
                                         <?php } ?>
                                     </td>
                                 </tr>

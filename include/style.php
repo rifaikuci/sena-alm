@@ -6,6 +6,7 @@ session_start();
 if (!isset($_SESSION['operatorId'])) {
     header("Location:" . base_url() . "login/");
 }
+$operatorId = $_SESSION['operatorId'];
 
 
 ?>

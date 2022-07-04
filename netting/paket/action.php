@@ -18,6 +18,7 @@ if ($received_data->action == 'siparisgetir') {
        korumaBandi,
        firmaAd,
        profilNo,
+       profilAdi,
        ad,
        paketAdet,
        biyetBirimGramaj,

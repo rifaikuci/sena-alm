@@ -240,6 +240,7 @@ from tblboyapaket bp
                             <input disabled value="<?php echo $paket['hurdaAdet'] ?>"
                                    class="form-control"
                                    placeholder="0">
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
 
                         </div>
                     </div>

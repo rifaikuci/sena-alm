@@ -3,27 +3,26 @@ require_once "../../netting/baglan.php";
 require_once "../../include/sql.php";
 require_once "../../include/helper.php";
 
-
 $balyaNo = $_POST['balyano'];
 
 $sql = "select b.balyaNo,
-       kod,
-       baskiId,
-       netAdet,
-       netKilo,
-       mtGr,
-       paketDetay,
-       realTolerans,
-       teorikTolerans,
-       satirNo,
-       siparisNo,
-       balyaBoy,
-       balyaKilo,
-       firmaAd
+       b.baskiId,
+       s.kod,
+       b.netAdet,
+       b.netKilo,
+       b.mtGr,
+       b.paketDetay,
+       b.realTolerans,
+       b.teorikTolerans,
+       b.satirNo,
+       b.siparisNo,
+       b.balyaBoy,
+      b.balyaKilo,
+       f.firmaAd
 from tblbalyalama b
          left JOIN tblsevkiyatcikis s ON s.id = b.sevkiyatId
-         left JOIN tblfirma f ON f.id = b.musteriId where b.balyaNo = '$balyaNo'
-        ";
+         left JOIN tblfirma f ON f.id = b.musteriId
+where b.balyaNo = '$balyaNo'";
 
 $row = mysqli_query($db, $sql)->fetch_assoc();
 
@@ -88,6 +87,7 @@ $siparisNo = explode(";", $row['siparisNo']);
             <th>Net Adet</th>
             <th>Net Kilo</th>
             <th>Mt/Gr</th>
+            <th>Yüzey/Cins</th>
             <th>Reel T.</th>
             <th>Teorik T.</th>
 
@@ -101,6 +101,30 @@ $siparisNo = explode(";", $row['siparisNo']);
                 <td><?php echo $netAdet[$i] ?></td>
                 <td><?php echo sayiFormatla($netKilo[$i]) ?></td>
                 <td><?php echo $mtGr[$i] ?></td>
+                <td>  <?php
+                    $tempSatirNo = $satirNo[$i];
+                   $yuzey = $tempSatirNo[3];
+                   $satirNo = $satirNo[$i];
+
+                    $yuzeyDetay = $yuzey == "B" ? "Boyalı" : ($yuzey == "E" ? "Eloksal" : "Pres");
+                    $sql2 = "SELECT s.id as id, e.ad as eloksalAd, pr.ad as boyaAd,eloksalId,siparisNo FROM tblsiparis s  
+                            LEFT JOIN tblprboya pr on pr.id = s.boyaId
+                            left join  tbleloksal e on e.id = s.eloksalId where s.satirNo = '$satirNo'";
+
+                    $row2 = mysqli_query($db, $sql2)->fetch_assoc();
+
+                    if($yuzey == "B") {
+
+                        $cins =$row2['boyaAd'] ;
+
+                    } else if ($yuzey == "E") {
+                        $cins =$row2['eloksalAd'] ;
+
+                    } else {
+                        $cins = "Pres";
+                    }
+
+                    echo $yuzeyDetay."/".$cins;    ?></td>
                 <td style="color: <?php echo $realTolerans[$i] > 0 ? '#ff0000' : '#3ea800' ?> "><?php echo "%" . $realTolerans[$i] ?></td>
                 <td style="color: <?php echo $teorikTolerans[$i] > 0 ? '#ff0000' : '#3ea800' ?> "><?php echo "%" . $teorikTolerans[$i] ?></td>
             </tr>

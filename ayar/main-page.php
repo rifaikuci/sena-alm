@@ -36,6 +36,8 @@ if ($_GET['ayarok'] == "ok") {
                             </select>
                             <input required type="hidden" class="form-control form-control-lg" name="id"
                                    value="<?php echo $row['id'] ?>">
+
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                         </div>
                     </div>
                 </div>

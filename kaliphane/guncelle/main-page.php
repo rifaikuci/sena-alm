@@ -32,9 +32,7 @@ if ($_GET['takimno']) {
                             <input class="form-control" type="hidden" value="kalipguncelle" name="kalipguncelle">
                             <input class="form-control" type="hidden" value="<?php echo $takim['konum']?>" name="oldprocess">
                             <input class="form-control" type="hidden" value="<?php echo $takim['id']?>" name="takimId">
-                            <input type="hidden"
-                                   value="<?php echo $operatorId; ?>"
-                                   name="operatorId">
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                         </div>
                     </div>
 

@@ -247,9 +247,7 @@ date_default_timezone_set('Europe/Istanbul');
                     <input type="hidden" name="satirNo" :value="satirNo">
                     <input type="hidden" name="boy" :value="boy">
                     <input type="hidden" value="baski-ekle" name="baskiekle">
-                    <input type="hidden"
-                           value="<?php echo isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0; ?>"
-                           name="operatorId">
+                    <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                     <input type="hidden" name="basilanNetKg" :value="basilanNetKg">
                     <input type="hidden" name="baslaZamani" :value="baslazamani">
                     <input name="arrayBiyetBoy" :value="arrayBiyetBoy" type="hidden">

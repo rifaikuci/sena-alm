@@ -14,7 +14,7 @@ if (isset($_POST['takimId']) && isset($_POST['oldProcess']) && isset($_POST['new
     $takimId = $_POST['takimId'];
     $newProcess = $_POST['newProcess'];
     $description = isset($_POST['description']) ? $_POST['description'] : '';
-    $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : '';
+    $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $kostikHavuzId = 0;
     $kumlamaHavuzId = 0;
     $teneferHavuzId = 0;

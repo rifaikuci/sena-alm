@@ -115,11 +115,13 @@ if (isset($_POST['naylonbaslat'])) {
         else {
 
             $sqlAnbar = "INSERT INTO tblanbar  (
+                       operatorId,
                         baskiId,
                         satirNo,
                         adet,
                         kalanAdet)
-                   VALUES  (
+                   VALUES  ('$operatorId',
+                            
                         '$baskiId',
                         '$satirNo',
                         '$netAdet',

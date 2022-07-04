@@ -17,7 +17,7 @@ $personeller2 = $db->query($personelsql2);
         <div class="card-body" id="stok-cikis">
             <form method="post" action="<?php echo base_url() . 'netting/sevkiyat/giden.php' ?>">
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label>1. Şoför</label>
                             <select required name="personelId1" class="form-control select2" style="width: 100%;">
@@ -28,7 +28,7 @@ $personeller2 = $db->query($personelsql2);
                             </select>
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="form-group">
                             <label>2. Şoför</label>
                             <select name="personelId2" class="form-control select2" style="width: 100%;">
@@ -41,22 +41,23 @@ $personeller2 = $db->query($personelsql2);
                     </div>
 
 
-                    <div class="col-sm-4">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Plaka</label>
                             <input required type="text" class="form-control form-control-lg" name="plaka"
                                    placeholder="Plaka Bilgisi ">
-                            <input type="hidden"
-                                   value="<?php echo isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0; ?>"
-                                   name="operatorId">
                             <input type="hidden" value="sevkiyatcikisekle" name="sevkiyatcikisekle">
                             <input type="hidden" name="balyalaArray" v-model="balyalaArray">
                             <input type="hidden" name="balyaNoArray" v-model="balyaNoArray">
+                            <input type="hidden" name="tonaj" v-model="tonaj">
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
+
+
 
                         </div>
                     </div>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Sevkiyat Tarihi</label>
                             <input required type="date" class="form-control form-control-lg" name="sevkiyatarih"
@@ -64,14 +65,14 @@ $personeller2 = $db->query($personelsql2);
                         </div>
                     </div>
 
-                    <div class="col-sm-3">
+                    <div class="col-sm-2">
                         <div class="form-group">
                             <label>Sevkiyat Zamanı</label>
                             <input required type="time" class="form-control form-control-lg" name="sevkiyatsaat">
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <div class="form-group">
                             <label>Açıklama</label>
                             <input type="text" class="form-control form-control-lg" name="aciklama"

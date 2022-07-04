@@ -54,7 +54,7 @@ if (isset($_POST['paketbaslat'])) {
                         icindekiler = null ,
                         adetler = null ,
                         durum = '0',
-                        isTermik = '0'
+                        isTermik = '0', operatorId = '$operatorId'
                     where id = '$sepetId'";
 
 
@@ -63,7 +63,7 @@ if (isset($_POST['paketbaslat'])) {
         $sqlSepet = "UPDATE tblsepet set
                         icindekiler = '$icindeTablo',
                         adetler = '$adetTablo',
-                        isTermik = '0'
+                        isTermik = '0', operatorId = '$operatorId'
                     where id = '$sepetId'";
         mysqli_query($db, $sqlSepet);
     }
@@ -71,7 +71,7 @@ if (isset($_POST['paketbaslat'])) {
     $sqlSepet = "UPDATE tblsepet set
                         icindekiler = '$icindeTablo',
                         adetler = '$adetTablo',
-                        isTermik = '0'
+                        isTermik = '0', operatorId = '$operatorId'
                     where id = '$sepetId'";
     mysqli_query($db, $sqlSepet);
 
@@ -159,11 +159,13 @@ if (isset($_POST['paketbaslat'])) {
 
             $sqlAnbar = "INSERT INTO tblanbar  (
                         baskiId,
+                       operatorId,
                         satirNo,
                         adet,
                         kalanAdet)
                    VALUES  (
                         '$baskiId',
+                            '$operatorId',
                         '$satirNo',
                         '$netAdet',
                         '$netAdet'

@@ -10,8 +10,10 @@ if (isset($_POST['firmaturekleme'])) {
     try {
         $ad = $_POST['ad'];
         $seo = seo($ad);
+        $operatorId = $_POST['operatorId'] ? $_POST['operatorId'] : 0;
 
-        $sql = "INSERT INTO tblfirmatur (ad, seo) VALUES ('$ad', '$seo')";
+
+        $sql = "INSERT INTO tblfirmatur (ad, seo, operatorId) VALUES ('$ad', '$seo', '$operatorId')";
 
         if (mysqli_query($db, $sql)) {
             header("Location:../../tanimlar/firmatur/?durumekle=ok");
@@ -41,10 +43,11 @@ if (isset($_GET['firmatursil'])) {
 if (isset($_POST['firmaturguncelleme'])) {
     $id = $_POST['id'];
     $ad = $_POST['ad'];
+    $operatorId = $_POST['operatorId'] ? $_POST['operatorId'] : 0;
     $seo = seo($ad);
 
     $sql = "UPDATE tblfirmatur set 
-        ad = '$ad', seo = '$seo' WHERE id='$id'";
+        ad = '$ad', seo = '$seo', operatorId = '$operatorId' WHERE id='$id'";
 
     if (mysqli_query($db, $sql)) {
         header("Location:../../tanimlar/firmatur/?durumguncelleme=ok");

@@ -58,7 +58,7 @@ date_default_timezone_set('Europe/Istanbul');
                             <input type="text" value="<?php echo $sepetKromat['ad'] ?>" class="form-control form-control-lg" disabled>
                             <input type="hidden" name="kromatbitir" value="<?php echo $kromat['id']?>">
                             <input type="hidden" name="sepetId" value="<?php echo $kromat['sepetId']?>">
-                            <input type="hidden" name="operatorId"  value="<?php echo $_SESSION['operatorId']?>">
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                         </div>
                     </div>
 

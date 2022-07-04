@@ -4,8 +4,8 @@ include "../../include/sql.php";
 require_once "../../include/data.php";if ($_GET['takimno']) {
     $takimno = $_GET['takimno'];
     $sql = "select parca1, parca2,takimNo, profilNo, firmaAd,kalipCins, cap from tbltakim t
-INNER JOIN tblprofil p ON p.id = t.profilId
-INNER JOIN tblfirma f ON f.id = t.firmaId where t.takimNo = '$takimno'";
+LEFT JOIN tblprofil p ON p.id = t.profilId
+LEFT JOIN tblfirma f ON f.id = t.firmaId where t.takimNo = '$takimno'";
     $result = mysqli_query($db, $sql);
     $row = $result->fetch_assoc();
 
@@ -82,6 +82,8 @@ INNER JOIN tblfirma f ON f.id = t.firmaId where t.takimNo = '$takimno'";
                             <label>Parça 2</label>
                             <input disabled type="text" class="form-control form-control-lg"
                                    value="<?php echo $row['parca2']; ?>">
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
+
                         </div>
                     </div>
 

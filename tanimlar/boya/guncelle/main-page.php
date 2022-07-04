@@ -13,24 +13,25 @@ if ($_GET['id']) {
 <section class="content">
     <div class="card card-info">
         <div class="card-header">
-            Firma Türleri Güncelleme Alanı
+            Boya Türleri Güncelleme Alanı
         </div>
         <div class="card-body">
             <form method="post" action="<?php echo base_url() . 'netting/tanimlar/boya.php' ?>">
                 <div class="row">
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <div class="form-group">
-                            <label>Alaşım Türü</label>
+                            <label>Renk</label>
                             <input required type="hidden" class="form-control form-control-lg" name="id"
                                    value="<?php echo $row['id'] ?>">
                             <input required type="text" class="form-control form-control-lg" name="ad"
                                    value="<?php echo $row['ad'] ?>">
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                         </div>
                     </div>
 
-                    <div class="col-sm-6">
+                    <div class="col-sm-3">
                         <div class="form-group">
-                            <label>Özkütle</label>
+                            <label>RAL</label>
                             <input required type="text" step="0.01" class="form-control form-control-lg"  name="kod"
                                    value="<?php echo $row['kod'] ?>">
                         </div>

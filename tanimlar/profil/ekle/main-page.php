@@ -29,6 +29,8 @@ $sektorler = $db->query($sqlsektor);
                             <label>Profil No</label>
                             <input disabled type="text" class="form-control form-control-lg"
                                    value="<?php echo $profilNo ?>">
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
+
 
                             <input required type="hidden" class="form-control form-control-lg"
                                    value="<?php echo $profilNo ?>" name="profilNo">

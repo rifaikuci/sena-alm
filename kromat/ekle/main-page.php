@@ -41,7 +41,7 @@ $kromatSepet = $db->query($kromatSql);
                             <input type="hidden" name="arrayadet[]" v-model="adetler">
                             <input type="hidden" name="arrayhurda[]" v-model="hurdaAdetler">
                             <input type="hidden" name="arraysebep[]" v-model="sebepler">
-                            <input type="hidden" name="operatorId" value="<?php echo $_SESSION['operatorId'] ? $_SESSION['operatorId'] : 0  ?>">
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                         </div>
                     </div>
 

@@ -21,6 +21,7 @@ if (isset($_POST['profilekleme'])) {
         $balyaAdet = $_POST['balyaAdet'];
         $maxGramaj = $_POST['maxGramaj'];
         $ezilmeKatsayisi = $_POST['ezilmeKatsayisi'];
+        $operatorId = $_POST['operatorId'] ? $_POST['operatorId'] : 0;
         $aciklama = $_POST['aciklama'];
         $cizim = $_POST['cizim'];
         $etKalinlik = $_POST['etKalinlik'];
@@ -91,10 +92,10 @@ if (isset($_POST['profilekleme'])) {
 
         $sql = "INSERT INTO tblprofil (profilNo, sektorId, gramaj, alan, cevre, paketAdet,
                                       paketEn, paketBoy, balyaAdet, maxGramaj, ezilmeKatsayisi, aciklama,
-                                      seo, resim, paketlemeSekli, sepetDizilmeSekli, cizim, profilAdi, boyaMaxAdet, etKalinlik )
+                                      seo, resim, paketlemeSekli, sepetDizilmeSekli, cizim, profilAdi, boyaMaxAdet, etKalinlik, operatorId )
                 VALUES ('$profilNo', '$sektorId','$gramaj', '$alan','$cevre', '$paketAdet',
                         '$paketEn', '$paketBoy', '$balyaAdet','$maxGramaj', '$ezilmeKatsayisi','$aciklama',
-                        '$seo', '$resim', '$paketlemeSekli', '$sepetDizilmeSekli', '$cizim', '$profilAdi', '$boyaMaxAdet','$etKalinlik')";;
+                        '$seo', '$resim', '$paketlemeSekli', '$sepetDizilmeSekli', '$cizim', '$profilAdi', '$boyaMaxAdet','$etKalinlik', '$operatorId')";;
 
         if (mysqli_query($db, $sql)) {
             header("Location:../../tanimlar/profil/?durumekle=ok");
@@ -165,6 +166,7 @@ if (isset($_POST['profilguncelleme'])) {
     $paketyol = $_POST['paketyol'];
     $cizimyol = $_POST['cizimyol'];
     $etKalinlik = $_POST['etKalinlik'];
+    $operatorId = $_POST['operatorId'] ? $_POST['operatorId'] : 0;
 
     if ($_FILES['resim']['name'] != "") {
         $resim = pdfUpload('resim', "asset/img/profilresim/");
@@ -256,7 +258,7 @@ if (isset($_POST['profilguncelleme'])) {
     $sql = "UPDATE tblprofil set 
         profilNo = '$profilNo', sektorId = '$sektorId', gramaj = '$gramaj', alan = '$alan',
         cevre = '$cevre', paketAdet = '$paketAdet', paketEn = '$paketEn', paketBoy = '$paketBoy', balyaAdet = '$balyaAdet', 
-                       maxGramaj = '$maxGramaj', ezilmeKatsayisi ='$ezilmeKatsayisi', aciklama = '$aciklama',
+                       maxGramaj = '$maxGramaj', ezilmeKatsayisi ='$ezilmeKatsayisi', aciklama = '$aciklama', operatorId = '$operatorId',
                     seo = '$seo', resim = '$resimyol', paketlemeSekli = '$paketyol' , sepetDizilmeSekli  = '$sepetyol', cizim = '$cizim',
                      profilAdi = '$profilAdi', boyaMaxAdet = '$boyaMaxAdet', etKalinlik = '$etKalinlik'
             WHERE id='$id'";

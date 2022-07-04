@@ -17,7 +17,7 @@ $sql = "select k.id as id,
        kalite,
        figurSayi
 from tblkalipparcalar k
-         INNER JOIN tblfirma f on f.id = k.firmaId  where k.id IN($parca)";
+         LEFT JOIN tblfirma f on f.id = k.firmaId  where k.id IN($parca)";
 
 
 $result = $db->query($sql);

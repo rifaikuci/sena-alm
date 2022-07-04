@@ -25,6 +25,7 @@ if ($_GET['id']) {
                                    value="<?php echo $row['id'] ?>">
                             <input required type="text" class="form-control form-control-lg" name="ad"
                                    value="<?php echo $row['ad'] ?>">
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                         </div>
                     </div>
 

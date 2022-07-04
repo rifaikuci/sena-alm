@@ -50,9 +50,7 @@ where durum = 1";
                             </div>
                         </div>
 
-                        <input type="hidden"
-                               value="<?php echo isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0; ?>"
-                               name="operatorId">
+                        <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                         <input type="hidden" value="havuzdoldur" name="havuzdoldur"/>
                         <input type="hidden" value="<?php echo $id; ?>" name="id"/>
                         <input type="hidden" value="<?php echo $id == 3 ? "kum" : ($id  == 4 ? "tenefer" : "kostik"); ?>" name="tur"/>

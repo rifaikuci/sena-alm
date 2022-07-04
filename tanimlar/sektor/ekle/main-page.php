@@ -20,6 +20,8 @@
                             <input required type="text" class="form-control form-control-lg"
                                    name="kisakod"
                                    placeholder="Kısa Kod">
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
+
                         </div>
                     </div>
                 </div>

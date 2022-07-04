@@ -3,13 +3,14 @@ include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
 
-$sqlItems = "select  * from tblbaski where  (paketId != '-1' AND paketId != '0' AND naylonId != '-1')
-                                   or  (boyaPaketId != '0' AND boyaPaketId != '-1' AND naylonId !='-1')";
+$sqlItems = "select  b.id as id, b.paketId, b.naylonId, b.boyaPaketId, b.naylonId from tblbaski b where  (b.paketId != '-1' AND b.paketId != '0' AND b.naylonId != '-1')
+                                   or  (b.boyaPaketId != '0' AND b.boyaPaketId != '-1' AND b.naylonId !='-1')";
 
 $items = $db->query($sqlItems);
 
 $paketDizi = "";
 $boyaPaketDizi = "";
+
 
 while ($item = $items->fetch_array()) {
 
@@ -32,17 +33,53 @@ $paketDizi = rtrim($paketDizi, ',');
 $boyaPaketDizi = rtrim($boyaPaketDizi, ',');
 $sql = "";
 if ($paketDizi == "" && $boyaPaketDizi != "") {
-    $sql = "SELECT CONCAT ('B') as tur, id, netAdet,baskiId, isNaylon, naylonDurum, zaman  FROM tblboyapaket where id in($boyaPaketDizi) and isNaylon = 0";
+    $sql = "SELECT CONCAT ('B') as tur, bp.id as id, bp.netAdet,s.siparisTuru, bp.baskiId, bp.isNaylon, bp.naylonDurum, zaman, profilNo, profilAdi, s.satirNo, boy, e.ad as eloksalAd, pr.ad as boyaAd
+from tblboyapaket bp
+INNER  JOIN tblbaski b on b.id = bp.baskiId
+INNER JOIN tblsiparis s on s.id = b.siparisId
+INNER JOIN tblprofil p on p.id = s.profilId
+LEFT JOIN tbleloksal e on s.eloksalId = e.id
+LEFT JOIN tblprboya pr on s.boyaId = pr.id
+where bp.id in ($boyaPaketDizi)
+  and bp.isNaylon = 0";
 }
 
 if ($paketDizi != "" && $boyaPaketDizi == "") {
-    $sql = "SELECT  CONCAT ('P') as tur, id, netAdet,baskiId, isNaylon, naylonDurum, zaman FROM tblpaket where id in($paketDizi)  and isNaylon = 0";
+    $sql = "SELECT  CONCAT ('P') as tur, p.id as id, p.netAdet, s.siparisTuru, p.baskiId, p.isNaylon, p.naylonDurum, p.zaman, profilNo, profilAdi, s.satirNo, boy, e.ad as eloksalAd, pr.ad as boyaAd
+from tblpaket p
+         INNER  JOIN tblbaski b on b.id = p.baskiId
+         INNER JOIN tblsiparis s on s.id = b.siparisId
+         INNER JOIN tblprofil pro on pro.id = s.profilId
+         LEFT JOIN tbleloksal e on s.eloksalId = e.id
+         LEFT JOIN tblprboya pr on s.boyaId = pr.id
+where p.id in ($paketDizi)
+  and p.isNaylon = 0";
 }
 
 if ($paketDizi != "" && $boyaPaketDizi != "") {
-    $sql = "SELECT  CONCAT ('B') as tur,id,  netAdet,baskiId, isNaylon, naylonDurum, zaman from tblboyapaket where id in($boyaPaketDizi) and isNaylon = 0
- UNION ALL select   CONCAT ('P') as tur , id,  netAdet,baskiId, isNaylon, naylonDurum, zaman from tblpaket where id in($paketDizi) and isNaylon = 0";
+    $sql = "
+    SELECT CONCAT('B') as tur, bp.id as id, bp.netAdet,s.siparisTuru, bp.baskiId, bp.isNaylon, bp.naylonDurum, zaman, profilNo, profilAdi, s.satirNo, boy, e.ad as eloksalAd, pr.ad as boyaAd
+from tblboyapaket bp
+INNER  JOIN tblbaski b on b.id = bp.baskiId
+INNER JOIN tblsiparis s on s.id = b.siparisId
+INNER JOIN tblprofil p on p.id = s.profilId
+LEFT JOIN tbleloksal e on s.eloksalId = e.id
+LEFT JOIN tblprboya pr on s.boyaId = pr.id
+where bp.id in ($boyaPaketDizi)
+  and bp.isNaylon = 0
+UNION ALL
+select CONCAT('P') as tur, p.id as id, p.netAdet, s.siparisTuru, p.baskiId, p.isNaylon, p.naylonDurum, p.zaman, profilNo, profilAdi, s.satirNo, boy, e.ad as eloksalAd, pr.ad as boyaAd
+from tblpaket p
+         INNER  JOIN tblbaski b on b.id = p.baskiId
+         INNER JOIN tblsiparis s on s.id = b.siparisId
+         INNER JOIN tblprofil pro on pro.id = s.profilId
+         LEFT JOIN tbleloksal e on s.eloksalId = e.id
+         LEFT JOIN tblprboya pr on s.boyaId = pr.id
+where p.id in ($paketDizi)
+  and p.isNaylon = 0
+  ";
 }
+
 $items = $db->query($sql);
 
 
@@ -60,18 +97,26 @@ $items = $db->query($sql);
                 <div class="row">
                     <div class="col-sm-8">
                         <div class="form-group">
-                            <label> Ürünü seçiniz</label>
+                            <label> Satır No - Profil Adı - Boy - Yüzey Detay - Adet</label>
                             <select required id="naylon-select" class="select2"
                                     data-dropdown-css-class="select2-gray" name="item"
-                                    data-placeholder="Satır No - Kesim Id - Adet "
+                                    data-placeholder="Satır No - Profil Adı - Boy - Yüzey Detay - Adet"
                                     style="width: 100%;">
-                                <option selected disabled value="0">Ürün Seçiniz</option>
+                                <option selected disabled value="0">Satır No - Profil No - Boy - Yüzey Detay - Adet</option>
                                 <?php while ($item = $items->fetch_array()) {
-                                    $tur = $item['naylonDurum'] == 1 ? "Baskılı" : ($item['naylonDurum'] == 2 ? "Baskısız" : "Yok")
+                                    $tur = $item['naylonDurum'] == 1 ? "Baskılı" : ($item['naylonDurum'] == 2 ? "Baskısız" : "Yok");
+                                    $satirNo = $item['satirNo'];
+                                    $profil = $item['profilNo'];
+                                    $boy = $item['boy'];
+                                    $yuzey  = $item['siparisTuru'];
+                                    $yuzeyDetay = $yuzey == "B" ? "Boyalı" : ($yuzey == "E" ? "Eloksal" : "Pres");
+                                    $cins = $yuzey == "B" ? $item['boyaAd'] : ($yuzey == "E" ? $item['eloksalAd'] : "Pres");
+                                    $adet = $item['netAdet'];
+                                    $value = $satirNo . " - ". $profil ." - ". $boy . " - " . $yuzeyDetay . " - ". $cins . " - ". $adet;
                                     ?>
                                     <option
                                             value="<?php echo $item['baskiId'] . ";" . $item['netAdet'] . ";" . $item['naylonDurum'] . ";" . $item['tur'] . ";" . $item['id'] ?>">
-                                        <?php echo tablogetir("tblbaski", 'id', $item['baskiId'], $db)['satirNo'] . " - " . $item['baskiId'] . " - " . $item['netAdet'] . " - " . $tur ?>
+                                        <?php echo $value ?>
                                     </option>
                                 <?php } ?>
                             </select>
@@ -81,14 +126,14 @@ $items = $db->query($sql);
                             <input name="baskiId" :value="baskiId" type="hidden">
                             <input name="satirNo" :value="satirNo" type="hidden">
                             <input name="netAdet" :value="netAdet" type="hidden">
-                            <input type="hidden" name="operatorId" value="<?php echo $_SESSION['operatorId'] ?>">
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
 
                         </div>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-sm-8">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label> Naylon </label>
                             <select class="select2" id="naylon1-selected"
@@ -106,7 +151,7 @@ $items = $db->query($sql);
                         </div>
                     </div>
 
-                    <div class="col-sm-4" v-if="naylon1Max && naylon1Max > 0">
+                    <div class="col-sm-2" v-if="naylon1Max && naylon1Max > 0">
                         <div class="form-group">
                             <label>Naylon Kullanılan Adet</label>
                             <input required v-model="naylon1Adet"
@@ -118,7 +163,7 @@ $items = $db->query($sql);
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-8">
+                    <div class="col-sm-4">
                         <div class="form-group">
                             <label> Naylon </label>
                             <select required class="select2" id="naylon2-selected"
@@ -136,7 +181,7 @@ $items = $db->query($sql);
                         </div>
                     </div>
 
-                    <div class="col-sm-4" v-if="naylon2Max && naylon2Max > 0">
+                    <div class="col-sm-2" v-if="naylon2Max && naylon2Max > 0">
                         <div class="form-group">
                             <label>Kullanılan Adet</label>
                             <input required v-model="naylon2Adet"

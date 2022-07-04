@@ -21,8 +21,8 @@ if ($_POST['cap'] != "" && $_POST['firmaId'] != "" && $_POST['profilId'] != "" &
        kalite,
        figurSayi
 from tblkalipparcalar k
-         INNER JOIN tblfirma f on f.id = k.firmaId
-         INNER JOIN tblprofil p on p.id = k.profilId
+         LEFT JOIN tblfirma f on f.id = k.firmaId
+         LEFT JOIN tblprofil p on p.id = k.profilId
 where k.takimNo = ''
   AND k.cap = '$cap'
   AND k.firmaId = '$firmaId'

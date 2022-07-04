@@ -10,12 +10,6 @@ $profillerrsql = "SELECT * FROM tblprofil";
 $profiller = $db->query($profillerrsql);
 
 
-$bolstersql = "select k.id as id, firmaAd, senaNo, kalipciNo, kalite, figurSayi
-from tblkalipparcalar k
-         INNER JOIN
-tblfirma f ON f.id = k.firmaId where durum =1 and parca =100";
-$bolsterler = $db->query($bolstersql);
-
 ?>
 
 <section class="content">
@@ -38,6 +32,7 @@ $bolsterler = $db->query($bolstersql);
                                 <option value="3">Hazneli Solid</option>
                             </select>
                         </div>
+                        <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                         <input name="parca1SenaNo" :value="parca1SenaNo" type="hidden">
                         <input name="parca2SenaNo" :value="parca2SenaNo" type="hidden">
                         <input name="profilId" :value="profilId" type="hidden">
@@ -121,16 +116,14 @@ $bolsterler = $db->query($bolstersql);
                         <div class="form-group" >
                             <label>Bolster Seçiniz</label>
                             <div class="select2-blue">
-                                <select :disabled="!ekle" required name="bolsterler[]" class="select2" multiple="multiple"
+                                <select required name="bolsterler[]" class="select2" multiple="multiple"
                                         data-dropdown-css-class="select2-blue"
                                         data-placeholder="Sena No - Firma Adı -Kalıpçı No - Kalite - Figür Sayı"
                                         style="width: 100%;">
-                                    <?php
-                                    while ($bolster = $bolsterler->fetch_array()) { ?>
-                                        <option value="<?php echo $bolster['id'] ?>">
-                                            <?php echo $bolster['senaNo'] . " - " . $bolster['firmaAd'] . " - " . $bolster['kalipciNo'] . " - " . $bolster['kalite'] . " - " . $bolster['figurSayi'] ?>
-                                        </option>
-                                    <?php } ?>
+
+                                    <option v-for="(bolster,index) in bolsterler" :value="bolster.id">
+                                        {{bolster.senaNo}} - {{bolster.firmaAdi}} - {{bolster.cap}} - {{bolster.kalipciNo}} -  {{bolster.kalite}} - {{bolster.figurSayi}}
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -142,7 +135,7 @@ $bolsterler = $db->query($bolstersql);
                         <div class="form-group">
                             <label>Destek Seçiniz</label>
                             <div class="select2-blue">
-                                <select :disabled="!ekle" required name="destekler[]" class="select2" multiple="multiple"
+                                <select  required name="destekler[]" class="select2" multiple="multiple"
                                         data-dropdown-css-class="select2-blue"
                                         data-placeholder="Sena No - Firma Adı - Çap - Kalıpçı No - Kalite - Figür Sayı"
                                         style="width: 100%;">

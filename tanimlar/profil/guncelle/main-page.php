@@ -29,6 +29,7 @@ if ($_GET['id']) {
                                    value="<?php echo $row['profilNo'] ?>">
                             <input type="hidden" class="form-control form-control-lg" name="profilNo"
                                    value="<?php echo $row['profilNo'] ?>">
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
 
                             <input type="hidden" class="form-control form-control-lg" name="id"
                                    value="<?php echo $row['id'] ?>">

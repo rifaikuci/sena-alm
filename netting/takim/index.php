@@ -43,8 +43,8 @@ if (isset($_POST['profilId']) && isset($_POST['kalipCins']) ) {
         }
     }
 
-    $sql = "INSERT INTO tbltakim (parca1, parca2, takimNo, firmaId, profilId, cap, kalipCins, bolster, destek,sonGramaj)
-                            VALUES ('$parca1', '$parca2','$takimNo', '$firmaId','$profilId', '$cap', '$kalipCins', '$bolster', '$destek', '$sonGramaj')";
+    $sql = "INSERT INTO tbltakim (operatorId, parca1, parca2, takimNo, firmaId, profilId, cap, kalipCins, bolster, destek,sonGramaj)
+                            VALUES ( '$operatorId','$parca1', '$parca2','$takimNo', '$firmaId','$profilId', '$cap', '$kalipCins', '$bolster', '$destek', '$sonGramaj')";
 
     if (mysqli_query($db, $sql)) {
         $takimId = mysqli_insert_id($db);

@@ -11,8 +11,10 @@ if (isset($_POST['boyaekleme'])) {
         $ad = $_POST['ad'];
         $kod = $_POST['kod'];
         $seo = seo($ad);
+        $operatorId = $_POST['operatorId'] ? $_POST['operatorId'] : 0;
 
-        $sql = "INSERT INTO tblprboya (ad, kod, seo) VALUES ('$ad', '$kod', '$seo')";
+
+        $sql = "INSERT INTO tblprboya (ad, kod, seo, operatorId) VALUES ('$ad', '$kod', '$seo', '$operatorId')";
 
         if (mysqli_query($db, $sql)) {
             header("Location:../../tanimlar/boya/?durumekle=ok");
@@ -43,10 +45,11 @@ if (isset($_POST['boyaguncelleme'])) {
     $id = $_POST['id'];
     $ad = $_POST['ad'];
     $kod = $_POST['kod'];
+    $operatorId = $_POST['operatorId'] ? $_POST['operatorId'] : 0;
     $seo = seo($ad);
 
     $sql = "UPDATE tblprboya set 
-        ad = '$ad', kod = '$kod', seo = '$seo' WHERE id='$id'";
+        ad = '$ad', kod = '$kod', seo = '$seo', operatorId = '$operatorId' WHERE id='$id'";
 
     if (mysqli_query($db, $sql)) {
         header("Location:../../tanimlar/boya/?durumguncelleme=ok");

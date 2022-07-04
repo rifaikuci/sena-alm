@@ -190,7 +190,7 @@ $boyaSepet = $db->query($boyaSql);
                                    @change="netAdetCalculate($event)"
                                    class="form-control" type="number"
                                    placeholder="0">
-                            <input type="hidden" name="operatorId" value="<?php echo $_SESSION['operatorId'] ?>">
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                             <input name="boyapaketbaslat" value="boyapaketbaslat" type="hidden">
                             <input type="hidden" name="netAdet" :value="netAdet">
                             <input type="hidden" name="baskiId" :value="baskiId">

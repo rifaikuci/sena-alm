@@ -111,8 +111,8 @@ if ($received_data->action == 'destekId') {
        profilNo,
        firmaAd
 from tblkalipparcalar k
-         INNER JOIN tblprofil p on p.id = k.profilId
-         INNER JOIN tblfirma f on f.id = k.firmaId
+         LEFT JOIN tblprofil p on p.id = k.profilId
+         LEFT JOIN tblfirma f on f.id = k.firmaId
 WHERE k.durum = '1'
   AND k.firmaId = '$firmaId'
   AND k.figurSayi = '$figur'
@@ -160,5 +160,41 @@ if ($received_data->action == 'alasimlar') {
     }
     echo json_encode($listedestekler);
 }
+
+if ($received_data->action == 'bolsterId') {
+
+    $figur = $received_data->figur;
+    $sql = "
+    select k.id as id, firmaAd, senaNo, kalipciNo, kalite, figurSayi,cap
+from tblkalipparcalar k
+         INNER JOIN
+tblfirma f ON f.id = k.firmaId where 
+                                     k.figurSayi = '$figur' AND k.durum =1 and k.parca =100";
+
+    $result = $db->query($sql);
+    $listedestekler = array();
+    while ($row = $result->fetch_array()) {
+        $data['senaNo'] = $row['senaNo'];
+        $data['id'] = $row['id'];
+        $data['profilId'] = $row['profilId'];
+        $data['cap'] = $row['cap'];
+        $data['kalite'] = $row['kalite'];
+        $data['figurSayi'] = $row['figurSayi'];
+        $data['kalipCins'] = $row['kalipCins'];
+        $data['kalipciNo'] = $row['kalipciNo'];
+        $data['parca'] = $row['parca'];
+        $data['durum'] = $row['durum'];
+        $data['netKilo'] = $row['netKilo'];
+        $data['brutKilo'] = $row['brutKilo'];
+        $data['profilNo'] = $row['profilNo'];
+        $data['firmaAdi'] = $row['firmaAd'];
+        $data['cap'] = $row['cap'];
+        array_push($listedestekler, $data);
+    }
+
+    echo json_encode($listedestekler);
+
+}
+
 
 ?>

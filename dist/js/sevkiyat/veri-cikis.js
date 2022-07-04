@@ -23,6 +23,7 @@ var cikis = new Vue({
                 musteriId: 0,
                 musteri: "",
                 selected: false,
+                tonaj: 0
             }
         },
         mounted: async function () {
@@ -117,7 +118,6 @@ var cikis = new Vue({
             bitir(event) {
 
                 let   filterArray = this.balyalar.filter(x => x.selected === true)
-
                 filterArray.forEach(x => {
                     this.balyalaArray = this.balyalaArray + x.id + ";";
                     this.balyaNoArray = this.balyaNoArray + x.balyaNo + ";";

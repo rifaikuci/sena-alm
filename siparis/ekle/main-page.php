@@ -49,7 +49,7 @@ $alasimlar = $db->query($alasimsql);
                         <input name="arrayBoyaAciklama" :value="arrayBoyaAciklama" type="hidden">
                         <input name="arrayPaketAciklama" :value="arrayPaketAciklama" type="hidden">
                         <input name="arrayistenilenTermik" :value="arrayistenilenTermik" type="hidden">
-                        <input type="hidden" value="<?php echo $operatorId; ?>" name="operatorId">
+                        <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
 
 
 

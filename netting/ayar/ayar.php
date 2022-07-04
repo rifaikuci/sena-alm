@@ -9,8 +9,9 @@ ini_set('display_errors', 1);
 if (isset($_POST['ayarguncelleme'])) {
 
     $vardiya = $_POST['vardiya'];
+    $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $sql = "UPDATE tblayar set 
-       vardiya = '$vardiya'
+       vardiya = '$vardiya', operatorId = '$operatorId'
 WHERE id='1'";
 
     mysqli_query($db, $sql);

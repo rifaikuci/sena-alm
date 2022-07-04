@@ -110,6 +110,7 @@ if ($_GET['id']) {
                                            $temp['profilAdi'] . " - " . $temp['boy'] . " - " . $temp['ad']  . " - " . $adetler[$i] ?>"
                                        disabled
                                        placeholder="0.1">
+                                <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                             </div>
                         </div>
 

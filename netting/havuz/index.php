@@ -70,7 +70,7 @@ if (isset($_POST['havuzdoldur'])) {
 if (isset($_GET['havuzbosalt'])) {
 
     $id = $_GET['havuzbosalt'];
-    $operator = isset($_SESSION['operatorId']) ? $_SESSION['operatorId'] : 0;
+    $operator = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $bosTarih = date("Y-m-d H:i:s");
 
     $logId = tablogetir("tblhavuz", 'id', $id, $db)['logHavuzId'];

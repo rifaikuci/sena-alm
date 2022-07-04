@@ -39,8 +39,8 @@ $result = $db->query($sql);
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Ad</th>
-                                <th>Kod</th>
+                                <th>Renk</th>
+                                <th>RAL</th>
                                 <th>İşlem</th>
                             </tr>
                             </thead>

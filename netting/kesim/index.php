@@ -64,7 +64,8 @@ if (isset($_POST['kesimekle'])) {
         $sqlsepet1 = "UPDATE tblsepet set
                         icindekiler = '$sepet1Icındekiler',
                         adetler = '$sepet1Adetler',
-                        durum = '$isSepet1Dolu'
+                        durum = '$isSepet1Dolu',
+                        operatorId = '$operatorId'
                     where id = '$sepet1'";
         mysqli_query($db, $sqlsepet1);
     }
@@ -81,7 +82,8 @@ if (isset($_POST['kesimekle'])) {
         $sqlsepet2 = "UPDATE tblsepet set
                         icindekiler = '$sepet2Icındekiler',
                         adetler = '$sepet2Adetler',
-                        durum = '$isSepet2Dolu'
+                        durum = '$isSepet2Dolu',
+                        operatorId = '$operatorId'
                     where id = '$sepet2'";
         mysqli_query($db, $sqlsepet2);
     }
@@ -98,7 +100,8 @@ if (isset($_POST['kesimekle'])) {
         $sqlsepet3 = "UPDATE tblsepet set
                         icindekiler = '$sepet3Icındekiler',
                         adetler = '$sepet3Adetler',
-                        durum = '$isSepet3Dolu'
+                        durum = '$isSepet3Dolu',
+                        operatorId = '$operatorId'
                     where id = '$sepet3'";
         mysqli_query($db, $sqlsepet3);
     }
@@ -109,8 +112,8 @@ if (isset($_POST['kesimekle'])) {
     $kilo = $adet * $guncelGr * $kesilenBoy;
     $kilo = $kilo / 1000000;
     $kilo = sayiFormatla($kilo);
-    $sqlprofil = "INSERT INTO tblstokprofil (kilo, adet, geldigiYer,baskiId) 
-                VALUES ('$kilo', '$adet', 'kesim', '$baskiId')";
+    $sqlprofil = "INSERT INTO tblstokprofil (kilo, adet, geldigiYer,baskiId, operatorId) 
+                VALUES ('$kilo', '$adet', 'kesim', '$baskiId', '$operatorId')";
 
     $hurdaKilo = $hurdaAdet * $guncelGr * $kesilenBoy;
     $hurdaKilo = $hurdaKilo / 1000000;
@@ -267,8 +270,8 @@ if (isset($_POST['kesimguncelle'])) {
     $kilo = $adet * $guncelGr * $kesilenBoy;
     $hurdaKilo = $hurdaAdet * $guncelGr * $kesilenBoy;
 
-    $sqlprofil = "INSERT INTO tblstokprofil (kilo, adet, geldigiYer,baskiId) 
-                VALUES ('$kilo', '$adet', 'kesim', '$baskiId')";
+    $sqlprofil = "INSERT INTO tblstokprofil (kilo, adet, geldigiYer,baskiId, operatorId) 
+                VALUES ('$kilo', '$adet', 'kesim', '$baskiId', '$operatorId')";
 
     $sqlHurda = "UPDATE tblhurda set
     adet = '$hurdaAdet',
@@ -284,7 +287,8 @@ if (isset($_POST['kesimguncelle'])) {
     if ($sepetId1 > 0) {
 
         $sqlsepet1 = "UPDATE tblsepet set
-                        durum = '$isSepet1Dolu'
+                        durum = '$isSepet1Dolu',
+                        operatorId = '$operatorId'
                     where id = '$sepetId1'";
         mysqli_query($db, $sqlsepet1);
     }
@@ -292,7 +296,8 @@ if (isset($_POST['kesimguncelle'])) {
     if ($sepetId2 > 0) {
 
         $sqlsepet2 = "UPDATE tblsepet set
-                        durum = '$isSepet2Dolu'
+                        durum = '$isSepet2Dolu',
+                        operatorId = '$operatorId'
                     where id = '$sepetId2'";
         mysqli_query($db, $sqlsepet2);
     }
@@ -301,7 +306,8 @@ if (isset($_POST['kesimguncelle'])) {
 
 
         $sqlsepet3 = "UPDATE tblsepet set
-                        durum = '$isSepet3Dolu'
+                        durum = '$isSepet3Dolu',
+                        operatorId = '$operatorId'
                     where id = '$sepetId3'";
         mysqli_query($db, $sqlsepet3);
     }

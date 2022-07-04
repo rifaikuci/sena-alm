@@ -20,10 +20,11 @@ if (isset($_POST['personelekleme'])) {
         $password = $_POST['password'];
         $rolId = $_POST['rolId'];
         $username = $_POST['username'];
+        $operatorId = $_POST['operatorId'] ? $_POST['operatorId'] : 0;
         $sql = "INSERT INTO tblpersonel (adsoyad, isegiristarih, isecikistarih, adres, tc, telefon,
-                                      mail, bedentshirt, bedenpantalon, bedenayakkabi, rolId, password, username)
+                                      mail, bedentshirt, bedenpantalon, bedenayakkabi, rolId, password, username, operatorId)
                 VALUES ('$adsoyad', '$isegiristarih','$isecikistarih', '$adres','$tc', '$telefon',
-                        '$mail', '$bedentshirt','$bedenpantalon', '$bedenayakkabi','$rolId', '$password', '$username')";
+                        '$mail', '$bedentshirt','$bedenpantalon', '$bedenayakkabi','$rolId', '$password', '$username', '$operatorId')";
         if (mysqli_query($db, $sql)) {
             header("Location:../../tanimlar/personel/?durumekle=ok");
             exit();
@@ -64,10 +65,11 @@ if (isset($_POST['personelguncelleme'])) {
     $password = $_POST['password'];
     $rolId = $_POST['rolId'];
     $username = $_POST['username'];
+    $operatorId = $_POST['operatorId'] ? $_POST['operatorId'] : 0;
 
     $sql = "UPDATE tblpersonel set 
         adsoyad = '$adsoyad', isegiristarih = '$isegiristarih', isecikistarih = '$isecikistarih', adres = '$adres',
-        tc = '$tc', telefon = '$telefon', mail = '$mail', bedentshirt = '$bedentshirt', 
+        tc = '$tc', telefon = '$telefon', mail = '$mail', bedentshirt = '$bedentshirt', operatorId = '$operatorId', 
                        bedenpantalon = '$bedenpantalon', bedenayakkabi ='$bedenayakkabi', rolId = '$rolId', password = '$password',
                        username = '$username'  WHERE id='$id'";
     if (mysqli_query($db, $sql)) {

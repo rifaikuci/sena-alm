@@ -17,7 +17,7 @@ if (isset($_POST['boyapaketbaslat'])) {
     $satirNo = $_POST['satirNo'];
     $rutusAdet = $_POST['rutusAdet'];
     $rutusSebep = $_POST['rutusSebep'];
-    $naylonDurum = tablogetir('tblsiparis', 'satirNo',$satirNo, $db)['naylonDurum'];
+    $naylonDurum = tablogetir('tblsiparis', 'satirNo', $satirNo, $db)['naylonDurum'];
 
     $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $vardiya = vardiyaBul($vardiya, date("H:i"));
@@ -26,7 +26,7 @@ if (isset($_POST['boyapaketbaslat'])) {
 
     if ($hurdaAdet > 0) {
         $geciciAdet = -1 * ($hurdaAdet);
-        $kilo = kiloBul($baskiId, $hurdaAdet,$db);
+        $kilo = kiloBul($baskiId, $hurdaAdet, $db);
 
         $kiloStok = -1 * $kilo;
         $kiloHurda = $kilo;
@@ -34,7 +34,7 @@ if (isset($_POST['boyapaketbaslat'])) {
 
         $kiloHurda = $kiloHurda / 1000000;
         $kiloHurda = sayiFormatla($kiloHurda);
-        $kiloStok  = $kiloStok / 1000000;
+        $kiloStok = $kiloStok / 1000000;
         $kiloStok = sayiFormatla($kiloStok);
 
 
@@ -53,7 +53,7 @@ if (isset($_POST['boyapaketbaslat'])) {
         mysqli_query($db, $sqlrutusprofil);
 
         $rutusAdetR = -1 * $rutusAdet;
-        $kiloR = kiloBul($baskiId, $rutusAdetR,$db);
+        $kiloR = kiloBul($baskiId, $rutusAdetR, $db);
         $kiloR = $kiloR / 1000000;
         $kiloR = sayiFormatla($kiloR);
         $sqlprofilr = "INSERT INTO tblstokprofil (adet, geldigiYer,baskiId, operatorId, kilo) 
@@ -117,11 +117,11 @@ if (isset($_POST['boyapaketbaslat'])) {
     }
 
     $satirNo = $baski['satirNo'];
-    if($baski['naylonId'] == "-1") {
+    if ($baski['naylonId'] == "-1") {
         $anbar = tablogetir("tblanbar", 'satirNo', $satirNo, $db);
         $anbar = $anbar ? $anbar : 0;
 
-        if($anbar != 0) {
+        if ($anbar != 0) {
             $adet = $netAdet + $anbar['adet'];
             $kalanAdet = $netAdet + $anbar['kalanAdet'];
 
@@ -129,15 +129,15 @@ if (isset($_POST['boyapaketbaslat'])) {
                         kalanAdet = '$kalanAdet',
                         adet = '$adet'
                     where satirNo = '$satirNo'";
-        }
-        else {
+        } else {
 
             $sqlAnbar = "INSERT INTO tblanbar  (
+                       operatorId,
                         baskiId,
                         satirNo,
                         adet,
                         kalanAdet)
-                   VALUES  (
+                   VALUES  ('$operatorId',   
                         '$baskiId',
                         '$satirNo',
                         '$netAdet',

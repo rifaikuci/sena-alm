@@ -13,9 +13,10 @@ if (isset($_POST['malzemelerekleme'])) {
         $birim = $_POST['birim'];
         $birimMiktari = $_POST['birimMiktari'];
         $kullanildigiAlanlar = $_POST['kullanildigiAlanlar'];
+        $operatorId = $_POST['operatorId'] ? $_POST['operatorId'] : 0;
 
-        $sql = "INSERT INTO tblmalzemeler (ad, seo, birim, birimMiktari, kullanildigiAlanlar) 
-                VALUES ('$ad', '$seo', '$birim', '$birimMiktari', '$kullanildigiAlanlar')";
+        $sql = "INSERT INTO tblmalzemeler (ad, seo, birim, birimMiktari, kullanildigiAlanlar, operatorId) 
+                VALUES ('$ad', '$seo', '$birim', '$birimMiktari', '$kullanildigiAlanlar', '$operatorId')";
 
         if (mysqli_query($db, $sql)) {
             header("Location:../../tanimlar/malzemeler/?durumekle=ok");
@@ -49,9 +50,11 @@ if (isset($_POST['malzemelerguncelleme'])) {
     $birim = $_POST['birim'];
     $birimMiktari = $_POST['birimMiktari'];
     $kullanildigiAlanlar = $_POST['kullanildigiAlanlar'];
+    $operatorId = $_POST['operatorId'] ? $_POST['operatorId'] : 0;
 
     $sql = "UPDATE tblmalzemeler set 
         ad = '$ad', seo = '$seo', birim = '$birim', birimMiktari = '$birimMiktari', kullanildigiAlanlar = '$kullanildigiAlanlar'
+                   ,operatorId = '$operatorId'
             WHERE id='$id'";
     if (mysqli_query($db, $sql)) {
         header("Location:../../tanimlar/malzemeler/?durumguncelleme=ok");

@@ -3,13 +3,14 @@ include "../../netting/baglan.php";
 include "../../include/sql.php";
 require_once "../../include/data.php";
 $sql = "
-select s.id as id, kod, plaka, sevkiyatTarih, aciklama, 
+select s.id as id, kod, plaka, sevkiyatTarih, aciklama,tonaj,
        p1.adsoyad as p1adsoyad, p2.adsoyad as p2adsoyad
        from tblsevkiyatcikis  s
 INNER JOIN tblpersonel p1 ON s.personelId1 = p1.id
 LEFT JOIN tblpersonel p2 ON s.personelId2 = p2.id order by s.id desc
 ";
 $result = $db->query($sql);
+
 
 ?>
 
@@ -50,6 +51,7 @@ $result = $db->query($sql);
                                 <th>Plaka</th>
                                 <th>Tarih</th>
                                 <th>Açıklama</th>
+                                <th>Tonaj</th>
                                 <th style="text-align: center">İşlem</th>
                             </tr>
                             </thead>
@@ -67,7 +69,12 @@ $result = $db->query($sql);
                                     <td><?php echo $row['plaka']; ?></td>
                                     <td><?php echo tarih($row['sevkiyatTarih']); ?></td>
                                     <td><?php echo kelimeAyirma($row['aciklama'], 30); ?></td>
+                                    <td><?php
 
+                                        echo
+                                        sayiFormatla($row['tonaj']);
+
+                                    ?> </td>
                                     <td style="text-align: center">
                                         <a href="<?php echo "goruntule/?id=" . $row['id']; ?>" class="btn btn-outline-primary">Görüntüle</a>
                                     </td>

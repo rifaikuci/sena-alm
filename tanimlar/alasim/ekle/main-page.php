@@ -42,6 +42,7 @@ $firmalar = $db->query($firmasql);
                                             value="<?php echo $firma['id']; ?>"><?php echo $firma['firmaAd']; ?></option>
                                 <?php } ?>
                             </select>
+                            <input type="hidden" name="operatorId" value="<?php echo $operatorId ?>">
                         </div>
                     </div>
                 </div>

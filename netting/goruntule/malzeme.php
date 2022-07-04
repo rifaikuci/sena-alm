@@ -19,8 +19,8 @@ $sql = "select s.id as id,
        malzemeId,
        adet
 from tblstokmalzeme s
-         INNER JOIN tblmalzemeler m ON s.malzemeId = m.id
-         INNER JOIN tblfirma f ON f.id = s.firmaId
+         left JOIN tblmalzemeler m ON s.malzemeId = m.id
+         left JOIN tblfirma f ON f.id = s.firmaId
 where s.partino = '$partino'
   AND s.firmaId = '$firmaId'
   AND s.malzemeId = '$malzemeId'

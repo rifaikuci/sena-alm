@@ -7,6 +7,14 @@ $result = $db->query($sql);
 
 $islemArray = [1,4];
 $sonuc = in_array($rolId, $islemArray);
+
+$kromatSepetDurum = tablogetir("tblhavuz","tur",'kromat', $db)['durum'];
+$asitSepetDurum = tablogetir("tblhavuz","tur",'asit', $db)['durum'];
+$kumSepetDurum = tablogetir("tblhavuz","tur",'kum', $db)['durum'];
+$teneferSepetDurum = tablogetir("tblhavuz","tur",'tenefer', $db)['durum'];
+$kostikSepetDurum = tablogetir("tblhavuz","tur",'kostik', $db)['durum'];
+
+#todo datalar düzgün kontrol edilebilir.
 ?>
 
 
@@ -69,8 +77,38 @@ $sonuc = in_array($rolId, $islemArray);
             </div>
 
         </div>
-        <br>
 
+
+        <br>
+        <?php if($kromatSepetDurum == 0) {  ?>
+        <div>
+            <p style="color: red; font-weight: bold">Kromat Yapabilmek için Kromat Havuzu doldurunuz!</p>
+        </div>
+        <?php } ?>
+
+        <?php if($asitSepetDurum == 0) {  ?>
+            <div>
+                <p style="color: red; font-weight: bold">Kromat Yapabilmek için Asit Havuzu doldurunuz!</p>
+            </div>
+        <?php } ?>
+
+        <?php if($teneferSepetDurum == 0) {  ?>
+            <div>
+                <p style="color: red; font-weight: bold">Tenefer Yapabilmek için Tenefer Havuzu doldurunuz!</p>
+            </div>
+        <?php } ?>
+
+        <?php if($kumSepetDurum == 0) {  ?>
+            <div>
+                <p style="color: red; font-weight: bold">Kumlama Yapabilmek için Kum Havuzu doldurunuz!</p>
+            </div>
+        <?php } ?>
+
+        <?php if($kostikSepetDurum == 0) {  ?>
+            <div>
+                <p style="color: red; font-weight: bold">Kostik Yapabilmek için Kostik Havuzu doldurunuz!</p>
+            </div>
+        <?php } ?>
 
         <div class="col-12">
 
@@ -101,7 +139,6 @@ $sonuc = in_array($rolId, $islemArray);
                               } else {
                                   if($row['yapilanTeneferBaski'] > 0 && $row['siradakiTeneferBaski'] > 0) {
                                       $oran = $row['yapilanTeneferBaski'] / $row['siradakiTeneferBaski'] ;
-                                      echo $oran;
                                       if($oran >= 0.85) {
                                           $isTenefer = true;
                                       } else {

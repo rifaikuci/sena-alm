@@ -73,6 +73,7 @@ if (isset($_POST['termikbitir'])) {
     $vardiya = tablogetir('tblayar', 'id', '1', $db)['vardiya'];
     $bitisVardiya = vardiyaBul($vardiya, date("H:i"));
     $bitisTarih = date("d.m.Y H:i");
+    $operatorId = $_POST['operatorId'] ? $_POST['operatorId'] : 0;
 
 
     $baskilar = explode(",", $_POST['baskilar']);
@@ -82,7 +83,6 @@ if (isset($_POST['termikbitir'])) {
         $baskiId = trim($baskilar[$i]);
         $termikSonuc = $_POST['baski' . $baskiId];
         $termikIds = tablogetir("tblbaski", 'id', $baskiId, $db)['termikId'];
-
         if ($termikIds != '0' && $termikIds != '-1') {
             $termikId = trim($termikId);
             $termikIds = $termikIds . ";" . $termikId;
@@ -93,23 +93,21 @@ if (isset($_POST['termikbitir'])) {
 
         } else {
 
-            $kromatIds = $termikId;
+            $termikIds = $termikId;
 
             $sqlTermikUpdate = "UPDATE tblbaski set
                         termikSonuc = '$termikSonuc', termikId = '$termikIds'
                     where id = '$baskiId'";
         }
-
         mysqli_query($db, $sqlTermikUpdate);
     }
-
 
     $sepetler = tablogetir('tbltermik', 'id', $termikId, $db)['sepetler'];
     $sepetler = str_replace(";", ",", $sepetler);
 
 
     // durum 2 olduğunda termik işlemi bitirildi.
-    $sqlSepetUpdate = "Update tblsepet set isTermik = 0, durum = 2 where id in($sepetler)";
+    $sqlSepetUpdate = "Update tblsepet set isTermik = 0, durum = 2, operatorId = '$operatorId' where id in($sepetler)";
     mysqli_query($db, $sqlSepetUpdate);
 
 

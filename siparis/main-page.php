@@ -54,7 +54,7 @@ $sonuc = in_array($rolId, $islemArray);
                                 <th>Sipariş No</th>
                                 <th>Müşteri</th>
                                 <th>Tarih</th>
-                                <th style="text-align: center"></th>
+                                <th style="text-align: center">İşlem</th>
                             </tr>
                             </thead>
 

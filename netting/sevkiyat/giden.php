@@ -13,6 +13,7 @@ if (isset($_POST['sevkiyatcikisekle'])) {
     $sevkiyatarih = $_POST['sevkiyatarih'];
     $sevkiyasaat = $_POST['sevkiyasaat'];
     $balyalaArray = $_POST['balyalaArray'];
+    $tonaj = $_POST['tonaj'];
     $balyaNoArray = $_POST['balyaNoArray'];
     $operatorId = isset($_POST['operatorId']) ? $_POST['operatorId'] : 0;
     $aciklama = $_POST['aciklama'];
@@ -23,9 +24,17 @@ if (isset($_POST['sevkiyatcikisekle'])) {
     $yil = date('y');
     $rand = rand(0, 9) . rand(0, 9) . rand(0, 9) . rand(0, 9);
     $kod = "SVK-" . $yil . $hafta . $rand;
+    $tempBalyalaArray = explode(";",$balyalaArray);
+    $tonaj = 0;
+    for($i = 0; $i< count($tempBalyalaArray); $i++) {
+        $tempId = $tempBalyalaArray[$i];
+        $tempKilo = tablogetir("tblbalyalama", "id",$tempId, $db)['netKilo'];
+        $tonaj = $tonaj + $tempKilo;
+    }
 
-    $sql = "INSERT INTO tblsevkiyatcikis (kod, personelId1, personelId2, plaka, sevkiyatTarih, aciklama, operatorId, balyaId, balyaNo
-        ) VALUES ('$kod', '$personelId1', '$personelId2', '$plaka', '$tarih', '$aciklama', '$operatorId', '$balyalaArray', '$balyaNoArray')";
+    $tonaj =  sayiFormatla($tonaj);
+    $sql = "INSERT INTO tblsevkiyatcikis (kod, personelId1, personelId2, plaka, sevkiyatTarih, aciklama, operatorId, balyaId, balyaNo, tonaj
+        ) VALUES ('$kod', '$personelId1', '$personelId2', '$plaka', '$tarih', '$aciklama', '$operatorId', '$balyalaArray', '$balyaNoArray', '$tonaj')";
 
 
     mysqli_query($db, $sql);
