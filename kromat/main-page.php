@@ -12,7 +12,6 @@ $sonuc = in_array($rolId, $islemArray);
 $kromatSepetDurum = tablogetir("tblhavuz","tur",'kromat', $db)['durum'];
 $asitSepetDurum = tablogetir("tblhavuz","tur",'asit', $db)['durum'];
 
-#todo eğer kromat havuz asit dolu değilse kromat yapmasına izin verilmesin
 
 ?>
 

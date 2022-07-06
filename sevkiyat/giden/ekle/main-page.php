@@ -2,10 +2,10 @@
 include "../../../netting/baglan.php";
 include "../../../include/data.php";
 
-$personelsql = "SELECT * FROM tblpersonel";
+$personelsql = "SELECT * FROM tblpersonel where rolId = 10 AND isecikistarih = '0000-00-00 00:00:00' ";
 $personeller = $db->query($personelsql);
 
-$personelsql2 = "SELECT * FROM tblpersonel";
+$personelsql2 = "SELECT * FROM tblpersonel where rolId = 10 AND isecikistarih = '0000-00-00 00:00:00' " ;
 $personeller2 = $db->query($personelsql2);
 ?>
 

@@ -1,4 +1,4 @@
-
+net
 const formatter = new
     Intl.NumberFormat('de-DE', {
     minimumFractionDigits: 2,

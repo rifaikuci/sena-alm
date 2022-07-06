@@ -6,6 +6,7 @@ require_once "../../include/style.php";
 $profilId = $_POST['profilId'];
 $boy = $_POST['boy'];
 
+#tenefer vakti gelenleri baski tarafında göster
 #todo Zamana göre Sıralama Yapıldığı Yer
 $sql = "
 select str_to_date(b.bitisZamani, '%d.%m.%Y %H:%i') as bitisZamani,
@@ -24,6 +25,7 @@ from tblbaski b
 INNER JOIN tblsiparis s ON s.id = b.siparisId
 where s.profilId = '$profilId'
   and s.boy = '$boy'
+    and b.bitisZamani != ''
 ORDER BY b.bitisZamani desc
 LIMIT 5
  ";
@@ -78,8 +80,8 @@ $result = $db->query($sql);
                     <thead>
                     <tr>
                         <th>İşlem Zamanı</th>
-                        <th>Baskı Id</th>
                         <th>Takım No</th>
+                        <th>Baskı Id</th>
                         <th>Güncel Gr</th>
                         <th>Fire</th>
                     </tr>

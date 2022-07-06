@@ -41,7 +41,6 @@ if (isset($_POST['boyabaslat'])) {
     $adets = '';
     $hurdaAdets = '';
     $hurdaSebeps = '';
-
     for($i = 0; $i <count($arraySepetId); $i++ ) {
 
         $arrays = $arrays.$array[$i].";";
@@ -90,19 +89,21 @@ if (isset($_POST['boyabaslat'])) {
         $adetTablo = str_replace("bitti;", "", $adetTablo);
         $icindeTablo = str_replace("bitti;", "", $icindeTablo);
 
+
         if ($adetTablo == "") {
             $sqlSepet = "UPDATE tblsepet set
-                        icindekiler = null ,
-                        adetler = null ,
+                        icindekiler = '' ,
+                        adetler = '' ,
                         durum = '0',
                         isTermik = '0',
-                        finishedKronat = '0',
+                        finishedKromat = '0',
                         operatorId = '$operatorId'
                     where id = '$sepetId'";
 
-
             mysqli_query($db, $sqlSepet);
         } else {
+            echo "bi";
+            exit();
             $sqlSepet = "UPDATE tblsepet set
                         icindekiler = '$icindeTablo',
                         adetler = '$adetTablo',

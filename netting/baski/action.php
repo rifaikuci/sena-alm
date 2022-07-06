@@ -50,7 +50,8 @@ from tblsiparis s
         $data['basilanKilo'] = $row['basilanKilo'];
         $data['basilanAdet'] = $row['basilanAdet'];
         $data['kiloAdet'] = $row['kiloAdet'];
-        $data['kalanKg'] = $row['kilo'] - $row['basilanKilo'];
+        $deger = $row['kilo'] - $row['basilanKilo'];
+        $data['kalanKg'] = sayiFormatla($deger);
         $data['cizim'] = base_url().$row['resim'];
 
     }

@@ -410,7 +410,7 @@ $kostikHavuzDurum = tablogetir("tblhavuz","tur",'kostik', $db)['durum'];
                                                 <?php } ?>
 
                                         <a href="<?php echo "detay-goster/?takimId=" . $row['id']; ?>" class="btn btn-outline-success">
-                                            Detay Göster (Filtreli) </a>
+                                            Filtrele </a>
 
                                     <?php }
                                     if ($row['konum'] == "K3" &&  $teneferSayisi == 0) {

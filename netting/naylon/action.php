@@ -13,7 +13,7 @@ if ($received_data->action == 'naylongetir') {
     // id 1 ise -> baskılı, 2 ise baskısızlar getirilecek
     $id = $received_data->tur;
     // stok malzemede 5 -> baskılı olduğu için yazıldı
-    $malzemeId = $id == 1 ? 5  : ($id == 2 ? 6 : 0);
+    $malzemeId = $id == 1 ? 10  : ($id == 2 ? 14 : 0);
     $sql = "
      select s.id as id, malzemeId, kalan, partino, firmaAd, firmaId, adet, barkod
 from tblstokmalzeme s

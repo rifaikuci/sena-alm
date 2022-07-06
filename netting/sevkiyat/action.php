@@ -11,7 +11,7 @@ if ($received_data->action == 'balyalamagetir') {
 
     $balyalamasql = "
     select b.id as id,
-       operatorId,
+       b.operatorId,
        tarih,
        baskiId,
        netAdet,
@@ -29,7 +29,7 @@ if ($received_data->action == 'balyalamagetir') {
        firmaAd,
         sevkiyatId
 from tblbalyalama b
-         INNER JOIN tblfirma f on f.id = b.musteriId where b.sevkiyatId = 0
+         LEFT JOIN tblfirma f on f.id = b.musteriId where b.sevkiyatId = 0
     ";
 
 

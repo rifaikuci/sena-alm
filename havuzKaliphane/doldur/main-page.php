@@ -30,6 +30,18 @@ from tblstokmalzeme sm
 where kalan > 0 AND sm.malzemeId = 12";
         $teneferMalzemeler = $db->query($kumsql);
 
+    } else if($id == 5) {
+
+        $kumsql = "select sm.id as id,
+       firmaAd,
+       barkod,
+       ad
+from tblstokmalzeme sm
+         INNER JOIN tblfirma f ON f.id = sm.firmaId
+         INNER JOIN tblmalzemeler m ON sm.malzemeId = m.id
+where kalan > 0 AND sm.malzemeId = 13";
+        $teneferMalzemeler = $db->query($kumsql);
+
     }
 
 } ?>

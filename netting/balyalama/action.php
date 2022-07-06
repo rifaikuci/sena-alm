@@ -32,11 +32,11 @@ if ($received_data->action == 'anbargetir') {
        pr.paketAdet 
 from tblanbar a
          INNER JOIN tblbaski b ON b.id = a.baskiId
-         INNER JOIN tblsiparis s ON s.id = b.siparisId
-         INNER JOIN tblfirma f ON f.id = s.musteriId
-         INNER JOIN tbltakim t on b.takimId = t.id
-         INNER JOIN tblkalipparcalar t2 ON t2.senaNo = t.parca1
-         INNER JOIN tblprofil pr on pr.id = s.profilId where a.kalanAdet > 0 group by a.satirNo order by a.tarih asc
+         LEFT JOIN tblsiparis s ON s.id = b.siparisId
+         LEFT JOIN tblfirma f ON f.id = s.musteriId
+         LEFT JOIN tbltakim t on b.takimId = t.id
+         LEFT JOIN tblkalipparcalar t2 ON t2.senaNo = t.parca1
+         LEFT JOIN tblprofil pr on pr.id = s.profilId where a.kalanAdet > 0 group by a.satirNo order by a.tarih asc
 
     ";
 
