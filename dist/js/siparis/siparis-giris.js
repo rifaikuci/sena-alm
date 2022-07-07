@@ -72,24 +72,6 @@ var siparisGiris = new Vue({
 
 
     methods: {
-        checkBoy(event) {
-            if (event.target.value &&
-                this.siparis.profilId &&
-                this.siparis.siparisTur &&
-                this.siparis.alasimId &&
-                this.siparis.termimTarih &&
-                this.siparis.maxTolerans &&
-                this.siparis.istenilenTermik &&
-                this.siparis.korumaBandi &&
-                this.errorShow == false &&
-                this.siparis.naylonId) {
-                this.isFullSiparisData = true
-
-            } else {
-                this.isFullSiparisData = false
-            }
-
-        },
         checkKagit() {
             if (this.siparis.boy &&
                 this.siparis.profilId &&
@@ -160,7 +142,7 @@ var siparisGiris = new Vue({
         },
 
         async checkAdet(event) {
-            if (event.target.value && event.target.value > 0) {
+            if (this.siparis.adet && this.siparis.adet > 0) {
                 this.kiloDisabled = true;
                 if (this.siparis.profilId && this.siparis.boy) {
                     const kiloBul = await axios.post('/sena/netting/siparis/action.php', {

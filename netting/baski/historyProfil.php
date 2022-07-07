@@ -6,7 +6,7 @@ require_once "../../include/style.php";
 $profilId = $_POST['profilId'];
 $boy = $_POST['boy'];
 
-#tenefer vakti gelenleri baski tarafında göster
+# todo tenefer vakti gelenleri baski tarafında göster
 #todo Zamana göre Sıralama Yapıldığı Yer
 $sql = "
 select str_to_date(b.bitisZamani, '%d.%m.%Y %H:%i') as bitisZamani,

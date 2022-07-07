@@ -12,7 +12,6 @@ $kumHavuzDurum = tablogetir("tblhavuz","tur",'kum', $db)['durum'];
 $teneferHavuzDurum = tablogetir("tblhavuz","tur",'tenefer', $db)['durum'];
 $kostikHavuzDurum = tablogetir("tblhavuz","tur",'kostik', $db)['durum'];
 
-#todo datalar düzgün kontrol edilebilir.
 ?>
 
 

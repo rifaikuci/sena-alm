@@ -116,7 +116,7 @@ $alasimlar = $db->query($alasimsql);
                                         <div class="form-group">
                                             <label>Boy (mm)</label>
                                             <input v-model="siparis.boy" type="number" placeholder="1 mm"
-                                                   @input="checkBoy($event)"
+                                                   @input="checkAdet($event)"
                                                    class="form-control form-control-lg" name="boy">
                                         </div>
                                     </div>
