@@ -28,7 +28,7 @@ var cikis = new Vue({
         },
         mounted: async function () {
 
-            let balyalama = await axios.post('/sena/netting/sevkiyat/action.php', {
+            let balyalama = await axios.post(BASE_URL+'netting/sevkiyat/action.php', {
                 action: 'balyalamagetir',
             }).then((response) => {
                 return response.data
@@ -130,7 +130,7 @@ var cikis = new Vue({
             detayGoster(event,item) {
                 if (item.balyaNo) {
                     $.ajax({
-                        url: '/sena/netting/balyalama/balyalama.php',
+                        url: BASE_URL+'netting/balyalama/balyalama.php',
                         type: 'post',
                         data: {
                             balyano: item.balyaNo,

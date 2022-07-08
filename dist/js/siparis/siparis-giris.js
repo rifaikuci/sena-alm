@@ -119,7 +119,7 @@ var siparisGiris = new Vue({
                 this.adetDisabled = true;
                 if (this.siparis.profilId && this.siparis.boy) {
 
-                    const kiloBul = await axios.post('/sena/netting/siparis/action.php', {
+                    const kiloBul = await axios.post(BASE_URL+'netting/siparis/action.php', {
                         action: 'kilo',
                         profilId: this.siparis.profilId,
                     }).then((response) => {
@@ -145,13 +145,13 @@ var siparisGiris = new Vue({
             if (this.siparis.adet && this.siparis.adet > 0) {
                 this.kiloDisabled = true;
                 if (this.siparis.profilId && this.siparis.boy) {
-                    const kiloBul = await axios.post('/sena/netting/siparis/action.php', {
+                    const kiloBul = await axios.post(BASE_URL+'netting/siparis/action.php', {
                         action: 'kilo',
                         profilId: this.siparis.profilId,
                     }).then((response) => {
                         return response.data
                     });
-
+                console.log(kiloBul);
 
                     this.siparis.kiloAdet = 'A';
                     this.siparis.kilo = ((event.target.value) *
@@ -171,7 +171,7 @@ var siparisGiris = new Vue({
         async checkTolerans(event) {
             if (event.target.value && event.target.value > 0) {
                 if (this.siparis.profilId) {
-                    const tolerans = await axios.post('/sena/netting/siparis/action.php', {
+                    const tolerans = await axios.post(BASE_URL+'netting/siparis/action.php', {
                         action: 'tolerans',
                         deger: event.target.value,
                         profilId: this.siparis.profilId,

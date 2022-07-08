@@ -26,7 +26,7 @@ var balyalamaGoruntule = new Vue({
     mounted: async function () {
 
         this.id = $(this)[0]._vnode.data.attrs.id;
-        let balyalama = await axios.post('/sena/netting/balyalama/action.php', {
+        let balyalama = await axios.post(BASE_URL+'netting/balyalama/action.php', {
             action: 'balyalamagetir',
             id: this.id
         }).then((response) => {

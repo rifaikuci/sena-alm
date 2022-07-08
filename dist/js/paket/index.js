@@ -99,7 +99,7 @@ $('#paket-giris-select').on("change", async function () {
     paketGiris.baskiId = array[1];
     paketGiris.sepetAdet = array[2];
 
-    const selectedRow = await axios.post('/sena/netting/paket/action.php', {
+    const selectedRow = await axios.post(BASE_URL+'netting/paket/action.php', {
         action: 'siparisgetir',
         id: paketGiris.baskiId,
     }).then((response) => {

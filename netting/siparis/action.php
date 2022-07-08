@@ -16,7 +16,7 @@ if ($received_data->action == 'kilo') {
     $row = $result->fetch_assoc();
 
     foreach ($result as $row) {
-        $data['ortalama'] = $row['deger']  && $row['deger']  ?  $row['deger'] :  0;
+        $data['ortalama'] = $row['deger']  && $row['deger']  ?  $row['deger'] :  tablogetir("tblprofil", 'id',$profilId,$db)['gramaj'];
     }
 
     echo json_encode($data);

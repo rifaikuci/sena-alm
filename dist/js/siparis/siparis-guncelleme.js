@@ -55,7 +55,7 @@ new Vue({
 
     mounted: async function () {
 
-        allItems = await axios.post('/sena/netting/siparis/action.php', {
+        allItems = await axios.post(BASE_URL+'netting/siparis/action.php', {
             action: 'siparislerlistesi',
             siparisNo: new URL(location.href).searchParams.get('siparisno'),
         }).then((response) => {
@@ -163,7 +163,7 @@ new Vue({
             if (event.target.value && event.target.value > 0) {
                 this.adetDisabled = true;
                 if (this.siparis.profilId && this.siparis.boy) {
-                    const kiloBul = await axios.post('/sena/netting/siparis/action.php', {
+                    const kiloBul = await axios.post(BASE_URL+'netting/siparis/action.php', {
                         action: 'kilo',
                         profilId: this.siparis.profilId,
                     }).then((response) => {
@@ -189,7 +189,7 @@ new Vue({
             if (event.target.value && event.target.value > 0) {
                 this.kiloDisabled = true;
                 if (this.siparis.profilId && this.siparis.boy) {
-                    const kiloBul = await axios.post('/sena/netting/siparis/action.php', {
+                    const kiloBul = await axios.post(BASE_URL+'netting/siparis/action.php', {
                         action: 'kilo',
                         profilId: this.siparis.profilId,
                     }).then((response) => {
@@ -214,7 +214,7 @@ new Vue({
         async checkTolerans(event) {
             if (event.target.value && event.target.value > 0) {
                 if (this.siparis.profilId) {
-                    const tolerans = await axios.post('/sena/netting/siparis/action.php', {
+                    const tolerans = await axios.post(BASE_URL+'netting/siparis/action.php', {
                         action: 'tolerans',
                         deger: event.target.value,
                         profilId: this.siparis.profilId,
@@ -334,7 +334,7 @@ new Vue({
                 this.siparis.boyaAciklama = this.siparis.siparisTur == "Boyalı" ? this.siparis.boyaAciklama : ""
 
                 $.ajax({
-                    url: '/sena/netting/siparis/index.php',
+                    url: BASE_URL+'netting/siparis/index.php',
                     type: 'post',
                     data: {
                         guncellesatir: true,
@@ -404,7 +404,7 @@ new Vue({
                 this.errorShow = false;
                 this.selectedRow = null;
 
-                allItems = await axios.post('/sena/netting/siparis/action.php', {
+                allItems = await axios.post(BASE_URL+'netting/siparis/action.php', {
                     action: 'siparislerlistesi',
                     siparisNo: new URL(location.href).searchParams.get('siparisno'),
                 }).then((response) => {

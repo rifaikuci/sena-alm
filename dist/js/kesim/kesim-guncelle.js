@@ -36,7 +36,7 @@ var kesimguncelle = new Vue({
 
             this.kesimId = $(this)[0]._vnode.data.attrs.kesim;
             this.hurdaAdet = $(this)[0]._vnode.data.attrs.hurdaadet;
-            const kesim = await axios.post('/sena/netting/kesim/action.php', {
+            const kesim = await axios.post(BASE_URL+'netting/kesim/action.php', {
                 action: 'kesimgetir',
                 id: this.kesimId
             }).then((response) => {
@@ -102,7 +102,7 @@ var kesimguncelle = new Vue({
 $('#kesim_baski_guncelle_id').on("change", async function () {
 
     kesimguncelle.baskiId = $(this).val();
-    const response = await axios.post('/sena/netting/kesim/action.php', {
+    const response = await axios.post(BASE_URL+'netting/kesim/action.php', {
         action: 'baskigetir',
         id: kesimguncelle.baskiId,
     }).then((response) => {

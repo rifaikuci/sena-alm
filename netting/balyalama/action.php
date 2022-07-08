@@ -11,34 +11,33 @@ if ($received_data->action == 'anbargetir') {
 
 
     $balyalamasql = "
-    select a.id as id,
-       a.satirNo,
-       musteriId,
-       firmaAd,
-       s.boy,
-       figurSayi,
-       baskiId,
-       siparisNo,
-       krepeKagit,
-       korumaBandi,
-       naylonDurum,
-       t.takimNo,
-       takimId,
-       s.profilId,
-       profilNo,
-       profilAdi,
-       gramaj, a.kalanAdet,
-       a.tarih as tarih,
-       pr.paketAdet 
-from tblanbar a
-         INNER JOIN tblbaski b ON b.id = a.baskiId
-         LEFT JOIN tblsiparis s ON s.id = b.siparisId
-         LEFT JOIN tblfirma f ON f.id = s.musteriId
-         LEFT JOIN tbltakim t on b.takimId = t.id
-         LEFT JOIN tblkalipparcalar t2 ON t2.senaNo = t.parca1
-         LEFT JOIN tblprofil pr on pr.id = s.profilId where a.kalanAdet > 0 group by a.satirNo order by a.tarih asc
-
-    ";
+                   select Max(a.id) as id,
+                       Max(a.satirNo) as satirNo,
+                       MAX(musteriId) as musteriId,
+                       MAX(firmaAd) as firmaAd,
+                       MAX(s.boy) as boy,
+                       MAX(figurSayi) as figurSayi,
+                       MAX(baskiId) as baskiId,
+                       MAX(siparisNo) as siparisNo,
+                       MAX(krepeKagit) as krepeKagit,
+                       MAX(korumaBandi) as korumaBandi,
+                       MAX(naylonDurum) as naylonDurum,
+                       MAX(t.takimNo) as takimNo,
+                       MAX(takimId) as takimId,
+                       MAX(s.profilId) as profilId,
+                       MAX(profilNo) as profilNo,
+                       MAX(profilAdi) as profilAdi,
+                       MAX(gramaj) as gramaj,
+                       MAX(a.kalanAdet) as kalanAdet,
+                       MAX(a.tarih) as tarih,
+                       MAX(pr.paketAdet) as paketAdet
+                from tblanbar a
+                         INNER JOIN tblbaski b ON b.id = a.baskiId
+                         LEFT JOIN tblsiparis s ON s.id = b.siparisId
+                         LEFT JOIN tblfirma f ON f.id = s.musteriId
+                         LEFT JOIN tbltakim t on b.takimId = t.id
+                         LEFT JOIN tblkalipparcalar t2 ON t2.senaNo = t.parca1
+                         LEFT JOIN tblprofil pr on pr.id = s.profilId where kalanAdet > 0 group by satirNo order by tarih asc";
 
 
     $result = $db->query($balyalamasql);

@@ -36,7 +36,7 @@ $('#naylon-select').on("change", async function () {
         naylonGiris.baskiId = array[0];
         naylonGiris.netAdet = array[1];
 
-        const naylonlar = await axios.post('/sena/netting/naylon/action.php', {
+        const naylonlar = await axios.post(BASE_URL+'netting/naylon/action.php', {
             action: 'naylongetir',
             tur: naylonGiris.naylonDurum,
         }).then((res2) => {

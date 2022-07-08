@@ -98,7 +98,7 @@ $('#kesim_baski_id').on("change", async function () {
     kesimgiris.sepetler2 = [];
     kesimgiris.sepetler3 = [];
     kesimgiris.baskiId = $(this).val();
-    const response = await axios.post('/sena/netting/kesim/action.php', {
+    const response = await axios.post(BASE_URL+'netting/kesim/action.php', {
         action: 'baskigetir',
         id: kesimgiris.baskiId,
     }).then((response) => {
@@ -128,7 +128,7 @@ $('#kesim_baski_id').on("change", async function () {
         }
 
 
-        const response2 = await axios.post('/sena/netting/kesim/action.php', {
+        const response2 = await axios.post(BASE_URL+'netting/kesim/action.php', {
             action: 'sepetgetir',
             tur: kesimgiris.adim,
         }).then((res2) => {

@@ -9,7 +9,7 @@ new Vue({
         detayGoster(event,) {
             if (event.target.dataset.balyano) {
                 $.ajax({
-                    url: '/sena/netting/balyalama/balyalama.php',
+                    url: BASE_URL+'netting/balyalama/balyalama.php',
                     type: 'post',
                     data: {
                         balyano: event.target.dataset.balyano,

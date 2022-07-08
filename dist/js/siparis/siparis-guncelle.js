@@ -51,7 +51,7 @@ var siparissatirguncelle = new Vue({
     mounted: async function () {
         this.satirno = $(this)[0]._vnode.data.attrs.satirno;
 
-        const response = await axios.post('/sena/netting/siparis-satir/action.php', {
+        const response = await axios.post(BASE_URL+'netting/siparis-satir/action.php', {
             action: 'siparisgetir',
             satirno: this.satirno
         }).then((response) => {
@@ -166,7 +166,7 @@ var siparissatirguncelle = new Vue({
             if (event.target.value && event.target.value > 0) {
                 this.adetDisabled = true;
                 if (this.profilId && this.boy) {
-                    const kiloBul = await axios.post('/sena/netting/siparis/action.php', {
+                    const kiloBul = await axios.post(BASE_URL+'netting/siparis/action.php', {
                         action: 'kilo',
                         profilId: this.profilId,
                     }).then((response) => {
@@ -209,7 +209,7 @@ var siparissatirguncelle = new Vue({
             if (event.target.value && event.target.value > 0) {
                 this.kiloDisabled = true;
                 if (this.profilId && this.boy) {
-                    const kiloBul = await axios.post('/sena/netting/siparis/action.php', {
+                    const kiloBul = await axios.post(BASE_URL+'netting/siparis/action.php', {
                         action: 'kilo',
                         profilId: this.profilId,
                     }).then((response) => {
@@ -251,7 +251,7 @@ var siparissatirguncelle = new Vue({
         async checkTolerans(event) {
             if (event.target.value && event.target.value > 0) {
                 if (this.profilId) {
-                    const tolerans = await axios.post('/sena/netting/siparis/action.php', {
+                    const tolerans = await axios.post(BASE_URL+'netting/siparis/action.php', {
                         action: 'tolerans',
                         deger: event.target.value,
                         profilId: this.profilId,

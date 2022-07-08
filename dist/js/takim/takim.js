@@ -91,7 +91,7 @@ new Vue({
 
                 }
                 $.ajax({
-                    url: '/sena/netting/kalipci/modal-parca1.php',
+                    url: BASE_URL+'netting/kalipci/modal-parca1.php',
                     type: 'post',
                     data: {
                         kalipCins: this.kalipCins,
@@ -146,7 +146,7 @@ new Vue({
                 }
 
                 $.ajax({
-                    url: '/sena/netting/kalipci/modal-parca2.php',
+                    url: BASE_URL+'netting/kalipci/modal-parca2.php',
                     type: 'post',
                     data: {
                         kalipCins: this.kalipCins,
@@ -198,7 +198,7 @@ new Vue({
                     this.figur = self.parca1FigurSayi ? self.parca1FigurSayi : self.parca2FigurSayi ? self.parca2FigurSayi : "";
                     this.parca1SenaNo = self.parca1SenaNo ? self.parca1SenaNo : "Parçayı Seç";
                     this.parca2SenaNo = self.parca2SenaNo ? self.parca2SenaNo : "Parçayı Seç";
-                    const destekler = await axios.post('/sena/netting/action.php', {
+                    const destekler = await axios.post(BASE_URL+'netting/action.php', {
                         action: 'destekId',
                         firmaId: this.firmaId,
                         profilId: this.profilId,
@@ -211,7 +211,7 @@ new Vue({
                     });
                     this.destekler = destekler;
 
-                    const bolsterler = await axios.post('/sena/netting/action.php', {
+                    const bolsterler = await axios.post(BASE_URL+'netting/action.php', {
                         action: 'bolsterId',
                         figur: this.figur,
                     }).then((response) => {
@@ -236,7 +236,7 @@ new Vue({
                     this.figur = self.parca1FigurSayi ? self.parca1FigurSayi : "";
                     this.parca1SenaNo = self.parca1SenaNo ? self.parca1SenaNo : "Parçayı Seç";
                     this.parca2SenaNo = self.parca2SenaNo ? self.parca2SenaNo : "Parçayı Seç";
-                    const destekler = await axios.post('/sena/netting/action.php', {
+                    const destekler = await axios.post(BASE_URL+'netting/action.php', {
                         action: 'destekId',
                         firmaId: this.firmaId,
                         profilId: this.profilId,
@@ -249,7 +249,7 @@ new Vue({
                     });
                     this.destekler = destekler;
 
-                    const bolsterler = await axios.post('/sena/netting/action.php', {
+                    const bolsterler = await axios.post(BASE_URL+'netting/action.php', {
                         action: 'bolsterId',
                         figur: this.figur
                     }).then((response) => {

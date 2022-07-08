@@ -8,7 +8,7 @@ $(document).ready(function () {
         var adet = $(this).data('adet');
 
         $.ajax({
-            url: '/sena/netting/goruntule/malzeme.php',
+            url: BASE_URL+'netting/goruntule/malzeme.php',
             type: 'post',
             data: {partino: partino, firmaId: firmaId, malzemeId: malzemeId, adet: adet},
             success: function (response) {
@@ -29,7 +29,7 @@ $(document).ready(function () {
         var kilo = $(this).data('kilo');
         var adet = $(this).data('adet');
         $.ajax({
-            url: '/sena/netting/goruntule/boya.php',
+            url: BASE_URL+'netting/goruntule/boya.php',
             type: 'post',
             data: {
                 partino: partino,
@@ -53,7 +53,7 @@ $(document).ready(function () {
     $('.biyetim').click(function () {
         var id = $(this).data('id');
             $.ajax({
-            url: '/sena/netting/goruntule/biyet.php',
+            url: BASE_URL+'netting/goruntule/biyet.php',
             type: 'post',
             data: {id: id},
             success: function (response) {

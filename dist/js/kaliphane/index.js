@@ -27,7 +27,7 @@ var kalipDetay = new Vue({
     mounted: async function () {
         this.takimId = $(this)[0]._vnode.data.attrs.takim;
 
-        kalip = await axios.post('/sena/netting/kaliphane/action.php', {
+        kalip = await axios.post(BASE_URL+'netting/kaliphane/action.php', {
             action: 'kalipgetir',
             takimId: this.takimId
         }).then((response) => {

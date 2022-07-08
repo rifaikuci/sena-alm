@@ -101,7 +101,7 @@ $('#boya-paket-giris').on("change", async function () {
     boyaPaketGiris.korumaBandiAd = boyaPaketGiris.korumaBandiId == 1 ? "Baskılı" :
         boyaPaketGiris.korumaBandiId == 2 ? "Baskısız" : boyaPaketGiris.korumaBandiId == 3 ? "Yok" : "";
 
-    const selectedRow = await axios.post('/sena/netting/boyapaket/action.php', {
+    const selectedRow = await axios.post(BASE_URL+'netting/boyapaket/action.php', {
         action: 'siparisgetir',
         id: siparisId,
     }).then((response) => {

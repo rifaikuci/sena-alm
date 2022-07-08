@@ -8,7 +8,7 @@ new Vue({
         methods: {
             destekgoster(event) {
                 $.ajax({
-                    url: '/sena/netting/takim/destek.php',
+                    url: BASE_URL+'netting/takim/destek.php',
                     type: 'post',
                     data: {
                         parca: event.target.dataset.parca,
@@ -23,7 +23,7 @@ new Vue({
 
             bolstergoster(event) {
                 $.ajax({
-                    url: '/sena/netting/takim/bolster.php',
+                    url: BASE_URL+'netting/takim/bolster.php',
                     type: 'post',
                     data: {
                         parca: event.target.dataset.parca,
@@ -38,7 +38,7 @@ new Vue({
             },
             modaltrash(event) {
                 $.ajax({
-                    url: '/sena/netting/takim/trash.php',
+                    url: BASE_URL+'netting/takim/trash.php',
                     type: 'post',
                     data: {
                         parca1: event.target.dataset.parca1,

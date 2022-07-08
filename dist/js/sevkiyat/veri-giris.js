@@ -124,7 +124,7 @@ var veri = new Vue({
             biyetekle: async function (event) {
                 event.preventDefault();
                 this.biyet.firmaId = biyetFirmaId;
-                const firmabul = await axios.post('/sena/netting/action.php', {
+                const firmabul = await axios.post(BASE_URL+'netting/action.php', {
                     action: 'firmaId',
                     id: this.biyet.firmaId
                 }).then((response) => {
@@ -132,7 +132,7 @@ var veri = new Vue({
                 });
 
 
-                const alasimbul = await axios.post('/sena/netting/action.php', {
+                const alasimbul = await axios.post(BASE_URL+'netting/action.php', {
                     action: 'alasimId',
                     id: this.biyet.alasimId
                 }).then((response) => {
@@ -252,14 +252,14 @@ var veri = new Vue({
                 event.preventDefault();
                     this.boya.firmaId = boyaFirmaId;
                     this.boya.boyaId = boyaTur;
-                const firmabul = await axios.post('/sena/netting/action.php', {
+                const firmabul = await axios.post(BASE_URL+'netting/action.php', {
                     action: 'firmaId',
                     id: this.boya.firmaId
                 }).then((response) => {
                     return response.data
                 });
 
-                const boyabul = await axios.post('/sena/netting/action.php', {
+                const boyabul = await axios.post(BASE_URL+'netting/action.php', {
                     action: 'boyaId',
                     id: this.boya.boyaId
                 }).then((response) => {
@@ -375,14 +375,14 @@ var veri = new Vue({
                 event.preventDefault();
                 this.malzeme.firmaId = malzemeFirmaId;
 
-                const firmabul = await axios.post('/sena/netting/action.php', {
+                const firmabul = await axios.post(BASE_URL+'netting/action.php', {
                     action: 'firmaId',
                     id: this.malzeme.firmaId
                 }).then((response) => {
                     return response.data
                 });
 
-                const malzemebul = await axios.post('/sena/netting/action.php', {
+                const malzemebul = await axios.post(BASE_URL+'netting/action.php', {
                     action: 'malzemeId',
                     id: this.malzeme.malzemeId
                 }).then((response) => {
@@ -463,7 +463,7 @@ var veri = new Vue({
                 this.profil.firmaId = sevkiyatGeldigiFirma;
                 this.profil.musteriId = sevkiyatMusteriId;
 
-                const data = await axios.post('/sena/netting/action.php', {
+                const data = await axios.post(BASE_URL+'netting/action.php', {
                     action: 'profilId',
                     id: this.profil.profilId
                 }).then((response) => {
@@ -472,7 +472,7 @@ var veri = new Vue({
                 this.profil.resim = data.resim;
                 this.profil.profilAd = data.ad;
 
-                const firmabul = await axios.post('/sena/netting/action.php', {
+                const firmabul = await axios.post(BASE_URL+'netting/action.php', {
                     action: 'firmaId',
                     id: this.profil.firmaId
                 }).then((response) => {
@@ -481,7 +481,7 @@ var veri = new Vue({
 
                 this.profil.firmaAd = firmabul.firmaAd;
 
-                const musteribul = await axios.post('/sena/netting/action.php', {
+                const musteribul = await axios.post(BASE_URL+'netting/action.php', {
                     action: 'firmaId',
                     id: this.profil.musteriId
                 }).then((response) => {
@@ -655,7 +655,7 @@ var veri = new Vue({
 $('#sevkiyatBiyetFirmaId').on("change", async  function(value){
     biyetFirmaId = value.target.value
 
-    alasimlar = await axios.post('/sena/netting/action.php', {
+    alasimlar = await axios.post(BASE_URL+'netting/action.php', {
         action: 'alasimlar',
         firmaid: biyetFirmaId
     }).then((response) => {

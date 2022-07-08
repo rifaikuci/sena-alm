@@ -86,7 +86,7 @@ var baskigiris = new Vue({
                 var baslazamani = gun + "." + ay + "." + date.getFullYear() + " " + saat + ":" + dakika
 
 
-                const response = await axios.post('/sena/netting/baski/action.php', {
+                const response = await axios.post(BASE_URL+'netting/baski/action.php', {
                     action: 'baskibaslat',
                     baslazamani: day,
                     siparisId: this.siparisId,
@@ -314,7 +314,7 @@ var baskigiris = new Vue({
                 event.preventDefault();
 
                 $.ajax({
-                    url: '/sena/netting/baski/historyProfil.php',
+                    url: BASE_URL+'netting/baski/historyProfil.php',
                     type: 'post',
                     data: {
                         profilId : this.profilId,
@@ -334,7 +334,7 @@ var baskigiris = new Vue({
 
 $('#supplier_id').on("change", async function () {
 
-    const selectedRow = await axios.post('/sena/netting/baski/action.php', {
+    const selectedRow = await axios.post(BASE_URL+'netting/baski/action.php', {
         action: 'baskigetir',
         id: $(this).val(),
     }).then((response) => {
@@ -362,7 +362,7 @@ $('#supplier_id').on("change", async function () {
         baskigiris.kalanKg = selectedRow.kalanKg;
         baskigiris.profilId = selectedRow.profilId;
         baskigiris.siparisId = $(this).val();
-        const takimlar = await axios.post('/sena/netting/baski/action.php', {
+        const takimlar = await axios.post(BASE_URL+'netting/baski/action.php', {
             action: 'takimgetir',
             profil: selectedRow.profilId,
         }).then((response) => {

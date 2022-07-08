@@ -10,7 +10,7 @@ var sepetGiris = new Vue({
     },
     mounted: async function () {
 
-        sepet = await axios.post('/sena/netting/sepet/action.php', {
+        sepet = await axios.post(BASE_URL+'netting/sepet/action.php', {
             action: 'sepetgetir',
         }).then((response) => {
             return response.data
@@ -50,7 +50,7 @@ var sepetGiris = new Vue({
         detayGoster(event,id) {
             if (id) {
                 $.ajax({
-                    url: '/sena/netting/sepet/sepet.php',
+                    url: BASE_URL+'netting/sepet/sepet.php',
                     type: 'post',
                     data: {
                         id: id,

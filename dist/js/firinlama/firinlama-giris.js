@@ -8,7 +8,7 @@ var firinlamaGiris = new Vue({
 
         mounted: async function () {
 
-            boyalar = await axios.post('/sena/netting/firinlama/action.php', {
+            boyalar = await axios.post(BASE_URL+'netting/firinlama/action.php', {
                 action: 'boyagetir',
             }).then((response) => {
                 return response.data

@@ -47,7 +47,7 @@ new Vue({
                 if(this.parcaNo && this.parcaTuru && this.eskiSenaNo) {
 
                     $.ajax({
-                        url: '/sena/netting/takim/degistir.php',
+                        url: BASE_URL+'netting/takim/degistir.php',
                         type: 'post',
                         data: {
                             cap: this.cap,

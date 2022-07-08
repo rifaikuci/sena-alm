@@ -26,7 +26,7 @@ var balyalamaGiris = new Vue({
     },
 
     mounted: async function () {
-        anbarlar = await axios.post('/sena/netting/balyalama/action.php', {
+        anbarlar = await axios.post(BASE_URL+'netting/balyalama/action.php', {
             action: 'anbargetir',
         }).then((response) => {
             return response.data

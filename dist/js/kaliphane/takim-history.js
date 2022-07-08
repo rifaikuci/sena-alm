@@ -8,7 +8,7 @@ new Vue({
         methods: {
             historygoster(event) {
                 $.ajax({
-                    url: '/sena/netting/kaliphane/history.php',
+                    url: BASE_URL+'netting/kaliphane/history.php',
                     type: 'post',
                     data: {
                         takimno : event.target.dataset.takimno,
