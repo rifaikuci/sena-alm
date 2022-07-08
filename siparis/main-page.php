@@ -3,11 +3,11 @@
 include "../netting/baglan.php";
 include "../include/sql.php";
 $sql = "
-SELECT s.id as id, siparisNo,firmaAd, siparisTarih
+SELECT MAX(s.id) as id, MAX(siparisNo) as siparisNo, MAX(firmaAd) as firmaAd, Max(siparisTarih) as siparisTarih
 FROM tblsiparis s
          INNER JOIN tblfirma f ON f.id = s.musteriId
 group by s.siparisNo
-order by s.id desc
+order by id desc
 ";
 $result = $db->query($sql);
 

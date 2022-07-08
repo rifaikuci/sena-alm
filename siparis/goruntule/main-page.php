@@ -7,8 +7,11 @@ if ($_GET['siparisno']) {
     include "../../include/sql.php";
     require_once "../../include/helper.php";
     require_once "../../include/data.php";
-
-    $sql = "SELECT * FROM tblsiparis WHERE siparisno = '$siparisNo' group by siparisNo";
+    $sql = "SELECT MAX(s.id) as id, MAX(siparisNo) as siparisNo, MAX(firmaAd) as firmaAd, Max(siparisTarih) as siparisTarih
+FROM tblsiparis s
+         INNER JOIN tblfirma f ON f.id = s.musteriId
+WHERE siparisno = '$siparisNo'
+group by s.siparisNo";
     $result = mysqli_query($db, $sql);
     $detail = $result->fetch_assoc();
 
@@ -46,7 +49,7 @@ if ($_GET['siparisno']) {
                             Sipariş No: <?php echo $detail['siparisNo'] ?></label>
                         <br>
                         <label style="color: #7f8c8d">Müşteri
-                            Adı: <?php echo tablogetir('tblfirma', 'id', $detail['musteriId'], $db)['firmaAd']; ?></label>
+                            Adı: <?php echo $detail['firmaAd']; ?></label>
                         <br>
                         <label style="color: #7f8c8d">Sipariş
                             Tarihi: <?php echo tarih($detail['siparisTarih']) ?></label>
